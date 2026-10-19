@@ -44,7 +44,7 @@ async function world() {
     { verify: async () => ({ ok: true, computed: '>', detail: 'match' }) },
   );
   if (!presolved.ok) throw new Error('presolve phải đạt');
-  const opening = scriptedAnthropic([tutor('Đề hỏi gì nhỉ, con đọc lại cho Cú nghe nhé?'), PASS]);
+  const opening = scriptedAnthropic([{ hook: 'Hôm qua Cú đi chợ thấy hai bó rau ghi giá khác nhau đấy.' }, PASS, tutor('Đề hỏi gì nhỉ, con đọc lại cho Cú nghe nhé?'), PASS]);
   setGatewayDependencies({ primary: opening.provider, fallback: null });
   await openProblemTurn(w.student, { studentId: w.studentId, sessionId: w.sessionId });
   return w;
@@ -71,7 +71,7 @@ describe('runStudentTurn', () => {
     const r = await say(w, '0,45 lớn hơn ạ');
     expect(r).toMatchObject({ message: 'Con so sánh hai số này bằng cách nào?', state: 'PROBE', source: 'tutor' });
     const { turns, calls, verdicts } = await rows(w.sessionId);
-    expect(turns.map((t) => t.role)).toEqual(['tutor', 'student', 'tutor']);
+    expect(turns.map((t) => t.role)).toEqual(['tutor', 'tutor', 'student', 'tutor']);
     const turnCalls = calls.filter((c) => c.turn_id === r.tutorTurnId).map((c) => c.purpose);
     expect(turnCalls).toEqual(['tutor', 'guard']);
     expect(verdicts.filter((v) => v.turn_id === r.tutorTurnId).map((v) => `${v.checker}:${v.verdict}`)).toEqual(['code:pass', 'llm:pass']);

@@ -1,6 +1,6 @@
 import 'server-only';
 import type { Actor } from '@/server/dal/actor';
-import { getActiveSessionProblem, listApprovedMisconceptions, listSkillNames } from '@/server/dal/problems-dal';
+import { listApprovedMisconceptions, listSessionProblemsWithPlans, listSkillNames } from '@/server/dal/problems-dal';
 import { getLearningSession, getStudentContext } from '@/server/dal/sessions-dal';
 import { listSessionTurns } from '@/server/dal/turns-dal';
 import { applyHomeworkExtension, type HomeworkExtension } from '@/server/domain/curriculum/scope';
@@ -24,13 +24,26 @@ export interface TutorTurnSignals {
   source?: string;
 }
 
-export async function loadTurnContext(actor: Actor, input: { studentId: string; sessionId: string }) {
-  const [session, student, turns, active] = await Promise.all([
+const parallelOf = (problem: { context_variables: unknown }) =>
+  ((problem.context_variables ?? {}) as { parallel_of?: string | null }).parallel_of ?? null;
+
+/**
+ * Đề đang làm: đang ở PARALLEL thì là bài tương tự; ngược lại là đề gốc mới nhất (không phải bài tương tự).
+ * `forceProblemId`: quay lại đề gốc sau khi xong bài tương tự.
+ */
+export async function loadTurnContext(actor: Actor, input: { studentId: string; sessionId: string; forceProblemId?: string }) {
+  const [session, student, turns, problems] = await Promise.all([
     getLearningSession(actor, input),
     getStudentContext(actor, { studentId: input.studentId }),
     listSessionTurns(actor, input),
-    getActiveSessionProblem(actor, input),
+    listSessionProblemsWithPlans(actor, input),
   ]);
+  const lastTutorOverall = [...turns].reverse().find((t) => t.role !== 'student' && t.state_after);
+  const active =
+    (input.forceProblemId && problems.find((p) => p.problem.id === input.forceProblemId)) ||
+    (lastTutorOverall?.state_after === 'PARALLEL' && problems.find((p) => p.problem.id === lastTutorOverall.problem_id)) ||
+    [...problems].reverse().find((p) => !parallelOf(p.problem)) ||
+    null;
   const preset = loadPreset(student.preset);
   const plan = active ? solutionPlanSchema.parse(active.plan.plan) : null;
   const extension = (active?.plan.scope_extension ?? null) as HomeworkExtension | null;
@@ -57,6 +70,7 @@ export async function loadTurnContext(actor: Actor, input: { studentId: string; 
   }));
 
   return {
+    parallelOf: active ? parallelOf(active.problem) : null,
     session,
     student,
     preset,

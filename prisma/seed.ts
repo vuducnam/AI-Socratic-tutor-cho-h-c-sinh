@@ -10,6 +10,8 @@ import {
 } from '@/server/domain/curriculum/curriculum-yaml-schema';
 import { parseSkillFile, SkillSeedError, type SkillDefinition } from '@/server/domain/curriculum/skill-yaml-schema';
 import { seedCurriculum } from '@/server/dal/seed/seed-curriculum';
+import { seedLifeContexts } from '@/server/dal/seed/seed-life-contexts';
+import { LifeContextSeedError, parseLifeContextFile, themeBalanceWarnings } from '@/server/domain/life-context/life-context-schema';
 import { listSkillIds, seedSkills } from '@/server/dal/seed/seed-skills';
 import { systemActor } from '../worker/actor';
 
@@ -62,14 +64,26 @@ export async function seedCurriculumData(skills: SkillDefinition[]): Promise<voi
   console.log(`[seed] bài: ${result.lessons}, thuật ngữ lớp trên: ${result.beyondTerms}`);
 }
 
+// Thư viện tình huống data/life-contexts/**. Trạng thái duyệt đi theo YAML (kèm content_hash).
+export async function seedLifeContextData(): Promise<void> {
+  const actor = systemActor('pnpm db:seed');
+  const known = new Set(await listSkillIds(actor));
+  const contexts = yamlFiles('data/life-contexts').flatMap((f) => parseLifeContextFile(f, readFileSync(f, 'utf8'), known));
+  themeBalanceWarnings(contexts).forEach((w) => console.warn(`[seed] tình huống: ${w}`));
+  const result = await seedLifeContexts(actor, contexts);
+  console.log(`[seed] tình huống: ${result.total}, đã duyệt: ${result.approved}`);
+  if (result.staleApprovals.length) console.warn(`[seed] mất duyệt vì mẫu đã sửa: ${result.staleApprovals.join(', ')}`);
+}
+
 async function main() {
   const skills = await seedSkillGraph();
   await seedCurriculumData(skills);
+  await seedLifeContextData();
 }
 
 main()
   .then(() => process.exit(0))
   .catch((err) => {
-    console.error(err instanceof SkillSeedError || err instanceof CurriculumSeedError ? err.message : err);
+    console.error(err instanceof SkillSeedError || err instanceof CurriculumSeedError || err instanceof LifeContextSeedError ? err.message : err);
     process.exit(1);
   });

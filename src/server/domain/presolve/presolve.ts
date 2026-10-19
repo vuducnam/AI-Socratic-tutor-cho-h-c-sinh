@@ -75,8 +75,14 @@ async function systemPromptFor(scope: CurriculumScope, grade: number) {
   return { text, misconceptionIds: new Set(misconceptions.map((m) => m.id)) };
 }
 
+let defaultVerify: (req: VerifyRequest) => ReturnType<typeof verifyAnswer> = (req) => verifyAnswer(req);
+/** Chỉ cho test/eval chạy không có sidecar: thay verifier mặc định (gọi math-verifier qua HTTP). */
+export function setDefaultVerifier(fn: ((req: VerifyRequest) => ReturnType<typeof verifyAnswer>) | null): void {
+  defaultVerify = fn ?? ((req) => verifyAnswer(req));
+}
+
 export async function presolveProblem(actor: Actor, input: PresolveInput, deps: PresolveDependencies = {}): Promise<PresolveResult> {
-  const verify = deps.verify ?? ((req: VerifyRequest) => verifyAnswer(req));
+  const verify = deps.verify ?? defaultVerify;
   let scope = input.sessionScope;
   let extension: HomeworkExtension | null = null;
   let feedback: string | null = null;
