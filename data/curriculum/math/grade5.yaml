@@ -42,7 +42,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "6-8", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "6-8", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B2
     seq: 2
     book: T1
@@ -52,7 +52,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "9-10", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "9-10", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B3
     seq: 3
     book: T1
@@ -62,7 +62,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "11-13", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "11-13", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B4
     seq: 4
     book: T1
@@ -72,7 +72,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "14-15", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "14-15", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B5
     seq: 5
     book: T1
@@ -82,7 +82,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "16-19", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "16-19", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B6
     seq: 6
     book: T1
@@ -92,7 +92,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "20-22", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "20-22", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B7
     seq: 7
     book: T1
@@ -102,7 +102,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "23-25", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "23-25", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B8
     seq: 8
     book: T1
@@ -112,7 +112,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "26-28", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "26-28", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B9
     seq: 9
     book: T1
@@ -122,7 +122,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "29-31", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "29-31", imported_at: 2026-10-20 }
   # --- Chủ đề 2: SỐ THẬP PHÂN
   - lesson_id: MATH5.T1.B10
     seq: 10
@@ -133,7 +133,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "32-37", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "32-37", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B11
     seq: 11
     book: T1
@@ -143,7 +143,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "38-41", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "38-41", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B12
     seq: 12
     book: T1
@@ -153,7 +153,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "42-46", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "42-46", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B13
     seq: 13
     book: T1
@@ -163,7 +163,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "47-50", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "47-50", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B14
     seq: 14
     book: T1
@@ -173,7 +173,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "51-52", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "51-52", imported_at: 2026-10-20 }
   # --- Chủ đề 3: MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH
   - lesson_id: MATH5.T1.B15
     seq: 15
@@ -184,7 +184,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "53-55", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "53-55", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B16
     seq: 16
     book: T1
@@ -194,7 +194,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "56-59", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "56-59", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B17
     seq: 17
     book: T1
@@ -204,7 +204,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "60-61", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "60-61", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B18
     seq: 18
     book: T1
@@ -214,7 +214,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "62-64", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "62-64", imported_at: 2026-10-20 }
   # --- Chủ đề 4: CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN
   - lesson_id: MATH5.T1.B19
     seq: 19
@@ -225,7 +225,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "65-67", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "65-67", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B20
     seq: 20
     book: T1
@@ -235,7 +235,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "68-70", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "68-70", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B21
     seq: 21
     book: T1
@@ -245,7 +245,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "71-75", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "71-75", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B22
     seq: 22
     book: T1
@@ -255,7 +255,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "76-82", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "76-82", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B23
     seq: 23
     book: T1
@@ -265,7 +265,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "83-87", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "83-87", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B24
     seq: 24
     book: T1
@@ -275,7 +275,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "88-90", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "88-90", imported_at: 2026-10-20 }
   # --- Chủ đề 5: MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH
   - lesson_id: MATH5.T1.B25
     seq: 25
@@ -286,7 +286,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "91-97", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "91-97", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B26
     seq: 26
     book: T1
@@ -296,7 +296,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "98-104", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "98-104", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B27
     seq: 27
     book: T1
@@ -306,7 +306,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "105-112", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "105-112", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B28
     seq: 28
     book: T1
@@ -316,7 +316,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "113-115", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "113-115", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B29
     seq: 29
     book: T1
@@ -326,7 +326,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "116-119", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "116-119", imported_at: 2026-10-20 }
   # --- Chủ đề 6: ÔN TẬP HỌC KÌ 1
   - lesson_id: MATH5.T1.B30
     seq: 30
@@ -337,7 +337,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "120-122", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "120-122", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B31
     seq: 31
     book: T1
@@ -347,7 +347,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "123-126", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "123-126", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B32
     seq: 32
     book: T1
@@ -357,7 +357,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "127-129", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "127-129", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B33
     seq: 33
     book: T1
@@ -367,7 +367,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "130-132", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "130-132", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B34
     seq: 34
     book: T1
@@ -377,7 +377,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "133-134", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "133-134", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B35
     seq: 35
     book: T1
@@ -387,7 +387,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "135-138", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "135-138", imported_at: 2026-10-20 }
   # --- Chủ đề 7: TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN
   - lesson_id: MATH5.T2.B36
     seq: 36
@@ -398,7 +398,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "4-7", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "4-7", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B37
     seq: 37
     book: T2
@@ -408,7 +408,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "8-11", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "8-11", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B38
     seq: 38
     book: T2
@@ -418,7 +418,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "12-14", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "12-14", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B39
     seq: 39
     book: T2
@@ -428,7 +428,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "15-17", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "15-17", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B40
     seq: 40
     book: T2
@@ -438,7 +438,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "18-20", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "18-20", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B41
     seq: 41
     book: T2
@@ -448,7 +448,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "21-22", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "21-22", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B42
     seq: 42
     book: T2
@@ -458,7 +458,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "23-26", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "23-26", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B43
     seq: 43
     book: T2
@@ -468,7 +468,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "27", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "27", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B44
     seq: 44
     book: T2
@@ -478,7 +478,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "28-29", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "28-29", imported_at: 2026-10-20 }
   # --- Chủ đề 8: THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH
   - lesson_id: MATH5.T2.B45
     seq: 45
@@ -489,7 +489,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "30-32", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "30-32", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B46
     seq: 46
     book: T2
@@ -499,7 +499,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "33-34", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "33-34", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B47
     seq: 47
     book: T2
@@ -509,7 +509,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "35-37", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "35-37", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B48
     seq: 48
     book: T2
@@ -519,7 +519,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "38-39", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "38-39", imported_at: 2026-10-20 }
   # --- Chủ đề 9: DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI
   - lesson_id: MATH5.T2.B49
     seq: 49
@@ -530,7 +530,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "40-43", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "40-43", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B50
     seq: 50
     book: T2
@@ -540,7 +540,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "44-47", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "44-47", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B51
     seq: 51
     book: T2
@@ -550,7 +550,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "48-50", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "48-50", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B52
     seq: 52
     book: T2
@@ -560,7 +560,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "51-53", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "51-53", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B53
     seq: 53
     book: T2
@@ -570,7 +570,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "54-57", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "54-57", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B54
     seq: 54
     book: T2
@@ -580,7 +580,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "58-59", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "58-59", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B55
     seq: 55
     book: T2
@@ -590,7 +590,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "60-63", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "60-63", imported_at: 2026-10-20 }
   # --- Chủ đề 10: SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU
   - lesson_id: MATH5.T2.B56
     seq: 56
@@ -601,7 +601,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "64-66", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "64-66", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B57
     seq: 57
     book: T2
@@ -611,7 +611,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "67-70", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "67-70", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B58
     seq: 58
     book: T2
@@ -621,7 +621,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "71-75", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "71-75", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B59
     seq: 59
     book: T2
@@ -631,7 +631,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "76-77", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "76-77", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B60
     seq: 60
     book: T2
@@ -641,7 +641,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "78-81", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "78-81", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B61
     seq: 61
     book: T2
@@ -651,7 +651,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "82-83", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "82-83", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B62
     seq: 62
     book: T2
@@ -661,7 +661,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "84-86", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "84-86", imported_at: 2026-10-20 }
   # --- Chủ đề 11: MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT
   - lesson_id: MATH5.T2.B63
     seq: 63
@@ -672,7 +672,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "87-89", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "87-89", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B64
     seq: 64
     book: T2
@@ -682,7 +682,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "90-93", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "90-93", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B65
     seq: 65
     book: T2
@@ -692,7 +692,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "94-95", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "94-95", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B66
     seq: 66
     book: T2
@@ -702,7 +702,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "96-99", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "96-99", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B67
     seq: 67
     book: T2
@@ -712,7 +712,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "100-102", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "100-102", imported_at: 2026-10-20 }
   # --- Chủ đề 12: ÔN TẬP CUỐI NĂM
   - lesson_id: MATH5.T2.B68
     seq: 68
@@ -723,7 +723,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "103-106", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "103-106", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B69
     seq: 69
     book: T2
@@ -733,7 +733,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "107-110", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "107-110", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B70
     seq: 70
     book: T2
@@ -743,7 +743,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "111-112", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "111-112", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B71
     seq: 71
     book: T2
@@ -753,7 +753,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "113-118", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "113-118", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B72
     seq: 72
     book: T2
@@ -763,7 +763,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "119-120", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "119-120", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B73
     seq: 73
     book: T2
@@ -773,7 +773,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "121-122", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "121-122", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B74
     seq: 74
     book: T2
@@ -783,7 +783,7 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "123-127", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "123-127", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T2.B75
     seq: 75
     book: T2
@@ -793,4 +793,4 @@ lessons:
     skill_ids: []
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
-    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "128-134", imported_at: null }
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "128-134", imported_at: 2026-10-20 }
