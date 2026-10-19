@@ -22,7 +22,8 @@
     "db:seed": "tsx --conditions=react-server prisma/seed.ts",
     "postinstall": "prisma generate",
     "admin:create": "tsx --conditions=react-server scripts/create-first-admin.ts",
-    "llm:smoke": "tsx --conditions=react-server scripts/llm-smoke.ts"
+    "llm:smoke": "tsx --conditions=react-server scripts/llm-smoke.ts",
+    "eval:presolve": "tsx --conditions=react-server eval/presolve-acceptance.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
