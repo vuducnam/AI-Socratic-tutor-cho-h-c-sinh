@@ -1,0 +1,179 @@
+# Skill graph Toán 5 — chủ đề số thập phân (Giai đoạn 0). SPEC mục 5, docs/CURRICULUM.md mục 5.
+# NHÁP do Claude Code soạn ngày 2026-10-20 CHỈ từ tên bài trong data/curriculum/math/grade5.yaml
+# (mục lục đã duyệt), không bịa nội dung bài. source chép từ mục lục: bài đầu tiên dạy skill đó.
+# Chủ dự án cần duyệt: tên skill đúng nội dung bài chưa, có skill nào gộp quá to (ví dụ phép chia
+# có nhiều dạng) hay tách quá vụn không, prerequisites hợp lý chưa.
+# Chưa có misconceptions: mỗi mục chỉ được thêm khi có approved: {by, at} do chủ dự án ghi sau khi đọc.
+
+subject: math
+grade: 5
+skills:
+  - skill_id: MATH.WHOLE.OPERATIONS
+    name: Các phép tính với số tự nhiên (ôn tập)
+    subject: math
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 2. Ôn tập các phép tính với số tự nhiên
+      pages: 9-10
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.FRACTION.DECIMAL_FRACTION
+    name: Phân số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 4. Phân số thập phân
+      pages: 14-15
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.FRACTION.MIXED_NUMBER
+    name: Hỗn số
+    subject: math
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 7. Hỗn số
+      pages: 23-25
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.CONCEPT
+    name: Khái niệm số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.FRACTION.DECIMAL_FRACTION
+      - MATH.FRACTION.MIXED_NUMBER
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 10. Khái niệm số thập phân
+      pages: 32-37
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.COMPARE
+    name: So sánh các số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.CONCEPT
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 11. So sánh các số thập phân
+      pages: 38-41
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    name: Viết số đo đại lượng dưới dạng số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.CONCEPT
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 12. Viết số đo đại lượng dưới dạng số thập phân
+      pages: 42-46
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.ROUND
+    name: Làm tròn số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.COMPARE
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 13. Làm tròn số thập phân
+      pages: 47-50
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.ADD
+    name: Phép cộng số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.CONCEPT
+      - MATH.WHOLE.OPERATIONS
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 19. Phép cộng số thập phân
+      pages: 65-67
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.SUBTRACT
+    name: Phép trừ số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.ADD
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 20. Phép trừ số thập phân
+      pages: 68-70
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.MULTIPLY
+    name: Phép nhân số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.CONCEPT
+      - MATH.WHOLE.OPERATIONS
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 21. Phép nhân số thập phân
+      pages: 71-75
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.DIVIDE
+    name: Phép chia số thập phân
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.MULTIPLY
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 22. Phép chia số thập phân
+      pages: 76-82
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20
+  - skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    name: Nhân, chia số thập phân với 10; 100; 1 000;... hoặc với 0,1; 0,01; 0,001;...
+    subject: math
+    grade_introduced: 5
+    prerequisites:
+      - MATH.DECIMAL.MULTIPLY
+      - MATH.DECIMAL.DIVIDE
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Toán 5, Tập 1
+      lesson: Bài 23. Nhân, chia số thập phân với 10; 100; 1 000;... hoặc với 0,1; 0,01; 0,001;...
+      pages: 83-87
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373
+      imported_at: 2026-10-20

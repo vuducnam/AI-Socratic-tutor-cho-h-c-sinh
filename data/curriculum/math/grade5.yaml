@@ -49,7 +49,7 @@ lessons:
     topic: "ÔN TẬP VÀ BỔ SUNG"
     lesson_no: 2
     title: "Ôn tập các phép tính với số tự nhiên"
-    skill_ids: []
+    skill_ids: [MATH.WHOLE.OPERATIONS]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "9-10", imported_at: 2026-10-20 }
@@ -69,7 +69,7 @@ lessons:
     topic: "ÔN TẬP VÀ BỔ SUNG"
     lesson_no: 4
     title: "Phân số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.FRACTION.DECIMAL_FRACTION]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "14-15", imported_at: 2026-10-20 }
@@ -99,7 +99,7 @@ lessons:
     topic: "ÔN TẬP VÀ BỔ SUNG"
     lesson_no: 7
     title: "Hỗn số"
-    skill_ids: []
+    skill_ids: [MATH.FRACTION.MIXED_NUMBER]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "23-25", imported_at: 2026-10-20 }
@@ -130,7 +130,7 @@ lessons:
     topic: "SỐ THẬP PHÂN"
     lesson_no: 10
     title: "Khái niệm số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.CONCEPT]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "32-37", imported_at: 2026-10-20 }
@@ -140,7 +140,7 @@ lessons:
     topic: "SỐ THẬP PHÂN"
     lesson_no: 11
     title: "So sánh các số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.COMPARE]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "38-41", imported_at: 2026-10-20 }
@@ -150,7 +150,7 @@ lessons:
     topic: "SỐ THẬP PHÂN"
     lesson_no: 12
     title: "Viết số đo đại lượng dưới dạng số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.MEASURE_NOTATION]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "42-46", imported_at: 2026-10-20 }
@@ -160,7 +160,7 @@ lessons:
     topic: "SỐ THẬP PHÂN"
     lesson_no: 13
     title: "Làm tròn số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.ROUND]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "47-50", imported_at: 2026-10-20 }
@@ -170,7 +170,7 @@ lessons:
     topic: "SỐ THẬP PHÂN"
     lesson_no: 14
     title: "Luyện tập chung"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.CONCEPT, MATH.DECIMAL.COMPARE, MATH.DECIMAL.MEASURE_NOTATION, MATH.DECIMAL.ROUND]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "51-52", imported_at: 2026-10-20 }
@@ -222,7 +222,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 19
     title: "Phép cộng số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.ADD]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "65-67", imported_at: 2026-10-20 }
@@ -232,7 +232,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 20
     title: "Phép trừ số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.SUBTRACT]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "68-70", imported_at: 2026-10-20 }
@@ -242,7 +242,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 21
     title: "Phép nhân số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.MULTIPLY]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "71-75", imported_at: 2026-10-20 }
@@ -252,7 +252,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 22
     title: "Phép chia số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.DIVIDE]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "76-82", imported_at: 2026-10-20 }
@@ -262,7 +262,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 23
     title: "Nhân, chia số thập phân với 10; 100; 1 000;... hoặc với 0,1; 0,01; 0,001;..."
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.SCALE_POWERS_OF_TEN]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "83-87", imported_at: 2026-10-20 }
@@ -272,7 +272,7 @@ lessons:
     topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
     lesson_no: 24
     title: "Luyện tập chung"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.ADD, MATH.DECIMAL.SUBTRACT, MATH.DECIMAL.MULTIPLY, MATH.DECIMAL.DIVIDE, MATH.DECIMAL.SCALE_POWERS_OF_TEN]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "88-90", imported_at: 2026-10-20 }
@@ -334,7 +334,7 @@ lessons:
     topic: "ÔN TẬP HỌC KÌ 1"
     lesson_no: 30
     title: "Ôn tập số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.CONCEPT, MATH.DECIMAL.COMPARE, MATH.DECIMAL.MEASURE_NOTATION, MATH.DECIMAL.ROUND]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "120-122", imported_at: 2026-10-20 }
@@ -344,7 +344,7 @@ lessons:
     topic: "ÔN TẬP HỌC KÌ 1"
     lesson_no: 31
     title: "Ôn tập các phép tính với số thập phân"
-    skill_ids: []
+    skill_ids: [MATH.DECIMAL.ADD, MATH.DECIMAL.SUBTRACT, MATH.DECIMAL.MULTIPLY, MATH.DECIMAL.DIVIDE, MATH.DECIMAL.SCALE_POWERS_OF_TEN]
     introduces_terms: []   # TODO: chưa đọc bài
     methods: []            # TODO: chưa đọc bài
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "123-126", imported_at: 2026-10-20 }
