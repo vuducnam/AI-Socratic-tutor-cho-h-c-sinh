@@ -1,0 +1,79 @@
+# Repo công khai: không bao giờ commit secret hay dữ liệu thật của học sinh
+# (quy tắc cứng 2, 10; SPEC §14b).
+
+# --- Secret, biến môi trường ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets/
+# file credentials của cloudflared tunnel (token để trong .env)
+cloudflared/*.json
+.cloudflared/
+
+# --- Dữ liệu học sinh và dữ liệu chạy thật ---
+# ảnh đề, ảnh nhiệm vụ, file tạm upload
+storage/
+uploads/
+# volume Postgres/Redis nếu bind-mount trong repo
+data/postgres/
+data/redis/
+# bản dump DB (migration .sql trong prisma/migrations vẫn được commit)
+*.dump
+*.backup
+*.sql.gz
+dumps/
+# ghi âm giọng các con cho stt-bench (SPEC §10: không đưa vào repo)
+eval/stt-bench/recordings/
+*.wav
+*.webm
+*.mp3
+*.m4a
+*.ogg
+# kết quả eval và log có thể chứa transcript
+eval/results/
+logs/
+*.log
+# export zip dữ liệu học sinh
+exports/
+*.zip
+
+# --- Node / Next.js ---
+node_modules/
+.pnpm-store/
+.next/
+out/
+build/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+# Prisma client sinh ra
+src/server/dal/generated/
+
+# --- Python (math-verifier, stt-local) ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+# model tải về cho stt-local
+services/stt-local/models/
+
+# --- Công cụ, hệ điều hành ---
+.claude/settings.local.json
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Plan, báo cáo nội bộ: chỉ giữ ở máy, không đưa lên GitHub ---
+plans/

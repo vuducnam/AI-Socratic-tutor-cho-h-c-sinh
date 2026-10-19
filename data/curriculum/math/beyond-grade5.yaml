@@ -1,0 +1,10 @@
+# Thuật ngữ / cách giải của lớp 6 trở lên mà Cú không được dùng khi dạy lớp 5 (SPEC mục 5c.1).
+# Mỗi mục phải có source trỏ tới bài SGK lớp trên chính thống. Chưa đối chiếu thì không thêm.
+subject: math
+for_grade: 5
+items: []
+#  - term: "<thuật ngữ>"
+#    patterns: ["<regex trên văn bản đã chuẩn hoá>"]
+#    introduced_grade: <lớp>
+#    note: "<vì sao cấm, cách lớp 5 dùng thay thế>"
+#    source: { book: "<Toán 6, Tập 1>", lesson: "<Bài …>", official_url: null }

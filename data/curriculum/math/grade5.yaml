@@ -1,0 +1,796 @@
+# Mục lục Toán 5 — Kết nối tri thức với cuộc sống (NXB Giáo dục Việt Nam)
+# Quy tắc cứng 6 và 15 (CLAUDE.md), SPEC mục 5c.1.
+# Chỉ nhập từ bản đọc chính thống taphuan.nxbgd.vn (quy tắc cứng 6).
+# Không lấy từ hoatieu, loigiaihay, thuvienhoclieu hay bất kỳ trang bên thứ ba nào.
+# Hướng dẫn điền từng trường: docs/CURRICULUM.md.
+# Thứ tự lessons = thứ tự trong sách (lớp học đúng thứ tự SGK); seq liên tục từ 1.
+#
+# Nguồn (đọc ngày 2026-10-19):
+# - Trên taphuan.nxbgd.vn, Toán 5 nằm ở mục "Bộ SGK thống nhất" (mục "SGK khác" không còn bộ
+#   Kết nối tri thức). Trang tên sách in hình mờ "Kết nối tri thức với cuộc sống", Tổng chủ biên
+#   Hà Huy Khoái, Chủ biên Lê Anh Vinh, "Tái bản lần thứ hai", bản quyền 2024.
+# - lessons[] chép từ trang MỤC LỤC in trong sách (menu "Mục lục" của trình đọc báo "Chưa có mục lục").
+#   Tên chủ đề giữ chữ in hoa như mục lục. Bài 1–35 ở Tập 1, Bài 36–75 ở Tập 2 (đánh số liên tục).
+# - pages: trang bắt đầu lấy từ mục lục; trang kết thúc suy ra = trang bắt đầu bài kế tiếp - 1
+#   (bài cuối mỗi tập: trước trang "Một số thuật ngữ dùng trong sách", T1 tr.139, T2 tr.135).
+# - URL trang cụ thể: <official_url>#page=<chỉ số trang của trình đọc>. Chỉ số này KHÔNG trùng số
+#   trang in (ví dụ T1 #page=7 hiện trang in 6), nên source.official_url dùng link cả cuốn.
+# - imported_at: điền ngày chủ dự án duyệt xong (so từng dòng với mục lục).
+# - Mỗi tập có trang cuối "Một số thuật ngữ dùng trong sách" (thuật ngữ + trang xuất hiện). Dùng làm
+#   điểm bắt đầu khi đọc bài để điền introduces_terms (CURRICULUM §6.1), không thay cho việc đọc bài.
+
+subject: math
+grade: 5
+series: "Kết nối tri thức với cuộc sống"
+publisher: "NXB Giáo dục Việt Nam"
+books:
+  - id: T1
+    title: "Toán 5, Tập 1"
+    official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373"
+  - id: T2
+    title: "Toán 5, Tập 2"
+    official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431"
+
+lessons:
+  # --- Chủ đề 1: ÔN TẬP VÀ BỔ SUNG
+  - lesson_id: MATH5.T1.B1
+    seq: 1
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 1
+    title: "Ôn tập số tự nhiên"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "6-8", imported_at: null }
+  - lesson_id: MATH5.T1.B2
+    seq: 2
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 2
+    title: "Ôn tập các phép tính với số tự nhiên"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "9-10", imported_at: null }
+  - lesson_id: MATH5.T1.B3
+    seq: 3
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 3
+    title: "Ôn tập phân số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "11-13", imported_at: null }
+  - lesson_id: MATH5.T1.B4
+    seq: 4
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 4
+    title: "Phân số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "14-15", imported_at: null }
+  - lesson_id: MATH5.T1.B5
+    seq: 5
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 5
+    title: "Ôn tập các phép tính với phân số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "16-19", imported_at: null }
+  - lesson_id: MATH5.T1.B6
+    seq: 6
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 6
+    title: "Cộng, trừ hai phân số khác mẫu số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "20-22", imported_at: null }
+  - lesson_id: MATH5.T1.B7
+    seq: 7
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 7
+    title: "Hỗn số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "23-25", imported_at: null }
+  - lesson_id: MATH5.T1.B8
+    seq: 8
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 8
+    title: "Ôn tập hình học và đo lường"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "26-28", imported_at: null }
+  - lesson_id: MATH5.T1.B9
+    seq: 9
+    book: T1
+    topic: "ÔN TẬP VÀ BỔ SUNG"
+    lesson_no: 9
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "29-31", imported_at: null }
+  # --- Chủ đề 2: SỐ THẬP PHÂN
+  - lesson_id: MATH5.T1.B10
+    seq: 10
+    book: T1
+    topic: "SỐ THẬP PHÂN"
+    lesson_no: 10
+    title: "Khái niệm số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "32-37", imported_at: null }
+  - lesson_id: MATH5.T1.B11
+    seq: 11
+    book: T1
+    topic: "SỐ THẬP PHÂN"
+    lesson_no: 11
+    title: "So sánh các số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "38-41", imported_at: null }
+  - lesson_id: MATH5.T1.B12
+    seq: 12
+    book: T1
+    topic: "SỐ THẬP PHÂN"
+    lesson_no: 12
+    title: "Viết số đo đại lượng dưới dạng số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "42-46", imported_at: null }
+  - lesson_id: MATH5.T1.B13
+    seq: 13
+    book: T1
+    topic: "SỐ THẬP PHÂN"
+    lesson_no: 13
+    title: "Làm tròn số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "47-50", imported_at: null }
+  - lesson_id: MATH5.T1.B14
+    seq: 14
+    book: T1
+    topic: "SỐ THẬP PHÂN"
+    lesson_no: 14
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "51-52", imported_at: null }
+  # --- Chủ đề 3: MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH
+  - lesson_id: MATH5.T1.B15
+    seq: 15
+    book: T1
+    topic: "MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH"
+    lesson_no: 15
+    title: "Ki-lô-mét vuông. Héc-ta"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "53-55", imported_at: null }
+  - lesson_id: MATH5.T1.B16
+    seq: 16
+    book: T1
+    topic: "MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH"
+    lesson_no: 16
+    title: "Các đơn vị đo diện tích"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "56-59", imported_at: null }
+  - lesson_id: MATH5.T1.B17
+    seq: 17
+    book: T1
+    topic: "MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH"
+    lesson_no: 17
+    title: "Thực hành và trải nghiệm với một số đơn vị đo đại lượng"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "60-61", imported_at: null }
+  - lesson_id: MATH5.T1.B18
+    seq: 18
+    book: T1
+    topic: "MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH"
+    lesson_no: 18
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "62-64", imported_at: null }
+  # --- Chủ đề 4: CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN
+  - lesson_id: MATH5.T1.B19
+    seq: 19
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 19
+    title: "Phép cộng số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "65-67", imported_at: null }
+  - lesson_id: MATH5.T1.B20
+    seq: 20
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 20
+    title: "Phép trừ số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "68-70", imported_at: null }
+  - lesson_id: MATH5.T1.B21
+    seq: 21
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 21
+    title: "Phép nhân số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "71-75", imported_at: null }
+  - lesson_id: MATH5.T1.B22
+    seq: 22
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 22
+    title: "Phép chia số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "76-82", imported_at: null }
+  - lesson_id: MATH5.T1.B23
+    seq: 23
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 23
+    title: "Nhân, chia số thập phân với 10; 100; 1 000;... hoặc với 0,1; 0,01; 0,001;..."
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "83-87", imported_at: null }
+  - lesson_id: MATH5.T1.B24
+    seq: 24
+    book: T1
+    topic: "CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN"
+    lesson_no: 24
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "88-90", imported_at: null }
+  # --- Chủ đề 5: MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH
+  - lesson_id: MATH5.T1.B25
+    seq: 25
+    book: T1
+    topic: "MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH"
+    lesson_no: 25
+    title: "Hình tam giác. Diện tích hình tam giác"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "91-97", imported_at: null }
+  - lesson_id: MATH5.T1.B26
+    seq: 26
+    book: T1
+    topic: "MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH"
+    lesson_no: 26
+    title: "Hình thang. Diện tích hình thang"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "98-104", imported_at: null }
+  - lesson_id: MATH5.T1.B27
+    seq: 27
+    book: T1
+    topic: "MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH"
+    lesson_no: 27
+    title: "Đường tròn. Chu vi và diện tích hình tròn"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "105-112", imported_at: null }
+  - lesson_id: MATH5.T1.B28
+    seq: 28
+    book: T1
+    topic: "MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH"
+    lesson_no: 28
+    title: "Thực hành và trải nghiệm đo, vẽ, lắp ghép, tạo hình"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "113-115", imported_at: null }
+  - lesson_id: MATH5.T1.B29
+    seq: 29
+    book: T1
+    topic: "MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH"
+    lesson_no: 29
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "116-119", imported_at: null }
+  # --- Chủ đề 6: ÔN TẬP HỌC KÌ 1
+  - lesson_id: MATH5.T1.B30
+    seq: 30
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 30
+    title: "Ôn tập số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "120-122", imported_at: null }
+  - lesson_id: MATH5.T1.B31
+    seq: 31
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 31
+    title: "Ôn tập các phép tính với số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "123-126", imported_at: null }
+  - lesson_id: MATH5.T1.B32
+    seq: 32
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 32
+    title: "Ôn tập một số hình phẳng"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "127-129", imported_at: null }
+  - lesson_id: MATH5.T1.B33
+    seq: 33
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 33
+    title: "Ôn tập diện tích, chu vi một số hình phẳng"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "130-132", imported_at: null }
+  - lesson_id: MATH5.T1.B34
+    seq: 34
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 34
+    title: "Ôn tập đo lường"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "133-134", imported_at: null }
+  - lesson_id: MATH5.T1.B35
+    seq: 35
+    book: T1
+    topic: "ÔN TẬP HỌC KÌ 1"
+    lesson_no: 35
+    title: "Ôn tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "135-138", imported_at: null }
+  # --- Chủ đề 7: TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN
+  - lesson_id: MATH5.T2.B36
+    seq: 36
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 36
+    title: "Tỉ số. Tỉ số phần trăm"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "4-7", imported_at: null }
+  - lesson_id: MATH5.T2.B37
+    seq: 37
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 37
+    title: "Tỉ lệ bản đồ và ứng dụng"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "8-11", imported_at: null }
+  - lesson_id: MATH5.T2.B38
+    seq: 38
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 38
+    title: "Tìm hai số khi biết tổng và tỉ số của hai số đó"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "12-14", imported_at: null }
+  - lesson_id: MATH5.T2.B39
+    seq: 39
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 39
+    title: "Tìm hai số khi biết hiệu và tỉ số của hai số đó"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "15-17", imported_at: null }
+  - lesson_id: MATH5.T2.B40
+    seq: 40
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 40
+    title: "Tìm tỉ số phần trăm của hai số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "18-20", imported_at: null }
+  - lesson_id: MATH5.T2.B41
+    seq: 41
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 41
+    title: "Tìm giá trị phần trăm của một số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "21-22", imported_at: null }
+  - lesson_id: MATH5.T2.B42
+    seq: 42
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 42
+    title: "Máy tính cầm tay"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "23-26", imported_at: null }
+  - lesson_id: MATH5.T2.B43
+    seq: 43
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 43
+    title: "Thực hành và trải nghiệm sử dụng máy tính cầm tay"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "27", imported_at: null }
+  - lesson_id: MATH5.T2.B44
+    seq: 44
+    book: T2
+    topic: "TỈ SỐ VÀ CÁC BÀI TOÁN LIÊN QUAN"
+    lesson_no: 44
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "28-29", imported_at: null }
+  # --- Chủ đề 8: THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH
+  - lesson_id: MATH5.T2.B45
+    seq: 45
+    book: T2
+    topic: "THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH"
+    lesson_no: 45
+    title: "Thể tích của một hình"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "30-32", imported_at: null }
+  - lesson_id: MATH5.T2.B46
+    seq: 46
+    book: T2
+    topic: "THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH"
+    lesson_no: 46
+    title: "Xăng-ti-mét khối. Đề-xi-mét khối"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "33-34", imported_at: null }
+  - lesson_id: MATH5.T2.B47
+    seq: 47
+    book: T2
+    topic: "THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH"
+    lesson_no: 47
+    title: "Mét khối"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "35-37", imported_at: null }
+  - lesson_id: MATH5.T2.B48
+    seq: 48
+    book: T2
+    topic: "THỂ TÍCH. ĐƠN VỊ ĐO THỂ TÍCH"
+    lesson_no: 48
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "38-39", imported_at: null }
+  # --- Chủ đề 9: DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI
+  - lesson_id: MATH5.T2.B49
+    seq: 49
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 49
+    title: "Hình khai triển của hình lập phương, hình hộp chữ nhật và hình trụ"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "40-43", imported_at: null }
+  - lesson_id: MATH5.T2.B50
+    seq: 50
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 50
+    title: "Diện tích xung quanh và diện tích toàn phần của hình hộp chữ nhật"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "44-47", imported_at: null }
+  - lesson_id: MATH5.T2.B51
+    seq: 51
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 51
+    title: "Diện tích xung quanh và diện tích toàn phần của hình lập phương"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "48-50", imported_at: null }
+  - lesson_id: MATH5.T2.B52
+    seq: 52
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 52
+    title: "Thể tích của hình hộp chữ nhật"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "51-53", imported_at: null }
+  - lesson_id: MATH5.T2.B53
+    seq: 53
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 53
+    title: "Thể tích của hình lập phương"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "54-57", imported_at: null }
+  - lesson_id: MATH5.T2.B54
+    seq: 54
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 54
+    title: "Thực hành tính toán và ước lượng thể tích một số hình khối"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "58-59", imported_at: null }
+  - lesson_id: MATH5.T2.B55
+    seq: 55
+    book: T2
+    topic: "DIỆN TÍCH VÀ THỂ TÍCH CỦA MỘT SỐ HÌNH KHỐI"
+    lesson_no: 55
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "60-63", imported_at: null }
+  # --- Chủ đề 10: SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU
+  - lesson_id: MATH5.T2.B56
+    seq: 56
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 56
+    title: "Các đơn vị đo thời gian"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "64-66", imported_at: null }
+  - lesson_id: MATH5.T2.B57
+    seq: 57
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 57
+    title: "Cộng, trừ số đo thời gian"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "67-70", imported_at: null }
+  - lesson_id: MATH5.T2.B58
+    seq: 58
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 58
+    title: "Nhân, chia số đo thời gian với một số"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "71-75", imported_at: null }
+  - lesson_id: MATH5.T2.B59
+    seq: 59
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 59
+    title: "Vận tốc của một chuyển động đều"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "76-77", imported_at: null }
+  - lesson_id: MATH5.T2.B60
+    seq: 60
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 60
+    title: "Quãng đường, thời gian của một chuyển động đều"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "78-81", imported_at: null }
+  - lesson_id: MATH5.T2.B61
+    seq: 61
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 61
+    title: "Thực hành tính toán và ước lượng về vận tốc, quãng đường, thời gian trong chuyển động đều"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "82-83", imported_at: null }
+  - lesson_id: MATH5.T2.B62
+    seq: 62
+    book: T2
+    topic: "SỐ ĐO THỜI GIAN, VẬN TỐC. CÁC BÀI TOÁN LIÊN QUAN ĐẾN CHUYỂN ĐỘNG ĐỀU"
+    lesson_no: 62
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "84-86", imported_at: null }
+  # --- Chủ đề 11: MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT
+  - lesson_id: MATH5.T2.B63
+    seq: 63
+    book: T2
+    topic: "MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT"
+    lesson_no: 63
+    title: "Thu thập, phân loại, sắp xếp các số liệu"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "87-89", imported_at: null }
+  - lesson_id: MATH5.T2.B64
+    seq: 64
+    book: T2
+    topic: "MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT"
+    lesson_no: 64
+    title: "Biểu đồ hình quạt tròn"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "90-93", imported_at: null }
+  - lesson_id: MATH5.T2.B65
+    seq: 65
+    book: T2
+    topic: "MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT"
+    lesson_no: 65
+    title: "Tỉ số của số lần lặp lại một sự kiện so với tổng số lần thực hiện"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "94-95", imported_at: null }
+  - lesson_id: MATH5.T2.B66
+    seq: 66
+    book: T2
+    topic: "MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT"
+    lesson_no: 66
+    title: "Thực hành và trải nghiệm thu thập, phân tích, biểu diễn các số liệu thống kê"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "96-99", imported_at: null }
+  - lesson_id: MATH5.T2.B67
+    seq: 67
+    book: T2
+    topic: "MỘT SỐ YẾU TỐ THỐNG KÊ VÀ XÁC SUẤT"
+    lesson_no: 67
+    title: "Luyện tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "100-102", imported_at: null }
+  # --- Chủ đề 12: ÔN TẬP CUỐI NĂM
+  - lesson_id: MATH5.T2.B68
+    seq: 68
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 68
+    title: "Ôn tập số tự nhiên, phân số, số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "103-106", imported_at: null }
+  - lesson_id: MATH5.T2.B69
+    seq: 69
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 69
+    title: "Ôn tập các phép tính với số tự nhiên, phân số, số thập phân"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "107-110", imported_at: null }
+  - lesson_id: MATH5.T2.B70
+    seq: 70
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 70
+    title: "Ôn tập tỉ số, tỉ số phần trăm"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "111-112", imported_at: null }
+  - lesson_id: MATH5.T2.B71
+    seq: 71
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 71
+    title: "Ôn tập hình học"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "113-118", imported_at: null }
+  - lesson_id: MATH5.T2.B72
+    seq: 72
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 72
+    title: "Ôn tập đo lường"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "119-120", imported_at: null }
+  - lesson_id: MATH5.T2.B73
+    seq: 73
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 73
+    title: "Ôn tập toán chuyển động đều"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "121-122", imported_at: null }
+  - lesson_id: MATH5.T2.B74
+    seq: 74
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 74
+    title: "Ôn tập một số yếu tố thống kê và xác suất"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "123-127", imported_at: null }
+  - lesson_id: MATH5.T2.B75
+    seq: 75
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM"
+    lesson_no: 75
+    title: "Ôn tập chung"
+    skill_ids: []
+    introduces_terms: []   # TODO: chưa đọc bài
+    methods: []            # TODO: chưa đọc bài
+    source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-hai.4714103431", pages: "128-134", imported_at: null }
