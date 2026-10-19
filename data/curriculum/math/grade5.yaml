@@ -40,8 +40,9 @@ lessons:
     lesson_no: 1
     title: "Ôn tập số tự nhiên"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (ôn tập, không có khung kiến thức)
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Viết số từ số đơn vị của từng hàng (chục nghìn, nghìn, trăm, chục, đơn vị) rồi đọc số, theo bảng mẫu"   # tr.6
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "6-8", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B2
     seq: 2
@@ -50,8 +51,8 @@ lessons:
     lesson_no: 2
     title: "Ôn tập các phép tính với số tự nhiên"
     skill_ids: [MATH.WHOLE.OPERATIONS]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (ôn tập, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "9-10", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B3
     seq: 3
@@ -60,8 +61,8 @@ lessons:
     lesson_no: 3
     title: "Ôn tập phân số"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (ôn tập, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "11-13", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B4
     seq: 4
@@ -70,8 +71,15 @@ lessons:
     lesson_no: 4
     title: "Phân số thập phân"
     skill_ids: [MATH.FRACTION.DECIMAL_FRACTION]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms:   # đã đọc SGK 2026-10-20
+      - term: "Phân số thập phân"   # tr.14
+        patterns: ["phân số thập phân"]
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Nhận biết phân số thập phân: phân số có mẫu số là 10, 100, 1 000, ..."   # tr.14
+      - "Đặt phân số thập phân lên tia số: đoạn từ 0 đến 1 chia 10 phần bằng nhau ứng với các phần mười; phóng to một phần mười chia tiếp 10 phần ứng với các phần trăm"   # tr.15
+      - "Viết phân số thành phân số thập phân bằng cách nhân cả tử và mẫu với cùng một số để mẫu thành 10, 100, 1 000"   # tr.15
+      - "Hoặc chia cả tử và mẫu cho cùng một số để mẫu thành 100, 1 000"   # tr.15
+      - "Chỉ một số phân số viết được thành phân số thập phân"   # tr.15
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "14-15", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B5
     seq: 5
@@ -80,8 +88,8 @@ lessons:
     lesson_no: 5
     title: "Ôn tập các phép tính với phân số"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (ôn tập, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "16-19", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B6
     seq: 6
@@ -90,8 +98,12 @@ lessons:
     lesson_no: 6
     title: "Cộng, trừ hai phân số khác mẫu số"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Hai mẫu số không chia hết cho nhau: lấy mẫu số chung là tích hai mẫu số, nhân cả tử và mẫu của mỗi phân số với mẫu số của phân số kia"   # tr.20
+      - "Sau khi quy đồng, cộng các tử số và giữ nguyên mẫu số chung"   # tr.20
+      - "Phép trừ làm tương tự: quy đồng mẫu số rồi trừ các tử số, giữ mẫu số chung"   # tr.21
+      - "Cộng (trừ) hai phân số khác mẫu số: quy đồng mẫu số trước, rồi cộng (trừ) hai phân số đã quy đồng"   # tr.21
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "20-22", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B7
     seq: 7
@@ -100,8 +112,22 @@ lessons:
     lesson_no: 7
     title: "Hỗn số"
     skill_ids: [MATH.FRACTION.MIXED_NUMBER]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms:   # đã đọc SGK 2026-10-20
+      - term: "Hỗn số"   # tr.23
+        patterns: ["hỗn số"]
+      - term: "Phần nguyên"   # tr.23
+        patterns: ["re:(?<![\\p{L}\\p{M}\\p{N}])phần\\s+nguyên(?!\\s+(vẹn|liệu))(?![\\p{L}\\p{M}\\p{N}])"]
+      - term: "Phần phân số"   # tr.23
+        patterns: ["phần phân số"]
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Viết gọn một số tự nhiên và một phân số bé hơn 1 thành hỗn số"   # tr.23
+      - "Hỗn số có phần nguyên là số tự nhiên và phần phân số bé hơn 1"   # tr.23
+      - "Đọc hỗn số: đọc phần nguyên, rồi chữ 'và', rồi phần phân số"   # tr.23
+      - "Viết hỗn số từ hình: số hình tô kín là phần nguyên, phần tô của hình chưa kín là phần phân số"   # tr.24
+      - "Tách hỗn số thành tổng phần nguyên cộng phần phân số"   # tr.24
+      - "Đặt hỗn số lên tia số giữa hai số tự nhiên liên tiếp, đoạn giữa chia 10 phần"   # tr.24
+      - "Chuyển hỗn số thành phân số thập phân: viết thành tổng phần nguyên với phần phân số rồi gộp thành một phân số"   # tr.25
+      - "Chuyển phân số thập phân lớn hơn 1 thành hỗn số: tách tử số thành tổng một số chia hết cho mẫu với phần còn lại, tách thành tổng hai phân số, đổi phân số đầu thành số tự nhiên rồi viết gọn"   # tr.25
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "23-25", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B8
     seq: 8
@@ -110,8 +136,8 @@ lessons:
     lesson_no: 8
     title: "Ôn tập hình học và đo lường"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (ôn tập, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "26-28", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B9
     seq: 9
@@ -120,8 +146,9 @@ lessons:
     lesson_no: 9
     title: "Luyện tập chung"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (luyện tập chung)
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Trình bày bài toán có lời văn theo khung 'Bài giải': mỗi bước một câu lời giải kèm phép tính và đơn vị trong ngoặc, kết thúc bằng 'Đáp số'"   # tr.29
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "29-31", imported_at: 2026-10-20 }
   # --- Chủ đề 2: SỐ THẬP PHÂN
   - lesson_id: MATH5.T1.B10
@@ -131,8 +158,28 @@ lessons:
     lesson_no: 10
     title: "Khái niệm số thập phân"
     skill_ids: [MATH.DECIMAL.CONCEPT]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms:   # đã đọc SGK 2026-10-20
+      - term: "Số thập phân"   # tr.32
+        # Không khớp bên trong "phân số thập phân" (thuật ngữ Bài 4).
+        patterns: ['re:(?<!phân\s)(?<![\p{L}\p{M}\p{N}])số\s+thập\s+phân(?![\p{L}\p{M}\p{N}])']
+      - term: "Phần thập phân"   # tr.33
+        patterns: ["phần thập phân"]
+      - term: "Hàng phần mười"   # tr.35
+        patterns: ["hàng phần mười"]
+      - term: "Hàng phần trăm"   # tr.35
+        patterns: ["hàng phần trăm"]
+      - term: "Hàng phần nghìn"   # tr.35
+        patterns: ["hàng phần nghìn"]
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Đổi số đo từ đơn vị nhỏ sang đơn vị lớn: viết thành phân số thập phân (hoặc hỗn số) của đơn vị lớn, rồi viết thành số thập phân"   # tr.32
+      - "Số thập phân có phần nguyên và phần thập phân, ngăn nhau bởi dấu phẩy: chữ số bên trái dấu phẩy thuộc phần nguyên, bên phải thuộc phần thập phân"   # tr.33
+      - "Trên tia số, đoạn từ 0 đến 1 chia 10 phần bằng nhau, các vạch 1/10, 2/10, ..., 9/10 ứng với 0,1; 0,2; ...; 0,9"   # tr.33
+      - "Đọc số thập phân: đọc phần nguyên, đọc 'phẩy', rồi đọc phần thập phân như đọc số tự nhiên; chữ số 0 đứng đầu phần thập phân đọc là 'không'"   # tr.33
+      - "Đổi đơn vị đo sang đơn vị lớn gấp 1 000 lần qua phân số thập phân có mẫu 1 000"   # tr.34
+      - "Đổi số thập phân về đơn vị nhỏ: viết thành hỗn số, tách thành hai đơn vị, rồi gộp về đơn vị nhỏ"   # tr.34
+      - "Viết số thập phân theo các hàng: các chữ số phần thập phân lần lượt chỉ số phần mười, phần trăm, phần nghìn"   # tr.35
+      - "Viết số thập phân: viết phần nguyên, viết dấu phẩy, rồi viết phần thập phân"   # tr.35
+      - "Chuyển phân số thập phân thành số thập phân: viết thành hỗn số, rồi viết phần nguyên trước dấu phẩy và tử số của phân số sau dấu phẩy"   # tr.36
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "32-37", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B11
     seq: 11
@@ -141,8 +188,11 @@ lessons:
     lesson_no: 11
     title: "So sánh các số thập phân"
     skill_ids: [MATH.DECIMAL.COMPARE]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Khám phá: đổi hai số đo về cùng một đơn vị nhỏ hơn để được số tự nhiên rồi so sánh"   # tr.38
+      - "So sánh hai số thập phân: so sánh phần nguyên trước; nếu bằng nhau thì so sánh lần lượt chữ số hàng phần mười, phần trăm, phần nghìn...; hàng đầu tiên khác nhau, số có chữ số lớn hơn thì lớn hơn; phần nguyên và phần thập phân đều bằng nhau thì hai số bằng nhau"   # tr.39
+      - "Viết thêm hoặc bỏ chữ số 0 ở tận cùng bên phải phần thập phân thì được số thập phân bằng nó"   # tr.40
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "38-41", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B12
     seq: 12
@@ -151,8 +201,12 @@ lessons:
     lesson_no: 12
     title: "Viết số đo đại lượng dưới dạng số thập phân"
     skill_ids: [MATH.DECIMAL.MEASURE_NOTATION]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Số đo có hai đơn vị độ dài hoặc khối lượng: viết phần đơn vị nhỏ thành phân số thập phân của đơn vị lớn, ghép thành hỗn số, rồi viết số thập phân"   # tr.42
+      - "Sau khi đổi, bỏ chữ số 0 ở tận cùng phần thập phân để viết gọn"   # tr.42
+      - "Số đo chỉ có đơn vị nhỏ: viết thành phân số thập phân của đơn vị lớn, rồi viết số thập phân"   # tr.43
+      - "Số đo diện tích: viết phần đơn vị nhỏ thành phân số thập phân mẫu 100 của đơn vị lớn liền trên, rồi viết số thập phân"   # tr.44
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "42-46", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B13
     seq: 13
@@ -161,8 +215,15 @@ lessons:
     lesson_no: 13
     title: "Làm tròn số thập phân"
     skill_ids: [MATH.DECIMAL.ROUND]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms:   # đã đọc SGK 2026-10-20
+      - term: "Làm tròn xuống"   # tr.47
+        patterns: ["làm tròn xuống"]
+      - term: "Làm tròn lên"   # tr.47
+        patterns: ["làm tròn lên"]
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Làm tròn số thập phân đến số tự nhiên gần nhất: xét chữ số hàng phần mười; bé hơn 5 thì làm tròn xuống (giữ phần nguyên), bằng hoặc lớn hơn 5 thì làm tròn lên (phần nguyên thêm 1)"   # tr.47
+      - "Làm tròn đến hàng phần mười: xét chữ số hàng phần trăm; bé hơn 5 thì làm tròn xuống, còn lại làm tròn lên"   # tr.49
+      - "Làm tròn đến hàng phần trăm: xét chữ số hàng phần nghìn; bé hơn 5 thì làm tròn xuống, còn lại làm tròn lên"   # tr.49
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "47-50", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B14
     seq: 14
@@ -171,8 +232,8 @@ lessons:
     lesson_no: 14
     title: "Luyện tập chung"
     skill_ids: [MATH.DECIMAL.CONCEPT, MATH.DECIMAL.COMPARE, MATH.DECIMAL.MEASURE_NOTATION, MATH.DECIMAL.ROUND]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (luyện tập chung, không có khung kiến thức hay cách giải mới)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "51-52", imported_at: 2026-10-20 }
   # --- Chủ đề 3: MỘT SỐ ĐƠN VỊ ĐO DIỆN TÍCH
   - lesson_id: MATH5.T1.B15
@@ -182,8 +243,18 @@ lessons:
     lesson_no: 15
     title: "Ki-lô-mét vuông. Héc-ta"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms:   # đã đọc SGK 2026-10-20
+      - term: "Ki-lô-mét vuông"   # tr.53
+        patterns: ["ki-lô-mét vuông", "ki lô mét vuông", "kilômét vuông", "kilomet vuông", "km²", "km2", "km^2"]
+      - term: "Héc-ta"   # tr.54
+        patterns: ["héc-ta", "héc ta", "hécta", "hec-ta", "hecta", "re:(?<=\\d)\\s*ha(?![\\p{L}\\p{M}\\p{N}])"]
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Một ki-lô-mét vuông là diện tích hình vuông cạnh 1 km; dùng km² đo những vùng rộng (thành phố, khu rừng, vùng biển)"   # tr.53
+      - "Đổi giữa km² và m² theo 1 km² = 1 000 000 m²: km² sang m² nhân 1 000 000, m² sang km² chia 1 000 000"   # tr.53
+      - "Đọc, viết số đo diện tích có đơn vị km², kể cả số đo là số thập phân"   # tr.53
+      - "Một héc-ta là diện tích hình vuông cạnh 100 m, viết tắt ha; dùng đo đất nông nghiệp, lâm nghiệp"   # tr.54
+      - "Đổi giữa ha và m² theo 1 ha = 10 000 m²"   # tr.54
+      - "Đổi giữa km² và ha theo 1 km² = 100 ha"   # tr.54
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "53-55", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B16
     seq: 16
@@ -192,8 +263,11 @@ lessons:
     lesson_no: 16
     title: "Các đơn vị đo diện tích"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Xếp các đơn vị diện tích theo thứ tự km², ha, m², dm², cm², mm² (m² ở giữa; bên trái lớn hơn, bên phải bé hơn m²)"   # tr.56
+      - "Hai đơn vị diện tích liền nhau trong bảng hơn kém nhau 100 lần: 1 đơn vị lớn = 100 đơn vị bé liền sau; 1 đơn vị bé = 1/100 đơn vị lớn liền trước"   # tr.56
+      - "Quan hệ cách một bậc lấy từ bảng: 1 ha = 10 000 m², 1 m² = 1/10 000 ha"   # tr.56
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "56-59", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B17
     seq: 17
@@ -202,8 +276,8 @@ lessons:
     lesson_no: 17
     title: "Thực hành và trải nghiệm với một số đơn vị đo đại lượng"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (chỉ có bài thực hành, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "60-61", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B18
     seq: 18
@@ -212,8 +286,8 @@ lessons:
     lesson_no: 18
     title: "Luyện tập chung"
     skill_ids: []
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới (luyện tập chung, không có khung kiến thức hay ví dụ mẫu)
+    methods: []            # đã đọc SGK 2026-10-20: không có khung kiến thức hay ví dụ mẫu
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "62-64", imported_at: 2026-10-20 }
   # --- Chủ đề 4: CÁC PHÉP TÍNH VỚI SỐ THẬP PHÂN
   - lesson_id: MATH5.T1.B19
@@ -223,8 +297,13 @@ lessons:
     lesson_no: 19
     title: "Phép cộng số thập phân"
     skill_ids: [MATH.DECIMAL.ADD]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Khám phá: đổi hai số đo thập phân ra đơn vị nhỏ hơn thành số tự nhiên, cộng rồi đổi kết quả về đơn vị ban đầu"   # tr.65
+      - "Đặt tính cộng hai số thập phân: chữ số cùng hàng thẳng cột, dấu phẩy thẳng cột; cộng như cộng số tự nhiên; dấu phẩy ở tổng thẳng cột với dấu phẩy của các số hạng"   # tr.65
+      - "Hai số hạng có số chữ số phần thập phân khác nhau: vẫn xếp thẳng theo dấu phẩy và theo hàng, cột thiếu để trống rồi cộng như số tự nhiên"   # tr.66
+      - "Cộng số thập phân với số tự nhiên bằng đặt tính, chữ số cùng hàng thẳng cột (bài tập)"   # tr.67
+      - "Đổi chỗ hai số hạng thì tổng không đổi; nhóm số hạng theo cách khác thì tổng không đổi, dùng để tính thuận tiện bằng cách ghép các số có tổng tròn (bài tập, sách không gọi tên tính chất)"   # tr.67
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "65-67", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B20
     seq: 20
@@ -233,8 +312,13 @@ lessons:
     lesson_no: 20
     title: "Phép trừ số thập phân"
     skill_ids: [MATH.DECIMAL.SUBTRACT]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Khám phá: đổi hai số đo ra đơn vị nhỏ hơn thành số tự nhiên, trừ rồi đổi hiệu về đơn vị ban đầu"   # tr.68
+      - "Đặt tính trừ hai số thập phân: số trừ dưới số bị trừ, chữ số cùng hàng thẳng cột, dấu phẩy thẳng cột; trừ như trừ số tự nhiên; dấu phẩy ở hiệu thẳng cột với dấu phẩy của số bị trừ và số trừ"   # tr.68
+      - "Số trừ có ít chữ số phần thập phân hơn: xếp theo dấu phẩy và theo hàng rồi trừ như số tự nhiên"   # tr.69
+      - "Số bị trừ có ít chữ số phần thập phân hơn số trừ hoặc là số tự nhiên: đặt tính chữ số cùng hàng thẳng cột (bài tập, sách không có ví dụ mẫu)"   # tr.70
+      - "Tìm số hạng chưa biết bằng phép trừ, tìm số bị trừ chưa biết bằng phép cộng (bài tập)"   # tr.70
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "68-70", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B21
     seq: 21
@@ -243,8 +327,14 @@ lessons:
     lesson_no: 21
     title: "Phép nhân số thập phân"
     skill_ids: [MATH.DECIMAL.MULTIPLY]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Khám phá nhân số thập phân với số tự nhiên: đổi số đo ra đơn vị nhỏ hơn thành số tự nhiên, nhân rồi đổi tích về đơn vị ban đầu"   # tr.71
+      - "Nhân số thập phân với số tự nhiên: nhân như hai số tự nhiên; đếm số chữ số phần thập phân của số thập phân rồi dùng dấu phẩy tách ở tích bấy nhiêu chữ số kể từ phải sang trái"   # tr.72
+      - "Khám phá nhân hai số thập phân: đổi cả hai số đo ra đơn vị nhỏ hơn, nhân hai số tự nhiên rồi đổi tích về đơn vị ban đầu"   # tr.73
+      - "Nhân hai số thập phân: nhân như hai số tự nhiên; đếm tổng số chữ số phần thập phân của cả hai thừa số rồi dùng dấu phẩy tách ở tích bấy nhiêu chữ số kể từ phải sang trái"   # tr.74
+      - "Suy ra tích các số thập phân từ một tích số tự nhiên đã biết bằng cách đếm chữ số phần thập phân (bài tập)"   # tr.74
+      - "Đổi chỗ hai thừa số thì tích không đổi; nhóm thừa số khác đi thì tích không đổi, dùng để tính thuận tiện bằng cách ghép cặp có tích tròn (bài tập, sách không gọi tên tính chất)"   # tr.75
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "71-75", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B22
     seq: 22
@@ -253,8 +343,18 @@ lessons:
     lesson_no: 22
     title: "Phép chia số thập phân"
     skill_ids: [MATH.DECIMAL.DIVIDE]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Khám phá chia số thập phân cho số tự nhiên: đổi số đo ra đơn vị nhỏ hơn, chia hai số tự nhiên rồi đổi thương về đơn vị ban đầu"   # tr.76
+      - "Chia số thập phân cho số tự nhiên bằng phép chia dọc: chia phần nguyên trước; trước khi hạ chữ số đầu tiên của phần thập phân thì viết dấu phẩy vào bên phải thương; chia tiếp từng chữ số phần thập phân"   # tr.76
+      - "Phần nguyên nhỏ hơn số chia hoặc có lượt chia không đủ: vẫn chia theo từng bước, lượt nào không đủ thì viết 0 ở thương"   # tr.77
+      - "Suy ra thương của số thập phân từ một phép chia số tự nhiên đã biết (bài tập)"   # tr.77
+      - "Chia số tự nhiên cho số tự nhiên còn dư (thương là số thập phân): viết dấu phẩy vào bên phải thương, viết thêm chữ số 0 vào bên phải số dư rồi chia tiếp; còn dư thì lặp lại"   # tr.78
+      - "Số bị chia bé hơn số chia: viết số bị chia thành số thập phân (thêm ,0) rồi chia như chia số thập phân cho số tự nhiên, thương bắt đầu bằng 0"   # tr.79
+      - "Nhân cả số bị chia và số chia với cùng một số khác 0 thì thương không đổi"   # tr.80
+      - "Chia số tự nhiên cho số thập phân: đếm số chữ số phần thập phân của số chia, viết thêm bấy nhiêu chữ số 0 vào bên phải số bị chia; bỏ dấu phẩy ở số chia rồi chia như chia số tự nhiên"   # tr.81
+      - "Chia số thập phân cho số thập phân: đếm số chữ số phần thập phân của số chia, chuyển dấu phẩy ở số bị chia sang phải bấy nhiêu chữ số; bỏ dấu phẩy ở số chia rồi chia như chia cho số tự nhiên"   # tr.81
+      - "Số bị chia có ít chữ số phần thập phân hơn số chia: viết thêm chữ số 0 vào bên phải số bị chia cho đủ rồi mới chuyển dấu phẩy"   # tr.82
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "76-82", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B23
     seq: 23
@@ -263,8 +363,14 @@ lessons:
     lesson_no: 23
     title: "Nhân, chia số thập phân với 10; 100; 1 000;... hoặc với 0,1; 0,01; 0,001;..."
     skill_ids: [MATH.DECIMAL.SCALE_POWERS_OF_TEN]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Nhân số thập phân với 10; 100; 1 000;...: chuyển dấu phẩy sang phải lần lượt một; hai; ba;... chữ số"   # tr.83
+      - "Nhân số thập phân với 0,1; 0,01; 0,001;...: chuyển dấu phẩy sang trái lần lượt một; hai; ba;... chữ số"   # tr.84
+      - "Dùng nhân với 10; 100; 1 000 để đổi đơn vị đo từ lớn ra nhỏ (bài tập)"   # tr.84
+      - "Chia số thập phân cho 10; 100; 1 000;...: chuyển dấu phẩy sang trái lần lượt một; hai; ba;... chữ số"   # tr.86
+      - "Chia số thập phân cho 0,1; 0,01; 0,001;...: chuyển dấu phẩy sang phải lần lượt một; hai; ba;... chữ số, thiếu chữ số thì viết thêm 0"   # tr.86
+      - "Dùng chia cho 10; 100; 1 000 để đổi đơn vị đo từ nhỏ ra lớn, áp dụng cả cho số tự nhiên (bài tập)"   # tr.87
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "83-87", imported_at: 2026-10-20 }
   - lesson_id: MATH5.T1.B24
     seq: 24
@@ -273,8 +379,11 @@ lessons:
     lesson_no: 24
     title: "Luyện tập chung"
     skill_ids: [MATH.DECIMAL.ADD, MATH.DECIMAL.SUBTRACT, MATH.DECIMAL.MULTIPLY, MATH.DECIMAL.DIVIDE, MATH.DECIMAL.SCALE_POWERS_OF_TEN]
-    introduces_terms: []   # TODO: chưa đọc bài
-    methods: []            # TODO: chưa đọc bài
+    introduces_terms: []   # đã đọc SGK 2026-10-20: không có thuật ngữ mới
+    methods:   # đã đọc SGK 2026-10-20; diễn đạt lại, không chép nguyên văn
+      - "Một số nhân với một tổng bằng tổng các tích, dùng để tính thuận tiện (bài tập, sách không gọi tên tính chất)"   # tr.88
+      - "Tính giá trị biểu thức có số thập phân: trong ngoặc trước, nhân chia trước, cộng trừ sau (bài tập)"   # tr.89
+      - "Tìm số bị chia chưa biết bằng phép nhân; tìm trung bình cộng của các số đo thập phân bằng tổng chia cho số các số (bài tập)"   # tr.90
     source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-toan-5-tap-mot.4699756373", pages: "88-90", imported_at: 2026-10-20 }
   # --- Chủ đề 5: MỘT SỐ HÌNH PHẲNG. CHU VI VÀ DIỆN TÍCH
   - lesson_id: MATH5.T1.B25
