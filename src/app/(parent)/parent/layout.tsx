@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { requireParentActor, UnauthenticatedError } from '@/server/auth/session';
@@ -19,7 +20,14 @@ export default async function ParentLayout({ children }: { children: ReactNode }
           <strong>Cú · Phụ huynh</strong>
         </a>
         <nav>
-          <a href="/parent/progress">Tiến độ trên lớp</a>
+          <Link href="/parent">Tổng quan</Link>
+          <Link href="/parent/sessions">Phiên</Link>
+          <Link href="/parent/flags">Cờ</Link>
+          <Link href="/parent/progress">Tiến độ trên lớp</Link>
+          <Link href="/parent/review">Duyệt</Link>
+          <Link href="/parent/independent">Dữ liệu độc lập</Link>
+          <Link href="/parent/settings">Cấu hình</Link>
+          <Link href="/parent/data">Dữ liệu</Link>
         </nav>
       </header>
       <main className="parent-main">{children}</main>
