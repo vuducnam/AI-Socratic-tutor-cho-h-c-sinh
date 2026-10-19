@@ -106,3 +106,11 @@ export async function revokeAllSessions(kind: SessionKind, subjectId: string): P
   await redis().del(indexKey(kind, subjectId));
   return ids.length;
 }
+
+/** Thu hồi mọi phiên khác của một người dùng, giữ phiên đang thao tác (ví dụ sau khi tự đổi mật khẩu). */
+export async function revokeOtherSessions(kind: SessionKind, subjectId: string, keepId: string): Promise<number> {
+  const ids = (await redis().smembers(indexKey(kind, subjectId))).filter((id) => id !== keepId);
+  if (!ids.length) return 0;
+  await redis().multi().del(...ids.map(sessionKey)).srem(indexKey(kind, subjectId), ...ids).exec();
+  return ids.length;
+}

@@ -6,7 +6,7 @@ import { setOwnTotpSecret } from '@/server/dal/users-dal';
 import { mintActor } from '@/server/dal/mint-actor';
 import { loginAccount } from './account-login';
 import { encryptTotpSecret, newTotpSecret } from './totp';
-import { createSession, revokeAllSessions, loadSession } from './session-store';
+import { createSession, revokeAllSessions, revokeOtherSessions, loadSession } from './session-store';
 
 let ipSeq = 0;
 const login = (role: 'parent' | 'admin', email: string, password: string, totpCode: string | null = null) =>
@@ -65,5 +65,16 @@ describe('đăng nhập phụ huynh/admin', () => {
     expect(await revokeAllSessions('parent', 'user-x')).toBe(2);
     expect(await loadSession('parent', a.id)).toBeNull();
     expect(await loadSession('parent', b.id)).toBeNull();
+  });
+
+  it('thu hồi các phiên khác, giữ phiên đang dùng', async () => {
+    const keep = await createSession('parent', 'user-y');
+    const other = await createSession('parent', 'user-y');
+    const unrelated = await createSession('parent', 'user-z');
+    expect(await revokeOtherSessions('parent', 'user-y', keep.id)).toBe(1);
+    expect(await loadSession('parent', keep.id)).not.toBeNull();
+    expect(await loadSession('parent', other.id)).toBeNull();
+    expect(await loadSession('parent', unrelated.id)).not.toBeNull();
+    expect(await revokeOtherSessions('parent', 'user-y', keep.id)).toBe(0);
   });
 });

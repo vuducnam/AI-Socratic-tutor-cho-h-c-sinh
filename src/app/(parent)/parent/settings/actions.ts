@@ -4,7 +4,8 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { hashSecret, passwordProblem, verifySecret } from '@/server/auth/password';
 import { hitRateLimit } from '@/server/auth/rate-limit';
-import { requireParentActor } from '@/server/auth/session';
+import { currentAppSession, requireParentActor } from '@/server/auth/session';
+import { revokeOtherSessions } from '@/server/auth/session-store';
 import { encryptTotpSecret, verifyTotpCode } from '@/server/auth/totp';
 import { updateStudentPreferences } from '@/server/dal/parent-settings-dal';
 import { changeOwnPassword, getOwnAccount, setOwnTotpSecret } from '@/server/dal/users-dal';
@@ -70,7 +71,10 @@ export async function changePasswordAction(form: FormData) {
   if (problem) back({ err: problem });
   if (!(await currentPasswordMatches(actor, form.get('currentPassword')))) back({ err: 'Mật khẩu hiện tại không đúng' });
   await changeOwnPassword(actor, { passwordHash: await hashSecret(newPassword) });
-  back({ ok: 'Đã đổi mật khẩu' });
+  // Mật khẩu cũ có thể đã lộ: đăng xuất mọi thiết bị khác, giữ phiên đang đổi mật khẩu.
+  const current = await currentAppSession();
+  if (current) await revokeOtherSessions('parent', actor.id, current.id);
+  back({ ok: 'Đã đổi mật khẩu, các thiết bị khác đã bị đăng xuất' });
 }
 
 const enableTotpForm = z.object({
