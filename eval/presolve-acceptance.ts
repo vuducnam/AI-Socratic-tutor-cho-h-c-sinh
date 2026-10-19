@@ -7,6 +7,7 @@ import { presolveProblem } from '@/server/domain/presolve/presolve';
 import { openLearningSession } from '@/server/domain/session/open-session';
 import { evalSpent } from '@/server/llm/llm-gateway';
 import { systemActor } from '../worker/actor';
+import { presolveAnswerMatches } from './acceptance-answer-match';
 import { loadAcceptanceProblems } from './load-acceptance-problems';
 
 // Nghiệm thu Pre-solver (SPEC §15.8) với LLM thật, hồ sơ giả, DB cu_eval:
@@ -66,7 +67,7 @@ async function main() {
     const ok =
       'ok' in r &&
       r.ok &&
-      JSON.stringify([r.plan.final_answer.canonical].flat()) === JSON.stringify(p.answer.machine) &&
+      presolveAnswerMatches(r.plan.final_answer, p.answer) &&
       r.plan.skill_ids.every((s) => r.scope.allowedSkillIds.includes(s));
     if (ok) pass += 1;
     results.push({ id: p.id, ok, detail: 'ok' in r ? (r.ok ? { attempts: r.attempts, answer: r.plan.final_answer } : r) : r });
