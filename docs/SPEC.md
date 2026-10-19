@@ -59,7 +59,7 @@ Toàn bộ chạy trên PC tại nhà (mục 14b). Ra ngoài chỉ có: Claude A
 - Thứ tự: Claude API trực tiếp → nếu lỗi credit/hết quota/5xx sau 2 retry → Claude cùng model qua OpenRouter → nếu vẫn lỗi → báo lỗi thân thiện cho con ("Cú đang mệt, con thử lại sau nhé") và cờ cho phụ huynh.
 - Ghi `llm_calls` (request đầy đủ, response thô, provider thực tế, tokens, cost, latency) **trước khi** trả kết quả cho service gọi.
 - Prompt caching: bật cho system prompt + solution plan (phần ổn định trong một bài).
-- Việc offline (eval, nháp misconception, báo cáo tuần) dùng Message Batches API.
+- Việc offline không tương tác (nháp misconception, báo cáo tuần) dùng Message Batches API. Eval hội thoại nhiều lượt gọi **API đồng bộ** với API key và trần chi phí riêng, không bao giờ fallback OpenRouter (mục 12).
 
 ### 2.2 Tài khoản, phân quyền, xác thực (quy tắc cứng 11 và 14)
 
@@ -77,7 +77,7 @@ Luồng tạo tài khoản (không có link mời, không có bước kích ho�
 2. Admin giao email + mật khẩu cho phụ huynh trực tiếp. Phụ huynh đổi mật khẩu được trong phần cấu hình (khuyến nghị, không bắt buộc).
 3. Với học sinh ngoài gia đình: admin ghi nhận xác nhận đồng ý của phụ huynh vào `consents` **trước khi** hồ sơ học sinh dùng được (mục 2.3).
 4. Học sinh đăng nhập ở `/login` bằng **tên đăng nhập** (admin đặt, không trùng tên gọi) + **PIN 6 số**, trên bất kỳ thiết bị nào. Form đăng nhập (học sinh và phụ huynh) có **Cloudflare Turnstile**; server xác minh token trước khi kiểm tra PIN/mật khẩu (mục 14b).
-5. Chống dò PIN: sai 5 lần → khoá 15 phút; sai 10 lần liên tiếp → khoá cho tới khi phụ huynh mở khoá; mỗi lần khoá đều báo phụ huynh.
+5. Chống dò PIN: sai 5 lần → khoá 15 phút; sai 10 lần liên tiếp → khoá cho tới khi phụ huynh mở khoá; mỗi lần khoá đều báo phụ huynh. Lần sai từ thiết bị đã từng đăng nhập đúng (cookie thiết bị tin cậy) và từ thiết bị lạ đếm ở hai bộ đếm riêng, mỗi bộ áp đủ luật trên, để người lạ biết tên đăng nhập không khoá được tablet của con.
 
 Bảo mật phiên: cookie `Secure`, `HttpOnly`, `SameSite=Strict`; phiên phụ huynh hết hạn sau 12 giờ không hoạt động; rate limit cho đăng nhập và PIN; mật khẩu băm argon2id; TOTP tuỳ chọn cho admin/phụ huynh (khuyến nghị bật, vì app mở công khai và không có lớp xác thực ở biên). Rate limit theo cả IP và tài khoản; ghi `access_log` mọi lần đăng nhập thất bại.
 
@@ -111,6 +111,7 @@ students(id uuid pk, username text unique, display_name text, gender text check 
          pin_hash text, pin_failed_count int, pin_locked_until timestamptz null,
          created_by uuid fk users,
          grade int, preset text, address jsonb, companion jsonb,
+         is_family boolean not null,          -- admin chọn khi tạo; false thì cần consents (mục 2.3)
          interests_declared text[], learning_prefs jsonb, created_at, updated_at)
 parent_student(parent_id, student_id, pk(parent_id, student_id))
 
@@ -120,7 +121,7 @@ skills(skill_id text pk, subject text, grade_introduced int, name text,
        source jsonb not null check (source ? 'official_url' and source ? 'lesson'),
        created_at)
 misconceptions(id text pk, skill_id text fk, description text, probe text,
-               approved_by uuid fk parents, approved_at timestamptz)  -- chưa duyệt thì không dùng
+               approved_by uuid fk users, approved_at timestamptz)  -- chưa duyệt thì không dùng
 allowed_sources(id serial pk, name text, official_url text, approved_by, approved_at)
 curriculum_lessons(lesson_id text pk, subject text, grade int, seq int, book text, topic text,
                    lesson_no int, title text, skill_ids text[], introduces_terms jsonb,
@@ -132,6 +133,7 @@ beyond_scope_terms(id serial pk, subject text, for_grade int, term text, pattern
 -- Tiến độ trên lớp (dữ liệu học sinh, có trong TransparencyRegistry)
 school_progress(student_id fk, subject text, frontier_lesson_id text fk curriculum_lessons,
                 preview_lesson_ids text[] not null default '{}',
+                stale_reminder_enabled bool not null default true,   -- tắt nhắc cập nhật trong hè
                 set_by uuid fk users, set_at, pk(student_id, subject))
                 -- lớp học đúng thứ tự SGK: đã học = mọi bài có seq ≤ seq của frontier
 school_progress_events [AO] (id uuid pk, student_id fk, subject text,
@@ -160,12 +162,15 @@ turns [AO] (id uuid pk, session_id fk, seq int, role text check (role in ('stude
             question_type text,
             turn_kind text check (turn_kind in ('normal','hook','transfer_question','transfer_answer')),
             created_at, unique(session_id, seq))
-llm_calls [AO] (id uuid pk, session_id fk null, turn_id fk null, purpose text,
+llm_calls [AO] (id uuid pk, student_id fk null, session_id fk null,
+                turn_id fk null deferrable initially deferred, purpose text,
+                -- student_id bắt buộc khi purpose liên quan học sinh (check theo purpose)
                 provider text, model text, prompt_version text,
                 request jsonb, response jsonb, input_tokens int, output_tokens int,
                 cost_usd numeric, latency_ms int, error text, created_at)
-guard_verdicts [AO] (id uuid pk, llm_call_id fk, tutor_llm_call_id fk, verdict text,
-                     reasons text[], created_at)
+guard_verdicts [AO] (id uuid pk, session_id fk, checker text check (checker in ('code','llm')),
+                     llm_call_id fk null,          -- bắt buộc khi checker = 'llm'
+                     tutor_llm_call_id fk, verdict text, reasons text[], created_at)
 
 -- Learner model
 mastery(student_id, skill_id, p_mastery numeric, updated_at, pk(student_id, skill_id))
@@ -186,14 +191,14 @@ label_corrections [AO] (id, student_id, target_table text, target_id text,
 independent_results(id uuid pk, student_id, type text check
                     (type in ('class_test','paper_quiz','teacher_note')),
                     skill_ids text[], score numeric null, max_score numeric null,
-                    note text, taken_on date, entered_by uuid fk parents, created_at)
+                    note text, taken_on date, entered_by uuid fk users, created_at)
 topic_arms(student_id, skill_id, arm text check (arm in ('with_cu','without_cu')),
            assigned_at, pk(student_id, skill_id))
 reports(id uuid pk, student_id, type text check (type in ('session','weekly','eight_week')),
         period_start, period_end, metrics jsonb, narrative jsonb, llm_call_id fk, created_at)
 decisions(id uuid pk, student_id, report_id fk, decision text check
           (decision in ('continue','adjust','stop')), reason text not null,
-          decided_by fk parents, created_at)
+          decided_by fk users, created_at)
 
 -- Học từ đời sống
 life_contexts(id text pk, skill_id text fk, theme text check (theme in
@@ -201,7 +206,7 @@ life_contexts(id text pk, skill_id text fk, theme text check (theme in
               template jsonb not null,  -- {setup, real_question, variables:{name:{min,max,step,unit}}, svg_kind}
               min_grade int, max_grade int,
               safety jsonb not null,    -- {adult_required bool, notes text}
-              approved_by uuid fk parents null, approved_at timestamptz, created_at)
+              approved_by uuid fk users null, approved_at timestamptz, created_at)
               -- chưa duyệt thì không dùng, giống misconceptions
 missions(id uuid pk, student_id fk, life_context_id fk, skill_ids text[], instructions text,
          adult_required bool, status text check (status in ('assigned','done','skipped')),
@@ -212,14 +217,21 @@ session_feedback(id uuid pk, session_id fk, student_id fk,
                  rating text check (rating in ('fun','ok','boring')), created_at)
 
 -- Minh bạch
-access_log [AO] (id bigserial pk, actor_type text, actor_id uuid, student_id uuid,
-                 action text, resource text, created_at)
-prompt_versions(id text pk, name text, content text, created_at)  -- không sửa, chỉ thêm version mới
+access_log [AO] (id bigserial pk, actor_type text, actor_id uuid,
+                 student_id uuid,               -- không FK: dòng log purge còn lại sau khi xoá học sinh
+                 action text, resource text, ip inet, user_agent text, created_at)
+system_alerts(id uuid pk, type text, severity text, detail jsonb, created_at,
+              acknowledged_by uuid fk users null)   -- credit 80%, gateway lỗi, thư viện tình huống cạn; không phải dữ liệu học sinh
+purge_requests(id uuid pk, student_id uuid, requested_by uuid fk users, reason text, created_at)
+pending_file_deletions(id uuid pk, uri text, attempts int, created_at)   -- không link học sinh
+prompt_versions(id text pk, name text, content text, content_hash text, created_at)  -- không sửa, chỉ thêm version mới; hash đổi dưới id cũ → loader lỗi
 ```
 
 ### 3.1 Append-only
 
-Migration SQL tạo function `forbid_mutation()` và trigger `BEFORE UPDATE OR DELETE` trên các bảng [AO]. `purge_student(student_id)` là function `SECURITY DEFINER`, tạm tắt trigger trong transaction, xoá toàn bộ dữ liệu học sinh ở mọi bảng, xoá file ảnh, ghi một dòng `access_log` cuối cùng không chứa nội dung.
+Migration SQL tạo function `forbid_mutation()` và trigger `BEFORE UPDATE OR DELETE` và `BEFORE TRUNCATE` trên các bảng [AO]. `purge_student(purge_request_id)` là function `SECURITY DEFINER` (`search_path` cố định), chỉ chạy khi có `purge_requests` do phụ huynh đã xác thực tạo; trong một transaction: gom URI file vào `pending_file_deletions`, tạm tắt trigger, xoá toàn bộ dữ liệu học sinh ở mọi bảng có `student_id`, ghi một dòng `access_log` cuối cùng không chứa nội dung. Worker xoá file trong `pending_file_deletions` có retry.
+
+Tài khoản DB: `cu_owner` (migration, sở hữu bảng và `purge_student`) và `cu_app` (app, worker; chỉ `SELECT, INSERT` trên bảng [AO]). Role tạo bằng script khởi tạo Postgres, không nằm trong migration.
 
 ### 3.2 TransparencyRegistry
 
@@ -239,7 +251,7 @@ Test bắt buộc (`src/server/transparency/registry.test.ts`, vitest): đọc t
 ### 3.3 Data access layer (`src/server/dal`)
 
 - Prisma client chỉ được khởi tạo và import trong `src/server/dal/**` (ESLint `no-restricted-imports` + test quét import).
-- Mỗi hàm DAL nhận `actor` (`{type: 'parent' | 'student' | 'system', id}`) và tự ghi `access_log` khi đọc dữ liệu học sinh từ phía phụ huynh hoặc export.
+- Mỗi hàm DAL nhận `actor` (`{type: 'admin' | 'parent' | 'student' | 'system', id, reason?}`; kiểu branded, chỉ tạo từ phiên đã xác thực hoặc trong worker/seed) và tự ghi `access_log` khi đọc dữ liệu học sinh từ phía phụ huynh, admin, `system` hoặc export. Admin đọc học sinh không liên kết bắt buộc có `reason`.
 - Hàm DAL cho học sinh luôn lọc theo `student_id` của session; không có hàm "đọc mọi học sinh" ngoài `system` (worker).
 - Server Components / Server Actions của `/parent` chỉ gọi DAL; mọi trang dữ liệu đặt `export const dynamic = 'force-dynamic'`.
 - Ghi vào bảng [AO] chỉ qua hàm `append*` trong DAL; DAL không có hàm update/delete cho các bảng này.
@@ -808,7 +820,7 @@ Mỗi task là một PR, có test, không vi phạm quy tắc cứng.
 6. **vi-math-normalizer** — `toCanonical`, `toSpoken`, `toMachine` + ≥ 200 test case.
 7. **math-verifier** — FastAPI `POST /verify` nhận biểu thức + đáp án kỳ vọng, trả `{ok, computed, detail}`.
 8. **Pre-solver** — prompt `presolve/v1`, verify, retry, cờ khi không verify được.
-   *Nghiệm thu*: 30 bài số thập phân, 100% plan dùng được đều `verified = true` và có `skill_ids` nằm trong phạm vi; đặt tiến độ chưa tới bài của đề → plan bị từ chối và có cờ `out_of_scope_problem`.
+   *Nghiệm thu*: 30 bài số thập phân, 100% plan dùng được đều `verified = true` và có `skill_ids` nằm trong phạm vi; đặt tiến độ chưa tới bài của đề: bài `origin = 'homework'` cùng lớp vẫn được dạy với `scope_extension` và tạo `progress_suggestions` (mục 5c.5); bài `origin = 'generated'` ngoài phạm vi và bài lớp trên bị từ chối, có cờ `out_of_scope_problem`.
 9. **State machine** — hàm thuần trong `src/server/domain/dialogue` + unit test cho mọi chuyển trong bảng mục 7.
 10. **Tutor + kiểm tra cứng + Guard** — prompt `tutor/v1`, `guard/v1` (gồm rule `SCOPE` và kiểm `forbiddenTerms` bằng code), fallback câu hỏi dự phòng.
 10b. **Học từ đời sống** — bảng `life_contexts`, `session_feedback`, cột `origin`, `turn_kind`; seed thư viện số thập phân (≥ 8 context/skill, chờ duyệt); prompt `hook/v1`, `contextualize/v1`, `transfer/v1`; trạng thái `TRANSFER`; rule Guard CONTEXT; màn hình duyệt context; nút vui/bình thường/chán cuối phiên.

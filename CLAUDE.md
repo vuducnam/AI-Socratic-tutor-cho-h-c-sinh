@@ -54,7 +54,8 @@ Gia sư AI theo phương pháp Socratic cho con trong gia đình, bắt đầu t
 | Guard, learner summary | `claude-haiku-5-5` |
 | Pre-solver | `claude-opus-5-5` + sympy verify |
 | Đọc ảnh đề (vision) | `claude-sonnet-5-5` |
-| Việc offline (eval, nháp misconception, báo cáo tuần) | Message Batches API |
+| Việc offline không tương tác (nháp misconception, báo cáo tuần) | Message Batches API |
+| Eval hội thoại nhiều lượt | API đồng bộ, API key và trần chi phí riêng, không fallback OpenRouter |
 | STT | Chính: `vinai/PhoWhisper-large` local (GPU). A/B và dự phòng: OpenRouter `openai/gpt-4o-transcribe` (hoặc GPT Transcribe), `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
 | TTS | `google/gemini-3.8-flash-tts` qua OpenRouter, `response_format: mp3` |
 | Sinh ảnh | `openai/gpt-image-2` qua OpenRouter — chỉ cho avatar và minh hoạ ngữ cảnh. **Hình toán học vẽ bằng SVG từ code**, không dùng image gen |
