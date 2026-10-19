@@ -101,7 +101,7 @@ describe('học từ đời sống', () => {
     setGatewayDependencies({ primary: scriptedAnthropic([{ hook: 'Cú kể chuyện nhảy xa nhé.' }, PASS, tutor('Đề hỏi gì?'), PASS]).provider, fallback: null });
     await openProblemTurn(w.student, { studentId: w.studentId, sessionId: w.sessionId });
 
-    const outputs: unknown[] = [];
+    const outputs: object[] = [];
     for (let i = 0; i < 4; i++) outputs.push(tutor('Con thử nghĩ thêm nhé?'), PASS);
     outputs.push({ problem_text: PARALLEL_TEXT }, PARALLEL_PLAN, PASS);
     setGatewayDependencies({ primary: scriptedAnthropic(outputs).provider, fallback: null });
@@ -131,7 +131,7 @@ describe('học từ đời sống', () => {
     const w = await homeworkWorld();
     setGatewayDependencies({ primary: scriptedAnthropic([{ hook: 'Chuyện nhảy xa.' }, PASS, tutor('Đề hỏi gì?'), PASS]).provider, fallback: null });
     await openProblemTurn(w.student, { studentId: w.studentId, sessionId: w.sessionId });
-    const outputs: unknown[] = [];
+    const outputs: object[] = [];
     for (let i = 0; i < 5; i++) outputs.push(tutor('Con thử nghĩ thêm nhé?'), PASS);
     setGatewayDependencies({ primary: scriptedAnthropic(outputs).provider, fallback: null });
     await say(w, 'con chịu');
