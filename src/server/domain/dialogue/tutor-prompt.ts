@@ -15,6 +15,15 @@ export const TUTOR_PROMPT = 'tutor/v1';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v1';
 const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
+// Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
+const GUESSING_GUIDANCE = 'em vừa đổi đáp án nhanh nhiều lần: chậm lại, hỏi em vì sao chọn đáp án đó';
+const DOT_DECIMAL_GUIDANCE = 'em viết dấu chấm làm dấu thập phân: nhắc nhẹ em dùng dấu phẩy, không chê';
+
+export interface TurnHints {
+  guessing?: boolean;
+  dotDecimal?: boolean;
+}
+
 // Hướng dẫn ngắn theo trạng thái: code chọn trạng thái, prompt chỉ nói Cú cần làm gì ở trạng thái đó.
 const STATE_GUIDANCE: Record<DialogueState, string> = {
   ELICIT: 'mời em nói em hiểu đề thế nào hoặc em định làm gì trước',
@@ -27,6 +36,13 @@ const STATE_GUIDANCE: Record<DialogueState, string> = {
   DONE: 'chào em, khen nỗ lực và cách nghĩ',
   PAUSE: 'dừng bài, ân cần khuyên em kể với bố mẹ',
 };
+
+/** Chỉ dẫn cho Tutor ở lượt này: theo trạng thái, cộng thêm chỉ dẫn cho tín hiệu code phát hiện. */
+export function stateGuidance(state: DialogueState, hints: TurnHints = {}): string {
+  return [STATE_GUIDANCE[state], hints.guessing && GUESSING_GUIDANCE, hints.dotDecimal && DOT_DECIMAL_GUIDANCE]
+    .filter(Boolean)
+    .join('; ');
+}
 
 export interface TutorPromptInput {
   student: StudentContext;
@@ -42,6 +58,7 @@ export interface TutorPromptInput {
   currentStepId: string | null;
   skillSource: string;
   learnerSummary: string;
+  hints?: TurnHints;
 }
 
 const field = (obj: unknown, key: string, fallback: string) =>
@@ -75,7 +92,7 @@ export async function buildTutorSystem(input: TutorPromptInput): Promise<SystemB
     level: input.scaffoldLevel,
     mode: input.mode,
     intensity: input.preset.socratic_intensity,
-    state_guidance: STATE_GUIDANCE[input.state],
+    state_guidance: stateGuidance(input.state, input.hints),
     step_id: input.currentStepId ?? '(chưa xác định)',
     completed_steps: input.completedSteps.length ? input.completedSteps.join(', ') : '(chưa có)',
   });

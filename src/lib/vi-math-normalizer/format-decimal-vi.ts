@@ -1,5 +1,10 @@
-// Hiển thị số theo quy ước Việt Nam: dấu thập phân là dấu phẩy, không phân cách hàng nghìn.
+// Hiển thị số theo quy ước Việt Nam: dấu thập phân là dấu phẩy. Phân cách hàng nghìn tuỳ chọn
+// (preset `thousands_separator`), mặc định không phân cách cho tới khi đối chiếu cách trình bày của SGK.
 // Dùng ở UI để "0.45" không bao giờ lọt ra màn hình học sinh.
+
+export const THOUSANDS_SEPARATORS = ['none', 'space', 'dot'] as const;
+export type ThousandsSeparator = (typeof THOUSANDS_SEPARATORS)[number];
+const SEPARATOR_CHAR: Record<Exclude<ThousandsSeparator, 'none'>, string> = { space: ' ', dot: '.' };
 
 const MACHINE_DECIMAL_RE = /^-?\d+(?:[.,]\d+)?$/;
 const EXPONENT_RE = /^(-?)(\d+)(?:\.(\d+))?e([+-]\d+)$/i;
@@ -21,9 +26,10 @@ function expandExponent(text: string): string {
 /**
  * Hiển thị số với dấu phẩy thập phân: 0.45 → "0,45", "12.5" → "12,5", -3 → "-3".
  * Chuỗi đầu vào phải ở dạng máy ("0.45") hoặc đã dùng dấu phẩy ("0,45"); không nhận phân cách hàng nghìn.
+ * `thousands`: phân cách nhóm 3 chữ số của phần nguyên (khoảng trắng không ngắt dòng hoặc dấu chấm).
  * Ném RangeError với NaN/Infinity, TypeError với chuỗi không phải số.
  */
-export function formatDecimalVi(value: number | string): string {
+export function formatDecimalVi(value: number | string, options: { thousands?: ThousandsSeparator } = {}): string {
   let text: string;
   if (typeof value === 'number') {
     if (!Number.isFinite(value)) throw new RangeError(`Không hiển thị được số không hữu hạn: ${value}`);
@@ -32,5 +38,9 @@ export function formatDecimalVi(value: number | string): string {
     text = value.trim();
     if (!MACHINE_DECIMAL_RE.test(text)) throw new TypeError(`Không phải số thập phân hợp lệ: "${value}"`);
   }
-  return text.replace('.', ',');
+  const [integerPart = '', fractionalPart] = text.split('.');
+  const thousands = options.thousands ?? 'none';
+  const grouped =
+    thousands === 'none' ? integerPart : integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, SEPARATOR_CHAR[thousands]);
+  return fractionalPart === undefined ? grouped : `${grouped},${fractionalPart}`;
 }

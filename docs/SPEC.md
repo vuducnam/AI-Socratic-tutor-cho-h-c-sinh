@@ -490,11 +490,13 @@ Trạng thái: `ELICIT` (luôn mở bằng lượt `hook`), `PROBE`, `SCAFFOLD` 
 | SCAFFOLD(3) → PARALLEL | Vẫn bế tắc ở level 3 |
 | PARALLEL → PROBE | Xong bài tương tự, quay về bài gốc |
 | PROBE → CONSOLIDATE | solve: đáp án khớp `final_answer`; argue: con đã nêu lập luận có lý do |
+| SCAFFOLD → CONSOLIDATE | Đang được gợi ý mà con đã tự ra đáp án cuối khớp `final_answer` (không bắt quay lại PROBE rồi mới củng cố) |
 | CONSOLIDATE → DONE | Con giải thích được cách làm hoặc chỗ từng nhầm |
 | * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn |
 | CONSOLIDATE → TRANSFER → DONE | Sau khi con giải thích được: Cú hỏi câu chuyển giao; con trả lời (hoặc bỏ qua) thì DONE |
 
 - `no_progress_streak`, tín hiệu nản (danh sách cụm từ + câu trả lời ≤ 2 từ lặp lại), phát hiện đoán bừa (đổi đáp án ≥ 2 lần trong 3 lượt, phản hồi < 3 giây) là **hàm thuần trong `src/server/domain/dialogue/signals.ts`**, có unit test.
+- Đoán bừa không có dòng chuyển trạng thái riêng: giữ trạng thái hiện tại, tín hiệu được đưa vào prompt Tutor (Cú hỏi con vì sao chọn đáp án đó) và ghi vào `turns.signals` cho báo cáo phụ huynh.
 - `student_state_guess` của Tutor chỉ là một input, không tự quyết định chuyển trạng thái.
 - `DONE` → lên lịch ôn: 1, 3, 7, 21 ngày.
 

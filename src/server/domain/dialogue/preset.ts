@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { parse } from 'yaml';
 import { z } from 'zod';
+import { THOUSANDS_SEPARATORS } from '@/lib/vi-math-normalizer';
 
 // Preset theo cấp (config/presets/*.yaml, SPEC §4.2): giới hạn độ dài, số câu hỏi, ngưỡng leo thang.
 const presetSchema = z.object({
@@ -15,6 +16,8 @@ const presetSchema = z.object({
   session_minutes: z.number().int().positive(),
   daily_limit_minutes: z.number().int().positive(),
   escalation_threshold: z.number().int().positive(),
+  // Cách Cú hiển thị số lớn do code tạo; chọn theo cách SGK của cấp đó trình bày.
+  thousands_separator: z.enum(THOUSANDS_SEPARATORS).default('none'),
 });
 
 export type Preset = z.infer<typeof presetSchema>;

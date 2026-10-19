@@ -42,7 +42,14 @@ describe('findFrustrationPhrase', () => {
     expect(findFrustrationPhrase('chán')).toBe('chán');
     expect(findFrustrationPhrase('thôi, con không làm nữa')).toBe('không làm nữa');
     expect(findFrustrationPhrase('con mệt')).toBe('mệt');
-    expect(findFrustrationPhrase('Thôi')).toBe('thôi');
+    expect(findFrustrationPhrase('thôi con không học nữa')).toBe('không học nữa');
+    expect(findFrustrationPhrase('Con thôi')).toBe('con thôi');
+  });
+
+  it('"thôi" đứng một mình hoặc trong câu bình thường không tính là nản', () => {
+    expect(findFrustrationPhrase('Thôi')).toBeNull();
+    expect(findFrustrationPhrase('thôi được, để con thử')).toBeNull();
+    expect(findFrustrationPhrase('con nghĩ vậy thôi')).toBeNull();
   });
 
   it('trả cụm cụ thể nhất (dài nhất) khi nhiều cụm cùng khớp', () => {

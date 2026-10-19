@@ -2,5 +2,6 @@
 export { toCanonical } from './to-canonical';
 export { toSpoken } from './to-spoken';
 export { toMachine, UnsupportedMathExpressionError, type UnsupportedMathReason } from './to-machine';
-export { formatDecimalVi } from './format-decimal-vi';
+export { formatDecimalVi, THOUSANDS_SEPARATORS, type ThousandsSeparator } from './format-decimal-vi';
+export { findDotDecimals } from './normalize-typed-math';
 export { integerToWords, decimalToWords, fractionToWords } from './vietnamese-number-words';

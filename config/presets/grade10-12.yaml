@@ -7,3 +7,5 @@ max_sentences_situational: 5
 session_minutes: 45
 daily_limit_minutes: 90
 escalation_threshold: 3
+# Phân cách hàng nghìn khi Cú hiển thị số: none | space | dot. Đổi sau khi đối chiếu cách SGK trình bày.
+thousands_separator: none

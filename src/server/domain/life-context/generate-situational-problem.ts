@@ -100,7 +100,7 @@ export async function generateSituationalProblem(actor: Actor, input: Situationa
     const template = lifeContextTemplateSchema.parse(row.template);
     let filled;
     try {
-      filled = fillVariables(template, { random });
+      filled = fillVariables(template, { random, thousands: preset.thousands_separator });
     } catch {
       continue;
     }

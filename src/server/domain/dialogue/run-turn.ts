@@ -1,6 +1,6 @@
 import 'server-only';
 import { randomUUID } from 'node:crypto';
-import { toCanonical } from '@/lib/vi-math-normalizer';
+import { findDotDecimals, toCanonical } from '@/lib/vi-math-normalizer';
 import type { Actor } from '@/server/dal/actor';
 import { createFlag } from '@/server/dal/flags-dal';
 import { getTurn, withTurnTransaction, type TurnWriter } from '@/server/dal/turns-dal';
@@ -23,6 +23,7 @@ import {
   looksLikeExplanation,
   stepsCompletedBy,
 } from './student-message-analysis';
+import type { TurnHints } from './tutor-prompt';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
 
@@ -97,7 +98,7 @@ function hardCheckContext(ctx: TurnContext, state: DialogueState) {
 async function produceTutorMessage(
   ctx: TurnContext,
   writer: TurnWriter,
-  args: { tutorTurnId: string; position: DialoguePosition; history: ChatMessage[]; studentMessage: string; completedSteps: string[]; evalMode?: 'live' | 'eval' },
+  args: { tutorTurnId: string; position: DialoguePosition; history: ChatMessage[]; studentMessage: string; completedSteps: string[]; hints?: TurnHints; evalMode?: 'live' | 'eval' },
 ) {
   const { state, scaffoldLevel } = args.position;
   const stepId = currentStep(ctx.plan, args.completedSteps);
@@ -124,6 +125,7 @@ async function produceTutorMessage(
       skillSource: ctx.skillSource,
       // Giai đoạn 0 chưa có learner model (Giai đoạn 1): không bịa nhận định.
       learnerSummary: 'Chưa đủ dữ liệu.',
+      hints: args.hints,
     },
     guard: guardInputFor(ctx, args.studentMessage, args.completedSteps, state),
   });
@@ -247,6 +249,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
 
     const frustrated = detectFrustration(text, ctx.recentStudentTexts).frustrated;
     const guessing = detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]);
+    const dotDecimal = findDotDecimals(text).length > 0;
+    const hints: TurnHints = { guessing, dotDecimal };
     const next = nextState({
       current: ctx.position,
       mode: ctx.session.mode as 'solve' | 'argue',
@@ -371,7 +375,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         else {
           parallel = null;
           position = { state: 'SCAFFOLD', scaffoldLevel: 3 };
-          generated = await produceTutorMessage(ctx, writer, { tutorTurnId, position, history, studentMessage: text, completedSteps, evalMode: input.evalMode });
+          generated = await produceTutorMessage(ctx, writer, { tutorTurnId, position, history, studentMessage: text, completedSteps, hints, evalMode: input.evalMode });
           message = generated.message;
         }
       } else if (position.state === 'TRANSFER') {
@@ -392,6 +396,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
           history: replyHistory,
           studentMessage: text,
           completedSteps: replyCtx === ctx ? completedSteps : replyCtx.completedSteps,
+          hints,
           evalMode: input.evalMode,
         });
         message = generated.message;
@@ -410,6 +415,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         reason: next.reason,
         guessing,
         frustrated,
+        dot_decimal: dotDecimal,
         blocked_reasons: generated?.blockedReasons ?? [],
         source: generated?.source ?? 'fixed',
       };

@@ -1,5 +1,5 @@
 import 'server-only';
-import { formatDecimalVi } from '@/lib/vi-math-normalizer';
+import { formatDecimalVi, type ThousandsSeparator } from '@/lib/vi-math-normalizer';
 import { evaluateCondition, evaluateExpression, Fraction } from './exact-arithmetic';
 import type { LifeContextTemplate } from './life-context-schema';
 
@@ -23,7 +23,7 @@ function gridValue(min: number, max: number, step: number, random: Random): Frac
   return Fraction.ofNumber(min).add(Fraction.ofNumber(step).mul(Fraction.ofNumber(k)));
 }
 
-export function fillVariables(template: LifeContextTemplate, options: { random?: Random; maxTries?: number } = {}): FilledVariables {
+export function fillVariables(template: LifeContextTemplate, options: { random?: Random; maxTries?: number; thousands?: ThousandsSeparator } = {}): FilledVariables {
   const random = options.random ?? Math.random;
   const tries = options.maxTries ?? 500;
   for (let attempt = 0; attempt < tries; attempt++) {
@@ -41,7 +41,7 @@ export function fillVariables(template: LifeContextTemplate, options: { random?:
     if (answer.compare(new Fraction(0n, 1n)) < 0) continue;
     const values = Object.fromEntries(Object.entries(vars).map(([k, f]) => [k, f.toDecimalString()]));
     const display = Object.fromEntries(
-      Object.entries(values).map(([k, v]) => [k, `${formatDecimalVi(v)}${template.variables[k]!.unit ? ` ${template.variables[k]!.unit}` : ''}`]),
+      Object.entries(values).map(([k, v]) => [k, `${formatDecimalVi(v, { thousands: options.thousands })}${template.variables[k]!.unit ? ` ${template.variables[k]!.unit}` : ''}`]),
     );
     return { values, display, answer: answer.toDecimalString() };
   }

@@ -23,6 +23,8 @@ export interface TutorTurnSignals {
   /** Lượt con vừa gửi bị code gắn cờ đoán bừa / nản (metric guessing_rate). */
   guessing?: boolean;
   frustrated?: boolean;
+  /** Con viết dấu chấm làm dấu thập phân ("2.5"); Cú nhắc dùng dấu phẩy. */
+  dot_decimal?: boolean;
   blocked_reasons?: string[];
   source?: string;
 }

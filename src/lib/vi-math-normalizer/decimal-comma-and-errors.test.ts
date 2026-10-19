@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   UnsupportedMathExpressionError,
+  findDotDecimals,
   formatDecimalVi,
   integerToWords,
   toCanonical,
@@ -87,6 +88,14 @@ describe('formatDecimalVi', () => {
     expect(formatDecimalVi(input)).toBe(expected);
   });
 
+  it('phân cách hàng nghìn tuỳ chọn, chỉ cho phần nguyên', () => {
+    expect(formatDecimalVi(2500, { thousands: 'space' })).toBe('2 500');
+    expect(formatDecimalVi('1234567.25', { thousands: 'dot' })).toBe('1.234.567,25');
+    expect(formatDecimalVi(-12500.5, { thousands: 'space' })).toBe('-12 500,5');
+    expect(formatDecimalVi(999, { thousands: 'dot' })).toBe('999');
+    expect(formatDecimalVi(2500)).toBe('2500');
+  });
+
   it('từ chối giá trị không phải số', () => {
     expect(() => formatDecimalVi(Number.NaN)).toThrow(RangeError);
     expect(() => formatDecimalVi(Number.POSITIVE_INFINITY)).toThrow(RangeError);
@@ -105,5 +114,18 @@ describe('integerToWords', () => {
   it('từ chối chuỗi không phải chữ số', () => {
     expect(() => integerToWords('12a')).toThrow(TypeError);
     expect(() => integerToWords('')).toThrow(TypeError);
+  });
+});
+
+describe('findDotDecimals', () => {
+  it('bắt dấu chấm dùng làm dấu thập phân', () => {
+    expect(findDotDecimals('con nghĩ 2.5 lớn hơn 0.45')).toEqual(['2.5', '0.45']);
+  });
+
+  it('không bắt nhóm nghìn, dấu phẩy, ngày tháng hay dấu chấm cuối câu', () => {
+    expect(findDotDecimals('2.500 đồng')).toEqual([]);
+    expect(findDotDecimals('0,45')).toEqual([]);
+    expect(findDotDecimals('ngày 19.10.2026')).toEqual([]);
+    expect(findDotDecimals('đáp án là 12.')).toEqual([]);
   });
 });

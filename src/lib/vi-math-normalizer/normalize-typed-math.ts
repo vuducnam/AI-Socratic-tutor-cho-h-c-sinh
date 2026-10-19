@@ -66,6 +66,16 @@ function convertBinaryOperator(
   return canonical === undefined ? match : `${left} ${canonical} `;
 }
 
+/**
+ * Số con gõ dấu chấm làm dấu thập phân ("2.5", "0.45"): normalizeTypedMath vẫn hiểu đúng (đổi sang phẩy),
+ * hàm này chỉ trả các chỗ đó để Cú nhắc nhẹ con viết dấu phẩy. "2.500" (nhóm nghìn) không tính.
+ */
+export function findDotDecimals(text: string): string[] {
+  return [...text.normalize('NFC').matchAll(DOTTED_NUMBER_RE)]
+    .map((m) => m[0])
+    .filter((m) => !THOUSANDS_DOTTED_RE.test(m) && m.split('.').length === 2);
+}
+
 /** Chuẩn hoá phần chữ số + ký hiệu; chữ (kể cả số đọc bằng chữ) giữ nguyên. Hàm idempotent. */
 export function normalizeTypedMath(text: string): string {
   return text
