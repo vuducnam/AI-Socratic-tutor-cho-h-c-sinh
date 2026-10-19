@@ -1,0 +1,10 @@
+// Mọi model phải có @@map("snake_case") để TransparencyRegistry khoá theo tên bảng thật.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/server/dal/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}

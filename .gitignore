@@ -78,3 +78,4 @@ desktop.ini
 # --- Plan, báo cáo nội bộ: chỉ giữ ở máy, không đưa lên GitHub ---
 plans/
 eval/problems/
+*.egg-info/
