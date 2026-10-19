@@ -1,0 +1,23 @@
+subject: math
+grade: 5
+skills:
+  - skill_id: FIXTURE.NO.URL
+    name: Thiếu official_url
+    subject: math
+    grade_introduced: 5
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      lesson: "Bài 1"
+      imported_at: 2026-10-19
+  - skill_id: FIXTURE.NO.LESSON
+    name: Thiếu lesson
+    subject: math
+    grade_introduced: 5
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      official_url: "https://taphuan.nxbgd.vn/x"
+      imported_at: 2026-10-19
