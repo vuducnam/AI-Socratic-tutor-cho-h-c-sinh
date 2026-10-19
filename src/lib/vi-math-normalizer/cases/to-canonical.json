@@ -129,5 +129,8 @@
   },
   { "input": "0,45, 0,5 và 0,6", "expected": "0,45, 0,5 và 0,6" },
   { "input": "1, 2, 3", "expected": "1, 2, 3" },
-  { "input": "So sánh 0,45 và 0,5.", "expected": "So sánh 0,45 và 0,5." }
+  { "input": "So sánh 0,45 và 0,5.", "expected": "So sánh 0,45 và 0,5." },
+  { "input": "làm tròn đến hàng phần mười", "expected": "làm tròn đến hàng phần mười" },
+  { "input": "chữ số ở hàng phần mười là 3", "expected": "chữ số ở hàng phần mười là 3" },
+  { "input": "lấy ba phần mười cái bánh", "expected": "lấy 3/10 cái bánh" }
 ]

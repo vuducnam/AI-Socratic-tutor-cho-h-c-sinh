@@ -115,6 +115,9 @@ class CanonicalParser {
       text = item.text;
       k = i + 1;
     } else {
+      // "phần mười" không có tử số đứng trước là tên hàng ("hàng phần mười"), không phải số 10.
+      // Có tử số ("ba phần mười") thì toán hạng bắt đầu từ tử số nên không tới nhánh này.
+      if (words[i - 1] === 'phần' && this.items[i - 1]?.kind === 'word') return null;
       const parsed = parseIntegerWords(words, i);
       if (!parsed) return null;
       text = String(parsed.value);
