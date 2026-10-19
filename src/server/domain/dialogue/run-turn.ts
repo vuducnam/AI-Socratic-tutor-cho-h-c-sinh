@@ -7,7 +7,7 @@ import { getTurn, withTurnTransaction, type TurnWriter } from '@/server/dal/turn
 import { enqueueParentNotification } from '@/server/jobs/enqueue-parent-notification';
 import type { ChatMessage } from '@/server/llm/llm-types';
 import { generateHook, generateTransferQuestion } from '@/server/domain/life-context/special-turns';
-import { generateSituationalProblem } from '@/server/domain/life-context/generate-situational-problem';
+import { generateSituationalProblem, type SituationalVisual } from '@/server/domain/life-context/generate-situational-problem';
 import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { DONE_MESSAGE, PAUSE_MESSAGE, currentStep } from './fallback-question';
 import { generateTutorMessage, type GeneratedMessage } from './generate-tutor-message';
@@ -62,6 +62,8 @@ export interface TurnResult {
   message: string;
   /** Tin nhắn của Cú hiện TRƯỚC `message` trong cùng lượt (câu mở chuyện đời, đề bài tương tự). */
   before?: { turnId: string; content: string; kind: 'hook' | 'parallel_problem' }[];
+  /** Hình minh hoạ đi kèm đề tình huống (bài tương tự ở PARALLEL). */
+  visual?: SituationalVisual | null;
   state: DialogueState;
   scaffoldLevel: number;
   done: boolean;
@@ -276,7 +278,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const history: ChatMessage[] = [...ctx.history, { role: 'user', content: text }];
 
     // ── PARALLEL: bài tương tự luôn là bài tình huống từ life_contexts đã duyệt (quy tắc cứng 13) ──
-    let parallel: { problemId: string; problemText: string } | null = null;
+    let parallel: { problemId: string; problemText: string; visual: SituationalVisual | null } | null = null;
     if (position.state === 'PARALLEL' && state !== 'PARALLEL') {
       const generated = await generateSituationalProblem(actor, {
         studentId: input.studentId,
@@ -288,7 +290,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         parallelOf: ctx.active.problem.id,
         evalMode: input.evalMode,
       });
-      if (generated.ok) parallel = { problemId: generated.problemId, problemText: generated.problemText };
+      if (generated.ok) parallel = { problemId: generated.problemId, problemText: generated.problemText, visual: generated.visual };
       // Cạn thư viện / sinh không được → ở lại SCAFFOLD(3), không bao giờ sinh bài trơn.
       else position = { state: 'SCAFFOLD', scaffoldLevel: 3 };
     }
@@ -459,6 +461,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
       done: position.state === 'DONE',
       paused: position.state === 'PAUSE',
       source: outcome.generated?.source ?? 'fixed',
+      visual: outcome.parallel?.visual ?? null,
     };
     const { message: _omit, ...stored } = result;
     await saveIdempotentResult(input.sessionId, input.idempotencyKey, stored);

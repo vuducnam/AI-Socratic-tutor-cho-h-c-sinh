@@ -38,8 +38,14 @@ export interface SituationalProblemInput {
 }
 
 export type SituationalProblemResult =
-  | { ok: true; problemId: string; problemText: string; contextId: string; values: Record<string, string> }
+  | { ok: true; problemId: string; problemText: string; contextId: string; values: Record<string, string>; visual: SituationalVisual | null }
   | { ok: false; reason: 'context_pool_exhausted' | 'generation_failed'; tried: string[] };
+
+/** Hình minh hoạ SVG cho đề tình huống (client vẽ bằng component math-visuals). */
+export interface SituationalVisual {
+  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box';
+  items: { label: string; value: number; unit: string }[];
+}
 
 const BRAND = /\b(coca|pepsi|vinamilk|kfc|lotte|samsung|iphone|honda|yamaha|grab|shopee|lazada|tiki|circle ?k|highlands)\b/i;
 
@@ -157,7 +163,16 @@ export async function generateSituationalProblem(actor: Actor, input: Situationa
     const agrees =
       presolved.ok &&
       (presolved.plan.final_answer.kind !== 'number' || normalizeNumber(String(presolved.plan.final_answer.canonical)) === normalizeNumber(filled.answer));
-    if (presolved.ok && agrees) return { ok: true, problemId, problemText, contextId: row.id, values: filled.values };
+    if (presolved.ok && agrees) {
+      const visual: SituationalVisual | null =
+        template.svg_kind === 'none'
+          ? null
+          : {
+              kind: template.svg_kind,
+              items: Object.entries(filled.values).map(([k, v]) => ({ label: template.variables[k]!.label ?? k, value: Number(v), unit: template.variables[k]!.unit })),
+            };
+      return { ok: true, problemId, problemText, contextId: row.id, values: filled.values, visual };
+    }
   }
   return { ok: false, reason: 'generation_failed', tried };
 }

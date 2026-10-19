@@ -17,6 +17,8 @@ const variableSchema = z
     max: z.number(),
     step: z.number().positive(),
     unit: z.string().max(20).default(''),
+    /** Nhãn ngắn trên hình minh hoạ (ví dụ "Lan"); mặc định là tên biến. */
+    label: z.string().max(30).optional(),
   })
   .refine((v) => v.min <= v.max, 'min phải ≤ max');
 
