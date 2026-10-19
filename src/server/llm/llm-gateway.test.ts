@@ -182,6 +182,18 @@ describe('LlmGateway', () => {
     const schema = toStrictJsonSchema(z.object({ a: z.object({ b: z.string() }), c: z.array(z.object({ d: z.number() })) }));
     expect(JSON.stringify(schema).match(/"additionalProperties":false/g)).toHaveLength(3);
   });
+
+  it('JSON Schema strict: bỏ ràng buộc Claude API không nhận, giữ trường tên trùng từ khoá', async () => {
+    const { solutionPlanSchema } = await import('@/server/domain/presolve/plan-schema');
+    const plan = JSON.stringify(toStrictJsonSchema(solutionPlanSchema));
+    for (const kw of ['minLength', 'maxLength', 'maxItems', 'pattern', 'minimum', 'maximum']) {
+      expect(plan).not.toContain(`"${kw}"`);
+    }
+    expect(plan).not.toMatch(/"minItems":([2-9]|\d\d)/);
+    const named = toStrictJsonSchema(z.object({ pattern: z.string().max(5), items: z.array(z.string()).min(3).max(9) }));
+    expect(Object.keys(named.properties as object)).toEqual(['pattern', 'items']);
+    expect((named.properties as Record<string, Record<string, unknown>>).items!.minItems).toBe(1);
+  });
 });
 
 describe('prompt loader', () => {

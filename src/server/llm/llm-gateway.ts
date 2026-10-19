@@ -87,16 +87,34 @@ export interface GatewayDependencies {
 // ───────────────────────── JSON Schema cho structured output ─────────────────────────
 
 /** zod → JSON Schema, mọi object có additionalProperties: false (yêu cầu của structured output). */
+// Từ khoá JSON Schema mà structured output của Claude API không nhận (trả 400). Output luôn được zod
+// kiểm lại sau khi parse nên bỏ chúng khỏi schema gửi đi không làm mất ràng buộc.
+const UNSUPPORTED_SCHEMA_KEYWORDS = [
+  'minLength', 'maxLength', 'pattern',
+  'minimum', 'maximum', 'exclusiveMinimum', 'exclusiveMaximum', 'multipleOf',
+  'maxItems', 'uniqueItems',
+];
+
 export function toStrictJsonSchema(schema: z.ZodType): Record<string, unknown> {
   const json = z.toJSONSchema(schema, { target: 'draft-2020-12' }) as Record<string, unknown>;
-  const visit = (node: unknown): void => {
+  // Chỉ duyệt các nút schema; map `properties` chứa tên trường nên không xoá khoá ở đó.
+  const visitSchema = (node: unknown): void => {
     if (!node || typeof node !== 'object') return;
-    if (Array.isArray(node)) return node.forEach(visit);
+    if (Array.isArray(node)) return node.forEach(visitSchema);
     const obj = node as Record<string, unknown>;
+    for (const keyword of UNSUPPORTED_SCHEMA_KEYWORDS) delete obj[keyword];
+    // API chỉ nhận minItems 0 hoặc 1.
+    if (typeof obj.minItems === 'number' && obj.minItems > 1) obj.minItems = 1;
     if (obj.type === 'object' && obj.properties) obj.additionalProperties = false;
-    Object.values(obj).forEach(visit);
+    for (const [key, value] of Object.entries(obj)) {
+      if ((key === 'properties' || key === '$defs' || key === 'definitions') && value && typeof value === 'object') {
+        Object.values(value as Record<string, unknown>).forEach(visitSchema);
+      } else if (key !== 'enum' && key !== 'const' && key !== 'required') {
+        visitSchema(value);
+      }
+    }
   };
-  visit(json);
+  visitSchema(json);
   delete json.$schema;
   return json;
 }
