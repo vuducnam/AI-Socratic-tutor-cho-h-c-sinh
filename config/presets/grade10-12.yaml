@@ -1,0 +1,9 @@
+id: grade10-12
+socratic_intensity: elenchus
+max_sentences: 4
+max_words_per_turn: 90
+max_questions_per_turn: 2
+max_sentences_situational: 5
+session_minutes: 45
+daily_limit_minutes: 90
+escalation_threshold: 3

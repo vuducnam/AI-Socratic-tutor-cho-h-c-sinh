@@ -1,0 +1,9 @@
+id: grade6-7
+socratic_intensity: guided
+max_sentences: 2
+max_words_per_turn: 45
+max_questions_per_turn: 1
+max_sentences_situational: 3
+session_minutes: 20
+daily_limit_minutes: 40
+escalation_threshold: 2

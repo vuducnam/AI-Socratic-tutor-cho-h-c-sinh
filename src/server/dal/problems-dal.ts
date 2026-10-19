@@ -111,6 +111,18 @@ export async function getTeachingPlan(actor: Actor, input: { studentId: string; 
   });
 }
 
+/** Đề đang làm của phiên: đề mới nhất đã có plan verify (kèm plan dùng để dạy). */
+export async function getActiveSessionProblem(actor: Actor, input: { studentId: string; sessionId: string }) {
+  await assertStudentAccess(actor, input.studentId, { action: 'read', resource: 'problems', log: logFor(actor) });
+  const problem = await prisma.problem.findFirst({
+    where: { session_id: input.sessionId, student_id: input.studentId, solution_plans: { some: { verified: true } } },
+    orderBy: { created_at: 'desc' },
+    include: { solution_plans: { where: { verified: true }, orderBy: { created_at: 'desc' }, take: 1 } },
+  });
+  if (!problem) return null;
+  return { problem, plan: problem.solution_plans[0]! };
+}
+
 /** Misconception đã duyệt của các skill (danh mục chung, không phải dữ liệu học sinh). */
 export async function listApprovedMisconceptions(skillIds: string[]) {
   return prisma.misconception.findMany({
@@ -152,6 +164,11 @@ export const authorizationFixtures: Record<string, AuthorizationFixture> = {
     kind: 'student-scoped',
     linkedParentAllowed: false,
     call: (a, c) => getTeachingPlan(a, { studentId: c.studentId, problemId: FAKE }),
+  },
+  getActiveSessionProblem: {
+    kind: 'student-scoped',
+    linkedParentAllowed: false,
+    call: (a, c) => getActiveSessionProblem(a, { studentId: c.studentId, sessionId: c.sessionId }),
   },
   listApprovedMisconceptions: { kind: 'no-actor', reason: 'danh mục misconception đã duyệt, không có dữ liệu học sinh' },
   listSkillNames: { kind: 'no-actor', reason: 'danh mục skill, không có dữ liệu học sinh' },
