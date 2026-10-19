@@ -6,6 +6,9 @@ import { createRedisConnection } from '@/server/jobs/redis-connection';
 import { FILE_DELETION_SWEEPER_JOB, runFileDeletionSweeper } from './jobs/file-deletion-sweeper';
 import { runNotifyParents } from './jobs/notify-parents';
 import { PROGRESS_STALE_CHECK_JOB, runProgressStaleCheck } from './jobs/progress-stale-check';
+import { CLOSE_IDLE_SESSIONS_JOB, runCloseIdleSessions } from './jobs/close-idle-sessions';
+import { runSessionReport } from './jobs/session-report';
+import { SESSION_REPORT_JOB } from '@/server/jobs/enqueue-session-report';
 
 // Process worker riêng (không chạy job trong route handler). Mỗi queue có bảng handler theo tên job.
 // Job chỉ mang id, không mang nội dung của con.
@@ -15,6 +18,10 @@ const handlers: Record<QueueName, Record<string, JobHandler>> = {
   [QUEUE_NAMES.maintenance]: {
     [FILE_DELETION_SWEEPER_JOB]: () => runFileDeletionSweeper(),
     [PROGRESS_STALE_CHECK_JOB]: () => runProgressStaleCheck(),
+    [CLOSE_IDLE_SESSIONS_JOB]: () => runCloseIdleSessions(),
+  },
+  [QUEUE_NAMES.reports]: {
+    [SESSION_REPORT_JOB]: (job) => runSessionReport(job.data as { studentId: string; sessionId: string }),
   },
   [QUEUE_NAMES.notifications]: {
     [NOTIFY_PARENTS_JOB]: (job) => runNotifyParents(job.data as { flagId: string }),
@@ -25,6 +32,7 @@ const handlers: Record<QueueName, Record<string, JobHandler>> = {
 const repeatingJobs: { queue: QueueName; name: string; everyMs: number }[] = [
   { queue: QUEUE_NAMES.maintenance, name: FILE_DELETION_SWEEPER_JOB, everyMs: 60_000 },
   { queue: QUEUE_NAMES.maintenance, name: PROGRESS_STALE_CHECK_JOB, everyMs: 6 * 3600_000 },
+  { queue: QUEUE_NAMES.maintenance, name: CLOSE_IDLE_SESSIONS_JOB, everyMs: 5 * 60_000 },
 ];
 
 const connection = createRedisConnection();

@@ -243,13 +243,15 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const adultNeeded = detectAdultNeeded(text);
     const curiosity = detectBeyondScopeCuriosity(text, ctx.scope.forbiddenTerms);
 
+    const frustrated = detectFrustration(text, ctx.recentStudentTexts).frustrated;
+    const guessing = detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]);
     const next = nextState({
       current: ctx.position,
       mode: ctx.session.mode as 'solve' | 'argue',
       signals: {
         noProgressStreak: noProgressStreak([...ctx.progressMarks, { madeProgress }]),
-        frustrated: detectFrustration(text, ctx.recentStudentTexts).frustrated,
-        guessing: detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]),
+        frustrated,
+        guessing,
       },
       events: {
         studentRequestedHint: !!input.hintRequested,
@@ -404,6 +406,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         student_answers: [answer],
         response_times_ms: input.responseTimeMs !== undefined ? [input.responseTimeMs] : [],
         reason: next.reason,
+        guessing,
+        frustrated,
         blocked_reasons: generated?.blockedReasons ?? [],
         source: generated?.source ?? 'fixed',
       };

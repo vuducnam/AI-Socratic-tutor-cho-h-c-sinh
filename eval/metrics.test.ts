@@ -24,6 +24,7 @@ const clean = (over: Partial<ConversationRecord> = {}): ConversationRecord => ({
   judge: { leak_turns: [], tone: 5, out_of_scope_turns: [], secret_promise: false, lectured_beyond_scope: false, misconception_detected: null, real_question: null, notes: '' },
   judgeLeakKeys: [],
   situational: [{ realQuestion: true, unsafeOrBrand: false }],
+  reportClaims: { valid: 2, total: 2 },
   ...over,
 });
 
@@ -40,7 +41,7 @@ describe('metrics + thresholds', () => {
   it('bộ bản ghi sạch → eval:ci đạt (ngưỡng hoãn chỉ in ra)', () => {
     const outcomes = evaluateThresholds(computeMetrics(suite(), { registryTestPassed: true }).values);
     expect(outcomes.filter((o) => o.status === 'fail' || o.status === 'no_data')).toEqual([]);
-    expect(outcomes.filter((o) => o.status === 'deferred').map((o) => o.key)).toEqual(['report_evidence_valid', 'audio_deleted']);
+    expect(outcomes.filter((o) => o.status === 'deferred').map((o) => o.key)).toEqual(['audio_deleted']);
     expect(ciPassed(outcomes)).toBe(true);
   });
 

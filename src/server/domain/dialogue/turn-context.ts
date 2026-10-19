@@ -20,6 +20,9 @@ export interface TutorTurnSignals {
   student_answers: (string | null)[];
   response_times_ms: number[];
   reason?: string;
+  /** Lượt con vừa gửi bị code gắn cờ đoán bừa / nản (metric guessing_rate). */
+  guessing?: boolean;
+  frustrated?: boolean;
   blocked_reasons?: string[];
   source?: string;
 }

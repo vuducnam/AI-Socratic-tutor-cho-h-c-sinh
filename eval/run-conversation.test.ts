@@ -48,6 +48,7 @@ describe('runConversation (eval)', () => {
       tutor('Con so sánh bằng cách nào?'),
       PASS,
       judge,
+      { summary: [{ text: 'Con trả lời ngay', evidence_turn_ids: [], evidence_session_ids: ['__SESSION__'], quote: null }], student_reasoning_quotes: [], concerns: [] },
     ]);
     setGatewayDependencies({ primary: scripted.provider, evalPrimary: scripted.provider, fallback: null });
     const rec = await runConversation(PROBLEM, 'guesser', 'learned', ['0,45 lớn hơn ạ']);
@@ -57,6 +58,8 @@ describe('runConversation (eval)', () => {
     // Judge báo lượt 3 lộ đáp án nhưng code không thấy → chờ chủ dự án xác nhận.
     expect(rec.judgeLeakKeys).toHaveLength(1);
     expect(scripted.remaining()).toBe(0);
+    // Nhận định dẫn session không thuộc học sinh bị loại → không còn nhận định hiển thị sai.
+    expect(rec.reportClaims).toEqual({ valid: 0, total: 0 });
   });
 
   it('bài Cú tạo ở mức chưa học → bộ chọn không sinh bài', async () => {

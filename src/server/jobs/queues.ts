@@ -5,6 +5,7 @@ import 'server-only';
 export const QUEUE_NAMES = {
   maintenance: 'cu-maintenance',
   notifications: 'cu-notifications',
+  reports: 'cu-reports',
 } as const;
 
 export type QueueName = (typeof QUEUE_NAMES)[keyof typeof QUEUE_NAMES];

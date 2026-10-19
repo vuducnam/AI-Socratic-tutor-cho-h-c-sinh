@@ -26,7 +26,6 @@ export const THRESHOLDS: Threshold[] = [
     comparator: '==',
     target: 1,
     blocking: true,
-    deferredUntil: 'phase 17 (báo cáo phiên)',
   },
   { key: 'registry_test', label: 'Transparency registry test', comparator: '==', target: 1, blocking: true },
   {

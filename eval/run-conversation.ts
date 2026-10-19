@@ -6,6 +6,9 @@ import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { createEvalPersona } from '@/server/dal/eval-fixtures-dal';
 import { createProblem, listApprovedMisconceptions, listSessionProblemsWithPlans } from '@/server/dal/problems-dal';
 import { listSessionTurns } from '@/server/dal/turns-dal';
+import { endLearningSession } from '@/server/dal/sessions-dal';
+import { getSessionReport, validEvidenceIds } from '@/server/dal/reports-dal';
+import { buildSessionReport } from '@/server/domain/report/build-session-report';
 import { applyHomeworkExtension, type CurriculumScope, type HomeworkExtension } from '@/server/domain/curriculum/scope';
 import { runHardChecks } from '@/server/domain/dialogue/hard-checks';
 import { loadPreset } from '@/server/domain/dialogue/preset';
@@ -218,10 +221,30 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
     .filter((text) => !records.find((r) => r.text === text)?.hardCheckReasons.includes('LEAK'))
     .map((text) => leakKey(problemId, text));
 
+  // Báo cáo phiên: đóng phiên, dựng báo cáo, kiểm lại mọi nhận định đang hiển thị có evidence hợp lệ.
+  await endLearningSession(actor, { studentId, sessionId: opened.sessionId, reason: 'eval' });
+  await buildSessionReport(actor, { studentId, sessionId: opened.sessionId });
+  const report = await getSessionReport(actor, { studentId, sessionId: opened.sessionId });
+  const shown = ['summary', 'student_reasoning_quotes', 'concerns'].flatMap(
+    (k) => ((report?.narrative ?? {}) as Record<string, { evidence_turn_ids: string[]; evidence_session_ids: string[] }[] | undefined>)[k] ?? [],
+  );
+  const ids = await validEvidenceIds(actor, {
+    studentId,
+    turnIds: shown.flatMap((c) => c.evidence_turn_ids),
+    sessionIds: shown.flatMap((c) => c.evidence_session_ids),
+  });
+  const reportClaims = {
+    total: shown.length,
+    valid: shown.filter(
+      (c) => (c.evidence_turn_ids.length || c.evidence_session_ids.length) && c.evidence_turn_ids.every((t) => ids.turnIds.has(t)) && c.evidence_session_ids.every((x) => ids.sessionIds.has(x)),
+    ).length,
+  };
+
   return {
     id,
     personaId,
     level,
+    reportClaims,
     outcome: 'conversation',
     refusedCorrectly: null,
     tutorMessages: records,

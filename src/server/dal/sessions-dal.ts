@@ -92,6 +92,15 @@ export async function endLearningSession(
   return r.count > 0;
 }
 
+/** Các phiên từ một mốc (để tính giới hạn thời gian học trong ngày). */
+export async function listSessionsSince(actor: Actor, input: { studentId: string; since: Date }) {
+  await assertStudentAccess(actor, input.studentId, { action: 'read', resource: 'sessions', log: actor.type !== 'student' });
+  return prisma.session.findMany({
+    where: { student_id: input.studentId, OR: [{ started_at: { gte: input.since } }, { last_activity_at: { gte: input.since } }] },
+    select: { id: true, started_at: true, last_activity_at: true, ended_at: true },
+  });
+}
+
 /** Worker: phiên không hoạt động quá `minutes` phút. */
 export async function findIdleSessions(actor: Actor, input: { minutes: number }) {
   assertSystem(actor);
@@ -116,5 +125,6 @@ export const authorizationFixtures: Record<string, AuthorizationFixture> = {
     kind: 'student-scoped',
     call: (a, c) => endLearningSession(a, { studentId: c.studentId, sessionId: '00000000-0000-0000-0000-000000000001', reason: 'fixture' }),
   },
+  listSessionsSince: { kind: 'student-scoped', call: (a, c) => listSessionsSince(a, { studentId: c.studentId, since: new Date(0) }) },
   findIdleSessions: { kind: 'system-only', call: (a) => findIdleSessions(a, { minutes: 30 }) },
 };

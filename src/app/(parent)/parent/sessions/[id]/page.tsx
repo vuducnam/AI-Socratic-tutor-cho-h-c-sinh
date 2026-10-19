@@ -3,6 +3,8 @@ import { z } from 'zod';
 import { requireParentActor } from '@/server/auth/session';
 import { AuthorizationError } from '@/server/dal/actor-authorization';
 import { getSessionTranscript, type SessionTranscript } from '@/server/dal/parent-views-dal';
+import { getSessionReport } from '@/server/dal/reports-dal';
+import { SessionReportCard } from '../../_components/session-report-card';
 import { JsonBlock } from '../../_components/json-block';
 import { GuardVerdictList, LlmCallDetails } from '../../_components/llm-call-details';
 import { TranscriptTurn } from '../../_components/transcript-turn';
@@ -32,6 +34,7 @@ export default async function ParentSessionDetailPage({
     throw err;
   }
   const { session, turns, llmCalls, guardVerdicts, problems, feedback, flags } = data;
+  const report = await getSessionReport(actor, { studentId: selected.id, sessionId: sessionId.data });
   const callsByTurn = (turnId: string) => llmCalls.filter((c) => c.turn_id === turnId);
   const verdictsByTurn = (turnId: string) => guardVerdicts.filter((v) => v.turn_id === turnId);
   const sessionCalls = llmCalls.filter((c) => !c.turn_id || !turns.some((t) => t.id === c.turn_id));
@@ -65,6 +68,8 @@ export default async function ParentSessionDetailPage({
           <JsonBlock value={session.scope_snapshot} />
         </details>
       </section>
+
+      <SessionReportCard report={report} />
 
       <section className="card">
         <h2>Câu trả lời chuyển giao</h2>
