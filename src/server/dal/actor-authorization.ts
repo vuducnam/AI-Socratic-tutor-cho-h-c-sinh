@@ -1,6 +1,7 @@
 import 'server-only';
 import type { Actor } from './actor';
 import { appendActorAccessLog, type RequestContext } from './access-log-dal';
+import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
 
 // Kiểm quyền trong DAL, không chỉ ở proxy (SPEC §3.3, quy tắc cứng 14):
@@ -72,3 +73,8 @@ export async function assertStudentAccess(
     });
   }
 }
+
+export const authorizationFixtures: Record<string, AuthorizationFixture> = {
+  isLinkedParent: { kind: 'no-actor', reason: 'helper kiểm liên kết, chỉ trả boolean' },
+  assertStudentAccess: { kind: 'no-actor', reason: 'chính là hàm kiểm quyền; test riêng ở export và mọi fixture student-scoped' },
+};

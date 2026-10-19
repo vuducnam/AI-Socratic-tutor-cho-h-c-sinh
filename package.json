@@ -19,16 +19,20 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
-    "db:seed": "tsx prisma/seed.ts",
-    "postinstall": "prisma generate"
+    "db:seed": "tsx --conditions=react-server prisma/seed.ts",
+    "postinstall": "prisma generate",
+    "admin:create": "tsx --conditions=react-server scripts/create-first-admin.ts"
   },
   "dependencies": {
+    "@node-rs/argon2": "^2.2.2",
     "@prisma/adapter-pg": "7.10.1",
     "@prisma/client": "7.10.1",
     "bullmq": "^6.3.17",
     "ioredis": "^6.0.0",
     "jszip": "^3.10.2",
     "next": "16.4.2",
+    "nodemailer": "^10.1.7",
+    "otplib": "^13.5.0",
     "pg": "^8.23.1",
     "react": "19.3.1",
     "react-dom": "19.3.1",
@@ -38,6 +42,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.43",
+    "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

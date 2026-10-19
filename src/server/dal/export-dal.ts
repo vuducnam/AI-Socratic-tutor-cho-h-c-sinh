@@ -3,6 +3,7 @@ import { REGISTERED_TABLES, TransparencyRegistry, type TableName } from '@/serve
 import type { Actor } from './actor';
 import type { RequestContext } from './access-log-dal';
 import { assertStudentAccess } from './actor-authorization';
+import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
 
 // Đọc toàn bộ dữ liệu của một học sinh theo TransparencyRegistry để export (quy tắc cứng 2).
@@ -30,3 +31,7 @@ export async function readStudentExport(
   for (const table of REGISTERED_TABLES) out[table] = await readTable(table, studentId);
   return out;
 }
+
+export const authorizationFixtures: Record<string, AuthorizationFixture> = {
+  readStudentExport: { kind: 'student-scoped', call: (a, c) => readStudentExport(a, { studentId: c.studentId }) },
+};

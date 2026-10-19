@@ -19,3 +19,38 @@ body {
   line-height: 1.5;
 }
 a { color: var(--accent); }
+
+/* ── Khung chung ── */
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; margin: 1rem 0; }
+.notice { padding: 0.6rem 1rem; border-radius: 10px; }
+.notice.ok { background: #e3f2e6; }
+.notice.err { background: #f8e1dd; color: var(--danger); }
+button { font: inherit; padding: 0.45rem 0.9rem; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.link-button { background: none; color: var(--accent); border: none; text-decoration: underline; }
+input, select, textarea { font: inherit; padding: 0.45rem 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+
+/* ── Đăng nhập ── */
+.login-page { max-width: 420px; margin: 0 auto; padding: 2rem 16px; text-align: center; }
+.login-page h1 { font-size: 2.4rem; margin-bottom: 0; }
+.login-form { display: flex; flex-direction: column; gap: 0.9rem; text-align: left; }
+.login-form label { display: flex; flex-direction: column; gap: 0.3rem; font-weight: 600; }
+.login-form input { font-size: 1.2rem; }
+.form-error { color: var(--danger); margin: 0; }
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tabs button { flex: 1; background: var(--accent-soft); color: var(--accent); }
+.tabs button[aria-selected='true'] { background: var(--accent); color: #fff; }
+.turnstile { min-height: 65px; }
+
+/* ── Quản trị ── */
+.admin-shell { max-width: 1200px; margin: 0 auto; padding: 0 16px 3rem; font-size: 16px; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.admin-main table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.admin-main th, .admin-main td { text-align: left; padding: 0.4rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.admin-main .actions form { display: inline-flex; gap: 0.3rem; margin: 0 0.3rem 0.3rem 0; }
+.inline-form { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.stack-form { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; }
+.chip { display: inline-flex; align-items: center; gap: 0.25rem; background: var(--accent-soft); border-radius: 999px; padding: 0 0.2rem 0 0.6rem; margin: 0 0.2rem 0.2rem 0; }
+.chip button { padding: 0 0.4rem; background: none; color: var(--accent); border: none; }

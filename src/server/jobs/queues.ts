@@ -4,6 +4,7 @@ import 'server-only';
 // không mang nội dung của con, để Redis không giữ dữ liệu học sinh.
 export const QUEUE_NAMES = {
   maintenance: 'cu-maintenance',
+  notifications: 'cu-notifications',
 } as const;
 
 export type QueueName = (typeof QUEUE_NAMES)[keyof typeof QUEUE_NAMES];

@@ -1,5 +1,6 @@
 import 'server-only';
 import type { Actor } from './actor';
+import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
 
 // access_log [AO]: chỉ có hàm append, không có update/delete (SPEC §3.3).
@@ -53,3 +54,8 @@ export async function appendActorAccessLog(
     ...entry,
   });
 }
+
+export const authorizationFixtures: Record<string, AuthorizationFixture> = {
+  appendAccessLog: { kind: 'no-actor', reason: 'chỉ ghi log (append-only), không đọc dữ liệu học sinh' },
+  appendActorAccessLog: { kind: 'no-actor', reason: 'chỉ ghi log thay actor đã được hàm gọi kiểm quyền' },
+};
