@@ -54,6 +54,22 @@ skills:
     prerequisites:
       - MATH.FRACTION.DECIMAL_FRACTION
       - MATH.FRACTION.MIXED_NUMBER
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: MISSING_ZERO_PLACEHOLDER
+    #     description: "Viết 5/100 thành 0,5: quên chữ số 0 giữ chỗ hàng phần mười"
+    #     probe: "Trong 0,5 thì chữ số 5 đứng ở hàng nào, còn đề bài nói mấy phần trăm?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: JOIN_NUMERATOR_DENOMINATOR
+    #     description: "Viết 7/10 thành 7,10 hoặc 0,710: ghép tử số và mẫu số thành số thập phân"
+    #     probe: "7/10 nghĩa là lấy mấy phần trong các phần bằng nhau của một đơn vị?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: READ_DECIMAL_SKIP_ZEROS
+    #     description: "Đọc 12,004 là \"mười hai phẩy bốn\": bỏ qua các chữ số 0 đứng đầu phần thập phân"
+    #     probe: "Sau dấu phẩy của 12,004 có mấy chữ số, và con đọc từng chữ số đó ra sao?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -68,6 +84,26 @@ skills:
     grade_introduced: 5
     prerequisites:
       - MATH.DECIMAL.CONCEPT
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: LONGER_IS_BIGGER
+    #     description: "Nghĩ 0,45 > 0,5 vì 45 > 5: so phần thập phân như so số tự nhiên"
+    #     probe: "Nếu chia cái bánh thành các phần bằng nhau, 5 phần mười và 45 phần trăm cái bánh thì phần nào nhiều hơn?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: SHORTER_IS_BIGGER
+    #     description: "Nghĩ 0,3 > 0,35 vì phần thập phân ít chữ số hơn"
+    #     probe: "Nếu viết thêm chữ số 0 vào tận cùng bên phải 0,3 thì được số nào, rồi so với 0,35 ra sao?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: TRAILING_ZERO_CHANGES_VALUE
+    #     description: "Nghĩ 7,30 > 7,3 vì có thêm chữ số 0"
+    #     probe: "Nếu đổi 7,3 m và 7,30 m ra xăng-ti-mét thì mỗi số đo được bao nhiêu?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: IGNORE_WHOLE_PART
+    #     description: "So phần thập phân trước, bỏ qua phần nguyên (cho rằng 1,95 > 2,9)"
+    #     probe: "Trong hai số này, phần nguyên của mỗi số là bao nhiêu?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -82,6 +118,22 @@ skills:
     grade_introduced: 5
     prerequisites:
       - MATH.DECIMAL.CONCEPT
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: MISSING_ZERO_IN_SMALL_UNIT
+    #     description: "Viết 2 m 5 cm = 2,5 m: quên 5 cm là 5 phần trăm mét"
+    #     probe: "5 cm là mấy phần trăm của mét, nên chữ số 5 phải đứng ở hàng nào sau dấu phẩy?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: WRONG_UNIT_RATIO
+    #     description: "Viết 2 kg 50 g = 2,50 kg: dùng quan hệ 100 thay vì 1 000 giữa kg và g"
+    #     probe: "1 kg bằng bao nhiêu gam, vậy 50 g là mấy phần nghìn của ki-lô-gam?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: AREA_RATIO_TEN
+    #     description: "Viết 56 dm² = 5,6 m²: nghĩ hai đơn vị diện tích liền nhau hơn kém 10 lần"
+    #     probe: "Hai đơn vị đo diện tích liền nhau hơn kém nhau bao nhiêu lần?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -96,6 +148,26 @@ skills:
     grade_introduced: 5
     prerequisites:
       - MATH.DECIMAL.COMPARE
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: TRUNCATE_INSTEAD_OF_ROUND
+    #     description: "Làm tròn 4,67 thành 4: chỉ bỏ phần thập phân, không xét chữ số hàng phần mười"
+    #     probe: "4,67 gần số 4 hơn hay gần số 5 hơn?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: LOOK_AT_WRONG_DIGIT
+    #     description: "Làm tròn đến hàng phần mười nhưng xét chữ số hàng phần nghìn hoặc làm tròn nối tiếp (12,348 thành 12,4)"
+    #     probe: "Làm tròn đến hàng phần mười thì con cần nhìn chữ số ở hàng nào?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: FIVE_ROUNDS_DOWN
+    #     description: "Làm tròn 3,25 đến hàng phần mười thành 3,2: nghĩ chữ số 5 thì làm tròn xuống"
+    #     probe: "Chữ số đang xét bằng 5 thì theo cách sách dạy con làm tròn lên hay làm tròn xuống?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: KEEP_DROPPED_DIGITS
+    #     description: "Làm tròn 2,456 đến hàng phần trăm thành 2,460: giữ lại chữ số sau hàng cần làm tròn"
+    #     probe: "Làm tròn đến hàng phần trăm thì sau dấu phẩy còn lại mấy chữ số?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -111,6 +183,22 @@ skills:
     prerequisites:
       - MATH.DECIMAL.CONCEPT
       - MATH.WHOLE.OPERATIONS
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: ALIGN_RIGHT_EDGE
+    #     description: "Đặt tính 3,45 + 2,7 thẳng mép phải như số tự nhiên nên chữ số khác hàng bị cộng với nhau"
+    #     probe: "Khi đặt tính, các dấu phẩy của hai số đã thẳng cột với nhau chưa?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: NO_CARRY_ACROSS_COMMA
+    #     description: "Cộng 1,75 + 0,6 thành 1,81 hoặc 1,135: cộng riêng phần sau dấu phẩy như số tự nhiên, không nhớ sang phần nguyên"
+    #     probe: "75 phần trăm cộng 60 phần trăm thì có vượt quá một đơn vị không?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: WHOLE_NUMBER_MISPLACED
+    #     description: "Cộng 4,61 + 8 bằng cách đặt 8 thẳng cột với chữ số 1 ở hàng phần trăm"
+    #     probe: "Số 8 thuộc hàng đơn vị, vậy nó phải thẳng cột với chữ số nào của 4,61?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -125,6 +213,18 @@ skills:
     grade_introduced: 5
     prerequisites:
       - MATH.DECIMAL.ADD
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: SMALLER_FROM_LARGER_DIGIT
+    #     description: "Ở mỗi cột lấy chữ số lớn trừ chữ số bé, không mượn (9,2 − 4,56 ra 5,36)"
+    #     probe: "Ở hàng phần trăm, số bị trừ có chữ số nào, có đủ để trừ 6 không?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: WHOLE_NUMBER_MISPLACED
+    #     description: "Trừ 15 − 7,38 bằng cách đặt 15 thẳng cột với phần thập phân của 7,38"
+    #     probe: "Số 15 có phần thập phân không, và chữ số 5 phải thẳng cột với chữ số nào của 7,38?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -140,6 +240,22 @@ skills:
     prerequisites:
       - MATH.DECIMAL.CONCEPT
       - MATH.WHOLE.OPERATIONS
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: COUNT_ONE_FACTOR_ONLY
+    #     description: "Nhân 1,6 × 0,25 rồi chỉ đếm chữ số phần thập phân của một thừa số (ra 4,00 hay 40,0)"
+    #     probe: "Cả hai thừa số có tất cả bao nhiêu chữ số ở phần thập phân?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: ALIGN_COMMA_LIKE_ADDITION
+    #     description: "Đặt dấu phẩy ở tích thẳng cột với dấu phẩy của thừa số như phép cộng"
+    #     probe: "Với phép nhân, sách dạy đặt dấu phẩy ở tích bằng cách nào?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: MULTIPLY_ALWAYS_BIGGER
+    #     description: "Nghĩ nhân luôn được số lớn hơn, nên thấy 1,6 × 0,25 = 0,4 là sai"
+    #     probe: "Lấy 1,6 nhân với một số bé hơn 1 thì kết quả lớn hơn hay bé hơn 1,6?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -154,6 +270,22 @@ skills:
     grade_introduced: 5
     prerequisites:
       - MATH.DECIMAL.MULTIPLY
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: MISSING_COMMA_IN_QUOTIENT
+    #     description: "Chia 92,8 : 4 ra 232: quên viết dấu phẩy ở thương trước khi hạ chữ số phần thập phân"
+    #     probe: "Trước khi hạ chữ số 8 ở phần thập phân xuống, con cần viết gì vào thương?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: MOVE_COMMA_DIVISOR_ONLY
+    #     description: "Chia 2,48 : 1,6 bằng cách bỏ dấu phẩy ở số chia nhưng không chuyển dấu phẩy ở số bị chia"
+    #     probe: "Khi bỏ dấu phẩy ở số chia, số bị chia phải thay đổi thế nào?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: STOP_AT_REMAINDER
+    #     description: "Chia 26 : 8 được 3 dư 2 rồi dừng, không viết thêm 0 vào số dư để chia tiếp"
+    #     probe: "Còn dư 2 thì con có thể viết thêm gì vào bên phải số dư để chia tiếp?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
@@ -169,6 +301,22 @@ skills:
     prerequisites:
       - MATH.DECIMAL.MULTIPLY
       - MATH.DECIMAL.DIVIDE
+    # NHÁP misconception (Claude soạn 2026-10-20, CHƯA DUYỆT, seed bỏ qua vì là chú thích).
+    # Duyệt: đọc từng mục; mục đồng ý thì bỏ "# " ở đầu dòng và thay approved bằng email + ngày duyệt.
+    # probe là câu Cú hỏi để dò lỗi: một câu hỏi, không nói đáp án, chỉ dùng từ con đã học.
+    # misconceptions:
+    #   - id: WRONG_DIRECTION
+    #     description: "Nhân với 0,1 mà chuyển dấu phẩy sang phải (52,8 × 0,1 = 528)"
+    #     probe: "Nhân một số với 0,1 thì kết quả lớn hơn hay bé hơn số đó?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: APPEND_ZEROS
+    #     description: "Nhân 3,754 × 100 bằng cách viết thêm chữ số 0 vào cuối (3,75400) như với số tự nhiên"
+    #     probe: "Khi nhân một số thập phân với 100, dấu phẩy của số đó chuyển đi đâu?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
+    #   - id: WRONG_SHIFT_COUNT
+    #     description: "Chuyển dấu phẩy sai số chữ số so với số chữ số 0 của 10; 100; 1 000"
+    #     probe: "1 000 có mấy chữ số 0, vậy dấu phẩy chuyển đi mấy chữ số?"
+    #     approved: { by: "<email>", at: "<yyyy-mm-dd>" }
     source:
       series: Kết nối tri thức với cuộc sống
       publisher: NXB Giáo dục Việt Nam
