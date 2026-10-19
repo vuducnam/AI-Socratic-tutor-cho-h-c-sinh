@@ -119,7 +119,7 @@ pnpm test                # vitest: domain, DAL, transparency registry, append-on
 pnpm lint                # gồm rule cấm import Prisma ngoài src/server/dal
 pnpm eval                # simulated students, in leak rate + metrics
 pnpm eval:ci             # fail nếu leak > 0 hoặc metric dưới ngưỡng
-pnpm build && docker compose --profile prod up -d   # chạy thật trên PC
+pnpm prod:up             # chạy thật trên PC (chỉ docker-compose.yml, không gộp override dev) — xem docs/deployment-guide.md
 ```
 
 ## Quy ước Next.js

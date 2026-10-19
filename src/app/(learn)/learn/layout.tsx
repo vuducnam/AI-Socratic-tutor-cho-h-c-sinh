@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { requireStudentActor, UnauthenticatedError } from '@/server/auth/session';
+import { ServiceWorkerRegister } from '@/components/chat/service-worker-register';
 import '../../learn.css';
 
 export const dynamic = 'force-dynamic';
@@ -19,6 +20,7 @@ export default async function LearnLayout({ children }: { children: ReactNode })
         Bố mẹ xem được cuộc trò chuyện này
       </div>
       {children}
+      <ServiceWorkerRegister />
     </div>
   );
 }

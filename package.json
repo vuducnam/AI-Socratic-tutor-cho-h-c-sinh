@@ -26,7 +26,9 @@
     "eval:presolve": "tsx --conditions=react-server eval/presolve-acceptance.ts",
     "eval": "tsx --conditions=react-server eval/run-eval.ts",
     "eval:ci": "tsx --conditions=react-server eval/run-eval.ts --ci",
-    "eval:smoke": "tsx --conditions=react-server eval/run-eval.ts --smoke"
+    "eval:smoke": "tsx --conditions=react-server eval/run-eval.ts --smoke",
+    "prod:up": "docker compose -f docker-compose.yml --profile prod up -d --build",
+    "prod:down": "docker compose -f docker-compose.yml --profile prod down"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
@@ -55,6 +57,7 @@
     "@types/react-dom": "^19.3.0",
     "@types/smtp-server": "^3.5.13",
     "dotenv": "^18.0.8",
+    "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.2",
     "prisma": "7.10.1",
