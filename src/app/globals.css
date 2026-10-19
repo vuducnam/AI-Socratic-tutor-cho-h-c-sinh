@@ -54,3 +54,9 @@ input, select, textarea { font: inherit; padding: 0.45rem 0.6rem; border-radius:
 .stack-form { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; }
 .chip { display: inline-flex; align-items: center; gap: 0.25rem; background: var(--accent-soft); border-radius: 999px; padding: 0 0.2rem 0 0.6rem; margin: 0 0.2rem 0.2rem 0; }
 .chip button { padding: 0 0.4rem; background: none; color: var(--accent); border: none; }
+
+/* ── Phụ huynh ── */
+.parent-shell { max-width: 1100px; margin: 0 auto; padding: 0 16px 3rem; font-size: 16px; }
+.parent-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.parent-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.parent-main details { margin-top: 1rem; }

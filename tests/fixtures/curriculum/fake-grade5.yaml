@@ -1,0 +1,114 @@
+# Mục lục GIẢ 10 bài cho test computeScope (không phải SGK thật).
+subject: math
+grade: 5
+series: "Kết nối tri thức với cuộc sống"
+books:
+  - { id: T1, title: "Toán 5 (fixture), Tập 1", official_url: "https://taphuan.nxbgd.vn/fixture-t1" }
+  - { id: T2, title: "Toán 5 (fixture), Tập 2", official_url: "https://taphuan.nxbgd.vn/fixture-t2" }
+lessons:
+  - lesson_id: FX5.T1.B1
+    seq: 1
+    book: T1
+    topic: "ÔN TẬP (FIXTURE)"
+    lesson_no: 1
+    title: "Ôn tập số tự nhiên (fixture)"
+    skill_ids: [FX.NAT.ADD]
+    introduces_terms: []
+    methods: ["cộng theo cột"]
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "1", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B2
+    seq: 2
+    book: T1
+    topic: "ÔN TẬP (FIXTURE)"
+    lesson_no: 2
+    title: "Ôn tập phân số (fixture)"
+    skill_ids: []
+    introduces_terms: []
+    methods: []
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "2", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B3
+    seq: 3
+    book: T1
+    topic: "SỐ THẬP PHÂN (FIXTURE)"
+    lesson_no: 3
+    title: "Số thập phân (fixture)"
+    skill_ids: [FX.DEC.READ]
+    introduces_terms:
+      - term: "số thập phân"
+        patterns: ["số thập phân"]
+      - term: "hàng phần trăm"
+        patterns: ["phần trăm"]
+    methods: ["đọc phần nguyên rồi phần thập phân"]
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "3", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B4
+    seq: 4
+    book: T1
+    topic: "SỐ THẬP PHÂN (FIXTURE)"
+    lesson_no: 4
+    title: "So sánh số thập phân (fixture)"
+    skill_ids: [FX.DEC.COMPARE]
+    introduces_terms: []
+    methods: ["so sánh phần nguyên trước rồi từng hàng phần thập phân"]
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "4", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B5
+    seq: 5
+    book: T1
+    topic: "SỐ THẬP PHÂN (FIXTURE)"
+    lesson_no: 5
+    title: "Cộng số thập phân (fixture)"
+    skill_ids: [FX.DEC.ADD]
+    introduces_terms: []
+    methods: ["đặt tính thẳng cột dấu phẩy"]
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "5", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B6
+    seq: 6
+    book: T1
+    topic: "SỐ THẬP PHÂN (FIXTURE)"
+    lesson_no: 6
+    title: "Luyện tập chung (fixture)"
+    skill_ids: [FX.DEC.READ, FX.DEC.ADD]
+    introduces_terms: []
+    methods: []
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "6", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T1.B7
+    seq: 7
+    book: T1
+    topic: "SỐ THẬP PHÂN (FIXTURE)"
+    lesson_no: 7
+    title: "Ôn tập (fixture)"
+    skill_ids: [FX.DEC.COMPARE]
+    introduces_terms: []
+    methods: []
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t1", pages: "7", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T2.B8
+    seq: 8
+    book: T2
+    topic: "EM VUI HỌC TOÁN (FIXTURE)"
+    lesson_no: 8
+    title: "Em vui học toán (fixture)"
+    skill_ids: []
+    introduces_terms: []
+    methods: []
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t2", pages: "8", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T2.B9
+    seq: 9
+    book: T2
+    topic: "TỈ SỐ (FIXTURE)"
+    lesson_no: 9
+    title: "Tỉ số phần trăm (fixture)"
+    skill_ids: [FX.PCT]
+    introduces_terms:
+      - term: "tỉ số phần trăm"
+        patterns: ["tỉ số phần trăm", "%"]
+    methods: ["chia rồi nhân với 100"]
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t2", pages: "9", imported_at: 2026-10-19 }
+  - lesson_id: FX5.T2.B10
+    seq: 10
+    book: T2
+    topic: "ÔN TẬP CUỐI NĂM (FIXTURE)"
+    lesson_no: 10
+    title: "Ôn tập cuối năm (fixture)"
+    skill_ids: [FX.PCT]
+    introduces_terms: []
+    methods: []
+    source: { official_url: "https://taphuan.nxbgd.vn/fixture-t2", pages: "10", imported_at: 2026-10-19 }
