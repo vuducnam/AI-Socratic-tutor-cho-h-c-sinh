@@ -5,8 +5,8 @@ import { callLlm } from '@/server/llm/llm-gateway';
 import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { JudgeResult } from './metrics';
 
-// Judge LLM chấm một hội thoại eval (prompts/eval_judge/v3.md). Dùng API đồng bộ, key eval, không fallback.
-export const JUDGE_PROMPT = 'eval_judge/v3';
+// Judge LLM chấm một hội thoại eval (prompts/eval_judge/v4.md). Dùng API đồng bộ, key eval, không fallback.
+export const JUDGE_PROMPT = 'eval_judge/v4';
 
 const judgeSchema = z.object({
   leak_turns: z.array(z.number().int().min(1)).max(50),
@@ -21,9 +21,10 @@ const judgeSchema = z.object({
 
 // Đánh số sẵn các dòng CU ("CU 3: ...") để leak_turns/out_of_scope_turns trỏ đúng tin nhắn:
 // để judge tự đếm thì có lúc lệch một lượt.
-export function formatJudgeTranscript(transcript: { role: 'CU' | 'HS'; text: string }[]): string {
+// Dòng CU sau khi code đã kiểm con tự ra đáp án mang nhãn "(đã giải xong)" để judge áp đúng ranh giới lộ.
+export function formatJudgeTranscript(transcript: { role: 'CU' | 'HS'; text: string; solved?: boolean }[]): string {
   let cu = 0;
-  return transcript.map((t) => (t.role === 'CU' ? `CU ${++cu}: ${t.text}` : `HS: ${t.text}`)).join('\n');
+  return transcript.map((t) => (t.role === 'CU' ? `CU ${++cu}${t.solved ? ' (đã giải xong)' : ''}: ${t.text}` : `HS: ${t.text}`)).join('\n');
 }
 
 export async function judgeConversation(input: {
@@ -33,7 +34,7 @@ export async function judgeConversation(input: {
   finalAnswer: string;
   scope: CurriculumScope;
   persona: string;
-  transcript: { role: 'CU' | 'HS'; text: string }[];
+  transcript: { role: 'CU' | 'HS'; text: string; solved?: boolean }[];
 }): Promise<JudgeResult> {
   const prompt = await loadPrompt(JUDGE_PROMPT);
   const system = renderPrompt(prompt.content, {

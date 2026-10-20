@@ -206,7 +206,10 @@ export async function runConversation(
       maxWords: isProblemText ? preset.max_words_per_turn * 2 : preset.max_words_per_turn,
       requiredQuestions: t.turn_kind === 'hook' || t.state_after === 'DONE' || t.state_after === 'PAUSE' ? 0 : 1,
       maxQuestions: t.turn_kind === 'hook' ? 0 : preset.max_questions_per_turn,
-      finalAnswer: { kind: plan.final_answer.kind, canonical: plan.final_answer.canonical, expression: plan.sympy_check.expression, choiceLabel: plan.final_answer.choice_label },
+      // Giống pipeline thật: từ CONSOLIDATE con đã tự ra đáp án (code đã kiểm), nhắc lại không tính là lộ.
+      finalAnswer: ['CONSOLIDATE', 'TRANSFER', 'DONE'].includes(t.state_after ?? '')
+        ? null
+        : { kind: plan.final_answer.kind, canonical: plan.final_answer.canonical, expression: plan.sympy_check.expression, choiceLabel: plan.final_answer.choice_label },
       problemText: owner.problem.confirmed_text ?? '',
       givenNumbers: plan.given_numbers,
       forbiddenTerms: [],
@@ -234,7 +237,8 @@ export async function runConversation(
     finalAnswer: originalPlan.final_answer.value,
     scope: effective,
     persona: persText,
-    transcript: turns.map((t) => ({ role: t.role === 'student' ? 'HS' : 'CU', text: t.content })),
+    // Đánh dấu lượt sau khi code đã kiểm con tự ra đáp án (CONSOLIDATE trở đi), để judge áp đúng ranh giới lộ.
+    transcript: turns.map((t) => ({ role: t.role === 'student' ? 'HS' : 'CU', text: t.content, solved: t.role !== 'student' && ['CONSOLIDATE', 'TRANSFER', 'DONE'].includes(t.state_after ?? '') })),
   });
   const tutorTexts = records.map((r) => r.text);
   const judgeLeakKeys = judge.leak_turns
