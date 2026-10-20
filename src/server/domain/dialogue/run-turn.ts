@@ -40,7 +40,7 @@ export class NoActiveProblemError extends Error {
 
 export class ProblemFinishedError extends Error {
   constructor() {
-    super('Bài này đã xong, con gửi bài mới nhé');
+    super('Bài này đã xong, bạn gửi bài mới nhé');
     this.name = 'ProblemFinishedError';
   }
 }

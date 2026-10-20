@@ -30,7 +30,7 @@ export const STUDENT_PURPOSES = [
 ] as const;
 
 export class LlmUnavailableError extends Error {
-  readonly friendlyMessage = 'Cú đang mệt, con thử lại sau nhé.';
+  readonly friendlyMessage = 'Cú đang mệt, bạn thử lại sau nhé.';
   constructor(readonly causes: ProviderError[]) {
     super(`LLM không khả dụng: ${causes.map((c) => `${c.provider}:${c.kind}`).join(', ')}`);
     this.name = 'LlmUnavailableError';

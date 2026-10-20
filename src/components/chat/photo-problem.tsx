@@ -25,7 +25,7 @@ export function PhotoProblem({ disabled, onSend }: { disabled: boolean; onSend: 
   function pick(f: File | undefined) {
     setError(null);
     if (!f) return;
-    if (f.size > MAX_BYTES) return setError('Ảnh lớn quá, con chụp lại gần hơn nhé.');
+    if (f.size > MAX_BYTES) return setError('Ảnh lớn quá, bạn chụp lại gần hơn nhé.');
     if (!/^image\/(jpeg|png|webp)$/.test(f.type)) return setError('Cú chỉ đọc được ảnh chụp (JPEG, PNG, WebP).');
     if (url) URL.revokeObjectURL(url);
     setFile(f);
@@ -62,10 +62,10 @@ export function PhotoProblem({ disabled, onSend }: { disabled: boolean; onSend: 
         </label>
       ) : (
         <>
-          <p className="muted">Con kéo ngón tay để khoanh đúng phần đề bài nhé (không lấy tên con, tên trường).</p>
+          <p className="muted">Bạn kéo ngón tay để khoanh đúng phần đề bài nhé (không lấy tên bạn, tên trường).</p>
           <div ref={boxRef} className="crop-box" onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={up}>
             {/* eslint-disable-next-line @next/next/no-img-element -- ảnh cục bộ từ máy con, không qua tối ưu ảnh của Next */}
-            <img src={url} alt="Ảnh đề bài con vừa chụp" draggable={false} />
+            <img src={url} alt="Ảnh đề bài bạn vừa chụp" draggable={false} />
             {rect && (
               <div
                 className="crop-rect"

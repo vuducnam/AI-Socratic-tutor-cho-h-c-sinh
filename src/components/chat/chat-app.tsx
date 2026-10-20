@@ -37,7 +37,7 @@ export function ChatApp({ studentName }: { studentName: string }) {
   const handleError = useCallback((err: unknown) => {
     if (err instanceof OfflineError) setPhase('offline');
     else if (err instanceof FriendlyError) setNotice(err.message);
-    else setNotice('Cú đang mệt, con thử lại sau nhé.');
+    else setNotice('Cú đang mệt, bạn thử lại sau nhé.');
   }, []);
 
   const applyStart = useCallback((r: StartDto) => {
@@ -107,7 +107,7 @@ export function ChatApp({ studentName }: { studentName: string }) {
       if (res.status >= 502) throw new OfflineError();
       const data = (await res.json()) as { ok?: boolean; problemId: string; extractedText: string; readable: boolean; message?: string };
       if (!res.ok || !data.ok) throw new FriendlyError('upload', data.message ?? 'Cú chưa đọc được ảnh này.');
-      if (!data.readable || !data.extractedText.trim()) throw new FriendlyError('unreadable', 'Cú chưa đọc rõ ảnh. Con chụp lại hoặc gõ đề nhé.');
+      if (!data.readable || !data.extractedText.trim()) throw new FriendlyError('unreadable', 'Cú chưa đọc rõ ảnh. Bạn chụp lại hoặc gõ đề nhé.');
       setOcr({ problemId: data.problemId, text: data.extractedText });
       setPhase('confirm');
     } catch (err) {
@@ -174,7 +174,7 @@ export function ChatApp({ studentName }: { studentName: string }) {
       )}
       {phase === 'problem' && !busy && (
         <section className="problem-entry">
-          <h2>Con gửi đề bài cho Cú nhé</h2>
+          <h2>Bạn gửi đề bài cho Cú nhé</h2>
           <Composer disabled={!!busy} multiline placeholder="Gõ đề bài ở đây" submitLabel="Gửi đề" onSubmit={(t) => void sendProblem(t)} />
           <p className="or">hoặc</p>
           <PhotoProblem disabled={!!busy} onSend={(f, c) => void sendPhoto(f, c)} />
@@ -182,8 +182,8 @@ export function ChatApp({ studentName }: { studentName: string }) {
       )}
       {phase === 'confirm' && ocr && (
         <section className="problem-entry">
-          <h2>Cú đọc được đề thế này. Con xem đúng chưa?</h2>
-          <p className="muted">Chỗ nào sai hoặc có dấu [?], con sửa lại cho đúng với đề nhé.</p>
+          <h2>Cú đọc được đề thế này. Bạn xem đúng chưa?</h2>
+          <p className="muted">Chỗ nào sai hoặc có dấu [?], bạn sửa lại cho đúng với đề nhé.</p>
           <textarea className="ocr-text" value={ocr.text} rows={4} onChange={(e) => setOcr({ ...ocr, text: e.target.value })} aria-label="Đề bài Cú đọc được" />
           <div className="composer-actions">
             <button type="button" className="ghost" onClick={() => { setOcr(null); setPhase('problem'); }}>
@@ -198,11 +198,11 @@ export function ChatApp({ studentName }: { studentName: string }) {
       {phase === 'chat' && (
         <Composer
           disabled={!!busy}
-          placeholder="Con trả lời Cú ở đây"
+          placeholder="Bạn trả lời Cú ở đây"
           submitLabel="Gửi"
           showHint
           onSubmit={(t) => void sendMessage(t)}
-          onHint={() => void sendMessage('Con cần gợi ý', true)}
+          onHint={() => void sendMessage('Mình cần gợi ý', true)}
         />
       )}
       {phase === 'done' && (

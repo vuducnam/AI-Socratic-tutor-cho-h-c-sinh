@@ -12,14 +12,14 @@ import { LlmUnavailableError } from '@/server/llm/llm-gateway';
 export type SseSend = (event: 'status' | 'result' | 'error', data: unknown) => void;
 
 export function friendlyError(err: unknown): { status: number; code: string; message: string } {
-  if (err instanceof UnauthenticatedError) return { status: 401, code: 'unauthenticated', message: 'Con đăng nhập lại nhé.' };
-  if (err instanceof AuthorizationError) return { status: 403, code: 'forbidden', message: 'Con không mở được phần này.' };
-  if (err instanceof TurnBusyError) return { status: 409, code: 'busy', message: 'Cú đang nghĩ câu trước, con chờ một chút nhé.' };
-  if (err instanceof NoActiveProblemError) return { status: 409, code: 'no_problem', message: 'Con gửi đề bài cho Cú trước nhé.' };
-  if (err instanceof ProblemFinishedError) return { status: 409, code: 'problem_finished', message: 'Bài này xong rồi, con gửi bài mới nhé.' };
+  if (err instanceof UnauthenticatedError) return { status: 401, code: 'unauthenticated', message: 'Bạn đăng nhập lại nhé.' };
+  if (err instanceof AuthorizationError) return { status: 403, code: 'forbidden', message: 'Bạn không mở được phần này.' };
+  if (err instanceof TurnBusyError) return { status: 409, code: 'busy', message: 'Cú đang nghĩ câu trước, bạn chờ một chút nhé.' };
+  if (err instanceof NoActiveProblemError) return { status: 409, code: 'no_problem', message: 'Bạn gửi đề bài cho Cú trước nhé.' };
+  if (err instanceof ProblemFinishedError) return { status: 409, code: 'problem_finished', message: 'Bài này xong rồi, bạn gửi bài mới nhé.' };
   if (err instanceof ProblemImageError) return { status: 400, code: 'bad_image', message: err.message };
   if (err instanceof LlmUnavailableError) return { status: 503, code: 'llm_unavailable', message: err.friendlyMessage };
-  return { status: 500, code: 'error', message: 'Cú đang mệt, con thử lại sau nhé.' };
+  return { status: 500, code: 'error', message: 'Cú đang mệt, bạn thử lại sau nhé.' };
 }
 
 export async function studentOr401(): Promise<StudentActor | Response> {

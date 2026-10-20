@@ -8,11 +8,11 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import type { DialogueState } from './state-machine';
 
-// Dựng system prompt tutor/v4 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
+// Dựng system prompt tutor/v5 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
 // là khối đầu có prompt caching; phần đổi mỗi lượt (trạng thái, bước) là khối sau.
 
-export const TUTOR_PROMPT = 'tutor/v4';
-export const TUTOR_FEWSHOT = 'tutor/fewshot/v1';
+export const TUTOR_PROMPT = 'tutor/v5';
+export const TUTOR_FEWSHOT = 'tutor/fewshot/v2';
 const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.

@@ -11,10 +11,10 @@ export function IntroScreen({ name, onStart }: { name: string; onStart: () => vo
       <OwlAvatar size={96} />
       <h1>Chào {name}! Mình là Cú.</h1>
       <ul className="intro-list">
-        <li>Cú là bạn học cùng con. Cú không nói đáp án, Cú hỏi để con tự nghĩ ra.</li>
-        <li>Con gửi đề bài bằng cách gõ hoặc chụp ảnh. Bí quá thì bấm “Gợi ý”.</li>
-        <li>Bố mẹ xem được mọi cuộc trò chuyện của con với Cú. Cú không giữ bí mật với bố mẹ.</li>
-        <li>Nếu có chuyện buồn hay điều làm con sợ, con hãy kể ngay với bố mẹ hoặc cô giáo nhé.</li>
+        <li>Cú là bạn học cùng của bạn. Cú không nói đáp án, Cú hỏi để bạn tự nghĩ ra.</li>
+        <li>Bạn gửi đề bài bằng cách gõ hoặc chụp ảnh. Bí quá thì bấm “Gợi ý”.</li>
+        <li>Bố mẹ xem được mọi cuộc trò chuyện của bạn với Cú. Cú không giữ bí mật với bố mẹ.</li>
+        <li>Nếu có chuyện buồn hay điều làm bạn sợ, bạn hãy kể ngay với bố mẹ hoặc cô giáo nhé.</li>
       </ul>
       <button type="button" onClick={onStart}>
         Bắt đầu học
@@ -28,7 +28,7 @@ export function RestingScreen({ onRetry }: { onRetry: () => void }) {
     <section className="center-screen">
       <OwlAvatar size={96} mood="resting" />
       <h1>Cú đang nghỉ</h1>
-      <p>Con hỏi bố nhé. Lát nữa con thử lại.</p>
+      <p>Bạn hỏi bố nhé. Lát nữa bạn thử lại.</p>
       <button type="button" className="ghost" onClick={onRetry}>
         Thử lại
       </button>
@@ -74,7 +74,7 @@ export function EndOfProblem({
           </div>
         </>
       ) : (
-        <p>Cảm ơn con! Cú chờ con lần sau nhé.</p>
+        <p>Cảm ơn bạn! Cú chờ bạn lần sau nhé.</p>
       )}
       <button type="button" className="ghost" onClick={onNewProblem}>
         Làm bài khác

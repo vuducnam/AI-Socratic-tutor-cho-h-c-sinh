@@ -9,7 +9,7 @@ import { computeScope, type CurriculumScope } from '@/server/domain/curriculum/s
 // Mở phiên (SPEC §6 bước 0, §5c.2): chưa đặt tiến độ cho môn → không mở phiên, cờ progress_missing.
 // Có tiến độ → computeScope một lần, lưu sessions.scope_snapshot (cố định trong phiên).
 
-export const PROGRESS_MISSING_MESSAGE = 'Bố mẹ cần cho Cú biết trên lớp con học tới bài nào đã.';
+export const PROGRESS_MISSING_MESSAGE = 'Bố mẹ cần cho Cú biết trên lớp bạn học tới bài nào đã.';
 
 export type OpenSessionResult =
   | { ok: true; sessionId: string; scope: CurriculumScope }

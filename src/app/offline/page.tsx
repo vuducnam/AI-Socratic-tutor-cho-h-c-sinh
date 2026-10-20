@@ -10,7 +10,7 @@ export default function OfflinePage() {
       {/* eslint-disable-next-line @next/next/no-img-element -- icon tĩnh đã cache trong service worker */}
       <img src="/icons/owl.svg" alt="" width={96} height={96} />
       <h1>Cú đang nghỉ</h1>
-      <p>Con hỏi bố nhé. Lát nữa con mở lại trang này.</p>
+      <p>Bạn hỏi bố nhé. Lát nữa bạn mở lại trang này.</p>
     </main>
   );
 }
