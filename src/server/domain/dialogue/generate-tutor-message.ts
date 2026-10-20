@@ -10,7 +10,7 @@ import { tutorConversationMessages, type BlockedDraft } from './tutor-conversati
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
 
 // Sinh một tin nhắn của Cú qua đủ các lớp (SPEC §6 bước 4–6):
-// Tutor → kiểm tra cứng bằng code → Guard → block thì Tutor sinh lại kèm lý do → block lần 2 thì câu hỏi
+// Tutor → kiểm tra cứng bằng code → Guard → block thì Tutor sửa bản nháp kèm lý do (tối đa 3 lần viết) → vẫn block thì câu hỏi
 // dự phòng của bước hiện tại (vẫn qua kiểm tra cứng) → vẫn fail thì câu chung đã duyệt. Lượt chat không
 // bao giờ treo. Mọi lần kiểm ghi guard_verdicts (checker 'code' hoặc 'llm').
 
@@ -36,7 +36,8 @@ export interface GeneratedMessage {
   attempts: number;
 }
 
-const MAX_TUTOR_ATTEMPTS = 2;
+// Ba lần viết: lần 2 và 3 sửa bản nháp bị chặn (thường chỉ dư vài từ) trước khi rơi về câu dự phòng.
+const MAX_TUTOR_ATTEMPTS = 3;
 
 export async function generateTutorMessage(input: GenerateInput): Promise<GeneratedMessage> {
   const system = await buildTutorSystem(input.prompt);

@@ -90,9 +90,9 @@ describe('runStudentTurn', () => {
     expect(mine[0]).toMatchObject({ checker: 'code', verdict: 'block', reasons: ['LEAK'], attempt: 1 });
   });
 
-  it('Guard chặn 2 lần → câu hỏi dự phòng của bước hiện tại', async () => {
+  it('Guard chặn cả 3 lần viết → câu hỏi dự phòng của bước hiện tại', async () => {
     const w = await world();
-    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Câu một?'), BLOCK, tutor('Câu hai?'), BLOCK]).provider, fallback: null });
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Câu một?'), BLOCK, tutor('Câu hai?'), BLOCK, tutor('Câu ba?'), BLOCK]).provider, fallback: null });
     const r = await say(w, 'con chưa hiểu');
     expect(r).toMatchObject({ source: 'fallback', message: PLAN.steps[0]!.hint_question });
   });
@@ -104,7 +104,7 @@ describe('runStudentTurn', () => {
     try {
       // Plan đã lưu trong DB từ world() nên phải tạo world sau khi đổi hint.
       const w2 = await world();
-      setGatewayDependencies({ primary: scriptedAnthropic([tutor('A?'), BLOCK, tutor('B?'), BLOCK]).provider, fallback: null });
+      setGatewayDependencies({ primary: scriptedAnthropic([tutor('A?'), BLOCK, tutor('B?'), BLOCK, tutor('C?'), BLOCK]).provider, fallback: null });
       const r = await say(w2, 'hả');
       expect(r).toMatchObject({ source: 'generic', message: GENERIC_FALLBACK });
       const { turns } = await rows(w2.sessionId);

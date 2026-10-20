@@ -468,7 +468,7 @@ computeScope({ lessons, progress, beyondTerms, grade, subject, problem? }): {
 3. **State machine** tính trạng thái (mục 7).
 4. **Tutor** sinh tin nhắn JSON (mục 8.1), Zod validate.
 5. **Kiểm tra cứng bằng code**: số từ, số dấu hỏi, chứa `final_answer` dạng chuẩn hoá, khớp `forbiddenTerms` của phạm vi → fail thì coi như Guard block.
-6. **Guard** (mục 8.2). `block` → Tutor sinh lại kèm lý do; block lần 2 → dùng câu hỏi dự phòng từ `plan` cho step hiện tại.
+6. **Guard** (mục 8.2). `block` (của kiểm tra cứng hoặc Guard) → Tutor sửa chính bản nháp bị chặn, kèm lý do; tối đa 3 lần viết, vẫn block → dùng câu hỏi dự phòng từ `plan` cho step hiện tại.
 7. Lưu `turns`, trả về client qua SSE: text hiển thị ngay; TTS chạy song song (text qua `toSpoken()`), phát khi có audio.
 8. Enqueue job cập nhật learner model (không chặn lượt hội thoại).
 
