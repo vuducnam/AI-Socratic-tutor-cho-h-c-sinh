@@ -6,6 +6,7 @@ import { GENERIC_FALLBACK, planFallbackQuestion } from './fallback-question';
 import { runGuard, type GuardInput } from './guard';
 import { runHardChecks, type HardCheckContext } from './hard-checks';
 import { buildTutorSystem, TUTOR_PROMPT, type TutorPromptInput } from './tutor-prompt';
+import { tutorConversationMessages } from './tutor-conversation-messages';
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
 
 // Sinh một tin nhắn của Cú qua đủ các lớp (SPEC §6 bước 4–6):
@@ -59,10 +60,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
     let output: TutorOutput;
     let tutorLlmCallId: string;
     try {
-      const messages: ChatMessage[] = [
-        ...input.history,
-        ...(feedback ? [{ role: 'user' as const, content: `[Hệ thống] Tin nhắn trước của Cú bị chặn: ${feedback}. Viết lại tin nhắn khác, đúng quy tắc.` }] : []),
-      ];
+      const messages = tutorConversationMessages(input.history, feedback);
       const result = await callLlm({
         purpose: 'tutor',
         studentId: input.studentId,
@@ -70,7 +68,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
         turnId: input.tutorTurnId,
         promptVersion: TUTOR_PROMPT,
         system,
-        messages: messages.length ? messages : [{ role: 'user', content: '[Hệ thống] Bắt đầu bài.' }],
+        messages,
         responseSchema: tutorOutputSchema,
         mode: input.evalMode,
         recorder: input.writer.recorder,
