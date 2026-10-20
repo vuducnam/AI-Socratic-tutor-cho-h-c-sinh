@@ -8,10 +8,10 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import type { DialogueState } from './state-machine';
 
-// Dựng system prompt tutor/v2 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
+// Dựng system prompt tutor/v3 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
 // là khối đầu có prompt caching; phần đổi mỗi lượt (trạng thái, bước) là khối sau.
 
-export const TUTOR_PROMPT = 'tutor/v2';
+export const TUTOR_PROMPT = 'tutor/v3';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v1';
 const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 

@@ -6,7 +6,7 @@ import { GENERIC_FALLBACK, planFallbackQuestion } from './fallback-question';
 import { runGuard, type GuardInput } from './guard';
 import { runHardChecks, type HardCheckContext } from './hard-checks';
 import { buildTutorSystem, TUTOR_PROMPT, type TutorPromptInput } from './tutor-prompt';
-import { tutorConversationMessages } from './tutor-conversation-messages';
+import { tutorConversationMessages, type BlockedDraft } from './tutor-conversation-messages';
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
 
 // Sinh một tin nhắn của Cú qua đủ các lớp (SPEC §6 bước 4–6):
@@ -42,7 +42,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
   const system = await buildTutorSystem(input.prompt);
   const blocked: string[] = [];
   let guardSafety = false;
-  let feedback: string | null = null;
+  let blockedDraft: BlockedDraft | null = null;
 
   const verdict = (row: { checker: 'code' | 'llm'; llmCallId: string | null; tutorLlmCallId: string | null; attempt: number; pass: boolean; reasons: string[] }) =>
     input.writer.appendGuardVerdict({
@@ -60,7 +60,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
     let output: TutorOutput;
     let tutorLlmCallId: string;
     try {
-      const messages = tutorConversationMessages(input.history, feedback);
+      const messages = tutorConversationMessages(input.history, blockedDraft);
       const result = await callLlm({
         purpose: 'tutor',
         studentId: input.studentId,
@@ -87,7 +87,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
     await verdict({ checker: 'code', llmCallId: null, tutorLlmCallId, attempt, pass: hard.pass, reasons: hard.reasons });
     if (!hard.pass) {
       blocked.push(...hard.reasons);
-      feedback = `${hard.reasons.join(', ')} (${hard.details.join('; ')})`;
+      blockedDraft = { message: output.message, feedback: `${hard.reasons.join(', ')} (${hard.details.join('; ')})` };
       continue;
     }
 
@@ -106,7 +106,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
       return { message: output.message, source: 'tutor', output, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };
     }
     blocked.push(...guard.reasons);
-    feedback = `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}`;
+    blockedDraft = { message: output.message, feedback: `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}` };
   }
 
   // Câu dự phòng của bước hiện tại, cũng qua kiểm tra cứng.
