@@ -1,7 +1,7 @@
 import 'server-only';
 import { z } from 'zod';
 
-// Output JSON của tutor/v7 (SPEC §8.1) và guard/v6 (SPEC §8.2).
+// Output JSON của tutor/v8 (SPEC §8.1) và guard/v7 (SPEC §8.2).
 
 export const tutorOutputSchema = z.object({
   message: z.string().min(1).max(600),

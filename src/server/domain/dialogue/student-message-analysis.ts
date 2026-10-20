@@ -46,8 +46,14 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
   const lower = normalizeForMatching(text);
   const fa = plan.final_answer;
   switch (fa.kind) {
-    case 'number':
-      return said.includes(normalizeNumber(String(fa.canonical)));
+    case 'number': {
+      const want = normalizeNumber(String(fa.canonical));
+      if (!said.includes(want)) return false;
+      // Con liệt kê nhiều đáp án để đoán ("3,7 hay 3,07, hay 3,007?") thì chưa phải tự giải: có số thập phân
+      // hoặc phân số khác đáp án, không có trong đề và không phải kết quả một bước → chưa khớp.
+      const known = new Set([...plan.given_numbers.flatMap((n) => numbersIn(n)), ...plan.steps.flatMap((s) => numbersIn(s.expected_result))]);
+      return !said.some((n) => n !== want && /[./]/.test(n) && !known.has(n));
+    }
     case 'number_list': {
       const want = [fa.canonical].flat().map(normalizeNumber).join('|');
       return said.filter((n) => want.split('|').includes(n)).join('|').includes(want);

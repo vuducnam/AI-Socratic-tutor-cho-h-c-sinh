@@ -36,6 +36,28 @@ describe('relationClaim / answerMatchesFinal (so sánh)', () => {
   });
 });
 
+// Đề viết 3 7/100 thành số thập phân (đáp án 3,07).
+const mixedPlan = {
+  steps: [{ step_id: 's1', skill_id: 'x', description: 'đổi 7/100', expected_result: '7/100 = 0,07', hint_question: '?' }],
+  final_answer: { value: '3,07', canonical: '3.07', kind: 'number', choice_label: null },
+  skill_ids: ['x'],
+  misconception_ids: [],
+  sympy_check: { kind: 'number', expression: '3 + 7/100', expected: '3.07' },
+  given_numbers: ['3', '7/100'],
+} as unknown as SolutionPlan;
+
+describe('answerMatchesFinal (số)', () => {
+  it('nói đúng đáp án, kèm số trong đề hoặc kết quả bước → khớp', () => {
+    expect(answerMatchesFinal('3,07', mixedPlan)).toBe(true);
+    expect(answerMatchesFinal('7/100 là 0,07 nên viết 3,07', mixedPlan)).toBe(true);
+  });
+
+  it('liệt kê nhiều đáp án để đoán → chưa khớp', () => {
+    const text = 'Hình như là 3,7 phải không Mít? À mà không, hay là 3,07? Hay là 3,007 hả Mít?';
+    expect(answerMatchesFinal(text, mixedPlan)).toBe(false);
+  });
+});
+
 describe('looksLikeExplanation', () => {
   it('có lý do → là giải thích', () => {
     expect(looksLikeExplanation('Vì 0,5 có 5 phần mười, còn 0,45 chỉ có 4 phần mười')).toBe(true);
