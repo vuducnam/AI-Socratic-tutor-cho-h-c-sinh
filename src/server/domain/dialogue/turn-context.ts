@@ -25,6 +25,8 @@ export interface TutorTurnSignals {
   frustrated?: boolean;
   /** Con viết dấu chấm làm dấu thập phân ("2.5"); Cú nhắc dùng dấu phẩy. */
   dot_decimal?: boolean;
+  /** Con tự nói là đoán / chưa chắc; Cú hỏi lý do trước khi xác nhận đúng. */
+  unsure?: boolean;
   blocked_reasons?: string[];
   source?: string;
 }

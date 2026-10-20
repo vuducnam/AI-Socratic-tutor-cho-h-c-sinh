@@ -32,6 +32,10 @@ export interface HardCheckContext {
   problemText: string;
   givenNumbers: string[];
   forbiddenTerms: TermDefinition[];
+  /** expected_result của các bước con CHƯA hoàn thành (bỏ trống: không kiểm lộ bước trung gian). */
+  pendingStepResults?: string[];
+  /** Mọi lời con đã nói trong bài (nhắc lại số con đã tự nói không tính là lộ). */
+  studentTexts?: string[];
 }
 
 export interface HardCheckResult {
@@ -142,6 +146,20 @@ function numberLeak(text: string, ctx: HardCheckContext, answer: FinalAnswerSpec
   return seq.includes(answers.join('|')) && answers.join('|') !== problemOrder ? [answers.join(', ')] : [];
 }
 
+// Lộ bước trung gian: tin có con số là kết quả của một bước con chưa làm (ví dụ con mới nói "3/10" mà Cú
+// viết sẵn "0,3"). Không tính: số đề cho, chữ số nằm sẵn trong số của đề ("4" trong "0,45" — Cú hay hỏi
+// "chữ số 4 đứng ở hàng nào"), và số con đã tự nói. Chỉ so số; lộ bằng chữ để Guard bắt.
+function stepResultLeak(text: string, ctx: HardCheckContext): string[] {
+  if (!ctx.pendingStepResults?.length) return [];
+  const given = [...ctx.givenNumbers.map(normalizeNumber), ...numbersIn(ctx.problemText)];
+  const givenSet = new Set(given);
+  const digitsOfGiven = given.map((n) => n.replace(/\D/g, ''));
+  const said = new Set((ctx.studentTexts ?? []).flatMap(numbersIn));
+  const isGiven = (n: string) => givenSet.has(n) || (/^\d+$/.test(n) && digitsOfGiven.some((d) => d.includes(n)));
+  const results = new Set(ctx.pendingStepResults.flatMap(numbersIn).filter((n) => !isGiven(n) && !said.has(n)));
+  return [...new Set(numbersIn(text).filter((n) => results.has(n)))];
+}
+
 // ───────────────────────── Kiểm tra tổng ─────────────────────────
 
 export function runHardChecks(message: string, ctx: HardCheckContext): HardCheckResult {
@@ -175,6 +193,12 @@ export function runHardChecks(message: string, ctx: HardCheckContext): HardCheck
       reasons.add('LEAK');
       details.push('khẳng định kết quả so sánh/lựa chọn');
     }
+  }
+
+  const stepLeaks = stepResultLeak(message, ctx);
+  if (stepLeaks.length) {
+    reasons.add('LEAK');
+    details.push(`nói sẵn kết quả bước con chưa làm: ${stepLeaks.join(', ')}`);
   }
 
   const scopeHits = compileTermSet(ctx.forbiddenTerms).match(message);

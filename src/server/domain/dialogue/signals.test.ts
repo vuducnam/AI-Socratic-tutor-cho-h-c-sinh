@@ -6,6 +6,7 @@ import {
   findFrustrationPhrase,
   noProgressStreak,
   normalizeVietnameseText,
+  soundsUnsure,
   type AnswerAttempt,
 } from './signals';
 import { FRUSTRATION_PHRASES } from './frustration-phrases';
@@ -183,5 +184,18 @@ describe('detectGuessing', () => {
 
   it('thời gian không hợp lệ coi như không nhanh', () => {
     expect(detectGuessing([att('1', 500), att('2', Number.NaN), att('3', -5)])).toBe(false);
+  });
+});
+
+describe('soundsUnsure', () => {
+  it('con tự nói là đoán / chưa chắc', () => {
+    expect(soundsUnsure('Tớ đoán thôi, là 0,3 hả Cú?')).toBe(true);
+    expect(soundsUnsure('chắc là 4,36')).toBe(true);
+    expect(soundsUnsure('Mình chưa chắc lắm')).toBe(true);
+  });
+
+  it('câu trả lời chắc chắn hoặc có lý do thì không', () => {
+    expect(soundsUnsure('0,3 vì 3 phần mười đứng ngay sau dấu phẩy')).toBe(false);
+    expect(soundsUnsure('Tớ chắc chắn là 0,5 lớn hơn')).toBe(false);
   });
 });

@@ -104,6 +104,40 @@ describe('LEAK theo kiểu đáp án', () => {
   });
 });
 
+describe('LEAK bước trung gian', () => {
+  const ribbon = 'Mai cắt sợi ruy băng thành 10 đoạn bằng nhau rồi lấy 3 đoạn. Phần Mai lấy viết bằng số thập phân là bao nhiêu?';
+  const ctx = (over: Partial<HardCheckContext> = {}) =>
+    base({
+      problemText: ribbon,
+      givenNumbers: ['10', '3'],
+      finalAnswer: { kind: 'number', canonical: '0.3', expression: '3/10', choiceLabel: null },
+      pendingStepResults: ['3/10', '0,3'],
+      studentTexts: [],
+      ...over,
+    });
+
+  it('nói sẵn kết quả bước con chưa làm → LEAK', () => {
+    const r = runHardChecks('Phần Mai lấy là 3/10 sợi ruy băng. Vậy viết thành số thập phân thế nào?', ctx());
+    expect(r.reasons).toContain('LEAK');
+    expect(r.details.join()).toContain('3/10');
+  });
+
+  it('nhắc lại số con đã tự nói → không LEAK', () => {
+    const r = runHardChecks('Bạn nói Mai lấy 3/10 sợi ruy băng rồi. Vậy viết thành số thập phân thế nào?', ctx({ studentTexts: ['Mai lấy 3/10 ạ'] }));
+    expect(r.reasons).not.toContain('LEAK');
+  });
+
+  it('chữ số nằm sẵn trong số của đề không tính là kết quả bước', () => {
+    const r = runHardChecks('Chữ số 4 và chữ số 5 của 0,45 đứng ở hàng nào?', base({ pendingStepResults: ['5 > 4'] }));
+    expect(r.reasons).not.toContain('LEAK');
+  });
+
+  it('không có pendingStepResults (bước đã xong hoặc đã CONSOLIDATE) → không kiểm', () => {
+    const r = runHardChecks('Phần Mai lấy là 3/10 sợi ruy băng. Bạn viết nó thành số thập phân thế nào?', ctx({ pendingStepResults: [] }));
+    expect(r.reasons).not.toContain('LEAK');
+  });
+});
+
 describe('LENGTH, SCOPE, FORMAT', () => {
   it('quá 2 câu, quá 35 từ, không có hoặc 2 câu hỏi → LENGTH', () => {
     expect(runHardChecks('Một. Hai. Ba?', base()).reasons).toContain('LENGTH');

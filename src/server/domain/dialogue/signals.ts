@@ -133,3 +133,13 @@ export function detectGuessing(attempts: readonly AnswerAttempt[]): boolean {
   }
   return fastChanges >= GUESS_MIN_CHANGES;
 }
+
+// Con tự nói mình đoán / chưa chắc ("con đoán thôi", "chắc là 0,3"). Khác `detectGuessing` (đổi đáp án
+// nhanh, SPEC §6, dùng cho state machine): tín hiệu này chỉ để Tutor hỏi "vì sao" trước khi xác nhận đúng.
+const UNSURE_PHRASES = ['đoán', 'chọn bừa', 'ăn may', 'chắc là', 'chắc vậy', 'hình như', 'không chắc', 'chưa chắc', 'không biết có đúng', 'doan', 'chac la', 'khong chac', 'chua chac'];
+const UNSURE_MATCHERS = UNSURE_PHRASES.map(phraseRegExp);
+
+export function soundsUnsure(text: string): boolean {
+  const normalized = normalizeVietnameseText(text);
+  return normalized !== '' && UNSURE_MATCHERS.some((re) => re.test(normalized));
+}

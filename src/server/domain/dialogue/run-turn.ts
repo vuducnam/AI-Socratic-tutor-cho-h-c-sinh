@@ -13,7 +13,7 @@ import { DONE_MESSAGE, PAUSE_MESSAGE, currentStep } from './fallback-question';
 import { generateTutorMessage, type GeneratedMessage } from './generate-tutor-message';
 import { numbersIn, runHardChecks } from './hard-checks';
 import { runGuard } from './guard';
-import { detectFrustration, detectGuessing, noProgressStreak } from './signals';
+import { detectFrustration, detectGuessing, noProgressStreak, soundsUnsure } from './signals';
 import { nextState, type DialoguePosition, type DialogueState } from './state-machine';
 import {
   answerMatchesFinal,
@@ -74,8 +74,14 @@ export interface TurnResult {
 
 const TERMINAL: DialogueState[] = ['DONE', 'PAUSE'];
 
-function hardCheckContext(ctx: TurnContext, state: DialogueState) {
+// Kiểm lộ bước trung gian chỉ khi con còn đang giải; từ CONSOLIDATE con đã tự ra đáp án.
+const STEP_LEAK_STATES: DialogueState[] = ['ELICIT', 'PROBE', 'SCAFFOLD', 'DIRECT_TEACH'];
+
+function hardCheckContext(ctx: TurnContext, state: DialogueState, progress: { completedSteps: string[]; studentMessage?: string } = { completedSteps: ctx.completedSteps }) {
   const plan = ctx.plan;
+  const pendingStepResults =
+    plan && STEP_LEAK_STATES.includes(state) ? plan.steps.filter((s) => !progress.completedSteps.includes(s.step_id)).map((s) => s.expected_result) : [];
+  const studentTexts = [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(progress.studentMessage ? [progress.studentMessage] : [])];
   return {
     maxSentences: ctx.preset.max_sentences,
     maxWords: ctx.preset.max_words_per_turn,
@@ -92,6 +98,8 @@ function hardCheckContext(ctx: TurnContext, state: DialogueState) {
     problemText: ctx.active?.problem.confirmed_text ?? '',
     givenNumbers: plan?.given_numbers ?? [],
     forbiddenTerms: ctx.scope.forbiddenTerms,
+    pendingStepResults,
+    studentTexts,
   };
 }
 
@@ -109,7 +117,7 @@ async function produceTutorMessage(
     history: args.history,
     writer,
     evalMode: args.evalMode,
-    hardChecks: hardCheckContext(ctx, state),
+    hardChecks: hardCheckContext(ctx, state, { completedSteps: args.completedSteps, studentMessage: args.studentMessage }),
     prompt: {
       student: ctx.student,
       preset: ctx.preset,
@@ -250,7 +258,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const frustrated = detectFrustration(text, ctx.recentStudentTexts).frustrated;
     const guessing = detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]);
     const dotDecimal = findDotDecimals(text).length > 0;
-    const hints: TurnHints = { guessing, dotDecimal };
+    const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text) };
     const next = nextState({
       current: ctx.position,
       mode: ctx.session.mode as 'solve' | 'argue',
@@ -416,6 +424,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         guessing,
         frustrated,
         dot_decimal: dotDecimal,
+        unsure: hints.unsure,
         blocked_reasons: generated?.blockedReasons ?? [],
         source: generated?.source ?? 'fixed',
       };

@@ -17,4 +17,13 @@ describe('stateGuidance', () => {
     expect(text).toContain('hỏi em vì sao chọn đáp án đó');
     expect(text).toContain('dùng dấu phẩy');
   });
+
+  it('CONSOLIDATE mà con đoán / chưa chắc → chưa xác nhận đúng, hỏi lý do trước', () => {
+    for (const hints of [{ unsure: true }, { guessing: true }]) {
+      const text = stateGuidance('CONSOLIDATE', hints);
+      expect(text).toContain('CHƯA nói đúng hay sai');
+      expect(text).not.toContain('"Đúng rồi"');
+    }
+    expect(stateGuidance('CONSOLIDATE')).toContain('"Đúng rồi"');
+  });
 });

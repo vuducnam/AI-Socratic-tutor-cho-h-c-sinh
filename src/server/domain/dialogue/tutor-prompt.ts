@@ -17,11 +17,16 @@ export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
 const GUESSING_GUIDANCE = 'em vừa đổi đáp án nhanh nhiều lần: chậm lại, hỏi em vì sao chọn đáp án đó';
+// Đáp án đúng nhưng con đoán: chưa xác nhận, hỏi lý do trước (lượt sau con giải thích được thì mới "Đúng rồi").
+const CONSOLIDATE_UNSURE_GUIDANCE =
+  'em ra đúng đáp án nhưng có vẻ đoán hoặc chưa chắc: CHƯA nói đúng hay sai, hỏi em vì sao em chọn như vậy (không nhắc lại con số)';
 const DOT_DECIMAL_GUIDANCE = 'em viết dấu chấm làm dấu thập phân: nhắc nhẹ em dùng dấu phẩy, không chê';
 
 export interface TurnHints {
   guessing?: boolean;
   dotDecimal?: boolean;
+  /** Con tự nói là đoán / chưa chắc (signals.soundsUnsure). */
+  unsure?: boolean;
 }
 
 // Hướng dẫn ngắn theo trạng thái: code chọn trạng thái, prompt chỉ nói Cú cần làm gì ở trạng thái đó.
@@ -39,7 +44,8 @@ const STATE_GUIDANCE: Record<DialogueState, string> = {
 
 /** Chỉ dẫn cho Tutor ở lượt này: theo trạng thái, cộng thêm chỉ dẫn cho tín hiệu code phát hiện. */
 export function stateGuidance(state: DialogueState, hints: TurnHints = {}): string {
-  return [STATE_GUIDANCE[state], hints.guessing && GUESSING_GUIDANCE, hints.dotDecimal && DOT_DECIMAL_GUIDANCE]
+  const unsureAnswer = state === 'CONSOLIDATE' && (hints.guessing || hints.unsure);
+  return [unsureAnswer ? CONSOLIDATE_UNSURE_GUIDANCE : STATE_GUIDANCE[state], !unsureAnswer && hints.guessing && GUESSING_GUIDANCE, hints.dotDecimal && DOT_DECIMAL_GUIDANCE]
     .filter(Boolean)
     .join('; ');
 }
