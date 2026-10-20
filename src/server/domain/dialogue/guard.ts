@@ -8,8 +8,8 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import { guardOutputSchema, type GuardOutput } from './tutor-output-schema';
 
-// Guard (guard/v2, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
-export const GUARD_PROMPT = 'guard/v2';
+// Guard (guard/v3, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
+export const GUARD_PROMPT = 'guard/v3';
 
 export interface GuardInput {
   studentId: string;
@@ -17,6 +17,8 @@ export interface GuardInput {
   turnId: string;
   message: string;
   studentMessage: string;
+  /** Tên Cú gọi học sinh (address.student hoặc tên hiển thị), để Guard không coi đó là nhân vật lạ. */
+  studentName: string;
   grade: number;
   preset: Preset;
   scope: CurriculumScope;
@@ -44,6 +46,7 @@ export async function runGuard(input: GuardInput): Promise<GuardOutput & { llmCa
     curriculum_scope: renderCurriculumScope(input.scope),
     mode: input.mode,
     state: input.state,
+    student_name: input.studentName,
     student_message: input.studentMessage || '(chưa có)',
     max_sentences: input.preset.max_sentences,
     max_words_per_turn: input.preset.max_words_per_turn,

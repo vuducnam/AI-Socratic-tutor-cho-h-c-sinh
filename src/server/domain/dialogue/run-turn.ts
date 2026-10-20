@@ -140,8 +140,10 @@ async function produceTutorMessage(
 }
 
 function guardInputFor(ctx: TurnContext, studentMessage: string, completedSteps: string[], state: DialogueState) {
+  const address = ctx.student.address as { student?: unknown } | null;
   return {
     studentMessage,
+    studentName: typeof address?.student === 'string' ? address.student : ctx.student.display_name,
     grade: ctx.student.grade,
     preset: ctx.preset,
     scope: ctx.scope,
