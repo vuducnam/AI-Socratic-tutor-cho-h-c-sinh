@@ -24,7 +24,7 @@ const PLAN: SolutionPlan = {
   sympy_check: { kind: 'relation', expression: '0.5 > 0.45', expected: '>' },
   given_numbers: ['0,45', '0,5'],
 };
-const tutor = (message: string) => ({ message, question_type: 'evidence', step_addressed: 's1', student_state_guess: 'progressing' });
+const tutor = (message: string) => ({ message, short_message: message, question_type: 'evidence', step_addressed: 's1', student_state_guess: 'progressing' });
 const PASS = { verdict: 'pass', reasons: [], explanation: '' };
 const BLOCK = { verdict: 'block', reasons: ['LEVEL'], explanation: 'khó quá' };
 
@@ -88,6 +88,17 @@ describe('runStudentTurn', () => {
     const { verdicts } = await rows(w.sessionId);
     const mine = verdicts.filter((v) => v.turn_id === r.tutorTurnId);
     expect(mine[0]).toMatchObject({ checker: 'code', verdict: 'block', reasons: ['LEAK'], attempt: 1 });
+  });
+
+  it('bản chính quá dài → dùng ngay bản ngắn, không gọi lại Tutor', async () => {
+    const w = await world();
+    const long = 'Bạn đã cố gắng rất nhiều và Cú thấy rõ điều đó trong từng câu trả lời của bạn hôm nay, thật đáng khen lắm luôn đó. Vậy bạn thử so phần nguyên của hai số xem sao nhé?';
+    setGatewayDependencies({ primary: scriptedAnthropic([{ ...tutor(long), short_message: 'Bạn thử so phần nguyên của hai số xem?' }, PASS]).provider, fallback: null });
+    const tutorCalls = async () => (await rows(w.sessionId)).calls.filter((c) => c.purpose === 'tutor').length;
+    const before = await tutorCalls();
+    const r = await say(w, 'con chưa hiểu');
+    expect(r).toMatchObject({ source: 'tutor', message: 'Bạn thử so phần nguyên của hai số xem?' });
+    expect((await tutorCalls()) - before).toBe(1);
   });
 
   it('Guard chặn cả 3 lần viết → câu hỏi dự phòng của bước hiện tại', async () => {

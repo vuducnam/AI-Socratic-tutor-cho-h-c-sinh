@@ -7,6 +7,7 @@ import { runGuard, type GuardInput } from './guard';
 import { runHardChecks, type HardCheckContext } from './hard-checks';
 import { buildTutorSystem, TUTOR_PROMPT, type TutorPromptInput } from './tutor-prompt';
 import { tutorConversationMessages, type BlockedDraft } from './tutor-conversation-messages';
+import { draftCandidates } from './tutor-draft-candidates';
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
 
 // Sinh một tin nhắn của Cú qua đủ các lớp (SPEC §6 bước 4–6):
@@ -84,11 +85,21 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
       throw err;
     }
 
-    const hard = runHardChecks(output.message, input.hardChecks);
-    await verdict({ checker: 'code', llmCallId: null, tutorLlmCallId, attempt, pass: hard.pass, reasons: hard.reasons });
-    if (!hard.pass) {
+    // Thử bản chính rồi bản ngắn dự phòng: bản nào qua kiểm tra cứng trước thì mới gửi Guard.
+    let draft: string | null = null;
+    let firstFailure: { message: string; feedback: string } | null = null;
+    for (const candidate of draftCandidates(output, input.hardChecks.maxSentences)) {
+      const hard = runHardChecks(candidate, input.hardChecks);
+      await verdict({ checker: 'code', llmCallId: null, tutorLlmCallId, attempt, pass: hard.pass, reasons: hard.reasons });
+      if (hard.pass) {
+        draft = candidate;
+        break;
+      }
       blocked.push(...hard.reasons);
-      blockedDraft = { message: output.message, feedback: `${hard.reasons.join(', ')} (${hard.details.join('; ')})` };
+      firstFailure ??= { message: candidate, feedback: `${hard.reasons.join(', ')} (${hard.details.join('; ')})` };
+    }
+    if (!draft) {
+      blockedDraft = firstFailure;
       continue;
     }
 
@@ -97,17 +108,17 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
       studentId: input.studentId,
       sessionId: input.sessionId,
       turnId: input.tutorTurnId,
-      message: output.message,
+      message: draft,
       recorder: input.writer.recorder,
       evalMode: input.evalMode,
     });
     await verdict({ checker: 'llm', llmCallId: guard.llmCallId, tutorLlmCallId, attempt, pass: guard.verdict === 'pass', reasons: guard.reasons });
     if (guard.reasons.includes('SAFETY')) guardSafety = true;
     if (guard.verdict === 'pass') {
-      return { message: output.message, source: 'tutor', output, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };
+      return { message: draft, source: 'tutor', output: { ...output, message: draft }, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };
     }
     blocked.push(...guard.reasons);
-    blockedDraft = { message: output.message, feedback: `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}` };
+    blockedDraft = { message: draft, feedback: `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}` };
   }
 
   // Câu dự phòng của bước hiện tại, cũng qua kiểm tra cứng.

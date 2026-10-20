@@ -18,7 +18,7 @@ const PLAN: SolutionPlan = {
   sympy_check: { kind: 'relation', expression: '0.5 > 0.45', expected: '>' },
   given_numbers: ['0,45', '0,5'],
 };
-const tutor = (message: string) => ({ message, question_type: 'evidence', step_addressed: 's1', student_state_guess: 'progressing' });
+const tutor = (message: string) => ({ message, short_message: message, question_type: 'evidence', step_addressed: 's1', student_state_guess: 'progressing' });
 const PASS = { verdict: 'pass', reasons: [], explanation: '' };
 const PROBLEM = { id: 'FX-01', target_lesson_id: 'FX5.T1.B4', kind: 'compare', origin: 'homework' as const, text: 'Số nào lớn hơn: 0,45 hay 0,5?', answer: { display: '0,5', machine: ['>'] }, skill_ids: ['FX.DEC.COMPARE'] };
 

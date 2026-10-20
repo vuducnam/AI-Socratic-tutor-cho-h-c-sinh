@@ -1,10 +1,12 @@
 import 'server-only';
 import { z } from 'zod';
 
-// Output JSON của tutor/v5 (SPEC §8.1) và guard/v4 (SPEC §8.2).
+// Output JSON của tutor/v6 (SPEC §8.1) và guard/v4 (SPEC §8.2).
 
 export const tutorOutputSchema = z.object({
   message: z.string().min(1).max(600),
+  /** Bản ngắn dự phòng cùng ý (≤ 20 từ), dùng ngay khi bản chính vượt giới hạn — không phải gọi lại model. */
+  short_message: z.string().max(400),
   question_type: z.enum(['clarify', 'assumption', 'evidence', 'perspective', 'implication', 'meta']),
   step_addressed: z.string().max(20),
   student_state_guess: z.enum(['progressing', 'stuck', 'guessing', 'frustrated', 'done']),

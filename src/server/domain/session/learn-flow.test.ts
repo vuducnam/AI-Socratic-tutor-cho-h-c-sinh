@@ -58,7 +58,7 @@ describe('learn flow', () => {
     const opened = await openLearningSession(w.actor, { studentId: w.studentId, subject: FX_SUBJECT });
     if (!opened.ok) throw new Error('phải mở được');
     setGatewayDependencies({
-      primary: scriptedAnthropic([PLAN, { hook: 'Ở chợ có hai bó rau.' }, PASS, { message: 'Đề hỏi gì nhỉ?', question_type: 'clarify', step_addressed: 's1', student_state_guess: 'progressing' }, PASS]).provider,
+      primary: scriptedAnthropic([PLAN, { hook: 'Ở chợ có hai bó rau.' }, PASS, { message: 'Đề hỏi gì nhỉ?', short_message: 'Đề hỏi gì nhỉ?', question_type: 'clarify', step_addressed: 's1', student_state_guess: 'progressing' }, PASS]).provider,
       fallback: null,
     });
     const r = await learn.submitTypedProblem(w.actor, { studentId: w.studentId, sessionId: opened.sessionId, text: 'Số nào lớn hơn: 0,45 hay 0,5?' });

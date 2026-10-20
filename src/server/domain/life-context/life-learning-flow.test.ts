@@ -42,7 +42,7 @@ const TEMPLATE = {
   conditions: [],
   svg_kind: 'segment_bar',
 };
-const tutor = (message: string) => ({ message, question_type: 'clarify', step_addressed: 's1', student_state_guess: 'stuck' });
+const tutor = (message: string) => ({ message, short_message: message, question_type: 'clarify', step_addressed: 's1', student_state_guess: 'stuck' });
 const PASS = { verdict: 'pass', reasons: [], explanation: '' };
 
 async function setApprovedParallelContext(approved: boolean) {
