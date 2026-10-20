@@ -3,7 +3,7 @@ import { ChatApp } from '@/components/chat/chat-app';
 import { requireStudentActor } from '@/server/auth/session';
 import { getStudentContext } from '@/server/dal/sessions-dal';
 
-export const metadata: Metadata = { title: 'Học với Cú', manifest: '/manifest.webmanifest' };
+export const metadata: Metadata = { title: 'Học với Mít', manifest: '/manifest.webmanifest' };
 export const dynamic = 'force-dynamic';
 
 export default async function LearnPage() {

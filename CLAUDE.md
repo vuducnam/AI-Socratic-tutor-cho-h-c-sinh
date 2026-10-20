@@ -2,6 +2,8 @@
 
 Gia sư AI theo phương pháp Socratic cho con trong gia đình, bắt đầu từ lớp 5 (sách **Kết nối tri thức với cuộc sống**) và dùng lâu dài lên THCS, THPT. Giao diện là **một luồng chat**, nhập bằng **giọng nói hoặc text**, kèm chụp ảnh đề.
 
+Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là cú mèo); "Cú" là tên dự án trong tài liệu và code. Mít tự xưng "Mít", gọi con là "bạn" hoặc tên (không gọi "con", "em").
+
 Đặc tả đầy đủ: `docs/SPEC.md`. Đọc SPEC trước khi làm bất kỳ module nào. Khi CLAUDE.md và SPEC mâu thuẫn, **quy tắc cứng bên dưới thắng**, sau đó đến SPEC.
 
 ---

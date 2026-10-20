@@ -29,23 +29,23 @@ export async function sendEmail(email: OutgoingEmail): Promise<void> {
 }
 
 const FLAG_SUBJECTS: Record<string, string> = {
-  pin_soft_locked: 'Cú: tài khoản của con bị khoá tạm 15 phút',
-  pin_hard_locked: 'Cú: tài khoản của con đang bị khoá, cần bố mẹ mở',
-  safety_pause: 'Cú: có cuộc trò chuyện cần bố mẹ xem ngay',
+  pin_soft_locked: 'Mít: tài khoản của con bị khoá tạm 15 phút',
+  pin_hard_locked: 'Mít: tài khoản của con đang bị khoá, cần bố mẹ mở',
+  safety_pause: 'Mít: có cuộc trò chuyện cần bố mẹ xem ngay',
 };
 
 export function buildFlagEmail(input: { to: string; parentName: string; flagType: string }): OutgoingEmail {
   const base = (process.env.APP_BASE_URL ?? '').replace(/\/$/, '');
   return {
     to: input.to,
-    subject: FLAG_SUBJECTS[input.flagType] ?? 'Cú: có việc cần bố mẹ xem',
+    subject: FLAG_SUBJECTS[input.flagType] ?? 'Mít: có việc cần bố mẹ xem',
     text: [
       `Chào ${input.parentName},`,
       '',
-      'Cú vừa ghi nhận một việc bố mẹ cần xem. Vì lý do riêng tư, email không kèm nội dung.',
+      'Mít vừa ghi nhận một việc bố mẹ cần xem. Vì lý do riêng tư, email không kèm nội dung.',
       `Mở trang phụ huynh để xem chi tiết: ${base}/parent`,
       '',
-      'Cú',
+      'Mít',
     ].join('\n'),
   };
 }

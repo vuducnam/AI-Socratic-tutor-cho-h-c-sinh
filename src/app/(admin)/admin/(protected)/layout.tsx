@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     <div className="admin-shell">
       <header className="admin-header">
         <a href="/admin">
-          <strong>Cú · Quản trị</strong>
+          <strong>Mít · Quản trị</strong>
         </a>
         <form action={adminLogoutAction}>
           <button type="submit" className="link-button">

@@ -8,7 +8,7 @@ import { GuardVerdictList, LlmCallDetails } from './llm-call-details';
 
 type TurnRow = SessionTranscript['turns'][number];
 
-const ROLE_LABELS: Record<string, string> = { student: 'Con', tutor: 'Cú', system: 'Hệ thống' };
+const ROLE_LABELS: Record<string, string> = { student: 'Con', tutor: 'Mít', system: 'Hệ thống' };
 const KIND_LABELS: Record<string, string> = {
   normal: 'Thường',
   hook: 'Câu mở đời thật',

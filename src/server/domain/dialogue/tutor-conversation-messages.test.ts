@@ -13,7 +13,7 @@ describe('tutorConversationMessages', () => {
 
   it('lịch sử đã kết thúc bằng lời con thì giữ nguyên', () => {
     const history = [
-      { role: 'user' as const, content: 'con chào Cú' },
+      { role: 'user' as const, content: 'con chào Mít' },
       { role: 'assistant' as const, content: 'Con thấy số nào lớn hơn?' },
       { role: 'user' as const, content: '0,45' },
     ];

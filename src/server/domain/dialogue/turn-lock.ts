@@ -10,7 +10,7 @@ const IDEMPOTENCY_TTL_S = 24 * 3600;
 
 export class TurnBusyError extends Error {
   constructor() {
-    super('Cú đang trả lời tin nhắn trước');
+    super('Mít đang trả lời tin nhắn trước');
     this.name = 'TurnBusyError';
   }
 }

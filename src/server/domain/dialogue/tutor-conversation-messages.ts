@@ -8,7 +8,7 @@ import type { ChatMessage } from '@/server/llm/llm-types';
 // thay vì viết lại từ đầu và lặp lại lỗi. Bản nháp chưa tới con nên chỉ nằm trong lượt gọi này.
 
 const START = '[Hệ thống] Bắt đầu bài.';
-const CONTINUE = '[Hệ thống] Viết tin nhắn tiếp theo của Cú.';
+const CONTINUE = '[Hệ thống] Viết tin nhắn tiếp theo của Mít.';
 
 export interface BlockedDraft {
   message: string;

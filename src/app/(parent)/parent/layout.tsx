@@ -17,7 +17,7 @@ export default async function ParentLayout({ children }: { children: ReactNode }
     <div className="parent-shell">
       <header className="parent-header">
         <a href="/parent">
-          <strong>Cú · Phụ huynh</strong>
+          <strong>Mít · Phụ huynh</strong>
         </a>
         <nav>
           <Link href="/parent">Tổng quan</Link>

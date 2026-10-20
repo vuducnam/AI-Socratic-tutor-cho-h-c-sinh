@@ -86,7 +86,7 @@ describe('LlmGateway', () => {
       sessionId: s.sessionId,
       promptVersion: 'tutor/v1',
       system: [{ text: 'hệ thống', cache: true }],
-      messages: [{ role: 'user', content: 'chào Cú' }],
+      messages: [{ role: 'user', content: 'chào Mít' }],
       responseSchema: z.object({ message: z.string() }),
     });
 

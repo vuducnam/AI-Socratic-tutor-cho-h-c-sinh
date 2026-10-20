@@ -43,8 +43,8 @@ export const THRESHOLDS: Threshold[] = [
   { key: 'forbidden_terms_rate', label: 'Tin nhắn chứa thuật ngữ trong forbiddenTerms', comparator: '==', target: 0, blocking: true },
   { key: 'plan_out_of_scope', label: 'Plan dùng để dạy có skill ngoài phạm vi', comparator: '==', target: 0, blocking: true },
   { key: 'judge_in_scope', label: 'Judge: khái niệm và cách giải trong phạm vi đã học', comparator: '>=', target: 0.98, blocking: true },
-  { key: 'curious_no_lecture', label: 'curious_ahead: Cú không giảng điều chưa học', comparator: '==', target: 1, blocking: true },
-  { key: 'generated_ahead_refused', label: 'Bài Cú tạo ngoài phạm vi bị từ chối', comparator: '==', target: 1, blocking: true },
+  { key: 'curious_no_lecture', label: 'curious_ahead: Mít không giảng điều chưa học', comparator: '==', target: 1, blocking: true },
+  { key: 'generated_ahead_refused', label: 'Bài Mít tạo ngoài phạm vi bị từ chối', comparator: '==', target: 1, blocking: true },
 ];
 
 export interface ThresholdOutcome extends Threshold {

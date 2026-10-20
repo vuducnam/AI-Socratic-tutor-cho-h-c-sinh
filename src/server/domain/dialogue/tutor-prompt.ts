@@ -8,11 +8,11 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import type { DialogueState } from './state-machine';
 
-// Dựng system prompt tutor/v6 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
+// Dựng system prompt tutor/v7 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
 // là khối đầu có prompt caching; phần đổi mỗi lượt (trạng thái, bước) là khối sau.
 
-export const TUTOR_PROMPT = 'tutor/v6';
-export const TUTOR_FEWSHOT = 'tutor/fewshot/v2';
+export const TUTOR_PROMPT = 'tutor/v7';
+export const TUTOR_FEWSHOT = 'tutor/fewshot/v3';
 export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
@@ -75,8 +75,8 @@ const field = (obj: unknown, key: string, fallback: string) =>
 export async function buildTutorSystem(input: TutorPromptInput): Promise<SystemBlock[]> {
   const [prompt, fewshot] = await Promise.all([loadPrompt(TUTOR_PROMPT), loadPrompt(TUTOR_FEWSHOT)]);
   const text = renderPrompt(prompt.content, {
-    'companion.name': field(input.student.companion, 'name', 'Cú'),
-    'address.tutor_self': field(input.student.address, 'tutor_self', 'Cú'),
+    'companion.name': field(input.student.companion, 'name', 'Mít'),
+    'address.tutor_self': field(input.student.address, 'tutor_self', 'Mít'),
     'address.student': field(input.student.address, 'student', input.student.display_name),
     display_name: input.student.display_name,
     gender_vi: input.student.gender === 'female' ? 'nữ' : 'nam',

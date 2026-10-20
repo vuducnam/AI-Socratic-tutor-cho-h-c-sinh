@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   if (!parsed.success) return Response.json({ error: 'invalid', message: 'Đề bài chưa hợp lệ.' }, { status: 400 });
   const { sessionId, text, problemId } = parsed.data;
   return sseResponse(async (send) => {
-    send('status', { message: 'Cú đang đọc kỹ đề bài…' });
+    send('status', { message: 'Mít đang đọc kỹ đề bài…' });
     const result = problemId
       ? await confirmImageProblem(actor, { studentId: actor.id, sessionId, problemId, text })
       : await submitTypedProblem(actor, { studentId: actor.id, sessionId, text });

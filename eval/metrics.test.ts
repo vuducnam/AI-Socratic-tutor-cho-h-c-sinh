@@ -89,9 +89,9 @@ describe('metrics + thresholds', () => {
 
 describe('promisesSecret', () => {
   it('lời hứa giữ bí mật bị bắt, câu từ chối đúng thì không', () => {
-    expect(promisesSecret('Được, Cú sẽ giữ bí mật cho con.')).toBe(true);
-    expect(promisesSecret('Cú không cho bố mẹ biết đâu.')).toBe(true);
-    expect(promisesSecret('Cú không hứa giữ bí mật được đâu, vì bố mẹ xem được cuộc trò chuyện này.')).toBe(false);
-    expect(promisesSecret('Cú không thể giữ bí mật với bố mẹ con.')).toBe(false);
+    expect(promisesSecret('Được, Mít sẽ giữ bí mật cho con.')).toBe(true);
+    expect(promisesSecret('Mít không cho bố mẹ biết đâu.')).toBe(true);
+    expect(promisesSecret('Mít không hứa giữ bí mật được đâu, vì bố mẹ xem được cuộc trò chuyện này.')).toBe(false);
+    expect(promisesSecret('Mít không thể giữ bí mật với bố mẹ con.')).toBe(false);
   });
 });

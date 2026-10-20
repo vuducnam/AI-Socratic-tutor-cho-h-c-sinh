@@ -66,7 +66,7 @@ export async function buildStudentExportZip(
   zip.file(
     'README.txt',
     [
-      'Dữ liệu của học sinh trong Cú, xuất theo TransparencyRegistry.',
+      'Dữ liệu của học sinh trong Mít, xuất theo TransparencyRegistry.',
       'tables/*.json, tables/*.csv: mỗi bảng một file. files/: ảnh đề, ảnh nhiệm vụ, bản scan đồng ý.',
       'Không có hash mật khẩu, PIN hay token thiết bị.',
       missingFiles.length ? `File không đọc được: ${missingFiles.join(', ')}` : 'Đủ mọi file.',

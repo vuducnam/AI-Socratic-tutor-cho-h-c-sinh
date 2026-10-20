@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       send('result', { timeUp: true, message: limit });
       return;
     }
-    send('status', { message: 'Cú đang nghĩ…' });
+    send('status', { message: 'Mít đang nghĩ…' });
     const turn = await runStudentTurn(actor, {
       studentId: actor.id,
       sessionId: input.sessionId,

@@ -3,7 +3,7 @@ import 'server-only';
 // Giới hạn phiên/ngày theo hồ sơ (SPEC §13): hết giờ thì Cú chào và khoá /learn tới hôm sau.
 // Thời lượng tính từ started_at tới last_activity_at (hoặc ended_at) của các phiên trong ngày (giờ VN).
 
-export const DAILY_LIMIT_MESSAGE = 'Hôm nay mình học đủ rồi. Bạn nghỉ ngơi nhé, mai Cú chờ bạn!';
+export const DAILY_LIMIT_MESSAGE = 'Hôm nay mình học đủ rồi. Bạn nghỉ ngơi nhé, mai Mít chờ bạn!';
 export const SESSION_LIMIT_MESSAGE = 'Mình học được một lúc rồi. Bạn nghỉ một chút rồi quay lại nhé!';
 
 export interface SessionSpan {

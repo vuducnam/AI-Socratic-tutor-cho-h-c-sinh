@@ -56,7 +56,7 @@ export async function createAdminWorld(options: { isFamily?: boolean; pin?: stri
     preset: 'grade5',
     isFamily: options.isFamily ?? true,
     interests: [],
-    companionName: 'Cú',
+    companionName: 'Mít',
   });
   await linkParentToStudent(admin, { parentId, studentId });
   return {

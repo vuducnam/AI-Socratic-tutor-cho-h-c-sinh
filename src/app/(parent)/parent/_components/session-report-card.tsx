@@ -19,7 +19,7 @@ const METRIC_LABELS: Record<string, string> = {
   high_scaffold_rate: 'Tỉ lệ bài cần hỗ trợ bậc 3 trở lên',
   abandon_rate: 'Bỏ dở trước khi xong',
   guessing_rate: 'Lượt đoán bừa',
-  scope_block_rate: 'Lượt Cú bị chặn vì vượt phạm vi',
+  scope_block_rate: 'Lượt Mít bị chặn vì vượt phạm vi',
   transfer_answer_rate: 'Có câu trả lời chuyển giao',
   fun_share: 'Con thấy vui',
   boring_share: 'Con thấy chán',

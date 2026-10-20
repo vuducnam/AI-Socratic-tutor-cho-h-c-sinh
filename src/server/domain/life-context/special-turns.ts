@@ -11,8 +11,8 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 // Câu mở chuyện đời (hook/v1) và câu hỏi chuyển giao (transfer/v1) — SPEC §5b.1 lớp 1 và 4, quy tắc cứng 13.
 // Như mọi tin nhắn gửi con: kiểm tra cứng + Guard; bị chặn 2 lần → câu cố định đã duyệt sẵn.
 
-export const HOOK_PROMPT = 'hook/v2';
-export const TRANSFER_PROMPT = 'transfer/v2';
+export const HOOK_PROMPT = 'hook/v3';
+export const TRANSFER_PROMPT = 'transfer/v3';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';
 

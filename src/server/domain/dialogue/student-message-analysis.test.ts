@@ -44,7 +44,7 @@ describe('looksLikeExplanation', () => {
 
   it('con tự nói đoán / đang rối, hoặc không có lý do → chưa phải giải thích', () => {
     expect(looksLikeExplanation('Ơ mình đoán thôi mà, thấy có số 3 với số 10 nên ghép lại thành 0,3')).toBe(false);
-    expect(looksLikeExplanation('Số 4 đứng ngay sau dấu phẩy, là hàng phần mười đúng không Cú? Mình hơi rối rồi.')).toBe(false);
-    expect(looksLikeExplanation('Dạ mình làm xong rồi đó Cú')).toBe(false);
+    expect(looksLikeExplanation('Số 4 đứng ngay sau dấu phẩy, là hàng phần mười đúng không Mít? Mình hơi rối rồi.')).toBe(false);
+    expect(looksLikeExplanation('Dạ mình làm xong rồi đó Mít')).toBe(false);
   });
 });

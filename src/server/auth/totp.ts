@@ -31,7 +31,7 @@ export function newTotpSecret(): string {
 }
 
 export function totpUri(secret: string, accountLabel: string): string {
-  return generateURI({ issuer: 'Cú', label: accountLabel, secret });
+  return generateURI({ issuer: 'Mít', label: accountLabel, secret });
 }
 
 export async function verifyTotpCode(secret: string, code: string): Promise<boolean> {

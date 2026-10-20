@@ -62,7 +62,7 @@ describe('runConversation (eval)', () => {
     expect(rec.reportClaims).toEqual({ valid: 0, total: 0 });
   });
 
-  it('bài Cú tạo ở mức chưa học → bộ chọn không sinh bài', async () => {
+  it('bài Mít tạo ở mức chưa học → bộ chọn không sinh bài', async () => {
     const { runGeneratedAheadCase } = await import('./run-conversation');
     setGatewayDependencies({ primary: scriptedAnthropic([]).provider, evalPrimary: scriptedAnthropic([]).provider, fallback: null });
     const rec = await runGeneratedAheadCase(PROBLEM);

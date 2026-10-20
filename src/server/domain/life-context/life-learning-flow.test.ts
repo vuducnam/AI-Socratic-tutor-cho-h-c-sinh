@@ -98,7 +98,7 @@ describe('học từ đời sống', () => {
   it('bế tắc ở SCAFFOLD(3) → PARALLEL với bài tình huống từ context đã duyệt, số trong khoảng; giải xong quay về bài gốc', async () => {
     await setApprovedParallelContext(true);
     const w = await homeworkWorld();
-    setGatewayDependencies({ primary: scriptedAnthropic([{ hook: 'Cú kể chuyện nhảy xa nhé.' }, PASS, tutor('Đề hỏi gì?'), PASS]).provider, fallback: null });
+    setGatewayDependencies({ primary: scriptedAnthropic([{ hook: 'Mít kể chuyện nhảy xa nhé.' }, PASS, tutor('Đề hỏi gì?'), PASS]).provider, fallback: null });
     await openProblemTurn(w.student, { studentId: w.studentId, sessionId: w.sessionId });
 
     const outputs: object[] = [];

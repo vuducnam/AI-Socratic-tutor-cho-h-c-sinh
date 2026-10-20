@@ -39,7 +39,7 @@ describe('normalizeVietnameseText', () => {
 describe('findFrustrationPhrase', () => {
   it('khớp các cụm từ cơ bản của con lớp 5', () => {
     expect(findFrustrationPhrase('Con không biết')).toBe('con không biết');
-    expect(findFrustrationPhrase('khó quá Cú ơi')).toBe('khó quá');
+    expect(findFrustrationPhrase('khó quá Mít ơi')).toBe('khó quá');
     expect(findFrustrationPhrase('chán')).toBe('chán');
     expect(findFrustrationPhrase('thôi, con không làm nữa')).toBe('không làm nữa');
     expect(findFrustrationPhrase('con mệt')).toBe('mệt');
@@ -189,7 +189,7 @@ describe('detectGuessing', () => {
 
 describe('soundsUnsure', () => {
   it('con tự nói là đoán / chưa chắc', () => {
-    expect(soundsUnsure('Tớ đoán thôi, là 0,3 hả Cú?')).toBe(true);
+    expect(soundsUnsure('Tớ đoán thôi, là 0,3 hả Mít?')).toBe(true);
     expect(soundsUnsure('chắc là 4,36')).toBe(true);
     expect(soundsUnsure('Mình chưa chắc lắm')).toBe(true);
   });

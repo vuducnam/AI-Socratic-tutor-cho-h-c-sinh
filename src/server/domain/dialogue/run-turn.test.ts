@@ -44,7 +44,7 @@ async function world() {
     { verify: async () => ({ ok: true, computed: '>', detail: 'match' }) },
   );
   if (!presolved.ok) throw new Error('presolve phải đạt');
-  const opening = scriptedAnthropic([{ hook: 'Hôm qua Cú đi chợ thấy hai bó rau ghi giá khác nhau đấy.' }, PASS, tutor('Đề hỏi gì nhỉ, con đọc lại cho Cú nghe nhé?'), PASS]);
+  const opening = scriptedAnthropic([{ hook: 'Hôm qua Mít đi chợ thấy hai bó rau ghi giá khác nhau đấy.' }, PASS, tutor('Đề hỏi gì nhỉ, con đọc lại cho Mít nghe nhé?'), PASS]);
   setGatewayDependencies({ primary: opening.provider, fallback: null });
   await openProblemTurn(w.student, { studentId: w.studentId, sessionId: w.sessionId });
   return w;
@@ -92,7 +92,7 @@ describe('runStudentTurn', () => {
 
   it('bản chính quá dài → dùng ngay bản ngắn, không gọi lại Tutor', async () => {
     const w = await world();
-    const long = 'Bạn đã cố gắng rất nhiều và Cú thấy rõ điều đó trong từng câu trả lời của bạn hôm nay, thật đáng khen lắm luôn đó. Vậy bạn thử so phần nguyên của hai số xem sao nhé?';
+    const long = 'Bạn đã cố gắng rất nhiều và Mít thấy rõ điều đó trong từng câu trả lời của bạn hôm nay, thật đáng khen lắm luôn đó. Vậy bạn thử so phần nguyên của hai số xem sao nhé?';
     setGatewayDependencies({ primary: scriptedAnthropic([{ ...tutor(long), short_message: 'Bạn thử so phần nguyên của hai số xem?' }, PASS]).provider, fallback: null });
     const tutorCalls = async () => (await rows(w.sessionId)).calls.filter((c) => c.purpose === 'tutor').length;
     const before = await tutorCalls();

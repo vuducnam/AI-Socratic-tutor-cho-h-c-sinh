@@ -119,7 +119,7 @@ describe('decideProblemScope', () => {
     expect(scope.allowedSkillIds).not.toContain('FX.DEC.COMPARE');
   });
 
-  it('cùng đề nhưng do Cú tạo → từ chối', () => {
+  it('cùng đề nhưng do Mít tạo → từ chối', () => {
     expect(decideProblemScope(scopeAt('FX5.T1.B2'), { skillIds: ['FX.DEC.COMPARE'], origin: 'generated' }, catalog)).toMatchObject({
       kind: 'out_of_scope',
       reason: 'generated_not_covered',

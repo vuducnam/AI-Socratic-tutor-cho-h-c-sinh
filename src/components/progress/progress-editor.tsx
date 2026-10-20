@@ -125,7 +125,7 @@ export function ProgressEditor(props: ProgressEditorProps) {
 
       {props.scope && (
         <details>
-          <summary>Phạm vi Cú đang áp nếu mở phiên bây giờ</summary>
+          <summary>Phạm vi Mít đang áp nếu mở phiên bây giờ</summary>
           <p>
             <strong>Skill được dùng:</strong> {props.scope.allowedSkillIds.join(', ') || '—'}
           </p>

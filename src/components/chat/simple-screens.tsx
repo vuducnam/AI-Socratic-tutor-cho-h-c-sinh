@@ -9,11 +9,11 @@ export function IntroScreen({ name, onStart }: { name: string; onStart: () => vo
   return (
     <section className="center-screen">
       <OwlAvatar size={96} />
-      <h1>Chào {name}! Mình là Cú.</h1>
+      <h1>Chào {name}! Mình là Mít.</h1>
       <ul className="intro-list">
-        <li>Cú là bạn học cùng của bạn. Cú không nói đáp án, Cú hỏi để bạn tự nghĩ ra.</li>
+        <li>Mít là bạn học cùng của bạn. Mít không nói đáp án, Mít hỏi để bạn tự nghĩ ra.</li>
         <li>Bạn gửi đề bài bằng cách gõ hoặc chụp ảnh. Bí quá thì bấm “Gợi ý”.</li>
-        <li>Bố mẹ xem được mọi cuộc trò chuyện của bạn với Cú. Cú không giữ bí mật với bố mẹ.</li>
+        <li>Bố mẹ xem được mọi cuộc trò chuyện của bạn với Mít. Mít không giữ bí mật với bố mẹ.</li>
         <li>Nếu có chuyện buồn hay điều làm bạn sợ, bạn hãy kể ngay với bố mẹ hoặc cô giáo nhé.</li>
       </ul>
       <button type="button" onClick={onStart}>
@@ -27,7 +27,7 @@ export function RestingScreen({ onRetry }: { onRetry: () => void }) {
   return (
     <section className="center-screen">
       <OwlAvatar size={96} mood="resting" />
-      <h1>Cú đang nghỉ</h1>
+      <h1>Mít đang nghỉ</h1>
       <p>Bạn hỏi bố nhé. Lát nữa bạn thử lại.</p>
       <button type="button" className="ghost" onClick={onRetry}>
         Thử lại
@@ -64,7 +64,7 @@ export function EndOfProblem({
     <section className="end-bar">
       {!rated ? (
         <>
-          <p>Hôm nay học với Cú thế nào?</p>
+          <p>Hôm nay học với Mít thế nào?</p>
           <div className="rating">
             {RATINGS.map((r) => (
               <button key={r.value} type="button" className="ghost" onClick={() => onRate(r.value)}>
@@ -74,7 +74,7 @@ export function EndOfProblem({
           </div>
         </>
       ) : (
-        <p>Cảm ơn bạn! Cú chờ bạn lần sau nhé.</p>
+        <p>Cảm ơn bạn! Mít chờ bạn lần sau nhé.</p>
       )}
       <button type="button" className="ghost" onClick={onNewProblem}>
         Làm bài khác

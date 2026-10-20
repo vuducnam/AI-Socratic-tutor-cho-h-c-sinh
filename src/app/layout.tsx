@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Cú',
+  title: 'Mít',
   robots: { index: false, follow: false },
 };
 

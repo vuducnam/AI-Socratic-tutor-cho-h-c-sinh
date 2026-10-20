@@ -45,7 +45,7 @@ export function LoginForm({ mode }: { mode: Mode }) {
       if (data.error === 'totp_required') setNeedTotp(true);
       setError(data.message ?? 'Chưa đăng nhập được, thử lại nhé.');
     } catch {
-      setError('Cú đang nghỉ, thử lại sau nhé.');
+      setError('Mít đang nghỉ, thử lại sau nhé.');
     } finally {
       setBusy(false);
       setResetSignal((n) => n + 1);

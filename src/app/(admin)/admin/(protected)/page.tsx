@@ -142,7 +142,7 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
 
         <h3>Tạo hồ sơ học sinh</h3>
         <form action={createStudentAction} className="stack-form">
-          <input name="displayName" placeholder="Tên gọi (Cú gọi con bằng tên này)" required maxLength={50} />
+          <input name="displayName" placeholder="Tên gọi (Mít gọi con bằng tên này)" required maxLength={50} />
           <input name="username" placeholder="Tên đăng nhập (không trùng tên gọi)" required pattern="[A-Za-z0-9._\-]{3,32}" />
           <input name="pin" inputMode="numeric" pattern="\d{6}" maxLength={6} placeholder="PIN 6 số" required />
           <select name="gender" required defaultValue="">
@@ -163,7 +163,7 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
             </label>
           </fieldset>
           <input name="interests" placeholder="Sở thích đã khai, cách nhau bằng dấu phẩy" maxLength={300} />
-          <input name="companionName" placeholder="Tên bạn học (mặc định Cú)" maxLength={30} />
+          <input name="companionName" placeholder="Tên bạn học (mặc định Mít)" maxLength={30} />
           <select name="parentId" defaultValue="">
             <option value="">— Liên kết với phụ huynh —</option>
             {parents.map((p) => (

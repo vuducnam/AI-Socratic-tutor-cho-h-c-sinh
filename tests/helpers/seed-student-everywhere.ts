@@ -71,7 +71,7 @@ export async function seedStudentEverywhere(db: pg.Pool): Promise<SeededStudent>
     );
     const studentId = await insert(
       `INSERT INTO students (username, display_name, gender, pin_hash, created_by, grade, preset, address, companion, is_family)
-       VALUES ($1, 'Bé Test', 'female', 'x', $2, 5, 'grade5', '{"tutor_self":"Cú","student":"Bé"}', '{"name":"Cú"}', false)
+       VALUES ($1, 'Bé Test', 'female', 'x', $2, 5, 'grade5', '{"tutor_self":"Mít","student":"Bé"}', '{"name":"Mít"}', false)
        RETURNING id`,
       [`hs-${tag}`, adminId],
     );

@@ -91,7 +91,7 @@ export async function createStudentAction(form: FormData) {
       preset,
       isFamily: parsed.data.isFamily === 'true',
       interests: (parsed.data.interests ?? '').split(',').map((s) => s.trim()).filter(Boolean).slice(0, 10),
-      companionName: parsed.data.companionName || 'Cú',
+      companionName: parsed.data.companionName || 'Mít',
     });
     if (parsed.data.parentId) await linkParentToStudent(actor, { parentId: parsed.data.parentId, studentId });
   } catch (err) {

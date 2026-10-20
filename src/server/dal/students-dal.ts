@@ -317,7 +317,7 @@ export const authorizationFixtures: Record<string, AuthorizationFixture> = {
         preset: 'grade5',
         isFamily: true,
         interests: [],
-        companionName: 'Cú',
+        companionName: 'Mít',
       }),
   },
   listStudentsForAdmin: { kind: 'admin-only', call: (a) => listStudentsForAdmin(a) },

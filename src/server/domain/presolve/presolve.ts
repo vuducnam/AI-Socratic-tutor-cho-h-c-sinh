@@ -26,7 +26,7 @@ import { planConsistencyProblems, solutionPlanSchema, type SolutionPlan } from '
 export const PRESOLVE_PROMPT = 'presolve/v1';
 export const MAX_REGENERATIONS = 2;
 
-export const UNVERIFIED_MESSAGE = 'Cú chưa chắc bài này, bạn hỏi bố hoặc cô nhé.';
+export const UNVERIFIED_MESSAGE = 'Mít chưa chắc bài này, bạn hỏi bố hoặc cô nhé.';
 export const OUT_OF_SCOPE_MESSAGE = 'Bài này có phần bạn chưa học trên lớp, bạn hỏi bố hoặc cô nhé.';
 
 export interface PresolveInput {

@@ -31,7 +31,7 @@ const GOLDEN_ARGUE_TUTOR = [
   'Có bạn lại nghĩ: nhặt được thì là của mình, vì không biết ai đánh rơi. Em nghĩ sao về ý đó?',
   'Em vừa dùng cách "đặt mình vào chỗ người khác" đấy. Nếu không ai đến nhận thì sao nhỉ?',
 ];
-const GOLDEN_ANTI_CHEAT = 'Cú chỉ được giúp em tự tìm ra thôi. Mình làm bước đầu nhé: đề hỏi gì nào?';
+const GOLDEN_ANTI_CHEAT = 'Mít chỉ được giúp em tự tìm ra thôi. Mình làm bước đầu nhé: đề hỏi gì nào?';
 
 describe('đếm câu, từ, câu hỏi', () => {
   it('dấu phẩy thập phân không tách câu', () => {

@@ -131,7 +131,7 @@ function ProblemsSection({ problems }: { problems: SessionTranscript['problems']
       {problems.map((p) => (
         <div key={p.id} className="problem">
           <p>
-            <strong>{p.origin === 'homework' ? 'Bài về nhà' : p.origin === 'generated' ? 'Bài Cú tạo' : 'Nhiệm vụ'}</strong>
+            <strong>{p.origin === 'homework' ? 'Bài về nhà' : p.origin === 'generated' ? 'Bài Mít tạo' : 'Nhiệm vụ'}</strong>
             {p.confirmed_by_student ? ' · con đã xác nhận đề' : ' · con chưa xác nhận đề'}
           </p>
           <p className="turn-content">{p.confirmed_text ?? p.extracted_text ?? '(chưa có nội dung)'}</p>

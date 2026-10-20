@@ -26,7 +26,7 @@ export function PhotoProblem({ disabled, onSend }: { disabled: boolean; onSend: 
     setError(null);
     if (!f) return;
     if (f.size > MAX_BYTES) return setError('Ảnh lớn quá, bạn chụp lại gần hơn nhé.');
-    if (!/^image\/(jpeg|png|webp)$/.test(f.type)) return setError('Cú chỉ đọc được ảnh chụp (JPEG, PNG, WebP).');
+    if (!/^image\/(jpeg|png|webp)$/.test(f.type)) return setError('Mít chỉ đọc được ảnh chụp (JPEG, PNG, WebP).');
     if (url) URL.revokeObjectURL(url);
     setFile(f);
     setUrl(URL.createObjectURL(f));

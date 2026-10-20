@@ -123,9 +123,9 @@ export default async function ParentIndependentPage({
       </section>
 
       <section className="card">
-        <h2>Nhóm chủ đề: học cùng Cú / không dùng Cú</h2>
+        <h2>Nhóm chủ đề: học cùng Mít / không dùng Mít</h2>
         <p className="muted small">
-          Gán mỗi kỹ năng vào một nhóm để sau này so sánh kết quả bên ngoài giữa chủ đề học cùng Cú và chủ đề không dùng Cú.
+          Gán mỗi kỹ năng vào một nhóm để sau này so sánh kết quả bên ngoài giữa chủ đề học cùng Mít và chủ đề không dùng Mít.
         </p>
         {skills.length === 0 ? (
           <p className="muted">Chưa có kỹ năng nào của lớp {profile.grade} trong danh mục.</p>
@@ -152,8 +152,8 @@ export default async function ParentIndependentPage({
                         <option value="" disabled>
                           Chưa gán
                         </option>
-                        <option value="with_cu">Học cùng Cú</option>
-                        <option value="without_cu">Không dùng Cú</option>
+                        <option value="with_cu">Học cùng Mít</option>
+                        <option value="without_cu">Không dùng Mít</option>
                       </select>
                       <button type="submit">Lưu</button>
                     </form>
