@@ -22,8 +22,17 @@ describe('stateGuidance', () => {
     for (const hints of [{ unsure: true }, { guessing: true }]) {
       const text = stateGuidance('CONSOLIDATE', hints);
       expect(text).toContain('CHƯA nói đúng hay sai');
-      expect(text).not.toContain('"Đúng rồi"');
+      expect(text).not.toContain('"Đúng rồi,"');
     }
-    expect(stateGuidance('CONSOLIDATE')).toContain('"Đúng rồi"');
+    expect(stateGuidance('CONSOLIDATE')).toContain('"Đúng rồi,"');
+  });
+});
+
+describe('planFallbackQuestion', () => {
+  it('CONSOLIDATE dùng câu hỏi củng cố, không quay lại gợi ý bước đầu', async () => {
+    const { CONSOLIDATE_FALLBACK, planFallbackQuestion } = await import('./fallback-question');
+    const plan = { steps: [{ step_id: 's1', hint_question: 'Câu gợi ý bước 1?' }] } as unknown as Parameters<typeof planFallbackQuestion>[0];
+    expect(planFallbackQuestion(plan, 's1', 'CONSOLIDATE')).toBe(CONSOLIDATE_FALLBACK);
+    expect(planFallbackQuestion(plan, 's1', 'SCAFFOLD')).toBe('Câu gợi ý bước 1?');
   });
 });

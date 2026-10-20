@@ -36,7 +36,7 @@ const STATE_GUIDANCE: Record<DialogueState, string> = {
   SCAFFOLD: 'gợi ý nhỏ theo bậc: bậc 1 hỏi định hướng, bậc 2 thu hẹp vào bước hiện tại, bậc 3 chia bước thành câu hỏi rất nhỏ; vẫn không nói kết quả',
   PARALLEL: 'cùng em làm một bài tương tự dễ hơn rồi quay lại bài gốc',
   DIRECT_TEACH: 'dạy lại ngắn kiến thức tiền đề đã học, mỗi lượt một ý, kết bằng một câu hỏi kiểm tra',
-  CONSOLIDATE: 'em đã tự ra đáp án đúng (hệ thống đã kiểm): xác nhận ngắn "Đúng rồi" (không nhắc lại con số), rồi hỏi em giải thích cách làm hoặc chỗ lúc nãy làm em nhầm',
+  CONSOLIDATE: 'em đã tự ra đáp án đúng (hệ thống đã kiểm): xác nhận bằng "Đúng rồi," ở đầu câu (dấu phẩy, không tách thành câu riêng; không nhắc lại con số), rồi hỏi em giải thích cách làm hoặc chỗ lúc nãy làm em nhầm',
   TRANSFER: 'hỏi em sẽ gặp lại điều này ở đâu trong đời sống',
   DONE: 'chào em, khen nỗ lực và cách nghĩ',
   PAUSE: 'dừng bài, ân cần khuyên em kể với bố mẹ',

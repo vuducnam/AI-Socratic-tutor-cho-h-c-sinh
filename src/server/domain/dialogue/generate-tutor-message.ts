@@ -111,7 +111,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
   }
 
   // Câu dự phòng của bước hiện tại, cũng qua kiểm tra cứng.
-  const fallback = planFallbackQuestion(input.prompt.plan, input.prompt.currentStepId);
+  const fallback = planFallbackQuestion(input.prompt.plan, input.prompt.currentStepId, input.prompt.state);
   if (fallback) {
     const hard = runHardChecks(fallback, input.hardChecks);
     await verdict({ checker: 'code', llmCallId: null, tutorLlmCallId: null, attempt: MAX_TUTOR_ATTEMPTS + 1, pass: hard.pass, reasons: hard.reasons });

@@ -169,7 +169,8 @@ export function runHardChecks(message: string, ctx: HardCheckContext): HardCheck
   const sentences = splitSentences(message).length;
   const words = countWords(message);
   const questions = countQuestions(message);
-  if (sentences > ctx.maxSentences) details.push(`${sentences} câu > ${ctx.maxSentences}`);
+  // Liệt kê các câu đã đếm: model hay không coi lời chào / "Đúng rồi!" là một câu.
+  if (sentences > ctx.maxSentences) details.push(`${sentences} câu > ${ctx.maxSentences}: ${splitSentences(message).map((s) => `«${s}»`).join(' ')}`);
   if (words > ctx.maxWords) details.push(`${words} từ > ${ctx.maxWords}`);
   if (questions > ctx.maxQuestions || questions < ctx.requiredQuestions) {
     details.push(`${questions} câu hỏi (cần ${ctx.requiredQuestions}–${ctx.maxQuestions})`);
