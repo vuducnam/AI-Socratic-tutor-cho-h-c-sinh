@@ -81,6 +81,14 @@ describe('stepsCompletedBy', () => {
     expect(stepsCompletedBy('Là 3/10 đó Mít', ribbonPlan, [])).toEqual(['s1']);
   });
 
+  it('phương án là số nguyên ("hay là 1 phần") cũng là đoán', () => {
+    expect(stepsCompletedBy('Chắc là 3/10 đoạn. À hay là 1 phần? Mình đoán 3/10.', ribbonPlan, [])).toEqual([]);
+  });
+
+  it('"hay" không đi với số thì không phải đoán', () => {
+    expect(stepsCompletedBy('Câu này hay ghê, là 3/10 đó Mít', ribbonPlan, [])).toEqual(['s1']);
+  });
+
   it('đoán giữa hai phương án → chưa xong bước, chưa khớp đáp án', () => {
     const text = 'Ừm... 3/10 hả Mít? Hay là 10/3 nhỉ? Tớ đoán 3/10 đó. Vậy là 0,3 đúng không?';
     expect(stepsCompletedBy(text, ribbonPlan, [])).toEqual([]);

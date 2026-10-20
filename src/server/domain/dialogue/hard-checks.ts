@@ -1,6 +1,7 @@
 import 'server-only';
 import { compileTermSet, type TermDefinition } from '@/lib/term-pattern-matcher';
 import { toCanonical } from '@/lib/vi-math-normalizer';
+import { unitNameLeak } from './unit-name-leak';
 
 // Kiểm tra cứng bằng code, chạy TRƯỚC Guard (SPEC §6 bước 5). Fail → coi như Guard block với lý do tương ứng.
 // - LENGTH: số câu, số từ, số câu hỏi theo preset.
@@ -200,6 +201,12 @@ export function runHardChecks(message: string, ctx: HardCheckContext): HardCheck
   if (stepLeaks.length) {
     reasons.add('LEAK');
     details.push(`nói sẵn kết quả bước con chưa làm: ${stepLeaks.join(', ')}`);
+  }
+  // Cùng điều kiện với lộ bước trung gian: còn bước chưa làm và chưa ở trạng thái con đã ra đáp án.
+  const unitLeaks = ctx.pendingStepResults?.length ? unitNameLeak(message, ctx.problemText, ctx.studentTexts ?? []) : [];
+  if (unitLeaks.length) {
+    reasons.add('LEAK');
+    details.push(`nói sẵn tên hàng/lượng con chưa nói: ${unitLeaks.join(', ')} (hỏi để học sinh tự nói)`);
   }
 
   const scopeHits = compileTermSet(ctx.forbiddenTerms).match(message);

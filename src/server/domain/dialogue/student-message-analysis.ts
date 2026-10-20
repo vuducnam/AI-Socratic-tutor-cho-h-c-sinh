@@ -40,17 +40,20 @@ function relationOf(expression: string) {
   return { equal: [a, b] as const };
 }
 
-const ALTERNATIVE_MARKER = /(?<![\p{L}\p{M}])(hay|hoặc)(\s+là)?\s+\d/u;
+/** "hay 3,07", "hay là 10 phần 3", "hoặc 0,5": nhóm 1 là phần ngay sau từ nối, chứa phương án con đưa ra. */
+// Nhóm 1 nằm trong lookahead để không nuốt mất "hay" kế tiếp ("hay là 3,07? Hay là 3,007").
+const ALTERNATIVE = /(?<![\p{L}\p{M}])(?:hay|hoặc)(?:\s+là)?\s+(?=(\S+(?:\s+\S+){0,3}))/gu;
 
 /**
- * Con đưa nhiều phương án để đoán ("3,7 phải không? Hay là 3,07?", "3 phần 10 hay 10 phần 3?"): có từ
- * "hay/hoặc" đứng ngay trước một số, và có số thập phân/phân số khác `wanted` không nằm trong đề hay kết quả
- * bước nào. Số trung gian trong lời giải thích ("mỗi phần là 0,1") không có "hay/hoặc" nên không bị tính.
+ * Con đưa nhiều phương án để đoán ("3,7 phải không? Hay là 3,07? Hay là 3,007?", "3 phần 10 hay 10 phần 3?",
+ * "10 phần nhỏ. À hay là 1 phần?"): số đứng ngay sau "hay/hoặc" khác `wanted` và không phải số trong đề
+ * hay kết quả bước nào. Số trung gian trong lời giải thích ("mỗi phần là 0,1") không đứng sau "hay/hoặc".
  */
 function offersAlternatives(text: string, wanted: string[], plan: SolutionPlan): boolean {
-  if (!ALTERNATIVE_MARKER.test(normalizeForMatching(text))) return false;
   const known = new Set([...plan.given_numbers.flatMap((n) => numbersIn(n)), ...plan.steps.flatMap((s) => numbersIn(s.expected_result))]);
-  return numbersIn(text).some((n) => !wanted.includes(n) && /[./]/.test(n) && !known.has(n));
+  return [...normalizeForMatching(text).matchAll(ALTERNATIVE)]
+    .map((m) => numbersIn(m[1]!)[0])
+    .some((n) => n !== undefined && !wanted.includes(n) && !known.has(n));
 }
 
 /** Đáp án của con khớp final_answer (so bằng code trên số đã chuẩn hoá). */
