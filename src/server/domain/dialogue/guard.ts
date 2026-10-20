@@ -8,8 +8,8 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import { guardOutputSchema, type GuardOutput } from './tutor-output-schema';
 
-// Guard (guard/v1, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
-export const GUARD_PROMPT = 'guard/v1';
+// Guard (guard/v2, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
+export const GUARD_PROMPT = 'guard/v2';
 
 export interface GuardInput {
   studentId: string;

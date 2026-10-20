@@ -5,8 +5,8 @@ import { callLlm } from '@/server/llm/llm-gateway';
 import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { JudgeResult } from './metrics';
 
-// Judge LLM chấm một hội thoại eval (prompts/eval_judge/v1.md). Dùng API đồng bộ, key eval, không fallback.
-export const JUDGE_PROMPT = 'eval_judge/v1';
+// Judge LLM chấm một hội thoại eval (prompts/eval_judge/v2.md). Dùng API đồng bộ, key eval, không fallback.
+export const JUDGE_PROMPT = 'eval_judge/v2';
 
 const judgeSchema = z.object({
   leak_turns: z.array(z.number().int().min(1)).max(50),
