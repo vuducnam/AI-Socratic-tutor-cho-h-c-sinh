@@ -40,6 +40,19 @@ function relationOf(expression: string) {
   return { equal: [a, b] as const };
 }
 
+const ALTERNATIVE_MARKER = /(?<![\p{L}\p{M}])(hay|hoặc)(\s+là)?\s+\d/u;
+
+/**
+ * Con đưa nhiều phương án để đoán ("3,7 phải không? Hay là 3,07?", "3 phần 10 hay 10 phần 3?"): có từ
+ * "hay/hoặc" đứng ngay trước một số, và có số thập phân/phân số khác `wanted` không nằm trong đề hay kết quả
+ * bước nào. Số trung gian trong lời giải thích ("mỗi phần là 0,1") không có "hay/hoặc" nên không bị tính.
+ */
+function offersAlternatives(text: string, wanted: string[], plan: SolutionPlan): boolean {
+  if (!ALTERNATIVE_MARKER.test(normalizeForMatching(text))) return false;
+  const known = new Set([...plan.given_numbers.flatMap((n) => numbersIn(n)), ...plan.steps.flatMap((s) => numbersIn(s.expected_result))]);
+  return numbersIn(text).some((n) => !wanted.includes(n) && /[./]/.test(n) && !known.has(n));
+}
+
 /** Đáp án của con khớp final_answer (so bằng code trên số đã chuẩn hoá). */
 export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
   const said = numbersIn(text);
@@ -48,11 +61,7 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
   switch (fa.kind) {
     case 'number': {
       const want = normalizeNumber(String(fa.canonical));
-      if (!said.includes(want)) return false;
-      // Con liệt kê nhiều đáp án để đoán ("3,7 hay 3,07, hay 3,007?") thì chưa phải tự giải: có số thập phân
-      // hoặc phân số khác đáp án, không có trong đề và không phải kết quả một bước → chưa khớp.
-      const known = new Set([...plan.given_numbers.flatMap((n) => numbersIn(n)), ...plan.steps.flatMap((s) => numbersIn(s.expected_result))]);
-      return !said.some((n) => n !== want && /[./]/.test(n) && !known.has(n));
+      return said.includes(want) && !offersAlternatives(text, [want], plan);
     }
     case 'number_list': {
       const want = [fa.canonical].flat().map(normalizeNumber).join('|');
@@ -80,7 +89,7 @@ export function stepsCompletedBy(text: string, plan: SolutionPlan, alreadyDone: 
     .filter((s) => !alreadyDone.includes(s.step_id))
     .filter((s) => {
       const expected = numbersIn(s.expected_result);
-      return expected.length > 0 && expected.every((n) => said.has(n));
+      return expected.length > 0 && expected.every((n) => said.has(n)) && !offersAlternatives(text, expected, plan);
     })
     .map((s) => s.step_id);
 }

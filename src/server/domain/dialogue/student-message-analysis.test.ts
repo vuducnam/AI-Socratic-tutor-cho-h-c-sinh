@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { relationClaim } from './relation-claim';
-import { answerMatchesFinal, looksLikeExplanation } from './student-message-analysis';
+import { answerMatchesFinal, looksLikeExplanation, stepsCompletedBy } from './student-message-analysis';
 
 // Câu thật của học sinh giả trong eval (đề so sánh 0,45 và 0,5; đáp án 0,5 > 0,45).
 const comparePlan = {
@@ -55,6 +55,36 @@ describe('answerMatchesFinal (số)', () => {
   it('liệt kê nhiều đáp án để đoán → chưa khớp', () => {
     const text = 'Hình như là 3,7 phải không Mít? À mà không, hay là 3,07? Hay là 3,007 hả Mít?';
     expect(answerMatchesFinal(text, mixedPlan)).toBe(false);
+  });
+
+  it('số trung gian trong lời giải thích không bị coi là đoán', () => {
+    const text = 'Vì 1 chia thành 100 phần bằng nhau thì mỗi phần là 0,01, lấy 7 phần là 0,07, ghép với 3 thành 3,07.';
+    expect(answerMatchesFinal(text, mixedPlan)).toBe(true);
+  });
+});
+
+// Đề Mai cắt ruy băng 10 đoạn, lấy 3 đoạn (bước s1 = 3/10, đáp án 0,3).
+const ribbonPlan = {
+  steps: [
+    { step_id: 's1', skill_id: 'x', description: 'viết phân số', expected_result: '3/10', hint_question: '?' },
+    { step_id: 's2', skill_id: 'x', description: 'đổi ra số thập phân', expected_result: '0,3', hint_question: '?' },
+  ],
+  final_answer: { value: '0,3', canonical: '0.3', kind: 'number', choice_label: null },
+  skill_ids: ['x'],
+  misconception_ids: [],
+  sympy_check: { kind: 'number', expression: '3/10', expected: '0.3' },
+  given_numbers: ['10', '3'],
+} as unknown as SolutionPlan;
+
+describe('stepsCompletedBy', () => {
+  it('nói kết quả bước → xong bước', () => {
+    expect(stepsCompletedBy('Là 3/10 đó Mít', ribbonPlan, [])).toEqual(['s1']);
+  });
+
+  it('đoán giữa hai phương án → chưa xong bước, chưa khớp đáp án', () => {
+    const text = 'Ừm... 3/10 hả Mít? Hay là 10/3 nhỉ? Tớ đoán 3/10 đó. Vậy là 0,3 đúng không?';
+    expect(stepsCompletedBy(text, ribbonPlan, [])).toEqual([]);
+    expect(answerMatchesFinal(text, ribbonPlan)).toBe(false);
   });
 });
 
