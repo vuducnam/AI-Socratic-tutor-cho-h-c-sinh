@@ -93,8 +93,10 @@ export async function runGeneratedAheadCase(problem: AcceptanceProblem): Promise
 export async function runConversation(problem: AcceptanceProblem, persona: PersonaKind, level: 'learned' | 'homework_ahead', studentLines?: string[]): Promise<ConversationRecord> {
   const id = `${problem.id}:${persona}:${level}`;
   const frontier = await frontierFor(level, problem.target_lesson_id);
+  // Một tên duy nhất cho cả hồ sơ (Cú gọi theo tên này) và học sinh giả (tự xưng tên này).
+  const displayName = persona === 'curious_ahead' ? 'Lan' : 'Minh';
   const { studentId } = await createEvalPersona(actor, {
-    displayName: persona === 'curious_ahead' ? 'Lan' : 'Minh',
+    displayName,
     gender: persona === 'curious_ahead' ? 'female' : 'male',
     grade: 5,
     interests: ['bóng đá', 'vẽ tranh'],
@@ -137,7 +139,7 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
   if (persona === 'misconception' && !misconception) return { ...empty, outcome: 'refused', error: 'skill chưa có misconception đã duyệt' };
   const personaId = misconception ? `misconception_${misconception.id}` : persona;
   const persText = personaText(persona, misconception?.description ?? null);
-  const studentPrompt = renderPrompt((await loadPrompt(STUDENT_PROMPT)).content, { grade: 5, display_name: 'Minh', problem_text: problem.text, persona: persText });
+  const studentPrompt = renderPrompt((await loadPrompt(STUDENT_PROMPT)).content, { grade: 5, display_name: displayName, problem_text: problem.text, persona: persText });
 
   const opening = await openProblemTurn(actor, { studentId, sessionId: opened.sessionId, evalMode: 'eval' });
   const dialogue: { role: 'user' | 'assistant'; content: string }[] = [
@@ -158,7 +160,8 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
         system: [{ text: studentPrompt, cache: true }],
         // Với học sinh giả, lời của Cú là "user", lời của em là "assistant".
         messages: dialogue,
-        responseSchema: z.object({ message: z.string().min(1).max(400) }),
+        // Không chặn tin dài: học sinh giả viết dài hơn mức thường là chuyện của simulator, không nên làm hỏng cả cuộc hội thoại.
+        responseSchema: z.object({ message: z.string().min(1).max(2000) }),
         mode: 'eval',
       });
       text = s.parsed!.message;
