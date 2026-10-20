@@ -2,6 +2,8 @@ import 'server-only';
 import { compileTermSet, normalizeForMatching, type TermDefinition } from '@/lib/term-pattern-matcher';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { normalizeNumber, numbersIn } from './hard-checks';
+import { relationClaim } from './relation-claim';
+import { findFrustrationPhrase, soundsUnsure } from './signals';
 
 // Phân tích tin nhắn của con bằng code (quy tắc cứng 7: code quyết định, LLM chỉ đề xuất):
 // tín hiệu cần người lớn, câu hỏi tò mò vượt phạm vi, đáp án khớp final_answer, bước con đã xong.
@@ -56,15 +58,11 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
       const r = relationOf(plan.sympy_check.expression);
       if (!r) return false;
       if ('equal' in r) return /bằng nhau|bằng|=/.test(lower);
-      // "0,5 lớn hơn", "0,45 bé hơn 0,5", hoặc chỉ nói số lớn hơn khi đề hỏi "số nào lớn hơn".
-      const bigFirst = said.indexOf(r.big);
-      const smallFirst = said.indexOf(r.small);
-      if (bigFirst >= 0 && smallFirst < 0) return !SMALLER.test(lower);
-      if (smallFirst >= 0 && bigFirst < 0) return SMALLER.test(lower);
-      if (bigFirst >= 0 && smallFirst >= 0) {
-        return (bigFirst < smallFirst && BIGGER.test(lower)) || (smallFirst < bigFirst && SMALLER.test(lower));
-      }
-      return false;
+      // Đọc mệnh đề so sánh theo từng câu; có một khẳng định sai là chưa khớp.
+      const claim = relationClaim(text, r.big, r.small);
+      if (claim) return claim === 'correct';
+      // Không có mệnh đề: chỉ nói đúng số lớn hơn (đề hỏi "số nào lớn hơn"), không nhắc số kia.
+      return said.includes(r.big) && !said.includes(r.small) && !BIGGER.test(lower) && !SMALLER.test(lower);
     }
   }
 }
@@ -81,9 +79,18 @@ export function stepsCompletedBy(text: string, plan: SolutionPlan, alreadyDone: 
     .map((s) => s.step_id);
 }
 
-/** Con giải thích cách làm/chỗ từng nhầm ở CONSOLIDATE: câu trả lời có nội dung (≥ 4 từ, có chữ). */
+// Từ chỉ lý do / cách làm / chỗ từng nhầm. Khớp nguyên từ trên văn bản chuẩn hoá.
+const REASON_WORDS = /(?<![\p{L}\p{M}\p{N}])(vì|tại|bởi|nên|do|cho nên|lúc nãy|lúc đầu|ban đầu|nhầm|tưởng|cách|trước tiên|đầu tiên|rồi mới|so sánh|so từng)(?![\p{L}\p{M}\p{N}])/u;
+
+/**
+ * Con giải thích cách làm/chỗ từng nhầm (ở CONSOLIDATE, hoặc lập luận ở chế độ argue): ≥ 4 từ, có từ chỉ lý
+ * do, và con không tự nói là đoán / đang rối. "Mình đoán thôi, thấy có 3 với 10 nên ghép lại" chưa phải
+ * giải thích — Cú hỏi tiếp thay vì chuyển sang câu hỏi chuyển giao.
+ */
 export function looksLikeExplanation(text: string): boolean {
-  return text.trim().split(/\s+/).filter((w) => /\p{L}/u.test(w)).length >= 4;
+  const words = text.trim().split(/\s+/).filter((w) => /\p{L}/u.test(w)).length;
+  const lower = normalizeForMatching(text);
+  return words >= 4 && REASON_WORDS.test(lower) && !soundsUnsure(text) && findFrustrationPhrase(text) === null && !/(?<![\p{L}])(rối|lộn)(?![\p{L}])/u.test(lower);
 }
 
 export function isSkip(text: string): boolean {
