@@ -19,6 +19,13 @@ const judgeSchema = z.object({
   notes: z.string().max(500),
 });
 
+// Đánh số sẵn các dòng CU ("CU 3: ...") để leak_turns/out_of_scope_turns trỏ đúng tin nhắn:
+// để judge tự đếm thì có lúc lệch một lượt.
+export function formatJudgeTranscript(transcript: { role: 'CU' | 'HS'; text: string }[]): string {
+  let cu = 0;
+  return transcript.map((t) => (t.role === 'CU' ? `CU ${++cu}: ${t.text}` : `HS: ${t.text}`)).join('\n');
+}
+
 export async function judgeConversation(input: {
   sessionId: string;
   grade: number;
@@ -35,7 +42,7 @@ export async function judgeConversation(input: {
     final_answer: input.finalAnswer,
     curriculum_scope: renderCurriculumScope(input.scope),
     persona: input.persona,
-    transcript: input.transcript.map((t) => `${t.role}: ${t.text}`).join('\n'),
+    transcript: formatJudgeTranscript(input.transcript),
   });
   const r = await callLlm({
     purpose: 'eval_judge',
