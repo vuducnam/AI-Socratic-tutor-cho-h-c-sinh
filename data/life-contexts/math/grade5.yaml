@@ -1,6 +1,6 @@
 # Thư viện tình huống đời thật — Toán 5, số thập phân (SPEC §5b, quy tắc cứng 13).
 # Tối thiểu 8 tình huống cho MỖI skill số thập phân (Bài 10–14, 19–24).
-# NHÁP do Claude soạn 2026-10-20: chưa mục nào được duyệt. Duyệt từng mục ở /parent › Duyệt › Tình huống.
+# Claude soạn nháp 2026-10-20; chủ dự án duyệt cả 72 mục qua chat cùng ngày. Mục mới duyệt ở /parent › Duyệt › Tình huống.
 #
 # Tiêu chuẩn: câu hỏi là câu người thật sẽ hỏi; số liệu hợp lý với đời sống Việt Nam, giá cả dùng "giả sử";
 # market không quá 1/3 thư viện của một skill; adult_required = true cho bếp, dao, điện, ra ngoài, leo trèo;
@@ -56,6 +56,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 26555d97ee245e2e }
   - id: MATH5.DECIMAL.CONCEPT.FLOOR_MAT
     skill_id: MATH.DECIMAL.CONCEPT
     theme: home
@@ -82,6 +83,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 9429511782d03054 }
   - id: MATH5.DECIMAL.CONCEPT.RUNNING_TRACK
     skill_id: MATH.DECIMAL.CONCEPT
     theme: sport
@@ -108,6 +110,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d58de29e5c5514ec }
   - id: MATH5.DECIMAL.CONCEPT.SEED_TRAY
     skill_id: MATH.DECIMAL.CONCEPT
     theme: nature
@@ -134,6 +137,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: a0328843e4cff627 }
   - id: MATH5.DECIMAL.CONCEPT.JIGSAW_PUZZLE
     skill_id: MATH.DECIMAL.CONCEPT
     theme: game
@@ -160,6 +164,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 97387d166fa48c3b }
   - id: MATH5.DECIMAL.CONCEPT.VET_SCALE_READING
     skill_id: MATH.DECIMAL.CONCEPT
     theme: animals
@@ -181,6 +186,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi cùng gia đình đưa mèo khám; chỉ đọc số trên cân.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c9e7ebd43ea4bc25 }
   - id: MATH5.DECIMAL.CONCEPT.ROAD_SIGN_READING
     skill_id: MATH.DECIMAL.CONCEPT
     theme: travel
@@ -202,6 +208,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con ngồi trong xe cùng gia đình, chỉ đọc biển.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: cc8f432c0641190a }
   - id: MATH5.DECIMAL.CONCEPT.WATER_BOTTLE_MARKS
     skill_id: MATH.DECIMAL.CONCEPT
     theme: school
@@ -228,6 +235,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 29569b856ceda0af }
   - id: MATH5.DECIMAL.COMPARE.LONG_JUMP
     skill_id: MATH.DECIMAL.COMPARE
     theme: sport
@@ -257,6 +265,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 041d39f8482be72b }
   - id: MATH5.DECIMAL.COMPARE.KITTEN_WEIGHTS
     skill_id: MATH.DECIMAL.COMPARE
     theme: animals
@@ -294,6 +303,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: e20a181a0b5481a6 }
   - id: MATH5.DECIMAL.COMPARE.CLASS_LINE_UP
     skill_id: MATH.DECIMAL.COMPARE
     theme: school
@@ -340,6 +350,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 8bd8d61a3a9d50db }
   - id: MATH5.DECIMAL.COMPARE.WATERMELON_CHOICE
     skill_id: MATH.DECIMAL.COMPARE
     theme: market
@@ -369,6 +380,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi chợ cùng mẹ.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 7662b6a1032c7049 }
   - id: MATH5.DECIMAL.COMPARE.BEAN_SPROUTS
     skill_id: MATH.DECIMAL.COMPARE
     theme: nature
@@ -398,6 +410,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ca440a63949fdb8a }
   - id: MATH5.DECIMAL.COMPARE.PARK_ROUTES
     skill_id: MATH.DECIMAL.COMPARE
     theme: travel
@@ -427,6 +440,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi ra ngoài cùng bố; con không tự đi.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: e9b671d99cef06b4 }
   - id: MATH5.DECIMAL.COMPARE.TOY_CAR_RACE
     skill_id: MATH.DECIMAL.COMPARE
     theme: game
@@ -464,6 +478,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b046c7c0c02c8cd2 }
   - id: MATH5.DECIMAL.COMPARE.LEMONADE_JUGS
     skill_id: MATH.DECIMAL.COMPARE
     theme: cooking
@@ -493,6 +508,7 @@ contexts:
     safety:
       adult_required: false
       notes: Người lớn pha nước; con chỉ so sánh dung tích bình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 44abeb687a21d4f0 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.HEALTH_BOOK_HEIGHT
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: school
@@ -519,6 +535,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 284efe86d465ecb2 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.WATERMELON_WEIGHT
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: market
@@ -545,6 +562,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi chợ cùng mẹ.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 1540996a0bfae1e8 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.CURTAIN_WIDTH
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: home
@@ -571,6 +589,7 @@ contexts:
     safety:
       adult_required: false
       notes: Bố đo; con chỉ đổi số đo.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 59c3ade9858c6934 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.JUMP_RESULT
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: sport
@@ -597,6 +616,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 8ef6dfc66ff7d51b }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.FLOWER_BED_AREA
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: nature
@@ -623,6 +643,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 534b4034cc774977 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.KITTEN_CHECKUP
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: animals
@@ -644,6 +665,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi cùng gia đình đưa mèo đi tiêm.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 53771589c3edd876 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.SUITCASE_WEIGHT
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: travel
@@ -670,6 +692,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi cùng gia đình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 2dce7198ca58d0f8 }
   - id: MATH5.DECIMAL.MEASURE_NOTATION.PLAY_MAT_AREA
     skill_id: MATH.DECIMAL.MEASURE_NOTATION
     theme: game
@@ -691,6 +714,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 974f4e521d33414c }
   - id: MATH5.DECIMAL.ROUND.SPRINT_TIME
     skill_id: MATH.DECIMAL.ROUND
     theme: sport
@@ -712,6 +736,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b62651487592f68c }
   - id: MATH5.DECIMAL.ROUND.PUMPKIN_SCALE
     skill_id: MATH.DECIMAL.ROUND
     theme: market
@@ -733,6 +758,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi chợ cùng người lớn.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d50007eb5ab5a67a }
   - id: MATH5.DECIMAL.ROUND.SCHOOLYARD_TREE
     skill_id: MATH.DECIMAL.ROUND
     theme: nature
@@ -754,6 +780,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 6c6e55cb55331c93 }
   - id: MATH5.DECIMAL.ROUND.TRIP_DISTANCE
     skill_id: MATH.DECIMAL.ROUND
     theme: travel
@@ -775,6 +802,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con ngồi trong xe cùng gia đình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 5edaef64f4b02411 }
   - id: MATH5.DECIMAL.ROUND.HEALTH_BOOK_HEIGHT
     skill_id: MATH.DECIMAL.ROUND
     theme: school
@@ -796,6 +824,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d36e7593f2822186 }
   - id: MATH5.DECIMAL.ROUND.PUPPY_WEIGHT
     skill_id: MATH.DECIMAL.ROUND
     theme: animals
@@ -817,6 +846,7 @@ contexts:
     safety:
       adult_required: false
       notes: Con đi cùng gia đình đưa chó đi khám.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 0f103d032611e5ea }
   - id: MATH5.DECIMAL.ROUND.FLOUR_BAG
     skill_id: MATH.DECIMAL.ROUND
     theme: cooking
@@ -838,6 +868,7 @@ contexts:
     safety:
       adult_required: true
       notes: Mẹ làm bánh (có thể dùng lò nướng); con chỉ đọc số trên cân, không dùng lò.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 4c0a101ad7ebd1a3 }
   - id: MATH5.DECIMAL.ROUND.MARBLE_ROLL
     skill_id: MATH.DECIMAL.ROUND
     theme: game
@@ -859,6 +890,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 133bbf55ae6715c8 }
   - id: MATH5.DECIMAL.ADD.WATER_AFTER_FOOTBALL
     skill_id: MATH.DECIMAL.ADD
     theme: sport
@@ -887,6 +919,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bfdc4abab842a358 }
   - id: MATH5.DECIMAL.ADD.GIFT_RIBBON
     skill_id: MATH.DECIMAL.ADD
     theme: home
@@ -915,6 +948,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ac36b75ede022485 }
   - id: MATH5.DECIMAL.ADD.TRIP_TO_BEACH
     skill_id: MATH.DECIMAL.ADD
     theme: travel
@@ -943,6 +977,7 @@ contexts:
     safety:
       adult_required: true
       notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 205d50cfe35e2225 }
   - id: MATH5.DECIMAL.ADD.CAKE_INGREDIENTS
     skill_id: MATH.DECIMAL.ADD
     theme: cooking
@@ -977,6 +1012,7 @@ contexts:
     safety:
       adult_required: true
       notes: Làm bánh cần lò nướng; mẹ làm, con chỉ cùng tính lượng nguyên liệu.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b1a9bc12d7208f0e }
   - id: MATH5.DECIMAL.ADD.SCHOOL_BAG_WEIGHT
     skill_id: MATH.DECIMAL.ADD
     theme: school
@@ -1011,6 +1047,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c7252c3d996c140f }
   - id: MATH5.DECIMAL.ADD.FRUIT_BAG
     skill_id: MATH.DECIMAL.ADD
     theme: market
@@ -1039,6 +1076,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 2a8da014841e42ee }
   - id: MATH5.DECIMAL.ADD.PUPPY_GROWTH
     skill_id: MATH.DECIMAL.ADD
     theme: animals
@@ -1067,6 +1105,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: fd9ef97a941b822b }
   - id: MATH5.DECIMAL.ADD.RAINFALL_GAUGE
     skill_id: MATH.DECIMAL.ADD
     theme: nature
@@ -1095,6 +1134,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b53b45ea6dc80c58 }
   - id: MATH5.DECIMAL.SUBTRACT.FABRIC_LEFT
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: home
@@ -1124,6 +1164,7 @@ contexts:
     safety:
       adult_required: false
       notes: Bà cắt vải; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 87454ac3b2cc692d }
   - id: MATH5.DECIMAL.SUBTRACT.RUNNING_LAP
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: sport
@@ -1153,6 +1194,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c86cac717e75f253 }
   - id: MATH5.DECIMAL.SUBTRACT.WATER_JUG
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: home
@@ -1182,6 +1224,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 204c52c4a9853706 }
   - id: MATH5.DECIMAL.SUBTRACT.HEIGHT_CHECKUP
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: school
@@ -1212,6 +1255,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: a440107f94656161 }
   - id: MATH5.DECIMAL.SUBTRACT.TRIP_HOMETOWN
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: travel
@@ -1241,6 +1285,7 @@ contexts:
     safety:
       adult_required: true
       notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ebe590d7c2eec07b }
   - id: MATH5.DECIMAL.SUBTRACT.MARKET_BAG
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: market
@@ -1270,6 +1315,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 105f04c59f8c81e1 }
   - id: MATH5.DECIMAL.SUBTRACT.CATS_WEIGHT
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: animals
@@ -1299,6 +1345,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 39db43911330de33 }
   - id: MATH5.DECIMAL.SUBTRACT.SUNFLOWER_GROWTH
     skill_id: MATH.DECIMAL.SUBTRACT
     theme: nature
@@ -1329,6 +1376,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 9595b0fec67e2dfd }
   - id: MATH5.DECIMAL.MULTIPLY.TEAM_WATER
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: sport
@@ -1357,6 +1405,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 00dd8b7379f3335b }
   - id: MATH5.DECIMAL.MULTIPLY.GIFT_BOXES_RIBBON
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: home
@@ -1385,6 +1434,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: cf0059ac0c7270ac }
   - id: MATH5.DECIMAL.MULTIPLY.GRAPES_PRICE
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: market
@@ -1413,6 +1463,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 023bfa1e2092e0bc }
   - id: MATH5.DECIMAL.MULTIPLY.VEGETABLE_BED_NET
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: nature
@@ -1441,6 +1492,7 @@ contexts:
     safety:
       adult_required: false
       notes: Bố phủ lưới; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 11afdf5e0d753a8a }
   - id: MATH5.DECIMAL.MULTIPLY.CAKE_BATCHES_FLOUR
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: cooking
@@ -1469,6 +1521,7 @@ contexts:
     safety:
       adult_required: true
       notes: Nướng bánh cần lò nướng; mẹ làm, con chỉ cùng tính lượng bột.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b6f37867faa55062 }
   - id: MATH5.DECIMAL.MULTIPLY.CAR_TRIP_HOURS
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: travel
@@ -1497,6 +1550,7 @@ contexts:
     safety:
       adult_required: true
       notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 00b71fe1efef7b55 }
   - id: MATH5.DECIMAL.MULTIPLY.FISH_FOOD
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: animals
@@ -1525,6 +1579,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ddaf74bce253ea0c }
   - id: MATH5.DECIMAL.MULTIPLY.BOOK_STACK
     skill_id: MATH.DECIMAL.MULTIPLY
     theme: school
@@ -1553,6 +1608,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bd5cf58d71515db9 }
   - id: MATH5.DECIMAL.DIVIDE.CLASS_ROPE_GROUPS
     skill_id: MATH.DECIMAL.DIVIDE
     theme: school
@@ -1581,6 +1637,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 165cfa68d415527b }
   - id: MATH5.DECIMAL.DIVIDE.JUICE_CUPS
     skill_id: MATH.DECIMAL.DIVIDE
     theme: home
@@ -1609,6 +1666,7 @@ contexts:
     safety:
       adult_required: false
       notes: Mẹ pha nước cam; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bd2f1e4e7cb1f315 }
   - id: MATH5.DECIMAL.DIVIDE.MEAT_PRICE_PER_KG
     skill_id: MATH.DECIMAL.DIVIDE
     theme: market
@@ -1637,6 +1695,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 1bf8808813f41d5b }
   - id: MATH5.DECIMAL.DIVIDE.RUNNING_LAPS
     skill_id: MATH.DECIMAL.DIVIDE
     theme: sport
@@ -1665,6 +1724,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d1afe82bbd09ca06 }
   - id: MATH5.DECIMAL.DIVIDE.COCONUT_JAM_BOXES
     skill_id: MATH.DECIMAL.DIVIDE
     theme: cooking
@@ -1694,6 +1754,7 @@ contexts:
     safety:
       adult_required: true
       notes: Sên mứt cần nấu trên bếp; mẹ làm, con chỉ cùng chia hộp và tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: beca5111120dcfd3 }
   - id: MATH5.DECIMAL.DIVIDE.BUS_AVERAGE_HOUR
     skill_id: MATH.DECIMAL.DIVIDE
     theme: travel
@@ -1722,6 +1783,7 @@ contexts:
     safety:
       adult_required: true
       notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 207af6c36594d9fa }
   - id: MATH5.DECIMAL.DIVIDE.CAT_FOOD_DAYS
     skill_id: MATH.DECIMAL.DIVIDE
     theme: animals
@@ -1751,6 +1813,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 67da64392fe04740 }
   - id: MATH5.DECIMAL.DIVIDE.SOIL_POTS
     skill_id: MATH.DECIMAL.DIVIDE
     theme: nature
@@ -1779,6 +1842,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 7ae729a1a3d56e87 }
   - id: MATH5.DECIMAL.SCALE.FLOUR_GRAMS
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: cooking
@@ -1806,6 +1870,7 @@ contexts:
     safety:
       adult_required: true
       notes: Làm bánh cần lò nướng; mẹ làm, con chỉ cùng cân và đổi đơn vị.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 470224a885667a5e }
   - id: MATH5.DECIMAL.SCALE.DESK_ROW
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: school
@@ -1834,6 +1899,7 @@ contexts:
     safety:
       adult_required: false
       notes: Kê bàn do thầy cô và cả lớp cùng làm.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: be6855e78d6cf438 }
   - id: MATH5.DECIMAL.SCALE.CURTAIN_FABRIC_CM
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: market
@@ -1861,6 +1927,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 970519a49205b732 }
   - id: MATH5.DECIMAL.SCALE.LAKE_WALK_KM
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: travel
@@ -1888,6 +1955,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi dạo cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 0536fc52adb4f7a8 }
   - id: MATH5.DECIMAL.SCALE.TEN_LAPS
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: sport
@@ -1916,6 +1984,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 5959e0523553b4f2 }
   - id: MATH5.DECIMAL.SCALE.CHICKEN_FEED
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: animals
@@ -1944,6 +2013,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d94bc597e79e8a2c }
   - id: MATH5.DECIMAL.SCALE.RAIN_MM_TO_CM
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: nature
@@ -1971,6 +2041,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d3fcbc6cfa810dc3 }
   - id: MATH5.DECIMAL.SCALE.FLOOR_TILE_METERS
     skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
     theme: home
@@ -1998,3 +2069,4 @@ contexts:
     safety:
       adult_required: false
       notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 888fb2ad5838fcda }
