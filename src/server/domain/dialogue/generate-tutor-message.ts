@@ -85,40 +85,38 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
       throw err;
     }
 
-    // Thử bản chính rồi bản ngắn dự phòng: bản nào qua kiểm tra cứng trước thì mới gửi Guard.
-    let draft: string | null = null;
-    let firstFailure: { message: string; feedback: string } | null = null;
+    // Thử bản chính rồi bản ngắn dự phòng (cùng một lần gọi model): qua kiểm tra cứng thì gửi Guard; Guard
+    // chặn bản chính thì thử bản ngắn trước khi gọi lại Tutor (một lần Guard ~1,4 giây, gọi lại ~3,6 giây).
+    let lastFailure: { message: string; feedback: string } | null = null;
     for (const candidate of draftCandidates(output, input.hardChecks.maxSentences)) {
       const hard = runHardChecks(candidate, input.hardChecks);
       await verdict({ checker: 'code', llmCallId: null, tutorLlmCallId, attempt, pass: hard.pass, reasons: hard.reasons });
-      if (hard.pass) {
-        draft = candidate;
-        break;
+      if (!hard.pass) {
+        blocked.push(...hard.reasons);
+        lastFailure ??= { message: candidate, feedback: `${hard.reasons.join(', ')} (${hard.details.join('; ')})` };
+        continue;
       }
-      blocked.push(...hard.reasons);
-      firstFailure ??= { message: candidate, feedback: `${hard.reasons.join(', ')} (${hard.details.join('; ')})` };
+      const guard = await runGuard({
+        ...input.guard,
+        studentId: input.studentId,
+        sessionId: input.sessionId,
+        turnId: input.tutorTurnId,
+        message: candidate,
+        recorder: input.writer.recorder,
+        evalMode: input.evalMode,
+      });
+      await verdict({ checker: 'llm', llmCallId: guard.llmCallId, tutorLlmCallId, attempt, pass: guard.verdict === 'pass', reasons: guard.reasons });
+      if (guard.reasons.includes('SAFETY')) guardSafety = true;
+      if (guard.verdict === 'pass') {
+        return { message: candidate, source: 'tutor', output: { ...output, message: candidate }, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };
+      }
+      blocked.push(...guard.reasons);
+      // Lý do Guard cụ thể hơn lý do độ dài: ưu tiên làm phản hồi cho lần viết sau.
+      lastFailure = { message: candidate, feedback: `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}` };
+      // An toàn: đã có dấu hiệu cần người lớn thì không thử bản khác.
+      if (guardSafety) break;
     }
-    if (!draft) {
-      blockedDraft = firstFailure;
-      continue;
-    }
-
-    const guard = await runGuard({
-      ...input.guard,
-      studentId: input.studentId,
-      sessionId: input.sessionId,
-      turnId: input.tutorTurnId,
-      message: draft,
-      recorder: input.writer.recorder,
-      evalMode: input.evalMode,
-    });
-    await verdict({ checker: 'llm', llmCallId: guard.llmCallId, tutorLlmCallId, attempt, pass: guard.verdict === 'pass', reasons: guard.reasons });
-    if (guard.reasons.includes('SAFETY')) guardSafety = true;
-    if (guard.verdict === 'pass') {
-      return { message: draft, source: 'tutor', output: { ...output, message: draft }, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };
-    }
-    blocked.push(...guard.reasons);
-    blockedDraft = { message: draft, feedback: `${guard.reasons.join(', ')}${guard.explanation ? ` — ${guard.explanation}` : ''}` };
+    blockedDraft = lastFailure;
   }
 
   // Câu dự phòng của bước hiện tại, cũng qua kiểm tra cứng.

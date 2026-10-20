@@ -76,6 +76,8 @@ const TERMINAL: DialogueState[] = ['DONE', 'PAUSE'];
 
 // Kiểm lộ bước trung gian chỉ khi con còn đang giải; từ CONSOLIDATE con đã tự ra đáp án.
 const STEP_LEAK_STATES: DialogueState[] = ['ELICIT', 'PROBE', 'SCAFFOLD', 'DIRECT_TEACH'];
+// Con đã tự ra đáp án cuối (code đã kiểm khi chuyển sang CONSOLIDATE).
+const ANSWER_GIVEN_STATES: DialogueState[] = ['CONSOLIDATE', 'TRANSFER', 'DONE'];
 
 function hardCheckContext(ctx: TurnContext, state: DialogueState, progress: { completedSteps: string[]; studentMessage?: string } = { completedSteps: ctx.completedSteps }) {
   const plan = ctx.plan;
@@ -87,7 +89,8 @@ function hardCheckContext(ctx: TurnContext, state: DialogueState, progress: { co
     maxWords: ctx.preset.max_words_per_turn,
     requiredQuestions: TERMINAL.includes(state) ? 0 : Math.min(1, ctx.preset.max_questions_per_turn),
     maxQuestions: ctx.preset.max_questions_per_turn,
-    finalAnswer: plan
+    // Từ CONSOLIDATE con đã tự nói ra đáp án đúng (code đã kiểm): nhắc lại đáp án đó không còn là lộ.
+    finalAnswer: plan && !ANSWER_GIVEN_STATES.includes(state)
       ? {
           kind: plan.final_answer.kind,
           canonical: plan.final_answer.canonical,

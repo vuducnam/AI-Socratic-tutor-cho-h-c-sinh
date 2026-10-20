@@ -101,6 +101,16 @@ describe('runStudentTurn', () => {
     expect((await tutorCalls()) - before).toBe(1);
   });
 
+  it('Guard chặn bản chính → thử bản ngắn qua Guard trước khi gọi lại Tutor', async () => {
+    const w = await world();
+    setGatewayDependencies({ primary: scriptedAnthropic([{ ...tutor('Bạn thử nghĩ cách khác xem?'), short_message: 'Phần nguyên của hai số là mấy?' }, BLOCK, PASS]).provider, fallback: null });
+    const tutorCalls = async () => (await rows(w.sessionId)).calls.filter((c) => c.purpose === 'tutor').length;
+    const before = await tutorCalls();
+    const r = await say(w, 'con chưa hiểu');
+    expect(r).toMatchObject({ source: 'tutor', message: 'Phần nguyên của hai số là mấy?' });
+    expect((await tutorCalls()) - before).toBe(1);
+  });
+
   it('Guard chặn cả 3 lần viết → câu hỏi dự phòng của bước hiện tại', async () => {
     const w = await world();
     setGatewayDependencies({ primary: scriptedAnthropic([tutor('Câu một?'), BLOCK, tutor('Câu hai?'), BLOCK, tutor('Câu ba?'), BLOCK]).provider, fallback: null });
