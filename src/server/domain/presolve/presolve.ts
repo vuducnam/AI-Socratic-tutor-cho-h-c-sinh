@@ -56,6 +56,11 @@ export type PresolveResult =
 
 export interface PresolveDependencies {
   verify?: (req: VerifyRequest) => ReturnType<typeof verifyAnswer>;
+  /**
+   * Chỉ eval dùng: nhớ plan model trả về theo đúng đầu vào (system + lời nhắn), để nhiều hội thoại cùng đề
+   * không gọi lại Opus. Kiểm phạm vi, sympy và ghi solution_plans vẫn chạy thật cho từng hội thoại.
+   */
+  planMemo?: Map<string, SolutionPlan>;
 }
 
 async function systemPromptFor(scope: CurriculumScope, grade: number) {
@@ -92,27 +97,31 @@ export async function presolveProblem(actor: Actor, input: PresolveInput, deps: 
   for (let attempt = 1; attempt <= MAX_REGENERATIONS + 1; attempt++) {
     const system = await systemPromptFor(scope, scope.grade);
     let plan: SolutionPlan;
-    let llmCallId: string;
+    let llmCallId: string | null;
+    const userContent = feedback ? `Đề bài:\n${input.problemText}\n\nLần trước chưa đạt: ${feedback}\nGiải lại.` : `Đề bài:\n${input.problemText}`;
+    const memoKey = `${system.text}\u0000${userContent}`;
     try {
-      const result = await callLlm({
-        purpose: 'presolve',
-        studentId: input.studentId,
-        sessionId: input.sessionId,
-        promptVersion: PRESOLVE_PROMPT,
-        // Phần ổn định trong một bài được cache (SPEC §2.1).
-        system: [{ text: system.text, cache: true }],
-        messages: [
-          {
-            role: 'user',
-            content: feedback ? `Đề bài:\n${input.problemText}\n\nLần trước chưa đạt: ${feedback}\nGiải lại.` : `Đề bài:\n${input.problemText}`,
-          },
-        ],
-        responseSchema: solutionPlanSchema,
-        mode: input.mode,
-        recorder: input.recorder,
-      });
-      plan = result.parsed!;
-      llmCallId = result.llmCallId;
+      const memoized = deps.planMemo?.get(memoKey);
+      if (memoized) {
+        plan = memoized;
+        llmCallId = null;
+      } else {
+        const result = await callLlm({
+          purpose: 'presolve',
+          studentId: input.studentId,
+          sessionId: input.sessionId,
+          promptVersion: PRESOLVE_PROMPT,
+          // Phần ổn định trong một bài được cache (SPEC §2.1).
+          system: [{ text: system.text, cache: true }],
+          messages: [{ role: 'user', content: userContent }],
+          responseSchema: solutionPlanSchema,
+          mode: input.mode,
+          recorder: input.recorder,
+        });
+        plan = result.parsed!;
+        llmCallId = result.llmCallId;
+        deps.planMemo?.set(memoKey, plan);
+      }
     } catch (err) {
       if (err instanceof LlmOutputInvalidError) {
         feedback = 'output không đúng schema JSON';

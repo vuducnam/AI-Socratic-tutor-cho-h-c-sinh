@@ -119,6 +119,8 @@ pnpm test                # vitest: domain, DAL, transparency registry, append-on
 pnpm lint                # gồm rule cấm import Prisma ngoài src/server/dal
 pnpm eval                # simulated students, in leak rate + metrics
 pnpm eval:ci             # fail nếu leak > 0 hoặc metric dưới ngưỡng
+pnpm eval:smoke          # 5 đề × 8 persona, ~3 USD; lọc: --personas=a,b --problems=DEC5-01
+pnpm eval:replay         # gửi lại yêu cầu tutor đã ghi với prompt mới, ~0,3 USD (--from=tutor/vN --limit=30)
 pnpm prod:up             # chạy thật trên PC (chỉ docker-compose.yml, không gộp override dev) — xem docs/deployment-guide.md
 ```
 

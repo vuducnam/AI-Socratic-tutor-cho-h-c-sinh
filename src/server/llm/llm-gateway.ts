@@ -135,7 +135,7 @@ export function evalSpent(): number {
   return evalSpentUsd;
 }
 function evalCapUsd(): number {
-  return Number(process.env.EVAL_COST_CAP_USD ?? '20');
+  return Number(process.env.EVAL_COST_CAP_USD ?? '60');
 }
 
 // ───────────────────────── Gateway ─────────────────────────

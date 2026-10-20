@@ -16,6 +16,7 @@ import { openProblemTurn, runStudentTurn } from '@/server/domain/dialogue/run-tu
 import { generateSituationalProblem } from '@/server/domain/life-context/generate-situational-problem';
 import { solutionPlanSchema } from '@/server/domain/presolve/plan-schema';
 import { presolveProblem } from '@/server/domain/presolve/presolve';
+import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { openLearningSession } from '@/server/domain/session/open-session';
 import { callLlm } from '@/server/llm/llm-gateway';
 import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
@@ -90,7 +91,21 @@ export async function runGeneratedAheadCase(problem: AcceptanceProblem): Promise
   return { ...base, refusedCorrectly: !r.ok };
 }
 
-export async function runConversation(problem: AcceptanceProblem, persona: PersonaKind, level: 'learned' | 'homework_ahead', studentLines?: string[]): Promise<ConversationRecord> {
+/** Tuỳ chọn tiết kiệm chi phí của một lần chạy eval (không đổi cách chấm). */
+export interface ConversationRunOptions {
+  /** Nhớ plan Pre-solver theo đầu vào, dùng chung cho mọi hội thoại cùng đề trong một lần chạy. */
+  planMemo?: Map<string, SolutionPlan>;
+  /** Có dựng báo cáo phiên (LLM) để kiểm evidence không; mặc định có. */
+  withReport?: boolean;
+}
+
+export async function runConversation(
+  problem: AcceptanceProblem,
+  persona: PersonaKind,
+  level: 'learned' | 'homework_ahead',
+  studentLines?: string[],
+  options: ConversationRunOptions = {},
+): Promise<ConversationRecord> {
   const id = `${problem.id}:${persona}:${level}`;
   const frontier = await frontierFor(level, problem.target_lesson_id);
   // Một tên duy nhất cho cả hồ sơ (Cú gọi theo tên này) và học sinh giả (tự xưng tên này).
@@ -105,16 +120,20 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
   const opened = await openLearningSession(actor, { studentId, subject: SUBJECT });
   if (!opened.ok) throw new Error(`không mở được phiên: ${opened.message}`);
   const problemId = await createProblem(actor, { studentId, sessionId: opened.sessionId, origin: 'homework', confirmedText: problem.text, confirmedByStudent: true });
-  const presolved = await presolveProblem(actor, {
-    studentId,
-    sessionId: opened.sessionId,
-    problemId,
-    problemText: problem.text,
-    origin: 'homework',
-    sessionScope: opened.scope,
-    catalog: await loadScopeCatalog(SUBJECT, 5),
-    mode: 'eval',
-  });
+  const presolved = await presolveProblem(
+    actor,
+    {
+      studentId,
+      sessionId: opened.sessionId,
+      problemId,
+      problemText: problem.text,
+      origin: 'homework',
+      sessionScope: opened.scope,
+      catalog: await loadScopeCatalog(SUBJECT, 5),
+      mode: 'eval',
+    },
+    { planMemo: options.planMemo },
+  );
   const empty: ConversationRecord = {
     id,
     personaId: persona,
@@ -225,23 +244,9 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
     .map((text) => leakKey(problemId, text));
 
   // Báo cáo phiên: đóng phiên, dựng báo cáo, kiểm lại mọi nhận định đang hiển thị có evidence hợp lệ.
+  // Báo cáo không ảnh hưởng hội thoại nên chỉ dựng cho một mẫu phiên (withReport) để đỡ chi phí.
   await endLearningSession(actor, { studentId, sessionId: opened.sessionId, reason: 'eval' });
-  await buildSessionReport(actor, { studentId, sessionId: opened.sessionId });
-  const report = await getSessionReport(actor, { studentId, sessionId: opened.sessionId });
-  const shown = ['summary', 'student_reasoning_quotes', 'concerns'].flatMap(
-    (k) => ((report?.narrative ?? {}) as Record<string, { evidence_turn_ids: string[]; evidence_session_ids: string[] }[] | undefined>)[k] ?? [],
-  );
-  const ids = await validEvidenceIds(actor, {
-    studentId,
-    turnIds: shown.flatMap((c) => c.evidence_turn_ids),
-    sessionIds: shown.flatMap((c) => c.evidence_session_ids),
-  });
-  const reportClaims = {
-    total: shown.length,
-    valid: shown.filter(
-      (c) => (c.evidence_turn_ids.length || c.evidence_session_ids.length) && c.evidence_turn_ids.every((t) => ids.turnIds.has(t)) && c.evidence_session_ids.every((x) => ids.sessionIds.has(x)),
-    ).length,
-  };
+  const reportClaims = options.withReport === false ? undefined : await checkReportEvidence(studentId, opened.sessionId);
 
   return {
     id,
@@ -266,5 +271,24 @@ export async function runConversation(problem: AcceptanceProblem, persona: Perso
       realQuestion: judge.real_question,
       unsafeOrBrand: BRAND.test(g.problem.confirmed_text ?? '') || UNSAFE.test(g.problem.confirmed_text ?? ''),
     })),
+  };
+}
+
+async function checkReportEvidence(studentId: string, sessionId: string) {
+  await buildSessionReport(actor, { studentId, sessionId });
+  const report = await getSessionReport(actor, { studentId, sessionId });
+  const shown = ['summary', 'student_reasoning_quotes', 'concerns'].flatMap(
+    (k) => ((report?.narrative ?? {}) as Record<string, { evidence_turn_ids: string[]; evidence_session_ids: string[] }[] | undefined>)[k] ?? [],
+  );
+  const ids = await validEvidenceIds(actor, {
+    studentId,
+    turnIds: shown.flatMap((c) => c.evidence_turn_ids),
+    sessionIds: shown.flatMap((c) => c.evidence_session_ids),
+  });
+  return {
+    total: shown.length,
+    valid: shown.filter(
+      (c) => (c.evidence_turn_ids.length || c.evidence_session_ids.length) && c.evidence_turn_ids.every((t) => ids.turnIds.has(t)) && c.evidence_session_ids.every((x) => ids.sessionIds.has(x)),
+    ).length,
   };
 }

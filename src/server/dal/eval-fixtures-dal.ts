@@ -69,8 +69,36 @@ export async function createEvalPersona(actor: Actor, input: EvalPersonaInput): 
   return { studentId: student.id };
 }
 
+export interface RecordedTutorRequest {
+  studentId: string;
+  sessionId: string;
+  promptVersion: string;
+  system: { text: string }[];
+  messages: { role: 'user' | 'assistant'; content: string }[];
+}
+
+/**
+ * Yêu cầu tutor lượt viết đầu (chưa bị chặn) đã ghi trong cu_eval, để eval:replay gửi lại với prompt mới.
+ * Mỗi phiên lấy một yêu cầu ngẫu nhiên cho đa dạng. Chỉ trên DB eval/test.
+ */
+export async function listRecordedTutorRequests(actor: Actor, input: { promptVersion: string; limit: number }): Promise<RecordedTutorRequest[]> {
+  assertSystem(actor);
+  assertEvalDatabase();
+  const rows = await prisma.$queryRaw<{ student_id: string; session_id: string; prompt_version: string; request: { system: { text: string }[]; messages: RecordedTutorRequest['messages'] } }[]>`
+    SELECT * FROM (
+      SELECT DISTINCT ON (session_id) student_id, session_id, prompt_version, request
+      FROM llm_calls
+      WHERE purpose = 'tutor' AND mode = 'eval' AND error IS NULL AND prompt_version = ${input.promptVersion}
+        AND request->'messages'->-1->>'content' NOT LIKE '[Hệ thống] Tin nhắn trước của Cú bị chặn%'
+        AND request->'messages'->-1->>'content' NOT LIKE '[Hệ thống] Bản nháp trên bị chặn%'
+      ORDER BY session_id, random()
+    ) per_session ORDER BY random() LIMIT ${input.limit}`;
+  return rows.map((r) => ({ studentId: r.student_id, sessionId: r.session_id, promptVersion: r.prompt_version, system: r.request.system, messages: r.request.messages }));
+}
+
 export const authorizationFixtures: Record<string, AuthorizationFixture> = {
   assertEvalDatabase: { kind: 'no-actor', reason: 'chỉ kiểm tên database, không đọc dữ liệu' },
+  listRecordedTutorRequests: { kind: 'system-only', call: (a) => listRecordedTutorRequests(a, { promptVersion: 'tutor/v1', limit: 1 }) },
   createEvalPersona: {
     kind: 'system-only',
     call: (a) => createEvalPersona(a, { displayName: 'x', gender: 'male', grade: 5, interests: [], progress: [] }),

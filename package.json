@@ -27,6 +27,7 @@
     "eval": "tsx --conditions=react-server eval/run-eval.ts",
     "eval:ci": "tsx --conditions=react-server eval/run-eval.ts --ci",
     "eval:smoke": "tsx --conditions=react-server eval/run-eval.ts --smoke",
+    "eval:replay": "tsx --conditions=react-server eval/replay-tutor.ts",
     "prod:up": "docker compose -f docker-compose.yml --profile prod up -d --build",
     "prod:down": "docker compose -f docker-compose.yml --profile prod down"
   },

@@ -13,7 +13,7 @@ import type { DialogueState } from './state-machine';
 
 export const TUTOR_PROMPT = 'tutor/v5';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v2';
-const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
+export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
 const GUESSING_GUIDANCE = 'em vừa đổi đáp án nhanh nhiều lần: chậm lại, hỏi em vì sao chọn đáp án đó';

@@ -67,6 +67,26 @@ describe('presolveProblem', () => {
     expect(rows[0].llm_call_id).toBeTruthy();
   });
 
+  it('planMemo (eval): đề cùng đầu vào lần hai không gọi model, vẫn verify và ghi plan', async () => {
+    const memo = new Map<string, SolutionPlan>();
+    const a = await setup('FX5.T1.B4');
+    const b = await setup('FX5.T1.B4');
+    // Chỉ có một output model: lần thứ hai phải lấy từ memo, gọi model lần nữa sẽ hết output giả.
+    setGatewayDependencies({ primary: scriptedAnthropic([comparePlan()]).provider, fallback: null });
+    const input = (w: typeof a) => ({ studentId: w.studentId, sessionId: w.sessionId, problemId: w.problemId, problemText: 'So sánh 0,45 và 0,5.', origin: 'homework' as const, sessionScope: w.scope, catalog: w.catalog });
+    let verifyCalls = 0;
+    const countingOk: Verify = async (req) => {
+      verifyCalls += 1;
+      return ok!(req);
+    };
+    expect(await presolveProblem(a.student, input(a), { verify: countingOk, planMemo: memo })).toMatchObject({ ok: true });
+    expect(await presolveProblem(b.student, input(b), { verify: countingOk, planMemo: memo })).toMatchObject({ ok: true });
+    expect(verifyCalls).toBe(2);
+    const rows = await plans(b.problemId);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({ verified: true, llm_call_id: null });
+  });
+
   it('verify sai → sinh lại; vẫn sai sau 2 lần sinh lại → không dạy, cờ presolve_unverified', async () => {
     const w = await setup('FX5.T1.B4');
     setGatewayDependencies({ primary: scriptedAnthropic([comparePlan(), comparePlan(), comparePlan()]).provider, fallback: null });
