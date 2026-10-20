@@ -17,6 +17,7 @@ import { ciPassed, evaluateThresholds } from './thresholds';
 // Lọc để thử nhanh một thay đổi: --personas=easily_frustrated,guesser  --problems=DEC5-01,DEC5-04
 // Tiết kiệm (không đổi cách chấm): plan Pre-solver nhớ theo đầu vào và dùng chung cho các hội thoại cùng đề;
 // báo cáo phiên chỉ dựng cho EVAL_REPORT_SAMPLE phiên rải đều (mặc định 5) để kiểm evidence.
+// Chạy song song EVAL_CONCURRENCY hội thoại (mặc định 5); trần chi phí vẫn tính chung cho cả lần chạy.
 // Ma trận (quy tắc cứng 15): mỗi bài × persona chạy ở (1) vừa học xong bài của đề, (2) chưa học, bài về nhà
 // → dạy với phạm vi mở thêm; và (3) chưa học, bài Cú tạo → bộ chọn không sinh bài.
 // Chỉ chạy trên DB cu_eval, hồ sơ giả; key + trần chi phí riêng, không fallback OpenRouter.
@@ -28,6 +29,8 @@ const listArg = (name: string) => process.argv.find((a) => a.startsWith(`--${nam
 const personaFilter = listArg('personas');
 const problemFilter = listArg('problems');
 const REPORT_SAMPLE = Number(process.env.EVAL_REPORT_SAMPLE ?? '5');
+// Số hội thoại chạy song song (mỗi hội thoại vẫn tuần tự từng lượt). Không đổi chi phí, chỉ đổi thời gian.
+const CONCURRENCY = Math.max(1, Number(process.env.EVAL_CONCURRENCY ?? '5'));
 
 function registryTestPassed(): boolean {
   try {
@@ -65,7 +68,6 @@ async function main() {
   const planMemo = new Map<string, SolutionPlan>();
   const planned = selected.length * personas.length * levels.length;
   const reportEvery = Math.max(1, Math.ceil(planned / Math.max(1, REPORT_SAMPLE)));
-  let convIndex = 0;
   const records: ConversationRecord[] = [];
   let aborted: string | null = null;
 
@@ -89,23 +91,32 @@ async function main() {
         console.log(`golden ${g.id}: xong`);
       }
     }
-    for (const p of selected) {
-      for (const persona of personas as PersonaKind[]) {
-        for (const level of levels) {
-          try {
-            const withReport = convIndex++ % reportEvery === 0;
-            const rec = await runConversation(p, persona, level, undefined, { planMemo, withReport });
-            records.push(rec);
-            console.log(`${rec.id}: ${rec.outcome}`);
-          } catch (err) {
-            if (err instanceof EvalBudgetExceededError) throw err;
-            records.push({ id: `${p.id}:${persona}:${level}`, personaId: persona, level, outcome: 'error', error: String(err) } as ConversationRecord);
-            console.log(`${p.id}:${persona}:${level}: LỖI ${String(err)}`);
+    // Xếp theo persona rồi mới tới đề: các hội thoại chạy cùng lúc rơi vào các đề khác nhau, nên mỗi đề
+    // chỉ gọi Pre-solver một lần ở lượt đầu, các lượt sau lấy từ planMemo.
+    const jobs = (personas as PersonaKind[]).flatMap((persona) => levels.flatMap((level) => selected.map((p) => ({ p, persona, level }))));
+    let budgetError: EvalBudgetExceededError | null = null;
+    let next = 0;
+    const worker = async () => {
+      while (!budgetError && next < jobs.length) {
+        const { p, persona, level } = jobs[next]!;
+        const withReport = next++ % reportEvery === 0;
+        try {
+          const rec = await runConversation(p, persona, level, undefined, { planMemo, withReport });
+          records.push(rec);
+          console.log(`${rec.id}: ${rec.outcome}`);
+        } catch (err) {
+          if (err instanceof EvalBudgetExceededError) {
+            budgetError = err;
+            return;
           }
+          records.push({ id: `${p.id}:${persona}:${level}`, personaId: persona, level, outcome: 'error', error: String(err) } as ConversationRecord);
+          console.log(`${p.id}:${persona}:${level}: LỖI ${String(err)}`);
         }
       }
-      if (mode === 'full') records.push(await runGeneratedAheadCase(p));
-    }
+    };
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, jobs.length) }, worker));
+    if (budgetError) throw budgetError;
+    if (mode === 'full') for (const p of selected) records.push(await runGeneratedAheadCase(p));
   } catch (err) {
     if (!(err instanceof EvalBudgetExceededError)) throw err;
     aborted = err.message;
