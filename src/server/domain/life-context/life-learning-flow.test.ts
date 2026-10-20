@@ -156,6 +156,9 @@ describe('học từ đời sống', () => {
         PASS,
         { question: 'Con nghĩ mình sẽ gặp lại việc so sánh số thập phân ở đâu nhỉ?' },
         PASS,
+        // Câu chào cuối do Tutor viết (trạng thái DONE, không có câu hỏi), cũng qua Guard.
+        tutor('Đi chợ so giá đúng là chỗ hay dùng đó. Hẹn bạn lần sau nhé!'),
+        PASS,
       ]).provider,
       fallback: null,
     });
@@ -164,7 +167,7 @@ describe('học từ đời sống', () => {
     const transfer = await say(w, 'con tưởng số dài hơn là to hơn');
     expect(transfer.state).toBe('TRANSFER');
     const done = await say(w, 'khi đi chợ so giá tiền');
-    expect(done).toMatchObject({ state: 'DONE', done: true });
+    expect(done).toMatchObject({ state: 'DONE', done: true, message: 'Đi chợ so giá đúng là chỗ hay dùng đó. Hẹn bạn lần sau nhé!' });
     const kinds = await appDb().query(`SELECT turn_kind, content FROM turns WHERE session_id = $1 ORDER BY seq`, [w.sessionId]);
     const k = kinds.rows.map((r) => r.turn_kind);
     expect(k[0]).toBe('hook');

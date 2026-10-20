@@ -8,10 +8,10 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import type { DialogueState } from './state-machine';
 
-// Dựng system prompt tutor/v9 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
+// Dựng system prompt tutor/v10 (SPEC §8.1). Phần ổn định trong một bài (quy tắc, phạm vi, plan, few-shot)
 // là khối đầu có prompt caching; phần đổi mỗi lượt (trạng thái, bước) là khối sau.
 
-export const TUTOR_PROMPT = 'tutor/v9';
+export const TUTOR_PROMPT = 'tutor/v10';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v3';
 export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
@@ -38,7 +38,7 @@ const STATE_GUIDANCE: Record<DialogueState, string> = {
   DIRECT_TEACH: 'dạy lại ngắn kiến thức tiền đề đã học, mỗi lượt một ý, kết bằng một câu hỏi kiểm tra',
   CONSOLIDATE: 'em đã tự ra đáp án đúng (hệ thống đã kiểm): xác nhận bằng "Đúng rồi," ở đầu câu (dấu phẩy, không tách thành câu riêng; không nhắc lại con số), rồi hỏi em giải thích cách làm hoặc chỗ lúc nãy làm em nhầm',
   TRANSFER: 'hỏi em sẽ gặp lại điều này ở đâu trong đời sống',
-  DONE: 'chào em, khen nỗ lực và cách nghĩ',
+  DONE: 'chào tạm biệt em, KHÔNG đặt câu hỏi: nếu tin cuối của em có câu hỏi hay nỗi lo thì câu đầu đáp ngắn điều đó (trấn an nhẹ, hoặc khen tò mò và hẹn học sau; không hứa thay bố mẹ, không giảng điều chưa học); khen đúng việc em đã làm trong bài, rồi hẹn lần sau',
   PAUSE: 'dừng bài, ân cần khuyên em kể với bố mẹ',
 };
 

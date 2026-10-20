@@ -12,7 +12,7 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 // Như mọi tin nhắn gửi con: kiểm tra cứng + Guard; bị chặn 2 lần → câu cố định đã duyệt sẵn.
 
 export const HOOK_PROMPT = 'hook/v3';
-export const TRANSFER_PROMPT = 'transfer/v3';
+export const TRANSFER_PROMPT = 'transfer/v4';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';
 
@@ -126,6 +126,7 @@ export async function generateTransferQuestion(input: SpecialTurnInput) {
     grade: input.ctx.student.grade,
     skill_names: skillNames(input.ctx),
     interests: input.ctx.student.interests_declared.join(', ') || 'chưa khai',
+    student_message: input.guard.studentMessage,
     curriculum_scope: renderCurriculumScope(input.ctx.scope),
   });
   return checkedMessage(input, {

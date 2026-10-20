@@ -9,7 +9,7 @@ import type { ChatMessage } from '@/server/llm/llm-types';
 import { generateHook, generateTransferQuestion } from '@/server/domain/life-context/special-turns';
 import { generateSituationalProblem, type SituationalVisual } from '@/server/domain/life-context/generate-situational-problem';
 import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
-import { DONE_MESSAGE, PAUSE_MESSAGE, currentStep } from './fallback-question';
+import { PAUSE_MESSAGE, currentStep } from './fallback-question';
 import { generateTutorMessage, type GeneratedMessage } from './generate-tutor-message';
 import { numbersIn, runHardChecks } from './hard-checks';
 import { runGuard } from './guard';
@@ -342,7 +342,6 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
       let generated: GeneratedMessage | null = null;
       let turnKind: 'normal' | 'transfer_question' = 'normal';
       if (position.state === 'PAUSE') message = PAUSE_MESSAGE;
-      else if (position.state === 'DONE') message = DONE_MESSAGE;
       else if (parallel && parallelCtx) {
         // Đề bài tương tự cũng qua kiểm tra cứng (≤ 3 câu, đúng 1 câu hỏi) và Guard (rule CONTEXT).
         const hard = runHardChecks(parallel.problemText, {

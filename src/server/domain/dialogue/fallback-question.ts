@@ -7,13 +7,15 @@ import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 export const GENERIC_FALLBACK = 'Bạn nói lại cho Mít nghe bạn đang làm tới bước nào nhé?';
 export const PAUSE_MESSAGE =
   'Mít nghe bạn nói rồi. Chuyện này bạn kể ngay với bố mẹ hoặc cô giáo nhé, người lớn sẽ giúp bạn. Mình tạm dừng bài ở đây nhé?';
-export const DONE_MESSAGE = 'Hôm nay bạn làm tốt lắm vì bạn đã tự nghĩ ra cách. Hẹn bạn lần sau nhé!';
+/** Câu chào cuối dự phòng (Tutor viết câu chào chính): không khen điều cụ thể vì code không biết con đã làm gì. */
+export const DONE_MESSAGE = 'Hôm nay bạn đã cố gắng làm hết bài, Mít vui lắm. Hẹn bạn lần sau nhé!';
 
 /** Câu dự phòng khi con đã tự ra đáp án (CONSOLIDATE): hỏi cách làm, không quay lại gợi ý bước đầu. */
 export const CONSOLIDATE_FALLBACK = 'Bạn kể Mít nghe bạn đã làm thế nào để ra kết quả đó nhé?';
 
 export function planFallbackQuestion(plan: SolutionPlan | null, currentStepId: string | null, state?: string): string | null {
   if (state === 'CONSOLIDATE') return CONSOLIDATE_FALLBACK;
+  if (state === 'DONE') return DONE_MESSAGE;
   if (!plan) return null;
   const step = plan.steps.find((s) => s.step_id === currentStepId) ?? plan.steps[0];
   return step?.hint_question ?? null;

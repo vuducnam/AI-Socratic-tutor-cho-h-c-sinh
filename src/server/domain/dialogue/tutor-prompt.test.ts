@@ -35,4 +35,10 @@ describe('planFallbackQuestion', () => {
     expect(planFallbackQuestion(plan, 's1', 'CONSOLIDATE')).toBe(CONSOLIDATE_FALLBACK);
     expect(planFallbackQuestion(plan, 's1', 'SCAFFOLD')).toBe('Câu gợi ý bước 1?');
   });
+
+  it('DONE dùng câu chào cuối, không phải câu hỏi', async () => {
+    const { DONE_MESSAGE, planFallbackQuestion } = await import('./fallback-question');
+    expect(planFallbackQuestion(null, null, 'DONE')).toBe(DONE_MESSAGE);
+    expect(DONE_MESSAGE).not.toContain('?');
+  });
 });
