@@ -17,8 +17,8 @@ cloudflared/*.json
 
 # --- Dữ liệu học sinh và dữ liệu chạy thật ---
 # ảnh đề, ảnh nhiệm vụ, file tạm upload
-storage/
-uploads/
+/storage/
+/uploads/
 # volume Postgres/Redis nếu bind-mount trong repo
 data/postgres/
 data/redis/
