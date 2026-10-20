@@ -69,6 +69,7 @@ async function checkedMessage(
     }
     const guard = await runGuard({
       ...input.guard,
+      messageKind: spec.purpose === 'hook' ? 'hook' : 'transfer_question',
       studentId: input.ctx.student.id,
       sessionId: input.ctx.session.id,
       turnId: input.turnId,
