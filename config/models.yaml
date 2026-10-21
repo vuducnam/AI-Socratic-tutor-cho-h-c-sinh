@@ -65,7 +65,7 @@ tts:
   default_voice: Sulafat                      # chủ dự án chọn 2026-10-21; students.companion.tts_voice ghi đè nếu có
   # Chỉ dẫn phong cách (gửi kèm, không bị đọc to — đã kiểm bằng STT nghe lại). Gemini không có giọng theo vùng miền.
   style_instructions: "Giọng nữ miền Nam Việt Nam, nhẹ nhàng, ấm áp, tốc độ nói bình thường, như một người bạn thân đang nói chuyện với bạn nhỏ lớp 5."
-  # Giá OpenRouter USD / token (prompt = chữ vào, completion = audio ra), 2026-10-21.
-  pricing: { input_per_token: 0.0000005, output_per_token: 0.000009 }
+  # Không có cấu hình giá: /audio/speech không trả số token nên llm_calls.cost_usd để trống (không ước lượng);
+  # chi phí thật đối chiếu bằng generation_id trên OpenRouter.
 image:
   model: openai/gpt-image-2

@@ -282,7 +282,7 @@ Mục tiêu độ trễ: dưới 4 giây từ lúc thả nút đến lúc thấy
 
 ### Giọng của Cú
 
-- Dùng `google/gemini-3.8-flash-tts` qua endpoint `/audio/speech` của OpenRouter, xuất mp3 ([OpenRouter](https://openrouter.ai/google/gemini-3.8-flash-tts/llms.txt)); vi-VN được Gemini TTS hỗ trợ ([Google Cloud](https://cloud.google.com/text-to-speech/docs/gemini-tts)).
+- Dùng `google/gemini-3.8-flash-tts` qua endpoint `/audio/speech` của OpenRouter; model chỉ trả PCM 24 kHz nên server bọc WAV ([OpenRouter](https://openrouter.ai/google/gemini-3.8-flash-tts/llms.txt)); vi-VN được Gemini TTS hỗ trợ ([Google Cloud](https://cloud.google.com/text-to-speech/docs/gemini-tts)).
 - Thế hệ Gemini TTS gần đây có inline audio tag kiểu \[excited\], \[whispers\] để điều khiển cảm xúc ([OpenRouter](https://openrouter.ai/google/gemini-3.1-flash-tts-preview)). Dùng tiết chế: \[warm\] khi con nản, \[excited\] khi con tự sửa được lỗi. Mình chưa kiểm chứng tag nào hoạt động tốt với tiếng Việt, cần nghe thử.
 - **Tiền xử lý trước TTS là bắt buộc**: đổi số và biểu thức ra chữ (0,45 → "không phẩy bốn mươi lăm", 3/4 → "ba phần tư", cm² → "xăng-ti-mét vuông"). TTS đọc sai một con số trong bài toán là hỏng cả lượt.
 - Mỗi con chọn một giọng cho nhân vật của mình; cache audio các câu lặp lại (lời chào, khen).
