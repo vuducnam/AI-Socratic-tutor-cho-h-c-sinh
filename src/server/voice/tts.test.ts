@@ -57,11 +57,12 @@ describe('speakTutorTurn', () => {
     const first = await speakTutorTurn(actor, { studentId: a.studentId, turnId });
     expect(first.cached).toBe(false);
     expect(new Uint8Array(first.audio)).toEqual(new Uint8Array(pcmToWav(Buffer.from(fakePcm()), { sampleRate: 24000, channels: 1 })));
-    expect(first.voice).toBe('Kore');
+    expect(first.voice).toBe('Sulafat');
     const sent = JSON.parse(String(fake.speechCalls()[0]!.init.body)) as Record<string, unknown>;
     expect(sent).toMatchObject({
       model: 'google/gemini-3.8-flash-tts',
-      voice: 'Kore',
+      voice: 'Sulafat',
+      instructions: expect.stringContaining('miền Nam'),
       response_format: 'pcm',
       input: 'Bạn so sánh không phẩy bốn mươi lăm với không phẩy năm nhé?',
       provider: { data_collection: 'deny' },
@@ -71,7 +72,7 @@ describe('speakTutorTurn', () => {
     expect(rows).toHaveLength(1);
     expect(rows[0]!.error).toBeNull();
     expect(rows[0]!.session_id).toBe(a.sessionId);
-    expect(rows[0]!.request).toMatchObject({ text_spoken: 'Bạn so sánh không phẩy bốn mươi lăm với không phẩy năm nhé?', voice: 'Kore' });
+    expect(rows[0]!.request).toMatchObject({ text_spoken: 'Bạn so sánh không phẩy bốn mươi lăm với không phẩy năm nhé?', voice: 'Sulafat' });
     expect(await readdir(join(cacheDir, a.studentId))).toHaveLength(1);
 
     const second = await speakTutorTurn(actor, { studentId: a.studentId, turnId });

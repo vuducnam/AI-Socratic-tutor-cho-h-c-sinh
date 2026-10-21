@@ -52,6 +52,8 @@ const configSchema = z.object({
     // Gemini TTS qua OpenRouter chỉ trả PCM; server bọc thành WAV (src/server/voice/pcm-to-wav.ts).
     response_format: z.literal('pcm'),
     default_voice: z.string().min(1),
+    // Chỉ dẫn phong cách đọc gửi kèm `instructions` (giọng miền, nhịp, cảm xúc); không bị đọc to.
+    style_instructions: z.string().max(500).optional(),
     pricing: z.object({ input_per_token: z.number().nonnegative(), output_per_token: z.number().nonnegative() }),
   }),
 });

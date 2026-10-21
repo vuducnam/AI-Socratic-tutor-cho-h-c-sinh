@@ -34,7 +34,8 @@ function companionVoice(companion: unknown): string | null {
 
 async function synthesize(spoken: string, voice: string, record: { studentId: string; sessionId: string; turnId: string }) {
   const config = ttsConfig();
-  const request = { endpoint: '/audio/speech', model: config.model, voice, response_format: config.response_format, text_spoken: spoken };
+  const instructions = config.style_instructions;
+  const request = { endpoint: '/audio/speech', model: config.model, voice, instructions: instructions ?? null, response_format: config.response_format, text_spoken: spoken };
   const base = {
     ...record,
     purpose: 'tts',
@@ -50,7 +51,7 @@ async function synthesize(spoken: string, voice: string, record: { studentId: st
   try {
     const res = await postOpenRouterAudio(
       '/audio/speech',
-      { model: config.model, input: spoken, voice, response_format: config.response_format, provider: OPENROUTER_DATA_POLICY },
+      { model: config.model, input: spoken, voice, ...(instructions ? { instructions } : {}), response_format: config.response_format, provider: OPENROUTER_DATA_POLICY },
       TTS_TIMEOUT_MS,
     );
     const contentType = res.headers.get('content-type') ?? '';
@@ -105,7 +106,8 @@ export async function speakTutorTurn(actor: Actor, input: { studentId: string; t
   const config = ttsConfig();
   const student = await getStudentContext(actor, { studentId: input.studentId });
   const voice = companionVoice(student.companion) ?? config.default_voice;
-  const key = ttsCacheKey(config.model, voice, spoken);
+  // Đổi chỉ dẫn phong cách thì phải đọc lại, nên chỉ dẫn nằm trong khoá cache cùng giọng.
+  const key = ttsCacheKey(config.model, config.style_instructions ? `${voice}|${config.style_instructions}` : voice, spoken);
 
   const hit = await readTtsCache(input.studentId, key);
   if (hit) return { audio: hit, cached: true, model: config.model, voice };
