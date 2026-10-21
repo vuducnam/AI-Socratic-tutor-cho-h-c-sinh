@@ -42,6 +42,7 @@ docker compose -f docker-compose.yml --profile prod run --rm admin node_modules/
   localhost cho Postgres/Redis/math-verifier). Ở prod không service dữ liệu nào publish cổng.
 - Thứ tự tự động: `postgres`/`redis` healthy → `migrate` (`prisma migrate deploy` bằng `cu_owner`) xong →
   `app`, `admin`, `worker` (kết nối bằng `cu_app`) → `cloudflared` khi `app` healthy.
+- Kiểm `docker compose -f docker-compose.yml --profile prod ps`: `cloudflared` phải `running`. Thiếu `CLOUDFLARE_TUNNEL_TOKEN` thì nó báo lỗi và khởi động lại liên tục (compose không chặn lúc đọc file để dev chạy được mà không cần token).
 - Sau seed, kiểm mỗi skill số thập phân có ≥ 1 misconception và ≥ 1 tình huống đã duyệt (trang `/parent` › Duyệt).
 
 ### Giọng nói (stt-local, GPU)

@@ -188,7 +188,9 @@ services:
     restart: unless-stopped
     command: ["tunnel", "--no-autoupdate", "run"]
     environment:
-      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?CLOUDFLARE_TUNNEL_TOKEN chưa đặt}
+      # Không dùng ${VAR:?}: compose kiểm biến của mọi service kể cả khi profile prod không bật, nên dev cũng bị chặn.
+      # Thiếu token thì cloudflared báo lỗi và khởi động lại liên tục (docker compose ps thấy ngay) — kiểm ở mục 2 deployment-guide.
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
     depends_on:
       app: { condition: service_healthy }
     networks: [edge]
