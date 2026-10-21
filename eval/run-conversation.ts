@@ -14,6 +14,7 @@ import { runHardChecks } from '@/server/domain/dialogue/hard-checks';
 import { loadPreset } from '@/server/domain/dialogue/preset';
 import { openProblemTurn, runStudentTurn } from '@/server/domain/dialogue/run-turn';
 import { generateSituationalProblem } from '@/server/domain/life-context/generate-situational-problem';
+import { HOOK_FALLBACK } from '@/server/domain/life-context/special-turns';
 import { solutionPlanSchema } from '@/server/domain/presolve/plan-schema';
 import { presolveProblem } from '@/server/domain/presolve/presolve';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
@@ -273,7 +274,8 @@ export async function runConversation(
     escalatedBeforeTurn4:
       persona === 'easily_frustrated' ? studentTurns.slice(0, 3).some((t) => (turns.find((x) => x.seq === t.seq + 1)?.scaffold_level ?? 0) > 0) : null,
     reachedDone: turns.some((t) => t.state_after === 'DONE'),
-    hadHook: turns.some((t) => t.turn_kind === 'hook'),
+    // Câu dự phòng không kể tình huống đời thật nào (quy tắc cứng 13): không tính là có hook.
+    hadHook: turns.some((t) => t.turn_kind === 'hook' && t.content !== HOOK_FALLBACK),
     hadTransferQuestion: turns.some((t) => t.turn_kind === 'transfer_question'),
     homeworkTextChanged: original.problem.confirmed_text !== problem.text,
     planSkillsOutOfScope: !originalPlan.skill_ids.every((s) => effective.allowedSkillIds.includes(s)),

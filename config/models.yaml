@@ -37,7 +37,8 @@ roles:
   learner_summary:  { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 1024 }
   presolve:         { model: claude-opus-5-5,   effort: high,   thinking: adaptive, max_tokens: 16000 }
   ocr:              { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 2048 }
-  hook:             { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 512 }
+  # Câu mở bài: Haiku hay viết thành câu hỏi hoặc chép số của đề (73% rơi về câu dự phòng); Sonnet 30/30 đúng dạng (thử 2026-10-21).
+  hook:             { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 512 }
   contextualize:    { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 1024 }
   transfer:         { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 512 }
   report_narrative: { model: claude-sonnet-5-5, effort: medium, thinking: adaptive, max_tokens: 8000 }
