@@ -29,7 +29,8 @@
     "eval:smoke": "tsx --conditions=react-server eval/run-eval.ts --smoke",
     "eval:replay": "tsx --conditions=react-server eval/replay-tutor.ts",
     "prod:up": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --build",
-    "prod:down": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod down"
+    "prod:down": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod down",
+    "prod:deploy": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod build app && docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm --no-deps migrate && docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --no-deps app admin worker cloudflared"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",

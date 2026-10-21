@@ -104,7 +104,7 @@ chỉ ở `127.0.0.1:3001` và đăng nhập được với Turnstile test key; 
 
 ## 6. Vận hành
 
-- Cập nhật: `git pull` → `pnpm prod:up` (build lại image, migrate tự chạy).
+- Cập nhật: `git pull` → `pnpm prod:deploy` (build lại image app, chạy migration, khởi động lại app/admin/worker/cloudflared; không đụng Postgres, Redis, math-verifier, stt-local). `pnpm prod:up` dùng cho lần chạy đầu hoặc khi đổi cấu hình các service đó; trên PC vừa làm dev vừa chạy prod, lệnh này tạo lại các service dữ liệu theo cấu hình prod nên mất cổng localhost của dev: chạy lại `docker compose up -d postgres redis math-verifier stt-local` để có lại.
 - Log: `docker compose --env-file .env.prod -f docker-compose.yml --profile prod logs -f app worker`.
 - Backup không thuộc phạm vi dự án: chủ dự án tự backup ở mức PC (volume `pgdata`, `storage`, thư mục `data/`).
 - Dừng: `pnpm prod:down`.
