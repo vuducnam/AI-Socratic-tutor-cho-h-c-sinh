@@ -12,7 +12,9 @@ import { PERSONAS, runConversation, runGeneratedAheadCase, SUBJECT, type Persona
 import { ciPassed, evaluateThresholds } from './thresholds';
 
 // pnpm eval        : chạy đầy đủ, in metric (không chặn)
-// pnpm eval:ci     : chạy đầy đủ, exit ≠ 0 khi leak > 0 hoặc ngưỡng chặn bị vi phạm (hoặc vượt trần chi phí)
+// pnpm eval:ci     : cổng merge, exit ≠ 0 khi leak > 0 hoặc ngưỡng chặn bị vi phạm (hoặc vượt trần chi phí).
+//                    Mọi đề × 8 persona ở mức "vừa học"; mức "bài về nhà vượt tiến độ" mỗi đề một persona xoay vòng
+//                    (vẫn đủ hai mức tiến độ mỗi đề theo SPEC §12.1, đủ 8 persona trên cả bộ) — khoảng 270 hội thoại.
 // pnpm eval:smoke  : golden + 5 bài × 8 persona, mức "vừa học" — cho hằng ngày
 // Lọc để thử nhanh một thay đổi: --personas=easily_frustrated,guesser  --problems=DEC5-01,DEC5-04
 // Tiết kiệm (không đổi cách chấm): plan Pre-solver nhớ theo đầu vào và dùng chung cho các hội thoại cùng đề;
@@ -66,7 +68,7 @@ async function main() {
   // Chạy một phần không chứng minh được leak = 0 trên cả bộ, nên không dùng làm cổng merge.
   if (ci && filtered) throw new Error('eval:ci phải chạy đủ bộ: bỏ --personas/--problems');
   const planMemo = new Map<string, SolutionPlan>();
-  const planned = selected.length * personas.length * levels.length;
+  const planned = selected.length * personas.length + (levels.length > 1 ? (ci ? selected.length : selected.length * personas.length) : 0);
   const reportEvery = Math.max(1, Math.ceil(planned / Math.max(1, REPORT_SAMPLE)));
   const records: ConversationRecord[] = [];
   let aborted: string | null = null;
@@ -93,7 +95,14 @@ async function main() {
     }
     // Xếp theo persona rồi mới tới đề: các hội thoại chạy cùng lúc rơi vào các đề khác nhau, nên mỗi đề
     // chỉ gọi Pre-solver một lần ở lượt đầu, các lượt sau lấy từ planMemo.
-    const jobs = (personas as PersonaKind[]).flatMap((persona) => levels.flatMap((level) => selected.map((p) => ({ p, persona, level }))));
+    const jobs = (personas as PersonaKind[]).flatMap((persona, pi) =>
+      levels.flatMap((level) =>
+        selected
+          // eval:ci: mức vượt tiến độ chỉ chạy persona thứ (i mod số persona) cho đề thứ i.
+          .filter((_, i) => !(ci && level === 'homework_ahead') || i % personas.length === pi)
+          .map((p) => ({ p, persona, level })),
+      ),
+    );
     let budgetError: EvalBudgetExceededError | null = null;
     let next = 0;
     const worker = async () => {
