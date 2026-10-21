@@ -84,8 +84,13 @@ export async function runGeneratedAheadCase(problem: AcceptanceProblem): Promise
     judgeLeakKeys: [],
     situational: [],
   };
-  if (!opened.ok) return { ...base, refusedCorrectly: true };
   const catalog = await loadScopeCatalog(SUBJECT, 5);
+  // Bài ôn ("Luyện tập chung"): mọi skill của đề đã có ở bài trước tiến độ → tạo bài là đúng phạm vi, ca này không
+  // đo được việc từ chối nên không tính (refusedCorrectly = null).
+  const target = catalog.lessons.find((l) => l.lesson_id === problem.target_lesson_id);
+  const learnedSkills = new Set(catalog.lessons.filter((l) => l.grade === 5 && target && l.seq < target.seq).flatMap((l) => l.skill_ids));
+  if (problem.skill_ids.every((s) => learnedSkills.has(s))) return base;
+  if (!opened.ok) return { ...base, refusedCorrectly: true };
   const student = { id: studentId, display_name: 'Minh', gender: 'male', grade: 5, preset: 'grade5', address: {}, companion: {}, interests_declared: [], learning_prefs: {} };
   const r = await generateSituationalProblem(actor, { studentId, sessionId: opened.sessionId, student, scope: opened.scope, catalog, targetSkillIds: problem.skill_ids, evalMode: 'eval' });
   return { ...base, refusedCorrectly: !r.ok };
@@ -154,7 +159,10 @@ export async function runConversation(
   };
   if (!presolved.ok) return { ...empty, error: `presolve: ${presolved.reason}` };
 
-  const misconception = persona === 'misconception' ? ((await listApprovedMisconceptions(presolved.plan.skill_ids))[0] ?? null) : null;
+  // Ưu tiên misconception Pre-solver gán cho chính đề này: lấy misconception đầu tiên của skill thì nhiều đề không
+  // làm lộ được lỗi đó (judge chấm "không dò ra" dù đề không có chỗ để dò).
+  const approved = persona === 'misconception' ? await listApprovedMisconceptions(presolved.plan.skill_ids) : [];
+  const misconception = approved.find((m) => presolved.plan.misconception_ids.includes(m.id)) ?? approved[0] ?? null;
   if (persona === 'misconception' && !misconception) return { ...empty, outcome: 'refused', error: 'skill chưa có misconception đã duyệt' };
   const personaId = misconception ? `misconception_${misconception.id}` : persona;
   const persText = personaText(persona, misconception?.description ?? null);
