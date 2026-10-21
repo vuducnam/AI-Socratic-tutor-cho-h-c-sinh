@@ -6,6 +6,7 @@ import { createProblem } from '@/server/dal/problems-dal';
 import type { StudentContext } from '@/server/dal/sessions-dal';
 import { raiseSystemAlert } from '@/server/dal/system-alerts-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
+import { findSubject } from '@/server/domain/curriculum/subject-config';
 import type { CurriculumScope, ScopeLesson, ScopeSkill } from '@/server/domain/curriculum/scope';
 import { countQuestions, normalizeNumber, numbersIn, splitSentences } from '@/server/domain/dialogue/hard-checks';
 import { loadPreset } from '@/server/domain/dialogue/preset';
@@ -61,7 +62,7 @@ export function situationalVisual(
   return { kind: template.svg_kind, items };
 }
 
-const BRAND = /\b(coca|pepsi|vinamilk|kfc|lotte|samsung|iphone|honda|yamaha|grab|shopee|lazada|tiki|circle ?k|highlands)\b/i;
+export const BRAND = /\b(coca|pepsi|vinamilk|kfc|lotte|samsung|iphone|honda|yamaha|grab|shopee|lazada|tiki|circle ?k|highlands)\b/i;
 
 /** Kiểm bằng code đề do LLM viết: đủ mọi số đã điền, không thêm số lạ, ≤ N câu, kết bằng câu hỏi. */
 export function situationalTextProblems(text: string, values: Record<string, string>, maxSentences: number): string[] {
@@ -79,13 +80,18 @@ export function situationalTextProblems(text: string, values: Record<string, str
 }
 
 // Nhân vật luân phiên nam/nữ (cân bằng giới), không lấy tên con.
-const CHARACTERS = ['bạn An', 'bạn Lan', 'bạn Minh', 'bạn Hoa', 'bạn Nam', 'bạn Mai', 'bạn Khôi', 'bạn Linh'];
+export const CHARACTERS = ['bạn An', 'bạn Lan', 'bạn Minh', 'bạn Hoa', 'bạn Nam', 'bạn Mai', 'bạn Khôi', 'bạn Linh'];
 
 export async function generateSituationalProblem(actor: Actor, input: SituationalProblemInput): Promise<SituationalProblemResult> {
   // Không skill đích nào trong phạm vi đã học → từ chối đúng quy tắc cứng 15, không phải thư viện cạn:
   // không kêu system_alert (bố mẹ chỉ nên thấy cảnh báo khi thư viện thật sự thiếu context).
   if (!input.targetSkillIds.some((s) => input.scope.allowedSkillIds.includes(s))) {
     return { ok: false, reason: 'out_of_scope', tried: [] };
+  }
+  // Môn kiến thức: mẫu không số gắn ý chính đã duyệt (SPEC §5d).
+  if (findSubject(input.scope.subject)?.verifier === 'key_facts') {
+    const { generateKnowledgeSituationalProblem } = await import('./generate-knowledge-situational-problem');
+    return generateKnowledgeSituationalProblem(actor, input);
   }
   const preset = loadPreset(input.student.preset);
   const random = input.random ?? Math.random;
@@ -116,7 +122,10 @@ export async function generateSituationalProblem(actor: Actor, input: Situationa
     }
     const row = contexts.find((c) => c.id === choice.context.id)!;
     tried.push(row.id);
-    const template = lifeContextTemplateSchema.parse(row.template);
+    // Mẫu không số (môn kiến thức) không dùng được ở đây.
+    const parsedTemplate = lifeContextTemplateSchema.safeParse(row.template);
+    if (!parsedTemplate.success) continue;
+    const template = parsedTemplate.data;
     let filled;
     try {
       filled = fillVariables(template, { random, thousands: preset.thousands_separator });

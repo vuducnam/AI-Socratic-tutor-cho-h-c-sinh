@@ -130,6 +130,30 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
     expect(r.state).toBe('CONSOLIDATE');
   });
 
+  it('Mít ra đề: tình huống không số đã duyệt, đề không lộ ý chính, kế hoạch kiểm đúng ý của tình huống', async () => {
+    await appDb().query(
+      `INSERT INTO life_contexts (id, skill_id, theme, template, min_grade, max_grade, safety, content_hash, approved_by, approved_at)
+       SELECT 'FH.CTX.CALENDAR', 'FH.DEC.READ', 'home', $1::jsonb, 5, 5, '{"adult_required":false,"notes":""}', 'fixture', id, now()
+       FROM users WHERE email = 'fixture-approver@test.local' ON CONFLICT DO NOTHING`,
+      [JSON.stringify({ kind: 'question', setup: 'Bố treo tờ lịch có ghi các ngày kỉ niệm lớn của đất nước.', real_question: 'Chiến dịch Điện Biên Phủ diễn ra từ ngày nào đến ngày nào?', fact_ids: [F(1), F(2)] })],
+    );
+    const { startPracticeProblem } = await import('@/server/domain/session/practice-problem');
+
+    // Lần 1: model viết lộ ngày kết thúc trong đề → code loại, hết tình huống → không ra đề.
+    const leaky = await historySession();
+    setGatewayDependencies({ primary: scriptedAnthropic([{ problem_text: 'Bạn Lan thấy lịch ghi ngày 7 tháng 5. Chiến dịch Điện Biên Phủ diễn ra từ ngày nào đến ngày nào?' }]).provider, fallback: null });
+    expect(await startPracticeProblem(leaky.actor, { studentId: leaky.studentId, sessionId: leaky.sessionId })).toMatchObject({ ok: false });
+
+    // Lần 2: đề hợp lệ → Pre-solver kiến thức → Guard (practice_problem) → tin của Mít chính là đề.
+    const w = await historySession();
+    const text = 'Bạn Lan thấy bố treo tờ lịch ghi các ngày kỉ niệm lớn. Chiến dịch Điện Biên Phủ diễn ra từ ngày nào đến ngày nào?';
+    setGatewayDependencies({ primary: scriptedAnthropic([{ problem_text: text }, PLAN_OUTPUT, PASS]).provider, fallback: null });
+    const r = await startPracticeProblem(w.actor, { studentId: w.studentId, sessionId: w.sessionId });
+    expect(r).toMatchObject({ ok: true, turn: { message: text } });
+    const p = await appDb().query(`SELECT origin, life_context_id, context_variables->'fact_ids' AS facts FROM problems WHERE session_id = $1`, [w.sessionId]);
+    expect(p.rows).toEqual([{ origin: 'generated', life_context_id: 'FH.CTX.CALENDAR', facts: [F(1), F(2)] }]);
+  });
+
   it('sách không nói tới điều con hỏi → không dạy, báo bố mẹ', async () => {
     const w = await historySession();
     setGatewayDependencies({
