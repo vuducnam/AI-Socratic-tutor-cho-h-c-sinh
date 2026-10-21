@@ -1,5 +1,5 @@
 # Cú — PC tại nhà (SPEC §14b).
-# Dev  : docker compose up -d postgres redis math-verifier stt-local   (docker-compose.override.yml tự gộp: mở cổng localhost)
+# Dev  : docker compose up -d postgres redis math-verifier stt-local mailpit   (docker-compose.override.yml tự gộp: mở cổng localhost)
 # Prod : pnpm prod:up   (= docker compose -f docker-compose.yml --profile prod up -d — KHÔNG gộp override,
 #        nên postgres/redis/math-verifier/stt-local không publish cổng nào)
 # Model STT tải một lần trước khi chạy stt-local: docker compose run --rm stt-models-download

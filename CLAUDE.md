@@ -112,7 +112,7 @@ docker-compose.yml          # app, admin (127.0.0.1:3001), worker, postgres, red
 
 ```bash
 pnpm install
-docker compose up -d postgres redis math-verifier stt-local   # stt-local cần GPU
+docker compose up -d postgres redis math-verifier stt-local mailpit   # stt-local cần GPU; mailpit: hộp thư thử ở http://localhost:8025
 pnpm db:migrate          # prisma migrate deploy (kèm SQL triggers)
 pnpm db:seed             # skill graph + mục lục lớp 5 từ data/skills, data/curriculum
 pnpm dev                 # next dev

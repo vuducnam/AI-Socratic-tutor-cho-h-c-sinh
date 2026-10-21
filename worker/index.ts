@@ -35,6 +35,16 @@ const repeatingJobs: { queue: QueueName; name: string; everyMs: number }[] = [
   { queue: QUEUE_NAMES.maintenance, name: CLOSE_IDLE_SESSIONS_JOB, everyMs: 5 * 60_000 },
 ];
 
+/**
+ * Mô tả lỗi cho log: lỗi mạng của Node (AggregateError khi mọi địa chỉ đều từ chối) có message rỗng, nên
+ * kèm tên và mã lỗi (ECONNREFUSED…) để người vận hành biết nguyên nhân. Không in cấu hình hay dữ liệu.
+ */
+function describeError(err: Error): string {
+  const code = (err as { code?: unknown }).code;
+  const inner = err instanceof AggregateError ? err.errors.map((e: unknown) => (e as { code?: string }).code ?? String(e)).join(', ') : '';
+  return [err.name, typeof code === 'string' ? code : '', err.message, inner ? `(${inner})` : ''].filter(Boolean).join(': ');
+}
+
 const connection = createRedisConnection();
 const queues = new Map<QueueName, Queue>();
 const workers: Worker[] = [];
@@ -51,7 +61,7 @@ for (const [queueName, table] of Object.entries(handlers) as [QueueName, Record<
     { connection, concurrency: 2 },
   );
   worker.on('failed', (job, err) => {
-    console.error(`[worker] ${queueName}/${job?.name ?? '?'} (${job?.id ?? '?'}) lỗi: ${err.message}`);
+    console.error(`[worker] ${queueName}/${job?.name ?? '?'} (${job?.id ?? '?'}) lỗi: ${describeError(err)}`);
   });
   workers.push(worker);
 }
