@@ -51,4 +51,21 @@ describe('runNotifyParents', () => {
     expect(mail!.body).toContain('https://cu.example.test/parent');
     expect(mail!.body).not.toContain('bắt nạt');
   });
+
+  it('chưa cấu hình SMTP_URL → bỏ qua, không lỗi (cờ vẫn hiện ở /parent)', async () => {
+    const saved = process.env.SMTP_URL;
+    delete process.env.SMTP_URL;
+    try {
+      const w = await createAdminWorld();
+      const flagId = await createFlag(mintActor('system', '00000000-0000-0000-0000-000000000000'), {
+        studentId: w.studentId,
+        type: 'pin_soft_locked',
+        severity: 'warning',
+        detail: {},
+      });
+      await expect(runNotifyParents({ flagId })).resolves.toEqual({ sent: 0, skipped: 'smtp_not_configured' });
+    } finally {
+      process.env.SMTP_URL = saved;
+    }
+  });
 });

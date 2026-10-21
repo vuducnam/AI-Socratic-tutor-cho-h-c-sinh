@@ -28,7 +28,8 @@ Sao chép `.env.example` thành `.env` rồi điền. Bắt buộc cho prod:
 | `CLOUDFLARE_TUNNEL_TOKEN` | Token tunnel (mục 3) |
 | `CLAUDE_API_KEY`, `CLAUDE_WORKSPACE_ID` | Key không gắn workspace thì bắt buộc có workspace id |
 | `OPENROUTER_API_KEY` | Dự phòng khi Claude API hết credit / 5xx |
-| `SMTP_URL`, `SMTP_FROM`, `APP_BASE_URL` | Email báo phụ huynh khi khoá PIN / cờ an toàn; `APP_BASE_URL=https://cu.<tên-miền>` |
+| `APP_BASE_URL` | `https://<subdomain>.<tên-miền>` (link trong email và trang) |
+| `SMTP_URL`, `SMTP_FROM` | Tuỳ chọn: email báo phụ huynh khi khoá PIN / cờ an toàn. Bỏ trống thì không gửi email; cờ và trạng thái khoá vẫn hiện ở `/parent` |
 
 ## 2. Chạy lần đầu
 
@@ -55,7 +56,7 @@ docker compose -f docker-compose.yml --profile setup run --rm stt-models-downloa
 docker compose -f docker-compose.yml up -d stt-local
 ```
 
-- `stt-local` nằm trong mạng internal `stt` (không ra internet, `HF_HUB_OFFLINE=1`); chỉ `app`, `admin`, `worker` gọi được qua `http://stt-local:8000`. Dev: publish `127.0.0.1:8002`, đặt `STT_LOCAL_URL=http://localhost:8002` trong `.env`.
+- `stt-local` nằm trong mạng internal `stt` (không ra internet, `HF_HUB_OFFLINE=1`, volume model mount chỉ đọc); chỉ `app` gọi được qua `http://stt-local:8000`. Dev: publish `127.0.0.1:8002`, đặt `STT_LOCAL_URL=http://localhost:8002` trong `.env`.
 - Model theo ngôn ngữ trong `config/models.yaml` (`stt.local_models`); đổi model thắng sau khi chạy `eval/stt-bench` trên giọng thật.
 - Dự phòng cloud (`openai/gpt-transcribe`) chỉ chạy khi phụ huynh bật ở `/parent/settings` và cần `OPENROUTER_API_KEY`. TTS cũng dùng `OPENROUTER_API_KEY`.
 
