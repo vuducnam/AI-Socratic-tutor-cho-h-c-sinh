@@ -77,4 +77,17 @@ describe('dữ liệu thật trong repo', () => {
     expect(lessons.length).toBeGreaterThan(0);
     expect(() => parseBeyondScopeFile('beyond', readFileSync('data/curriculum/math/beyond-grade5.yaml', 'utf8'))).not.toThrow();
   });
+
+  it('data/curriculum/history_geography/grade5.yaml: 28 bài liên tục, mỗi skill trỏ đúng bài, ôn tập không có skill', () => {
+    const skillFile = 'data/skills/history_geography/grade5.yaml';
+    const skills = parseSkillFile(skillFile, readFileSync(skillFile, 'utf8'));
+    const { lessons } = parseCurriculumFile(
+      'data/curriculum/history_geography/grade5.yaml',
+      readFileSync('data/curriculum/history_geography/grade5.yaml', 'utf8'),
+      { knownSkillIds: new Set(skills.map((s) => s.skill_id)), gradeSkillIds: skills.map((s) => s.skill_id) },
+    );
+    expect(lessons.map((l) => l.seq)).toEqual(Array.from({ length: 28 }, (_, i) => i + 1));
+    expect(lessons.filter((l) => l.title === 'Ôn tập').every((l) => l.skill_ids.length === 0)).toBe(true);
+    for (const s of skills) expect(lessons.find((l) => l.skill_ids.includes(s.skill_id))?.title).toBe(s.name);
+  });
 });

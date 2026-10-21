@@ -483,7 +483,7 @@ Nội dung trong bảng dưới là theo hiểu biết chung, chưa đối chi�
 | Toán | solve | Số thập phân và các phép tính, tỉ số phần trăm, diện tích tam giác/hình thang/hình tròn, thể tích hình hộp, số đo thời gian, toán chuyển động | MVP |
 | Tiếng Việt | argue + solve | Đọc hiểu văn bản, từ đồng nghĩa/đa nghĩa, câu ghép, liên kết câu; viết đoạn nêu ý kiến | Giai đoạn 2 |
 | Khoa học | argue | Biến đổi chất, năng lượng, sinh sản của sinh vật, con người và sức khoẻ, sinh vật và môi trường | Giai đoạn 2 |
-| Lịch sử và Địa lí | argue | Đất nước Việt Nam, các quốc gia cổ, xây dựng và bảo vệ đất nước, láng giềng và thế giới | Giai đoạn 3 |
+| Lịch sử và Địa lí | solve (`key_points`: câu hỏi kiến thức, chấm bằng code so ý chính) + argue (câu hỏi ý kiến) | Đất nước Việt Nam, các quốc gia cổ, xây dựng và bảo vệ đất nước, láng giềng và thế giới | Giai đoạn 0b (song song Toán, quyết định 2026-10-21) |
 | Đạo đức | argue | Tình huống ứng xử, tôn trọng khác biệt, bảo vệ cái đúng, dùng tiền hợp lý | Giai đoạn 3 |
 
 Môn argue (Khoa học, Lịch sử – Địa lí, Đạo đức, đọc hiểu) mới là nơi "tự bảo vệ quan điểm" thực sự xảy ra: học sinh đưa ra nhận định, AI hỏi bằng chứng, đưa góc nhìn khác, học sinh quyết định giữ hay sửa.

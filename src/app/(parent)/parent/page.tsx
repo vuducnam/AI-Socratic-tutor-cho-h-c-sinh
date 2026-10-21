@@ -4,6 +4,7 @@ import { listSystemAlerts } from '@/server/dal/system-alerts-dal';
 import { Notices } from './_components/child-tabs';
 import { formatDateTime, SEVERITY_LABELS } from './_lib/parent-page-helpers';
 import { acknowledgeSystemAlertAction, unlockStudentPinAction } from './overview-actions';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -88,7 +89,7 @@ export default async function ParentOverviewPage({ searchParams }: { searchParam
                     <td>
                       <a href={`/parent/sessions/${s.id}?studentId=${child.id}`}>{formatDateTime(s.started_at)}</a>
                     </td>
-                    <td>{s.subject}</td>
+                    <td>{subjectName(s.subject)}</td>
                     <td>{s._count.turns}</td>
                     <td>{s.ended_at ? 'Đã kết thúc' : 'Đang mở'}</td>
                   </tr>

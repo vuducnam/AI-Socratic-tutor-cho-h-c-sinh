@@ -2,6 +2,7 @@ import { requireParentActor } from '@/server/auth/session';
 import { listStudentSessions } from '@/server/dal/parent-views-dal';
 import { ChildTabs, NoChild } from '../_components/child-tabs';
 import { formatDateTime, loadSelectedChild, RATING_LABELS } from '../_lib/parent-page-helpers';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +44,7 @@ export default async function ParentSessionsPage({ searchParams }: { searchParam
                   {s.end_reason && <span className="muted small"> ({s.end_reason})</span>}
                 </td>
                 <td>
-                  {s.subject} / {s.mode}
+                  {subjectName(s.subject)} / {s.mode}
                 </td>
                 <td>{s.opened_via === 'reminder' ? 'Lời nhắc' : 'Con tự mở'}</td>
                 <td>{s._count.turns}</td>

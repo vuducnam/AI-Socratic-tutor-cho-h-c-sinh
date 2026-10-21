@@ -3,8 +3,10 @@ import type { Actor } from '@/server/dal/actor';
 import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { confirmProblemText, createProblem, getProblem } from '@/server/dal/problems-dal';
 import { endLearningSession, findOpenSession, getLearningSession, getStudentContext, listSessionsSince } from '@/server/dal/sessions-dal';
+import { listSchoolProgress } from '@/server/dal/school-progress-dal';
 import { listSessionTurns } from '@/server/dal/turns-dal';
 import { enqueueSessionReport } from '@/server/jobs/enqueue-session-report';
+import { findSubject, loadSubjects, type SubjectConfig } from '@/server/domain/curriculum/subject-config';
 import { loadPreset } from '@/server/domain/dialogue/preset';
 import { openProblemTurn, type TurnResult } from '@/server/domain/dialogue/run-turn';
 import { extractProblemFromImage } from '@/server/domain/input/extract-problem-from-image';
@@ -18,7 +20,6 @@ import { DAILY_LIMIT_MESSAGE, learningPrefsLimits, minutesUsed, SESSION_LIMIT_ME
 // Pre-solver, mở bài; giới hạn thời gian theo hồ sơ. Route handler chỉ xác thực → zod → gọi các hàm này.
 
 export const IDLE_SESSION_MINUTES = 30;
-export const SUBJECT = 'math';
 
 export interface ChatLine {
   turnId: string;
@@ -27,9 +28,37 @@ export interface ChatLine {
   kind: string;
 }
 
+/** Môn gửi cho client: tên hiển thị và có bàn phím toán không (config/subjects.yaml). */
+export interface SubjectDto {
+  id: string;
+  name: string;
+  mathKeyboard: boolean;
+}
+
 export type StartResult =
-  | { ok: true; sessionId: string; lines: ChatLine[]; state: string | null; hasProblem: boolean; minutesLeft: number }
-  | { ok: false; reason: 'progress_missing' | 'daily_limit'; message: string };
+  | {
+      ok: true;
+      sessionId: string;
+      subject: SubjectDto;
+      /** Mọi môn đã đặt tiến độ (từ hai môn thì /learn có nút "Đổi môn"). */
+      subjects: SubjectDto[];
+      lines: ChatLine[];
+      state: string | null;
+      hasProblem: boolean;
+      minutesLeft: number;
+    }
+  | { ok: false; reason: 'progress_missing' | 'daily_limit'; message: string }
+  /** Con có từ hai môn đã đặt tiến độ và chưa chọn môn: client hiện màn chọn môn. */
+  | { ok: false; reason: 'choose_subject'; subjects: SubjectDto[] };
+
+const toSubjectDto = (s: SubjectConfig): SubjectDto => ({ id: s.id, name: s.name, mathKeyboard: s.math_keyboard });
+
+/** Môn trong config mà bố mẹ đã đặt tiến độ (con trỏ hoặc cho học trước), theo thứ tự trong config. */
+async function subjectsWithProgress(actor: Actor, studentId: string): Promise<SubjectConfig[]> {
+  const rows = await listSchoolProgress(actor, { studentId });
+  const ready = new Set(rows.filter((r) => r.frontier_lesson_id || r.preview_lesson_ids.length).map((r) => r.subject));
+  return loadSubjects().filter((s) => ready.has(s.id));
+}
 
 async function remainingMinutes(actor: Actor, studentId: string) {
   const student = await getStudentContext(actor, { studentId });
@@ -42,23 +71,33 @@ function toLines(turns: { id: string; role: string; content: string; turn_kind: 
   return turns.map((t) => ({ turnId: t.id, from: t.role === 'student' ? 'student' : 'cu', text: t.content, kind: t.turn_kind }));
 }
 
-export async function startOrResumeSession(actor: Actor, input: { studentId: string }): Promise<StartResult> {
+/**
+ * Mở hoặc tiếp tục phiên. `subject` bỏ trống: tiếp tục phiên đang mở (mọi môn); không có thì con chỉ có một môn đã
+ * đặt tiến độ → mở môn đó, có từ hai môn → trả danh sách để con chọn. Chọn môn khác môn đang mở → đóng phiên cũ.
+ */
+export async function startOrResumeSession(actor: Actor, input: { studentId: string; subject?: string }): Promise<StartResult> {
   // Tuần tự theo học sinh: hai lần mở cùng lúc không tạo hai phiên (student-start-lock.ts).
   return withStudentStartLock(input.studentId, () => startOrResumeUnlocked(actor, input));
 }
 
-async function startOrResumeUnlocked(actor: Actor, input: { studentId: string }): Promise<StartResult> {
+async function startOrResumeUnlocked(actor: Actor, input: { studentId: string; subject?: string }): Promise<StartResult> {
   const { left } = await remainingMinutes(actor, input.studentId);
   if (left <= 0) return { ok: false, reason: 'daily_limit', message: DAILY_LIMIT_MESSAGE };
 
-  const open = await findOpenSession(actor, { studentId: input.studentId, subject: SUBJECT });
-  if (open) {
+  const ready = await subjectsWithProgress(actor, input.studentId);
+  const subjects = ready.map(toSubjectDto);
+  const open = await findOpenSession(actor, { studentId: input.studentId });
+  if (open && input.subject && open.subject !== input.subject) {
+    await closeSession(actor, { studentId: input.studentId, sessionId: open.id, reason: 'switch_subject' });
+  } else if (open) {
     const session = await getLearningSession(actor, { studentId: input.studentId, sessionId: open.id });
     if (Date.now() - session.last_activity_at.getTime() < IDLE_SESSION_MINUTES * 60_000) {
       const turns = await listSessionTurns(actor, { studentId: input.studentId, sessionId: open.id });
       return {
         ok: true,
         sessionId: open.id,
+        subject: subjectDtoFor(open.subject),
+        subjects,
         lines: toLines(turns),
         state: [...turns].reverse().find((t) => t.role !== 'student')?.state_after ?? null,
         hasProblem: turns.length > 0,
@@ -67,9 +106,21 @@ async function startOrResumeUnlocked(actor: Actor, input: { studentId: string })
     }
     await closeSession(actor, { studentId: input.studentId, sessionId: open.id, reason: 'timeout' });
   }
-  const opened = await openLearningSession(actor, { studentId: input.studentId, subject: SUBJECT });
+  let subject = input.subject ? findSubject(input.subject) : null;
+  if (!subject) {
+    if (ready.length > 1) return { ok: false, reason: 'choose_subject', subjects };
+    // Chưa môn nào có tiến độ: mở thử môn đầu tiên để openLearningSession ghi cờ progress_missing cho bố mẹ.
+    subject = ready[0] ?? loadSubjects()[0]!;
+  }
+  const opened = await openLearningSession(actor, { studentId: input.studentId, subject: subject.id });
   if (!opened.ok) return { ok: false, reason: 'progress_missing', message: opened.message };
-  return { ok: true, sessionId: opened.sessionId, lines: [], state: null, hasProblem: false, minutesLeft: left };
+  return { ok: true, sessionId: opened.sessionId, subject: toSubjectDto(subject), subjects, lines: [], state: null, hasProblem: false, minutesLeft: left };
+}
+
+/** Phiên mở theo môn không còn trong config (môn thử trong test): hiện đúng mã môn, có bàn phím toán như trước. */
+function subjectDtoFor(id: string): SubjectDto {
+  const subject = findSubject(id);
+  return subject ? toSubjectDto(subject) : { id, name: id, mathKeyboard: true };
 }
 
 export type ProblemStartResult = { ok: true; turn: TurnResult } | { ok: false; message: string; reason: string };
@@ -153,7 +204,7 @@ export async function confirmImageProblem(
   return presolveAndOpen(actor, input);
 }
 
-export async function closeSession(actor: Actor, input: { studentId: string; sessionId: string; reason: 'student_done' | 'timeout' | 'time_limit' }) {
+export async function closeSession(actor: Actor, input: { studentId: string; sessionId: string; reason: 'student_done' | 'timeout' | 'time_limit' | 'switch_subject' }) {
   const closed = await endLearningSession(actor, input);
   if (closed) await enqueueSessionReport({ studentId: input.studentId, sessionId: input.sessionId });
   return closed;

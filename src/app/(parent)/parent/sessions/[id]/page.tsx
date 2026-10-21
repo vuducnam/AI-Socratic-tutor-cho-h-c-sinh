@@ -9,6 +9,7 @@ import { JsonBlock } from '../../_components/json-block';
 import { GuardVerdictList, LlmCallDetails } from '../../_components/llm-call-details';
 import { TranscriptTurn } from '../../_components/transcript-turn';
 import { formatDateTime, loadSelectedChild, RATING_LABELS, SEVERITY_LABELS } from '../../_lib/parent-page-helpers';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,7 +52,7 @@ export default async function ParentSessionDetailPage({
         <dl className="kv">
           <dt>Môn / chế độ</dt>
           <dd>
-            {session.subject} / {session.mode}
+            {subjectName(session.subject)} / {session.mode}
           </dd>
           <dt>Mở bởi</dt>
           <dd>{session.opened_via === 'reminder' ? 'Lời nhắc' : 'Con tự mở'}</dd>

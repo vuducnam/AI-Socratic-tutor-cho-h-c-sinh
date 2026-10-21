@@ -97,11 +97,13 @@ services/
   stt-local/                # FastAPI + PhoWhisper-large, GPU
 config/
   models.yaml
+  subjects.yaml             # các môn: tên, cách kiểm đáp án (sympy | key_facts), bàn phím toán
   presets/                  # grade5.yaml, grade6-7.yaml, grade8-9.yaml, grade10-12.yaml
 data/
   skills/                   # skill graph YAML theo môn/lớp (có source bắt buộc)
   life-contexts/            # thư viện tình huống đời thật theo skill (seed, chờ phụ huynh duyệt)
   curriculum/               # mục lục SGK theo đúng thứ tự (bài → skill, thuật ngữ, cách giải) + danh sách thuật ngữ lớp trên
+  key-facts/                # ý chính từng bài của môn kiến thức (Lịch sử và Địa lí), đọc từ SGK chính thống, chủ dự án duyệt
 docs/
   SPEC.md
   CURRICULUM.md             # hướng dẫn nhập mục lục, thuật ngữ, cách giải và cập nhật tiến độ

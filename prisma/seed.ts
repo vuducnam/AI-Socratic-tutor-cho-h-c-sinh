@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import {
   CurriculumSeedError,
   parseBeyondScopeFile,
@@ -53,7 +53,8 @@ export async function seedCurriculumData(skills: SkillDefinition[]): Promise<voi
     const grade = Number(/grade(\d+)\.yaml$/.exec(name)?.[1]);
     const parsed = parseCurriculumFile(file, text, {
       knownSkillIds: known,
-      gradeSkillIds: skills.filter((s) => s.grade_introduced === grade && file.includes(`${s.subject}`)).map((s) => s.skill_id),
+      // Thư mục chứa file là mã môn (data/curriculum/<subject>/), so đúng tên thay vì so chuỗi con trong đường dẫn.
+      gradeSkillIds: skills.filter((s) => s.grade_introduced === grade && basename(dirname(file)) === s.subject).map((s) => s.skill_id),
     });
     const pendingReview = parsed.warnings.filter((w) => w.includes('imported_at'));
     if (pendingReview.length) console.warn(`[seed] ${file}: ${pendingReview.length} bài chưa có imported_at (chờ chủ dự án duyệt)`);

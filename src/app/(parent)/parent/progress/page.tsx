@@ -2,11 +2,10 @@ import { ProgressEditor } from '@/components/progress/progress-editor';
 import { requireParentActor } from '@/server/auth/session';
 import { listLinkedStudents } from '@/server/dal/students-dal';
 import { loadProgressView } from '@/server/domain/curriculum/progress-view';
+import { loadSubjects } from '@/server/domain/curriculum/subject-config';
 import { parentPreviewAction, parentSetFrontierAction, parentStaleReminderAction } from './actions';
 
 export const dynamic = 'force-dynamic';
-
-const SUBJECT = 'math';
 
 export default async function ParentProgressPage({
   searchParams,
@@ -18,7 +17,10 @@ export default async function ParentProgressPage({
   const children = await listLinkedStudents(actor);
   const selected = children.find((c) => c.id === query.studentId) ?? children[0];
   if (!selected) return <p>Chưa có hồ sơ học sinh nào được liên kết với tài khoản này.</p>;
-  const view = await loadProgressView(actor, { studentId: selected.id, subject: SUBJECT });
+  // Mỗi môn một khối; môn chưa có mục lục cho lớp của con thì không hiện.
+  const views = (
+    await Promise.all(loadSubjects().map(async (s) => ({ subject: s, view: await loadProgressView(actor, { studentId: selected.id, subject: s.id }) })))
+  ).filter((v) => v.view.lessons.length > 0);
   return (
     <>
       {children.length > 1 && (
@@ -33,18 +35,22 @@ export default async function ParentProgressPage({
       <h1>{selected.display_name}</h1>
       {query.ok && <p className="notice ok">{query.ok}</p>}
       {query.err && <p className="notice err">{query.err}</p>}
-      <ProgressEditor
-        studentId={selected.id}
-        subject={SUBJECT}
-        lessons={view.lessons}
-        frontierLessonId={view.frontierLessonId}
-        previewLessonIds={view.previewLessonIds}
-        staleReminderEnabled={view.staleReminderEnabled}
-        scope={view.scope}
-        setFrontierAction={parentSetFrontierAction}
-        previewAction={parentPreviewAction}
-        staleReminderAction={parentStaleReminderAction}
-      />
+      {views.map(({ subject, view }) => (
+        <ProgressEditor
+          key={subject.id}
+          studentId={selected.id}
+          subject={subject.id}
+          subjectName={subject.name}
+          lessons={view.lessons}
+          frontierLessonId={view.frontierLessonId}
+          previewLessonIds={view.previewLessonIds}
+          staleReminderEnabled={view.staleReminderEnabled}
+          scope={view.scope}
+          setFrontierAction={parentSetFrontierAction}
+          previewAction={parentPreviewAction}
+          staleReminderAction={parentStaleReminderAction}
+        />
+      ))}
     </>
   );
 }

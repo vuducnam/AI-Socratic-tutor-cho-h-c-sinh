@@ -30,6 +30,10 @@
 .chat-head { display: flex; align-items: flex-end; gap: var(--k-s2); padding: 0 var(--k-s1); }
 .chat-head .owl { width: 72px; height: 72px; flex: none; }
 .chat-hello { margin: 0 0 6px; font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif; font-weight: 700; font-size: 28px; line-height: 1.1; color: var(--k-sky-ink); }
+/* Tên môn dưới lời chào; "Đổi môn" đẩy sang phải (chỉ hiện khi con có từ hai môn). */
+.chat-hello-block { display: flex; flex-direction: column; }
+.chat-subject { margin: 0 0 6px; font-weight: 700; font-size: 16px; color: var(--k-green); }
+.learn-shell .change-subject { margin-left: auto; align-self: center; min-height: 44px; }
 .messages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--k-s2); }
 .msg { display: flex; gap: var(--k-s2); align-items: flex-end; max-width: 82%; animation: msg-pop 240ms var(--k-ease) both; }
 /* Biểu tượng người nói: cú bên trái cho Mít, vòng tròn chữ cái đầu tên bên phải cho bạn. */
@@ -211,6 +215,11 @@
 .center-screen p { margin: 0; }
 .center-screen .lead { font-size: 20px; }
 .learn-shell .center-screen > button { min-height: 56px; padding: 0 var(--k-s5); font-size: 19px; }
+/* Màn chọn môn: thẻ lớn, chạm dễ trên tablet. */
+.subject-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--k-s3); width: 100%; }
+.learn-shell .subject-card { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--k-s1); min-height: 140px; border-radius: var(--k-r-card); background: var(--k-card); color: var(--k-sky-ink); font-size: 22px; box-shadow: 0 0 0 3px var(--k-tint); }
+.learn-shell .subject-card:hover { background: var(--k-tint); }
+.subject-icon { font-size: 44px; line-height: 1; }
 .intro-list {
   list-style: none;
   margin: 0;

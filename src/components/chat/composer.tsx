@@ -32,6 +32,7 @@ export function Composer({
   submitLabel,
   multiline = false,
   showHint = false,
+  mathKeyboard = true,
   voice,
   onSubmit,
   onHint,
@@ -41,6 +42,8 @@ export function Composer({
   submitLabel: string;
   multiline?: boolean;
   showHint?: boolean;
+  /** Môn có bàn phím toán không (config/subjects.yaml). */
+  mathKeyboard?: boolean;
   voice?: ComposerVoice;
   onSubmit: (text: string, meta: SubmitMeta) => void;
   onHint?: () => void;
@@ -121,11 +124,13 @@ export function Composer({
         {voiceOn && <MicButton recorder={recorder} disabled={disabled} />}
         {multiline ? <textarea {...fieldProps} rows={3} /> : <input {...fieldProps} enterKeyHint="send" />}
       </div>
-      {keyboard && <MathKeyboard onInsert={insert} onBackspace={backspace} />}
+      {mathKeyboard && keyboard && <MathKeyboard onInsert={insert} onBackspace={backspace} />}
       <div className="composer-actions">
-        <button type="button" className="ghost" aria-pressed={keyboard} onClick={() => setKeyboard((k) => !k)}>
-          {keyboard ? 'Ẩn bàn phím toán' : 'Bàn phím toán'}
-        </button>
+        {mathKeyboard && (
+          <button type="button" className="ghost" aria-pressed={keyboard} onClick={() => setKeyboard((k) => !k)}>
+            {keyboard ? 'Ẩn bàn phím toán' : 'Bàn phím toán'}
+          </button>
+        )}
         {showHint && onHint && (
           <button type="button" className="ghost hint" disabled={disabled || voiceBusy} onClick={onHint}>
             Gợi ý

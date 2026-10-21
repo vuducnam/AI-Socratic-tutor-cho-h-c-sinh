@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FriendlyError, OfflineError, postJson, postSse } from '@/lib/sse-client';
-import { linesFromTurn, type ChatLine, type ClientVoicePrefs, type ProblemResultDto, type StartDto, type TurnResultDto } from './chat-types';
+import { linesFromTurn, type ChatLine, type ClientVoicePrefs, type ProblemResultDto, type StartDto, type SubjectDto, type TurnResultDto } from './chat-types';
 import { Composer } from './composer';
 import { MessageList } from './message-list';
 import { OwlAvatar } from './owl-avatar';
 import { OcrConfirmPanel, ProblemEntryPanel } from './problem-entry-panels';
 import { BlockedScreen, EndOfProblem, IntroScreen, RestingScreen, SessionEndedScreen } from './simple-screens';
+import { SubjectPicker } from './subject-picker';
 import { speakableTurnIds } from './tts-playback-logic';
 import { useTtsPlayer } from './use-tts-player';
 import type { SubmitMeta } from './voice-input-logic';
@@ -16,7 +17,7 @@ import type { SubmitMeta } from './voice-input-logic';
 // hỏi đáp (SSE) → chuyển giao → chấm vui/chán. Lỗi mạng → "Cú đang nghỉ"; không bao giờ hiện lỗi kỹ thuật.
 // Trả lời bằng giọng là cách chính (micro trong Composer); Mít đọc to tin của mình (nút "nghe", tự đọc nếu bố mẹ bật).
 
-type Phase = 'loading' | 'intro' | 'blocked' | 'offline' | 'problem' | 'confirm' | 'chat' | 'done' | 'ended';
+type Phase = 'loading' | 'intro' | 'choose' | 'blocked' | 'offline' | 'problem' | 'confirm' | 'chat' | 'done' | 'ended';
 const INTRO_KEY = 'cu_intro_seen_v1';
 
 function readIntroSeen(): boolean {
@@ -34,6 +35,8 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
   const [busy, setBusy] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [blocked, setBlocked] = useState('');
+  const [subject, setSubject] = useState<SubjectDto | null>(null);
+  const [subjects, setSubjects] = useState<SubjectDto[]>([]);
   const [ocr, setOcr] = useState<{ problemId: string; text: string } | null>(null);
   const [rated, setRated] = useState(false);
   const [finishing, setFinishing] = useState(false);
@@ -49,18 +52,29 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
 
   const applyStart = useCallback((r: StartDto) => {
     if (!r.ok) {
+      if ('subjects' in r) {
+        setSubjects(r.subjects);
+        setPhase(readIntroSeen() ? 'choose' : 'intro');
+        return;
+      }
       setBlocked(r.message);
       setPhase('blocked');
       return;
     }
     setSessionId(r.sessionId);
+    setSubject(r.subject);
+    setSubjects(r.subjects);
     setLines(r.lines);
     const finished = r.state === 'DONE' || r.state === 'PAUSE';
     setPhase(!readIntroSeen() ? 'intro' : r.hasProblem && !finished ? 'chat' : r.hasProblem ? 'done' : 'problem');
   }, []);
 
   // setState chỉ trong callback sau khi request xong (không render dây chuyền trong effect).
-  const load = useCallback(() => postJson<StartDto>('/api/learn/start').then(applyStart, handleError), [applyStart, handleError]);
+  // subjectId bỏ trống: tiếp tục phiên đang mở, hoặc server trả danh sách môn để con chọn.
+  const load = useCallback(
+    (subjectId?: string) => postJson<StartDto>('/api/learn/start', subjectId ? { subject: subjectId } : undefined).then(applyStart, handleError),
+    [applyStart, handleError],
+  );
 
   useEffect(() => {
     void load();
@@ -70,6 +84,15 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     setPhase('loading');
     setNotice(null);
     void load();
+  };
+
+  const pickSubject = (subjectId: string) => {
+    tts.stop();
+    setPhase('loading');
+    setNotice(null);
+    setLines([]);
+    setRated(false);
+    void load(subjectId);
   };
 
   const showTurn = (turn: TurnResultDto) => {
@@ -200,6 +223,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
   if (phase === 'offline') return <RestingScreen onRetry={retry} />;
   if (phase === 'blocked') return <BlockedScreen message={blocked} />;
   if (phase === 'ended') return <SessionEndedScreen onContinue={retry} />;
+  if (phase === 'choose') return <SubjectPicker subjects={subjects} onPick={pickSubject} />;
   if (phase === 'intro') {
     return (
       <IntroScreen
@@ -210,7 +234,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
           } catch {
             /* trình duyệt chặn lưu: lần sau hiện lại giới thiệu, không sao */
           }
-          setPhase(lines.length ? 'chat' : 'problem');
+          setPhase(!sessionId && subjects.length > 1 ? 'choose' : lines.length ? 'chat' : 'problem');
         }}
       />
     );
@@ -220,7 +244,15 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     <div className="chat">
       <header className="chat-head">
         <OwlAvatar size={72} />
-        <p className="chat-hello">Chào {studentName}!</p>
+        <div className="chat-hello-block">
+          <p className="chat-hello">Chào {studentName}!</p>
+          {subject && <p className="chat-subject">Môn {subject.name}</p>}
+        </div>
+        {subjects.length > 1 && (phase === 'problem' || phase === 'done') && !busy && (
+          <button type="button" className="ghost change-subject" onClick={() => setPhase('choose')}>
+            Đổi môn
+          </button>
+        )}
       </header>
       <MessageList lines={lines} busyText={busy} speech={tts} studentName={studentName} />
       {notice && (
@@ -233,6 +265,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
           onText={(t, meta) => void sendProblem(t, undefined, meta)}
           onPhoto={(f, c) => void sendPhoto(f, c)}
           onPractice={() => void requestPractice()}
+          mathKeyboard={subject?.mathKeyboard ?? true}
         />}
       {phase === 'confirm' && ocr && (
         <OcrConfirmPanel
@@ -251,6 +284,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
           placeholder="Bạn trả lời Mít ở đây"
           submitLabel="Gửi"
           showHint
+          mathKeyboard={subject?.mathKeyboard ?? true}
           voice={sessionId ? { sessionId, defaultLanguage: voicePrefs.sttLanguage, onRecordingStart: tts.stop } : undefined}
           onSubmit={(t, meta) => void sendMessage(t, meta)}
           onHint={() => void sendMessage('Mình cần gợi ý', { inputModality: 'text' }, true)}
