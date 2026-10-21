@@ -11,6 +11,7 @@ import { extractProblemFromImage } from '@/server/domain/input/extract-problem-f
 import { sanitizeProblemImage, type CropRect } from '@/server/domain/input/sanitize-problem-image';
 import { presolveProblem } from '@/server/domain/presolve/presolve';
 import { openLearningSession } from './open-session';
+import { withStudentStartLock } from './student-start-lock';
 import { DAILY_LIMIT_MESSAGE, learningPrefsLimits, minutesUsed, SESSION_LIMIT_MESSAGE, startOfVietnamDay } from './usage-limits';
 
 // Luồng của trang /learn (SPEC §6, §11.5, §13): mở/tiếp tục phiên, nộp đề (gõ tay hoặc ảnh → con xác nhận),
@@ -42,6 +43,11 @@ function toLines(turns: { id: string; role: string; content: string; turn_kind: 
 }
 
 export async function startOrResumeSession(actor: Actor, input: { studentId: string }): Promise<StartResult> {
+  // Tuần tự theo học sinh: hai lần mở cùng lúc không tạo hai phiên (student-start-lock.ts).
+  return withStudentStartLock(input.studentId, () => startOrResumeUnlocked(actor, input));
+}
+
+async function startOrResumeUnlocked(actor: Actor, input: { studentId: string }): Promise<StartResult> {
   const { left } = await remainingMinutes(actor, input.studentId);
   if (left <= 0) return { ok: false, reason: 'daily_limit', message: DAILY_LIMIT_MESSAGE };
 
