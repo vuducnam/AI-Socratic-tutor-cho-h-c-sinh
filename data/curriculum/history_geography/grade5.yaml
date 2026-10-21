@@ -1,0 +1,59 @@
+# Mục lục Lịch sử và Địa lí 5 — Kết nối tri thức với cuộc sống (NXB Giáo dục Việt Nam)
+# Quy tắc cứng 6 và 15 (CLAUDE.md), SPEC mục 5c.1 và 5d. Hướng dẫn: docs/CURRICULUM.md.
+#
+# Nguồn (Claude Code đọc ngày 2026-10-21, CHỜ CHỦ DỰ ÁN DUYỆT — imported_at để trống tới khi duyệt):
+# - taphuan.nxbgd.vn › Bộ SGK thống nhất › Lớp 5 › Lịch sử và Địa lí 5 › "SGK Lịch sử và Địa lí 5".
+#   Hình mờ và bìa sau ghi "Kết nối tri thức với cuộc sống", ISBN 978-604-0-39225-1. Sách một tập.
+# - lessons[] chép từ trang MỤC LỤC in trong sách (trang 4). Tên chủ đề giữ chữ in hoa như mục lục.
+# - pages: trang bắt đầu lấy từ mục lục; trang kết thúc = trang bắt đầu bài kế tiếp - 1 (Bài 28 kết thúc
+#   trước trang 118 "Giải thích khái niệm, thuật ngữ").
+# - Chỉ số trang của trình đọc = trang in + 4 (ví dụ trang in 65 là trang 69 của trình đọc), nên
+#   source.official_url dùng link cả cuốn.
+# - introduces_terms: lấy từ bảng "Giải thích khái niệm, thuật ngữ" (tr.118-119), mỗi thuật ngữ gán vào
+#   bài chứa trang đầu tiên ghi cạnh thuật ngữ đó. methods để trống: môn không có cách giải kiểu Toán.
+# - Bài 11 và Bài 28 (Ôn tập) không có skill riêng; phạm vi là các bài đã học trước đó.
+
+subject: history_geography
+grade: 5
+series: "Kết nối tri thức với cuộc sống"
+publisher: "NXB Giáo dục Việt Nam"
+books:
+  - id: SGK
+    title: "Lịch sử và Địa lí 5"
+    official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100"
+
+lessons:
+  # --- Chủ đề 1: ĐẤT NƯỚC VÀ CON NGƯỜI VIỆT NAM
+  - { lesson_id: HG5.SGK.B1, seq: 1, book: SGK, topic: "ĐẤT NƯỚC VÀ CON NGƯỜI VIỆT NAM", lesson_no: 1, title: "Vị trí địa lí, lãnh thổ, đơn vị hành chính, Quốc kì, Quốc huy, Quốc ca", skill_ids: [HG.B01.LOCATION_TERRITORY_SYMBOLS], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "5-8", imported_at: null } }
+  - { lesson_id: HG5.SGK.B2, seq: 2, book: SGK, topic: "ĐẤT NƯỚC VÀ CON NGƯỜI VIỆT NAM", lesson_no: 2, title: "Thiên nhiên Việt Nam", skill_ids: [HG.B02.NATURE], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "9-15", imported_at: null } }
+  - { lesson_id: HG5.SGK.B3, seq: 3, book: SGK, topic: "ĐẤT NƯỚC VÀ CON NGƯỜI VIỆT NAM", lesson_no: 3, title: "Biển, đảo Việt Nam", skill_ids: [HG.B03.SEA_ISLANDS], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "16-19", imported_at: null } }
+  - { lesson_id: HG5.SGK.B4, seq: 4, book: SGK, topic: "ĐẤT NƯỚC VÀ CON NGƯỜI VIỆT NAM", lesson_no: 4, title: "Dân cư và dân tộc ở Việt Nam", skill_ids: [HG.B04.POPULATION_ETHNIC_GROUPS], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "20-24", imported_at: null } }
+  # --- Chủ đề 2: NHỮNG QUỐC GIA ĐẦU TIÊN TRÊN LÃNH THỔ VIỆT NAM
+  - { lesson_id: HG5.SGK.B5, seq: 5, book: SGK, topic: "NHỮNG QUỐC GIA ĐẦU TIÊN TRÊN LÃNH THỔ VIỆT NAM", lesson_no: 5, title: "Nhà nước Văn Lang, Nhà nước Âu Lạc", skill_ids: [HG.B05.VAN_LANG_AU_LAC], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "25-28", imported_at: null } }
+  - { lesson_id: HG5.SGK.B6, seq: 6, book: SGK, topic: "NHỮNG QUỐC GIA ĐẦU TIÊN TRÊN LÃNH THỔ VIỆT NAM", lesson_no: 6, title: "Vương quốc Phù Nam", skill_ids: [HG.B06.FUNAN], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "29-31", imported_at: null } }
+  - { lesson_id: HG5.SGK.B7, seq: 7, book: SGK, topic: "NHỮNG QUỐC GIA ĐẦU TIÊN TRÊN LÃNH THỔ VIỆT NAM", lesson_no: 7, title: "Vương quốc Chăm-pa", skill_ids: [HG.B07.CHAMPA], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "32-35", imported_at: null } }
+  # --- Chủ đề 3: XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM
+  - { lesson_id: HG5.SGK.B8, seq: 8, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 8, title: "Đấu tranh giành độc lập thời kì Bắc thuộc", skill_ids: [HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "36-39", imported_at: null } }
+  - { lesson_id: HG5.SGK.B9, seq: 9, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 9, title: "Triều Lý và việc định đô ở Thăng Long", skill_ids: [HG.B09.LY_DYNASTY_THANG_LONG], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "40-43", imported_at: null } }
+  - { lesson_id: HG5.SGK.B10, seq: 10, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 10, title: "Triều Trần xây dựng đất nước và kháng chiến chống quân Mông – Nguyên xâm lược", skill_ids: [HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "44-49", imported_at: null } }
+  - { lesson_id: HG5.SGK.B11, seq: 11, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 11, title: "Ôn tập", skill_ids: [], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "50", imported_at: null } }
+  - { lesson_id: HG5.SGK.B12, seq: 12, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 12, title: "Khởi nghĩa Lam Sơn và Triều Hậu Lê", skill_ids: [HG.B12.LAM_SON_LATER_LE], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "51-55", imported_at: null } }
+  - { lesson_id: HG5.SGK.B13, seq: 13, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 13, title: "Triều Nguyễn", skill_ids: [HG.B13.NGUYEN_DYNASTY], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "56-60", imported_at: null } }
+  - { lesson_id: HG5.SGK.B14, seq: 14, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 14, title: "Cách mạng tháng Tám năm 1945", skill_ids: [HG.B14.AUGUST_REVOLUTION_1945], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "61-64", imported_at: null } }
+  - { lesson_id: HG5.SGK.B15, seq: 15, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 15, title: "Chiến dịch Điện Biên Phủ năm 1954", skill_ids: [HG.B15.DIEN_BIEN_PHU_1954], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "65-68", imported_at: null } }
+  - { lesson_id: HG5.SGK.B16, seq: 16, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 16, title: "Chiến dịch Hồ Chí Minh năm 1975", skill_ids: [HG.B16.HO_CHI_MINH_CAMPAIGN_1975], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "69-71", imported_at: null } }
+  - { lesson_id: HG5.SGK.B17, seq: 17, book: SGK, topic: "XÂY DỰNG VÀ BẢO VỆ ĐẤT NƯỚC VIỆT NAM", lesson_no: 17, title: "Đất nước Đổi mới", skill_ids: [HG.B17.DOI_MOI], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "72-75", imported_at: null } }
+  # --- Chủ đề 4: CÁC NƯỚC LÁNG GIỀNG
+  - { lesson_id: HG5.SGK.B18, seq: 18, book: SGK, topic: "CÁC NƯỚC LÁNG GIỀNG", lesson_no: 18, title: "Nước Cộng hoà Nhân dân Trung Hoa", skill_ids: [HG.B18.CHINA], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "76-81", imported_at: null } }
+  - { lesson_id: HG5.SGK.B19, seq: 19, book: SGK, topic: "CÁC NƯỚC LÁNG GIỀNG", lesson_no: 19, title: "Nước Cộng hoà Dân chủ Nhân dân Lào", skill_ids: [HG.B19.LAOS], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "82-85", imported_at: null } }
+  - { lesson_id: HG5.SGK.B20, seq: 20, book: SGK, topic: "CÁC NƯỚC LÁNG GIỀNG", lesson_no: 20, title: "Vương quốc Cam-pu-chia", skill_ids: [HG.B20.CAMBODIA], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "86-89", imported_at: null } }
+  - { lesson_id: HG5.SGK.B21, seq: 21, book: SGK, topic: "CÁC NƯỚC LÁNG GIỀNG", lesson_no: 21, title: "Hiệp hội các quốc gia Đông Nam Á", skill_ids: [HG.B21.ASEAN], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "90-92", imported_at: null } }
+  # --- Chủ đề 5: TÌM HIỂU THẾ GIỚI
+  - { lesson_id: HG5.SGK.B22, seq: 22, book: SGK, topic: "TÌM HIỂU THẾ GIỚI", lesson_no: 22, title: "Các châu lục và đại dương trên thế giới", skill_ids: [HG.B22.CONTINENTS_OCEANS], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "93-97", imported_at: null } }
+  - { lesson_id: HG5.SGK.B23, seq: 23, book: SGK, topic: "TÌM HIỂU THẾ GIỚI", lesson_no: 23, title: "Dân số và các chủng tộc chính trên thế giới", skill_ids: [HG.B23.WORLD_POPULATION_RACES], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "98-100", imported_at: null } }
+  - { lesson_id: HG5.SGK.B24, seq: 24, book: SGK, topic: "TÌM HIỂU THẾ GIỚI", lesson_no: 24, title: "Văn minh Ai Cập", skill_ids: [HG.B24.EGYPT_CIVILIZATION], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "101-104", imported_at: null } }
+  - { lesson_id: HG5.SGK.B25, seq: 25, book: SGK, topic: "TÌM HIỂU THẾ GIỚI", lesson_no: 25, title: "Văn minh Hy Lạp", skill_ids: [HG.B25.GREEK_CIVILIZATION], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "105-108", imported_at: null } }
+  # --- Chủ đề 6: CHUNG TAY XÂY DỰNG THẾ GIỚI
+  - { lesson_id: HG5.SGK.B26, seq: 26, book: SGK, topic: "CHUNG TAY XÂY DỰNG THẾ GIỚI", lesson_no: 26, title: "Xây dựng thế giới xanh – sạch – đẹp", skill_ids: [HG.B26.GREEN_CLEAN_WORLD], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "109-111", imported_at: null } }
+  - { lesson_id: HG5.SGK.B27, seq: 27, book: SGK, topic: "CHUNG TAY XÂY DỰNG THẾ GIỚI", lesson_no: 27, title: "Xây dựng thế giới hoà bình", skill_ids: [HG.B27.WORLD_PEACE], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "112-115", imported_at: null } }
+  - { lesson_id: HG5.SGK.B28, seq: 28, book: SGK, topic: "CHUNG TAY XÂY DỰNG THẾ GIỚI", lesson_no: 28, title: "Ôn tập", skill_ids: [], introduces_terms: [], methods: [], source: { official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100", pages: "116-117", imported_at: null } }
