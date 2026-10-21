@@ -21,6 +21,12 @@ export default async function ParentReviewPage() {
         </p>
       </section>
       <section className="card">
+        <h2>Ý chính các bài (Lịch sử và Địa lí)</h2>
+        <p>
+          <a href="/parent/review/key-facts">Mở trang duyệt ý chính</a>
+        </p>
+      </section>
+      <section className="card">
         <h2>Misconception ({misconceptions.length}, chưa duyệt {pending})</h2>
         <p className="muted small">
           Chỉ xem. Trạng thái duyệt lấy từ file YAML trong <code>data/skills</code>; muốn đổi thì sửa file rồi chạy lại seed.

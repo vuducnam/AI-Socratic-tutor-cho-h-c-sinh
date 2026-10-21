@@ -14,6 +14,7 @@ x-app-env: &app-env
   STT_LOCAL_URL: http://stt-local:8000
   STORAGE_DIR: /data/storage
   LIFE_CONTEXTS_DIR: /app/data/life-contexts
+  KEY_FACTS_DIR: /app/data/key-facts
   SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET chưa đặt}
   ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?ADMIN_SESSION_SECRET chưa đặt}
   TOTP_ENCRYPTION_KEY: ${TOTP_ENCRYPTION_KEY:-}
@@ -163,8 +164,9 @@ services:
       - "127.0.0.1:3001:3000"
     volumes:
       - storage:/data/storage
-      # Màn hình Duyệt ghi trạng thái duyệt ngược vào YAML (data/life-contexts) để seed DB khác mang theo.
+      # Màn hình Duyệt ghi trạng thái duyệt ngược vào YAML (data/life-contexts, data/key-facts) để seed DB khác mang theo.
       - ./data/life-contexts:/app/data/life-contexts
+      - ./data/key-facts:/app/data/key-facts
     depends_on:
       migrate: { condition: service_completed_successfully }
       redis: { condition: service_healthy }
