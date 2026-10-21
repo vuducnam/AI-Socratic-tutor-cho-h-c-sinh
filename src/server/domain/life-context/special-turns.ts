@@ -3,7 +3,7 @@ import { z } from 'zod';
 import type { TurnWriter } from '@/server/dal/turns-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
 import { subjectName } from '@/server/domain/curriculum/subject-config';
-import { runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
+import { guardVerdictRows, runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
 import { runHardChecks, type HardCheckContext } from '@/server/domain/dialogue/hard-checks';
 import type { TurnContext } from '@/server/domain/dialogue/turn-context';
 import { callLlm, LlmOutputInvalidError } from '@/server/llm/llm-gateway';
@@ -80,16 +80,9 @@ async function checkedMessage(
       recorder: input.writer.recorder,
       evalMode: input.evalMode,
     });
-    await input.writer.appendGuardVerdict({
-      sessionId: input.ctx.session.id,
-      turnId: input.turnId,
-      checker: 'llm',
-      llmCallId: guard.llmCallId,
-      tutorLlmCallId: llmCallId,
-      attempt,
-      verdict: guard.verdict,
-      reasons: guard.reasons,
-    });
+    for (const row of guardVerdictRows(guard)) {
+      await input.writer.appendGuardVerdict({ sessionId: input.ctx.session.id, turnId: input.turnId, tutorLlmCallId: llmCallId, attempt, ...row });
+    }
     if (guard.verdict === 'pass') return { message: text, source: 'llm' };
     feedback = `${guard.reasons.join(', ')} ${guard.explanation}`;
   }

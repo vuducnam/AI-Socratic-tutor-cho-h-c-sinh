@@ -16,7 +16,8 @@ import { appDb, closeTestDatabases } from '../../../../tests/helpers/test-databa
 const LESSON = 'FH5.T1.B3';
 const F = (n: number) => `${LESSON}.F${n}`;
 const QUESTION = 'Chiến dịch Điện Biên Phủ diễn ra từ ngày nào đến ngày nào?';
-const PASS = { verdict: 'pass', reasons: [], explanation: '' };
+const PASS = { verdict: 'pass', reasons: [], leak_quotes: [], explanation: '' };
+const LEAK_BLOCK = (quote: string) => ({ verdict: 'block', reasons: ['LEAK'], leak_quotes: [quote], explanation: `lộ «${quote}»` });
 const tutor = (message: string) => ({ message, short_message: message, question_type: 'clarify', step_addressed: 's1', student_state_guess: 'progressing' });
 const PLAN_OUTPUT = {
   not_covered: false,
@@ -95,9 +96,32 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
     const second = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Kết thúc ngày 7 tháng 5', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
     expect(second.state).toBe('CONSOLIDATE');
 
-    // Prompt riêng của môn kiến thức; Guard bản có luật LEAK cho ý chính.
+    // Prompt riêng của môn kiến thức, kể cả Guard (Toán giữ guard/v11).
     const versions = await appDb().query(`SELECT DISTINCT prompt_version FROM llm_calls WHERE session_id = $1 ORDER BY 1`, [w.sessionId]);
-    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard/v11', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'tutor_knowledge/v1']);
+    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard_knowledge/v3', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'tutor_knowledge/v2']);
+  });
+
+  it('Guard báo lộ mà chữ trích không phải chữ của ý chính: code bác và ghi log; trích đúng chữ thì vẫn chặn', async () => {
+    const w = await historySession();
+    setGatewayDependencies({ primary: scriptedAnthropic([PLAN_OUTPUT, { hook: 'Nhà bạn có tờ lịch ghi các ngày lễ lớn của đất nước.' }, PASS, tutor('Đề hỏi mấy mốc thời gian?'), PASS]).provider, fallback: null });
+    await learn.submitTypedProblem(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: QUESTION });
+
+    // "khi nào" chỉ hỏi loại điều cần tìm: không phải lộ bằng chữ → tin được gửi, có dòng code ghi việc bác.
+    const asked = 'Bạn mở SGK trang 1, chiến dịch mở màn khi nào?';
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor(asked), LEAK_BLOCK('khi nào')]).provider, fallback: null });
+    const first = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Mình không nhớ', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
+    expect(first.message).toBe(asked);
+    const rows = await appDb().query(`SELECT checker, verdict, reasons FROM guard_verdicts WHERE turn_id = $1 AND (llm_call_id IS NOT NULL OR 'LEAK_UNGROUNDED' = ANY(reasons)) ORDER BY checker DESC`, [first.tutorTurnId]);
+    expect(rows.rows).toEqual([
+      { checker: 'llm', verdict: 'block', reasons: ['LEAK'] },
+      { checker: 'code', verdict: 'pass', reasons: ['LEAK_UNGROUNDED'] },
+    ]);
+
+    // "thắng lợi" là chữ của ý chính con chưa nói → vẫn chặn, Mít viết lại.
+    const safe = 'Bạn đọc lại trang 1 xem chiến dịch kết thúc ra sao nhé?';
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Chiến dịch thắng lợi rồi, bạn nhớ ngày nào không?'), LEAK_BLOCK('thắng lợi'), tutor(safe), PASS]).provider, fallback: null });
+    const second = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Vẫn không nhớ', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
+    expect(second.message).toBe(safe);
   });
 
   it('câu hỏi ý kiến chạy chế độ argue: không chấm đúng sai, con nêu lý do thì sang CONSOLIDATE', async () => {

@@ -50,6 +50,13 @@ describe('key-points-progress', () => {
       { fact_id: 'B15.F3', phrases: ['7 – 5 – 1954', 'ngày 7 tháng 5', '7 5 1954'] },
     ]);
   });
+
+  it('câu ý kiến: dẫn chứng (ý ngữ cảnh) con chưa kể thì Mít cũng không kể trước', () => {
+    const opinion = plan({ question_type: 'opinion', required_fact_ids: [], min_required: 0, context_fact_ids: ['B15.F2', 'B15.F4'] });
+    expect(withheldPhrases({ plan: opinion, facts: FACTS, problemText: QUESTION, statedFactIds: ['B15.F4'] })).toEqual([
+      { fact_id: 'B15.F2', phrases: ['13 – 3 – 1954', 'ngày 13 tháng 3', '13 3 1954'] },
+    ]);
+  });
 });
 
 describe('statedTimeline', () => {

@@ -31,6 +31,14 @@ export const knowledgePlanOutputSchema = z.object({
 
 type KnowledgeOutput = z.infer<typeof knowledgePlanOutputSchema>;
 
+// Tóm tắt chỉ để hệ thống và bố mẹ xem; plan giữ tối đa 200 ký tự (final_answer.value) nên cắt ở ranh giới từ.
+const SUMMARY_MAX = 200;
+export function fitSummary(summary: string): string {
+  if (summary.length <= SUMMARY_MAX) return summary;
+  const cut = summary.slice(0, SUMMARY_MAX - 1);
+  return `${cut.slice(0, cut.lastIndexOf(' ') > 0 ? cut.lastIndexOf(' ') : cut.length)}…`;
+}
+
 /** Đổi đầu ra của model thành plan đã lưu: skill của ý chính = skill của bài chứa ý đó (mục lục). */
 export function knowledgeOutputToPlan(out: KnowledgeOutput, facts: Map<string, KeyFactRow>, lessons: ScopeLesson[]): SolutionPlan | string {
   const skillOf = (factId: string) => {
@@ -44,7 +52,7 @@ export function knowledgeOutputToPlan(out: KnowledgeOutput, facts: Map<string, K
   if (!skillIds.length || !out.steps.length) return 'cần ít nhất một bước gắn ý chính của bài';
   return {
     steps: out.steps.map((s) => ({ ...s, skill_id: skillOf(s.fact_ids[0]!) ?? skillIds[0]! })),
-    final_answer: { value: out.summary, canonical: out.required_fact_ids.length ? out.required_fact_ids : ['opinion'], kind: 'key_points', choice_label: null },
+    final_answer: { value: fitSummary(out.summary), canonical: out.required_fact_ids.length ? out.required_fact_ids : ['opinion'], kind: 'key_points', choice_label: null },
     skill_ids: skillIds,
     misconception_ids: [],
     sympy_check: null,

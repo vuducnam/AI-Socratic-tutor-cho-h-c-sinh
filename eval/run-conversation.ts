@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { listKeyFactsByIds } from '@/server/dal/key-facts-dal';
-import { keyPointsProgress, withheldPhrases } from '@/server/domain/dialogue/key-points-progress';
+import { guardedFactIds, keyPointsProgress, withheldPhrases } from '@/server/domain/dialogue/key-points-progress';
 import { readFileSync } from 'node:fs';
 import { z } from 'zod';
 import { compileTermSet } from '@/lib/term-pattern-matcher';
@@ -253,8 +253,11 @@ export async function runConversation(
   const studentTurns = turns.filter((t) => t.role === 'student');
   const consolidateAt = studentTurns.findIndex((t) => t.state_after === 'CONSOLIDATE');
   const generated = problems.filter((p) => p.problem.origin === 'generated');
+  const k = originalPlan.knowledge;
+  const judgeFacts = k ? await listKeyFactsByIds([...k.required_fact_ids, ...k.context_fact_ids.filter((id) => !k.required_fact_ids.includes(id))]) : [];
 
   const judge = await judgeConversation({
+    knowledge: k ? { questionType: k.question_type, facts: judgeFacts.map((f) => ({ statement: f.statement, required: k.required_fact_ids.includes(f.fact_id), guarded: guardedFactIds(k).includes(f.fact_id) })) } : undefined,
     sessionId: opened.sessionId,
     grade: 5,
     problemText: problem.text,
@@ -286,8 +289,11 @@ export async function runConversation(
     tutorMessages: records,
     studentTurnsToConsolidate: consolidateAt >= 0 ? consolidateAt + 1 : null,
     // Leo thang trước lượt 4: một trong ba câu trả lời đầu của Cú (sau 3 lượt đầu của con) đã ở bậc hỗ trợ > 0.
+    // Con tự ra đáp án ngay trong ba lượt đầu thì không cần leo thang: không tính vào chỉ số (null).
     escalatedBeforeTurn4:
-      persona === 'easily_frustrated' ? studentTurns.slice(0, 3).some((t) => (turns.find((x) => x.seq === t.seq + 1)?.scaffold_level ?? 0) > 0) : null,
+      persona === 'easily_frustrated' && !(consolidateAt >= 0 && consolidateAt < 3)
+        ? studentTurns.slice(0, 3).some((t) => (turns.find((x) => x.seq === t.seq + 1)?.scaffold_level ?? 0) > 0)
+        : null,
     reachedDone: turns.some((t) => t.state_after === 'DONE'),
     // Câu dự phòng không kể tình huống đời thật nào (quy tắc cứng 13): không tính là có hook.
     hadHook: turns.some((t) => t.turn_kind === 'hook' && t.content !== HOOK_FALLBACK),

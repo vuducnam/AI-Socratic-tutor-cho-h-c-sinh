@@ -15,8 +15,8 @@ import type { DialogueState } from './state-machine';
 export const TUTOR_PROMPT = 'tutor/v10';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v3';
 // Môn kiến thức (SPEC §5d): ý chính thay cho lời giải, nấc gợi ý cao nhất là chỉ trang sách.
-export const TUTOR_KNOWLEDGE_PROMPT = 'tutor_knowledge/v1';
-export const TUTOR_KNOWLEDGE_FEWSHOT = 'tutor_knowledge/fewshot/v1';
+export const TUTOR_KNOWLEDGE_PROMPT = 'tutor_knowledge/v2';
+export const TUTOR_KNOWLEDGE_FEWSHOT = 'tutor_knowledge/fewshot/v2';
 export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
@@ -70,7 +70,7 @@ export function stateGuidance(state: DialogueState, hints: TurnHints = {}): stri
 // Môn kiến thức: đổi hướng dẫn của hai trạng thái có nội dung riêng (chỉ trang sách; đủ ý chính).
 const KNOWLEDGE_STATE_GUIDANCE: Partial<Record<DialogueState, string>> = {
   SCAFFOLD:
-    'gợi ý nhỏ theo bậc: bậc 1 hỏi gợi nhớ, liên hệ điều em đã nói; bậc 2 thu hẹp vào đúng điều cần tìm; bậc 3 chỉ em mở sách tới "chỗ trong sách" của lượt này để tự đọc ra; vẫn không nói nội dung ý chính',
+    'gợi ý nhỏ theo bậc: bậc 1 hỏi gợi nhớ, liên hệ điều em đã nói; bậc 2 thu hẹp bằng loại điều cần tìm (mốc nào, ai, ở đâu, làm gì); bậc 3 chỉ em mở sách tới "chỗ trong sách" của lượt này để tự đọc ra; câu gợi ý không chứa chữ, chi tiết nào của ý chính em chưa nói',
   CONSOLIDATE:
     'em đã tự nêu đủ ý chính (hệ thống đã kiểm): xác nhận bằng "Đúng rồi," ở đầu câu (không tách thành câu riêng), rồi hỏi em vì sao, ý nghĩa của điều đó, hoặc em đã tìm ra bằng cách nào',
 };

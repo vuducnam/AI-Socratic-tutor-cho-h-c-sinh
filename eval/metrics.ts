@@ -22,6 +22,10 @@ export interface JudgeResult {
   misconception_detected: boolean | null;
   real_question: boolean | null;
   notes: string;
+  /** Môn kiến thức: chữ lộ judge trích theo lượt (code kiểm lại với câu ý chính). */
+  leak_quotes?: { turn: number; words: string }[];
+  /** Môn kiến thức: lượt judge báo lộ mà chữ trích không phải chữ của ý chính con chưa nói (đã bỏ khỏi leak_turns). */
+  ungrounded_leak_turns?: number[];
 }
 
 export interface ConversationRecord {

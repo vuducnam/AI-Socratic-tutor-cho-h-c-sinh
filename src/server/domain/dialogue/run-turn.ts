@@ -12,7 +12,7 @@ import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { PAUSE_MESSAGE, currentStep } from './fallback-question';
 import { generateTutorMessage, type GeneratedMessage } from './generate-tutor-message';
 import { numbersIn, runHardChecks } from './hard-checks';
-import { runGuard } from './guard';
+import { guardVerdictRows, runGuard } from './guard';
 import { detectFrustration, detectGuessing, noProgressStreak, soundsUnsure } from './signals';
 import { nextState, type DialoguePosition, type DialogueState } from './state-machine';
 import {
@@ -27,7 +27,7 @@ import {
 } from './student-message-analysis';
 import { confirmationWithheld, type TurnHints } from './tutor-prompt';
 import { subjectName } from '@/server/domain/curriculum/subject-config';
-import { keyPointsProgress, statedTimeline, withheldPhrases } from './key-points-progress';
+import { guardedFactIds, keyPointsProgress, statedTimeline, withheldPhrases } from './key-points-progress';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
 
@@ -172,6 +172,11 @@ function guardInputFor(ctx: TurnContext, studentMessage: string, completedSteps:
   const address = ctx.student.address as { student?: unknown } | null;
   return {
     studentMessage,
+    studentTexts:
+      ctx.plan?.final_answer.kind === 'key_points'
+        ? [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(studentMessage ? [studentMessage] : [])]
+        : undefined,
+    keyFactStatements: ctx.plan?.knowledge ? ctx.keyFacts.filter((f) => guardedFactIds(ctx.plan!.knowledge!).includes(f.fact_id)).map((f) => f.statement) : undefined,
     studentName: typeof address?.student === 'string' ? address.student : ctx.student.display_name,
     grade: ctx.student.grade,
     preset: ctx.preset,
@@ -304,17 +309,8 @@ export async function openPracticeProblemTurn(
         verdict: hard.pass ? 'pass' : 'block',
         reasons: hard.reasons,
       });
-      if (guard) {
-        await writer.appendGuardVerdict({
-          sessionId: input.sessionId,
-          turnId: verdictTurnId,
-          checker: 'llm',
-          llmCallId: guard.llmCallId,
-          tutorLlmCallId: null,
-          attempt: 1,
-          verdict: guard.verdict,
-          reasons: guard.reasons,
-        });
+      for (const row of guard ? guardVerdictRows(guard) : []) {
+        await writer.appendGuardVerdict({ sessionId: input.sessionId, turnId: verdictTurnId, tutorLlmCallId: null, attempt: 1, ...row });
       }
       if (!passed) return null;
       await writer.appendTurn({
@@ -498,17 +494,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
           verdict: hard.pass ? 'pass' : 'block',
           reasons: hard.reasons,
         });
-        if (guard) {
-          await writer.appendGuardVerdict({
-            sessionId: input.sessionId,
-            turnId: tutorTurnId,
-            checker: 'llm',
-            llmCallId: guard.llmCallId,
-            tutorLlmCallId: null,
-            attempt: 1,
-            verdict: guard.verdict,
-            reasons: guard.reasons,
-          });
+        for (const row of guard ? guardVerdictRows(guard) : []) {
+          await writer.appendGuardVerdict({ sessionId: input.sessionId, turnId: tutorTurnId, tutorLlmCallId: null, attempt: 1, ...row });
         }
         if (guard?.verdict === 'pass') message = parallel.problemText;
         else {

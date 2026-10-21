@@ -38,15 +38,25 @@ export function keyPointsProgress(input: { plan: SolutionPlan; facts: MatchableF
 }
 
 /**
- * Cụm từ Mít KHÔNG được nói (kiểm tra cứng LEAK): cụm chấp nhận của ý bắt buộc con chưa tự nêu, trừ cụm có sẵn
- * trong câu hỏi. Ý con đã nêu thì Mít nhắc lại được.
+ * Ý chính Mít không được nói ra trước con: ý bắt buộc. Câu ý kiến không có ý bắt buộc: dẫn chứng là ý ngữ cảnh,
+ * con tự kể hoặc tự đọc trong sách, nên Mít cũng không kể trước. Ý ngữ cảnh của câu sự kiện, giải thích là bối cảnh
+ * Mít được dùng để hỏi gợi.
+ */
+export function guardedFactIds(knowledge: NonNullable<SolutionPlan['knowledge']>): string[] {
+  return knowledge.question_type === 'opinion' ? [...knowledge.required_fact_ids, ...knowledge.context_fact_ids] : knowledge.required_fact_ids;
+}
+
+/**
+ * Cụm từ Mít KHÔNG được nói (kiểm tra cứng LEAK): cụm chấp nhận của ý cần giữ (guardedFactIds) con chưa tự nêu, trừ
+ * cụm có sẵn trong câu hỏi. Ý con đã nêu thì Mít nhắc lại được.
  */
 export function withheldPhrases(input: { plan: SolutionPlan; facts: MatchableFact[]; problemText: string; statedFactIds: string[] }): { fact_id: string; phrases: string[] }[] {
   const k = input.plan.knowledge;
   if (!k) return [];
   const stated = new Set(input.statedFactIds);
+  const guarded = guardedFactIds(k);
   return factsBeyondQuestion(input.facts, input.problemText)
-    .filter((f) => k.required_fact_ids.includes(f.fact_id) && !stated.has(f.fact_id) && f.accept.length > 0)
+    .filter((f) => guarded.includes(f.fact_id) && !stated.has(f.fact_id) && f.accept.length > 0)
     .map((f) => ({ fact_id: f.fact_id, phrases: f.accept }));
 }
 
