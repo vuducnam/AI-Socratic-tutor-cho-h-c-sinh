@@ -1,27 +1,19 @@
-import { readFileSync } from 'node:fs';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
-import { SYSTEM_ACTOR_ID } from '@/server/dal/actor';
 import { mintActor } from '@/server/dal/mint-actor';
 import { setFrontier } from '@/server/dal/school-progress-dal';
-import { seedCurriculum } from '@/server/dal/seed/seed-curriculum';
-import { parseCurriculumFile } from '@/server/domain/curriculum/curriculum-yaml-schema';
 import { createAdminWorld, resetTestRedis } from '../../../../tests/helpers/auth-test-world';
-import { ensureFakeCurriculum, FX_SKILLS, FX_SUBJECT } from '../../../../tests/helpers/fake-curriculum-world';
+import { ensureFakeHistoryCurriculum, FH_SUBJECT, FX_SUBJECT } from '../../../../tests/helpers/fake-curriculum-world';
 import { appDb, closeTestDatabases } from '../../../../tests/helpers/test-database';
 
 // Mở phiên theo môn (quy tắc cứng 15): chỉ môn bố mẹ đã đặt tiến độ; từ hai môn thì con chọn; chọn môn khác môn
 // đang mở thì phiên cũ đóng (switch_subject). Danh sách môn giả: tests/fixtures/subjects-two.yaml.
 
-const HIST = 'fx-hist';
+const HIST = FH_SUBJECT;
 let learn: typeof import('./learn-flow');
 
 beforeAll(async () => {
   process.env.CU_SUBJECTS_CONFIG = 'tests/fixtures/subjects-two.yaml';
-  await ensureFakeCurriculum();
-  // Môn thứ hai: dùng lại mục lục giả, đổi mã môn và mã bài cho khỏi trùng.
-  const text = readFileSync('tests/fixtures/curriculum/fake-grade5.yaml', 'utf8').replace('subject: math', `subject: ${HIST}`).replaceAll('FX5.', 'FH5.');
-  const { lessons } = parseCurriculumFile('fake-hist', text, { knownSkillIds: new Set(FX_SKILLS.map((s) => s.id)) });
-  await seedCurriculum(mintActor('system', SYSTEM_ACTOR_ID), { lessons, beyondTerms: [] });
+  await ensureFakeHistoryCurriculum();
   learn = await import('./learn-flow');
 });
 beforeEach(resetTestRedis);

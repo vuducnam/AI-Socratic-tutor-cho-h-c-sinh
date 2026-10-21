@@ -73,7 +73,7 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
     case 'choice':
       return !!fa.choice_label && lower.includes(fa.choice_label.normalize('NFC').toLowerCase());
     case 'relation': {
-      const r = relationOf(plan.sympy_check.expression);
+      const r = relationOf(plan.sympy_check?.expression ?? '');
       if (!r) return false;
       if ('equal' in r) return /bằng nhau|bằng|=/.test(lower);
       // Đọc mệnh đề so sánh theo từng câu; có một khẳng định sai là chưa khớp.
@@ -82,6 +82,9 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
       // Không có mệnh đề: chỉ nói đúng số lớn hơn (đề hỏi "số nào lớn hơn"), không nhắc số kia.
       return said.includes(r.big) && !said.includes(r.small) && !BIGGER.test(lower) && !SMALLER.test(lower);
     }
+    case 'key_points':
+      // Môn kiến thức chấm cộng dồn qua mọi lượt của bài (key-points-progress.ts), không theo một tin nhắn.
+      return false;
   }
 }
 

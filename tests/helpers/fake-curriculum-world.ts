@@ -61,3 +61,27 @@ export async function studentWithSession(frontierLessonId: string) {
   const catalog = await loadScopeCatalog(FX_SUBJECT, 5);
   return { ...w, student, sessionId: opened.sessionId, scope: opened.scope, catalog };
 }
+
+// Môn kiến thức GIẢ (fx-hist, verifier key_facts trong tests/fixtures/subjects-two.yaml): dùng lại mục lục giả,
+// đổi mã môn, mã bài (FH5.) và skill (FH.) cho khỏi trùng với fx-math.
+export const FH_SUBJECT = 'fx-hist';
+let historySeeded = false;
+export async function ensureFakeHistoryCurriculum(): Promise<void> {
+  if (historySeeded) return;
+  await ensureFakeCurriculum();
+  for (const s of FX_SKILLS) {
+    await appDb().query(
+      `INSERT INTO skills (skill_id, subject, grade_introduced, name, source) VALUES ($1, $2, $3, $1,
+       '{"official_url":"https://taphuan.nxbgd.vn/fixture","lesson":"fixture"}') ON CONFLICT DO NOTHING`,
+      [s.id.replace(/^FX\./, 'FH.'), FH_SUBJECT, s.grade],
+    );
+  }
+  const text = readFileSync('tests/fixtures/curriculum/fake-grade5.yaml', 'utf8')
+    .replace('subject: math', `subject: ${FH_SUBJECT}`)
+    .replaceAll('FX5.', 'FH5.')
+    .replaceAll('FX.', 'FH.');
+  const known = new Set(FX_SKILLS.map((s) => s.id.replace(/^FX\./, 'FH.')));
+  const { lessons } = parseCurriculumFile('fake-hist', text, { knownSkillIds: known });
+  await seedCurriculum(mintActor('system', SYSTEM_ACTOR_ID), { lessons, beyondTerms: [] });
+  historySeeded = true;
+}

@@ -216,9 +216,11 @@ export async function runConversation(
       requiredQuestions: t.turn_kind === 'hook' || t.state_after === 'DONE' || t.state_after === 'PAUSE' ? 0 : 1,
       maxQuestions: t.turn_kind === 'hook' ? 0 : preset.max_questions_per_turn,
       // Giống pipeline thật: từ CONSOLIDATE con đã tự ra đáp án (code đã kiểm), nhắc lại không tính là lộ.
-      finalAnswer: ['CONSOLIDATE', 'TRANSFER', 'DONE'].includes(t.state_after ?? '')
-        ? null
-        : { kind: plan.final_answer.kind, canonical: plan.final_answer.canonical, expression: plan.sympy_check.expression, choiceLabel: plan.final_answer.choice_label },
+      // Môn kiến thức không có đáp án dạng số (kiểm lộ ý chính ở eval môn đó).
+      finalAnswer:
+        ['CONSOLIDATE', 'TRANSFER', 'DONE'].includes(t.state_after ?? '') || !plan.sympy_check || plan.final_answer.kind === 'key_points'
+          ? null
+          : { kind: plan.final_answer.kind, canonical: plan.final_answer.canonical, expression: plan.sympy_check.expression, choiceLabel: plan.final_answer.choice_label },
       problemText: owner.problem.confirmed_text ?? '',
       givenNumbers: plan.given_numbers,
       forbiddenTerms: [],

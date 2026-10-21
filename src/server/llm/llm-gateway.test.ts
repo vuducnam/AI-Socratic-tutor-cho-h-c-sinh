@@ -184,8 +184,8 @@ describe('LlmGateway', () => {
   });
 
   it('JSON Schema strict: bỏ ràng buộc Claude API không nhận, giữ trường tên trùng từ khoá', async () => {
-    const { solutionPlanSchema } = await import('@/server/domain/presolve/plan-schema');
-    const plan = JSON.stringify(toStrictJsonSchema(solutionPlanSchema));
+    const { mathPlanOutputSchema } = await import('@/server/domain/presolve/plan-schema');
+    const plan = JSON.stringify(toStrictJsonSchema(mathPlanOutputSchema));
     for (const kw of ['minLength', 'maxLength', 'maxItems', 'pattern', 'minimum', 'maximum']) {
       expect(plan).not.toContain(`"${kw}"`);
     }
