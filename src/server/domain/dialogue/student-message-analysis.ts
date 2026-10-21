@@ -100,6 +100,15 @@ export function stepsCompletedBy(text: string, plan: SolutionPlan, alreadyDone: 
 // Từ chỉ lý do / cách làm / chỗ từng nhầm. Khớp nguyên từ trên văn bản chuẩn hoá.
 const REASON_WORDS = /(?<![\p{L}\p{M}\p{N}])(vì|tại|bởi|nên|do|cho nên|lúc nãy|lúc đầu|ban đầu|nhầm|tưởng|cách|trước tiên|đầu tiên|rồi mới|so sánh|so từng)(?![\p{L}\p{M}\p{N}])/u;
 
+// Thêm cách nói suy luận hay gặp ở trẻ ("nếu… thì", "giống như…", "vậy 7 đứng ở…"; "vậy là 0,3?" không tính).
+const INFERENCE_WORDS = /(?<![p{L}p{M}p{N}])(nếu|giống như|khớp|vậy(?!s+là))(?![p{L}p{M}p{N}])/u;
+
+/** Con có nêu lý do ("vì…", "nên…", "nếu…"), kể cả khi vẫn hỏi lại "đúng không?". */
+export function givesReason(text: string): boolean {
+  const lower = normalizeForMatching(text);
+  return REASON_WORDS.test(lower) || INFERENCE_WORDS.test(lower);
+}
+
 /**
  * Con giải thích cách làm/chỗ từng nhầm (ở CONSOLIDATE, hoặc lập luận ở chế độ argue): ≥ 4 từ, có từ chỉ lý
  * do, và con không tự nói là đoán / đang rối. "Mình đoán thôi, thấy có 3 với 10 nên ghép lại" chưa phải

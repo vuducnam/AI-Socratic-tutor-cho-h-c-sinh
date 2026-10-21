@@ -19,11 +19,12 @@ import {
   answerMatchesFinal,
   detectAdultNeeded,
   detectBeyondScopeCuriosity,
+  givesReason,
   isSkip,
   looksLikeExplanation,
   stepsCompletedBy,
 } from './student-message-analysis';
-import type { TurnHints } from './tutor-prompt';
+import { confirmationWithheld, type TurnHints } from './tutor-prompt';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
 
@@ -79,7 +80,11 @@ const STEP_LEAK_STATES: DialogueState[] = ['ELICIT', 'PROBE', 'SCAFFOLD', 'DIREC
 // Con đã tự ra đáp án cuối (code đã kiểm khi chuyển sang CONSOLIDATE).
 const ANSWER_GIVEN_STATES: DialogueState[] = ['CONSOLIDATE', 'TRANSFER', 'DONE'];
 
-function hardCheckContext(ctx: TurnContext, state: DialogueState, progress: { completedSteps: string[]; studentMessage?: string } = { completedSteps: ctx.completedSteps }) {
+function hardCheckContext(
+  ctx: TurnContext,
+  state: DialogueState,
+  progress: { completedSteps: string[]; studentMessage?: string; hints?: TurnHints } = { completedSteps: ctx.completedSteps },
+) {
   const plan = ctx.plan;
   const pendingStepResults =
     plan && STEP_LEAK_STATES.includes(state) ? plan.steps.filter((s) => !progress.completedSteps.includes(s.step_id)).map((s) => s.expected_result) : [];
@@ -103,6 +108,7 @@ function hardCheckContext(ctx: TurnContext, state: DialogueState, progress: { co
     forbiddenTerms: ctx.scope.forbiddenTerms,
     pendingStepResults,
     studentTexts,
+    forbidConfirmation: confirmationWithheld(state, progress.hints),
   };
 }
 
@@ -120,7 +126,7 @@ async function produceTutorMessage(
     history: args.history,
     writer,
     evalMode: args.evalMode,
-    hardChecks: hardCheckContext(ctx, state, { completedSteps: args.completedSteps, studentMessage: args.studentMessage }),
+    hardChecks: hardCheckContext(ctx, state, { completedSteps: args.completedSteps, studentMessage: args.studentMessage, hints: args.hints }),
     prompt: {
       student: ctx.student,
       preset: ctx.preset,
@@ -263,7 +269,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const frustrated = detectFrustration(text, ctx.recentStudentTexts).frustrated;
     const guessing = detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]);
     const dotDecimal = findDotDecimals(text).length > 0;
-    const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text) };
+    const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text), reasoned: givesReason(text) };
     const next = nextState({
       current: ctx.position,
       mode: ctx.session.mode as 'solve' | 'argue',

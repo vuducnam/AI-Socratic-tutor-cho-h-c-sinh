@@ -37,7 +37,11 @@ export interface HardCheckContext {
   pendingStepResults?: string[];
   /** Mọi lời con đã nói trong bài (nhắc lại số con đã tự nói không tính là lộ). */
   studentTexts?: string[];
+  /** Con ra đúng đáp án nhưng đang đoán: xác nhận "Đúng rồi" lúc này là lộ (đoán lần lượt cũng được gật đầu). */
+  forbidConfirmation?: boolean;
 }
+
+const CONFIRMATION = /(?<![p{L}p{M}])(đúng rồi|chính xác|đúng vậy|đúng đó|bạn nói đúng|bạn đúng)(?![p{L}p{M}])/iu;
 
 export interface HardCheckResult {
   pass: boolean;
@@ -201,6 +205,10 @@ export function runHardChecks(message: string, ctx: HardCheckContext): HardCheck
   if (stepLeaks.length) {
     reasons.add('LEAK');
     details.push(`nói sẵn kết quả bước con chưa làm: ${stepLeaks.join(', ')}`);
+  }
+  if (ctx.forbidConfirmation && CONFIRMATION.test(message)) {
+    reasons.add('LEAK');
+    details.push('xác nhận đúng khi con đang đoán: chưa nói đúng hay sai, hỏi con vì sao chọn như vậy');
   }
   // Cùng điều kiện với lộ bước trung gian: còn bước chưa làm và chưa ở trạng thái con đã ra đáp án.
   const unitLeaks = ctx.pendingStepResults?.length ? unitNameLeak(message, ctx.problemText, ctx.studentTexts ?? []) : [];

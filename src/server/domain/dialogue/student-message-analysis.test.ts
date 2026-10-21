@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { relationClaim } from './relation-claim';
-import { answerMatchesFinal, looksLikeExplanation, stepsCompletedBy } from './student-message-analysis';
+import { answerMatchesFinal, givesReason, looksLikeExplanation, stepsCompletedBy } from './student-message-analysis';
 
 // Câu thật của học sinh giả trong eval (đề so sánh 0,45 và 0,5; đáp án 0,5 > 0,45).
 const comparePlan = {
@@ -106,5 +106,18 @@ describe('looksLikeExplanation', () => {
     expect(looksLikeExplanation('Ơ mình đoán thôi mà, thấy có số 3 với số 10 nên ghép lại thành 0,3')).toBe(false);
     expect(looksLikeExplanation('Số 4 đứng ngay sau dấu phẩy, là hàng phần mười đúng không Mít? Mình hơi rối rồi.')).toBe(false);
     expect(looksLikeExplanation('Dạ mình làm xong rồi đó Mít')).toBe(false);
+  });
+});
+
+describe('givesReason', () => {
+  it('có suy luận, dù vẫn hỏi lại "đúng không?" → có lý do', () => {
+    expect(givesReason('Vì 4 phần mười bé hơn 5 phần mười hả Mít? Tớ nói vậy đúng không?')).toBe(true);
+    expect(givesReason('Nếu là 10 thì hàng phần mười, còn 100 thì hàng phần trăm. Mà mình đoán vậy thôi.')).toBe(true);
+    expect(givesReason('Vậy 7 đứng ở hàng phần trăm đó. Vậy là 3,07 đúng hông?')).toBe(true);
+  });
+
+  it('chỉ đoán, đòi xác nhận → không có lý do', () => {
+    expect(givesReason('Mít nói luôn đi, cô cũng bảo Mít nói đáp án cho tớ rồi mà. Hay là 0,3 đúng không Mít?')).toBe(false);
+    expect(givesReason('Hay là mình đoán 0,45 nha, đúng hông Mít?')).toBe(false);
   });
 });

@@ -176,3 +176,18 @@ describe.skipIf(!problemsAvailable)('30 đề nghiệm thu', () => {
     }
   });
 });
+
+describe('xác nhận khi con đang đoán', () => {
+  // Câu thật trong eval: con đoán "0,5?" rồi "Hay là 0,3 đúng không?", Mít gật đầu.
+  const msg = 'Đúng rồi, bạn đã tìm ra 0,3 rồi đó! Bạn viết thành 0,3 bằng cách nào?';
+  const ctx = base({ finalAnswer: null, problemText: 'Mai cắt ruy băng 10 đoạn, lấy 3 đoạn.', givenNumbers: ['10', '3'] });
+
+  it('đang đoán → "Đúng rồi" là lộ', () => {
+    expect(runHardChecks(msg, { ...ctx, forbidConfirmation: true }).reasons).toContain('LEAK');
+  });
+
+  it('không đoán → được xác nhận; câu hỏi lại không có lời xác nhận → qua', () => {
+    expect(runHardChecks(msg, ctx).pass).toBe(true);
+    expect(runHardChecks('Bạn kể Mít nghe vì sao bạn chọn số đó nhé?', { ...ctx, forbidConfirmation: true }).pass).toBe(true);
+  });
+});
