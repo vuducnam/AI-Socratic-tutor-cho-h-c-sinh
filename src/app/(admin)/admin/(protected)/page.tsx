@@ -112,6 +112,26 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
                         <button type="submit" title="Gỡ liên kết">×</button>
                       </form>
                     ))}
+                    {/* Liên kết ngay trên hàng: tạo học sinh trước, phụ huynh sau vẫn nối được ở đây. */}
+                    {parents.some((p) => !s.parent_links.some((l) => l.parent_id === p.id)) && (
+                      <form action={linkParentAction} className="inline-form">
+                        <input type="hidden" name="studentId" value={s.id} />
+                        <select name="parentId" required defaultValue="" aria-label={`Phụ huynh liên kết với ${s.display_name}`}>
+                          <option value="" disabled>
+                            {s.parent_links.length ? 'Thêm phụ huynh' : 'Chọn phụ huynh'}
+                          </option>
+                          {parents
+                            .filter((p) => !s.parent_links.some((l) => l.parent_id === p.id))
+                            .map((p) => (
+                              <option key={p.id} value={p.id}>
+                                {p.name}
+                              </option>
+                            ))}
+                        </select>
+                        <button type="submit">Liên kết</button>
+                      </form>
+                    )}
+                    {!s.parent_links.length && !parents.length && <span>Chưa có phụ huynh: tạo tài khoản phụ huynh ở trên</span>}
                   </td>
                   <td>
                     {locked.length
@@ -175,30 +195,6 @@ export default async function AdminHome({ searchParams }: { searchParams: Promis
           <button type="submit">Tạo hồ sơ</button>
         </form>
 
-        <h3>Liên kết phụ huynh – học sinh</h3>
-        <form action={linkParentAction} className="inline-form">
-          <select name="parentId" required defaultValue="">
-            <option value="" disabled>
-              Phụ huynh
-            </option>
-            {parents.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </select>
-          <select name="studentId" required defaultValue="">
-            <option value="" disabled>
-              Học sinh
-            </option>
-            {students.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.display_name}
-              </option>
-            ))}
-          </select>
-          <button type="submit">Liên kết</button>
-        </form>
       </section>
 
       <section className="card">

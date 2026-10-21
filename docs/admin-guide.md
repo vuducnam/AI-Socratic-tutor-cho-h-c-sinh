@@ -69,10 +69,11 @@ Làm theo thứ tự trên trang admin:
 Bấm **Tạo hồ sơ** → trang chuyển sang **Tiến độ trên lớp**: chọn bài con **đã học đến** trên lớp (theo SGK
 Kết nối tri thức). Chưa đặt tiến độ thì con chưa mở được phiên học. Mít không dạy vượt bài này.
 
-### 4.3 Liên kết thêm phụ huynh — mục "Liên kết phụ huynh – học sinh"
+### 4.3 Liên kết phụ huynh — cột "Phụ huynh" trong bảng Học sinh
 
-Chọn phụ huynh và học sinh → **Liên kết**. Phụ huynh chỉ thấy học sinh đã liên kết với mình. Bỏ liên kết bằng
-nút × ở cột Phụ huynh trong bảng Học sinh.
+Trên hàng của học sinh, chọn phụ huynh ở ô **Chọn phụ huynh** (hoặc **Thêm phụ huynh**) → **Liên kết**. Dùng
+cách này khi tạo học sinh trước rồi mới tạo phụ huynh, hoặc khi thêm người lớn thứ hai. Phụ huynh chỉ thấy học
+sinh đã liên kết với mình. Bỏ liên kết bằng nút × cạnh tên phụ huynh ở cùng cột.
 
 ### 4.4 Học sinh ngoài gia đình — mục "Ghi nhận xác nhận đồng ý"
 

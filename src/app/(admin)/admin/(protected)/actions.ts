@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { notFound, redirect } from 'next/navigation';
 import { z } from 'zod';
 import { hashSecret, isValidPin, passwordProblem } from '@/server/auth/password';
-import { ADMIN_SESSION_COOKIE, assertAdminRuntime, logoutCurrent } from '@/server/auth/session';
+import { ADMIN_SESSION_COOKIE, assertAdminRuntime, logoutCurrent, withAdminReason } from '@/server/auth/session';
 import { revokeAllSessions } from '@/server/auth/session-store';
 import {
   createStudent,
@@ -160,7 +160,8 @@ export async function unlockStudentAction(form: FormData) {
   const actor = await requireAdmin();
   const parsed = z.object({ studentId: uuid }).safeParse(Object.fromEntries(form));
   if (!parsed.success) fail('Thiếu thông tin');
-  await unlockStudentPin(actor, parsed.data);
+  // unlockStudentPin dùng chung với phụ huynh nên kiểm quyền đọc học sinh: admin chưa liên kết cần lý do (ghi access_log).
+  await unlockStudentPin(withAdminReason(actor, 'admin mở khoá PIN từ trang quản trị'), parsed.data);
   done('Đã mở khoá PIN');
 }
 
