@@ -94,6 +94,40 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
     setGatewayDependencies({ primary: scriptedAnthropic([tutor('Bạn tìm ra hai mốc đó bằng cách nào?'), PASS]).provider, fallback: null });
     const second = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Kết thúc ngày 7 tháng 5', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
     expect(second.state).toBe('CONSOLIDATE');
+
+    // Prompt riêng của môn kiến thức; Guard bản có luật LEAK cho ý chính.
+    const versions = await appDb().query(`SELECT DISTINCT prompt_version FROM llm_calls WHERE session_id = $1 ORDER BY 1`, [w.sessionId]);
+    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard/v11', 'hook_knowledge/v1', 'presolve_knowledge/v1', 'tutor_knowledge/v1']);
+  });
+
+  it('câu hỏi ý kiến chạy chế độ argue: không chấm đúng sai, con nêu lý do thì sang CONSOLIDATE', async () => {
+    const w = await historySession();
+    const opinion = {
+      ...PLAN_OUTPUT,
+      question_type: 'opinion',
+      steps: [{ step_id: 's1', fact_ids: [F(3)], description: 'Nêu cảm nghĩ kèm lý do', expected_result: 'ý kiến của em', hint_question: 'Việc làm nào của anh làm bạn nhớ nhất?' }],
+      required_fact_ids: [],
+      min_required: 0,
+      context_fact_ids: [F(3)],
+    };
+    setGatewayDependencies({ primary: scriptedAnthropic([opinion, { hook: 'Ở nhiều thành phố có con đường mang tên các anh hùng.' }, PASS, tutor('Bạn nghĩ gì về anh ấy?'), PASS]).provider, fallback: null });
+    expect(await learn.submitTypedProblem(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Em có suy nghĩ gì về anh hùng Phan Đình Giót?' })).toMatchObject({ ok: true });
+
+    // Lượt đầu luôn ELICIT → PROBE (state machine); lập luận có lý do ở PROBE thì sang CONSOLIDATE.
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Bạn thấy anh ấy thế nào, vì sao?'), PASS]).provider, fallback: null });
+    const first = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Anh ấy dũng cảm', idempotencyKey: crypto.randomUUID(), responseTimeMs: 9000 });
+    expect(first.state).toBe('PROBE');
+    const reply = scriptedAnthropic([tutor('Bạn dẫn đúng chi tiết trong câu chuyện, có bạn lại nghĩ khác thì sao?'), PASS]);
+    setGatewayDependencies({ primary: reply.provider, fallback: null });
+    const r = await turns.runStudentTurn(w.actor, {
+      studentId: w.studentId,
+      sessionId: w.sessionId,
+      text: 'Anh ấy rất dũng cảm vì bị thương mà vẫn lao lên để đồng đội tiến công',
+      idempotencyKey: crypto.randomUUID(),
+      responseTimeMs: 9000,
+    });
+    expect(JSON.stringify(reply.requests[0]!.system)).toContain('mode: argue');
+    expect(r.state).toBe('CONSOLIDATE');
   });
 
   it('sách không nói tới điều con hỏi → không dạy, báo bố mẹ', async () => {

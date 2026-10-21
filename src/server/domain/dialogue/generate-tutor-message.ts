@@ -5,7 +5,7 @@ import { callLlm, LlmOutputInvalidError } from '@/server/llm/llm-gateway';
 import { GENERIC_FALLBACK, planFallbackQuestion } from './fallback-question';
 import { runGuard, type GuardInput } from './guard';
 import { runHardChecks, type HardCheckContext } from './hard-checks';
-import { buildTutorSystem, TUTOR_PROMPT, type TutorPromptInput } from './tutor-prompt';
+import { buildTutorSystem, tutorPromptVersion, type TutorPromptInput } from './tutor-prompt';
 import { tutorConversationMessages, type BlockedDraft } from './tutor-conversation-messages';
 import { draftCandidates } from './tutor-draft-candidates';
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
@@ -68,7 +68,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
         studentId: input.studentId,
         sessionId: input.sessionId,
         turnId: input.tutorTurnId,
-        promptVersion: TUTOR_PROMPT,
+        promptVersion: tutorPromptVersion(input.prompt.plan),
         system,
         messages,
         responseSchema: tutorOutputSchema,

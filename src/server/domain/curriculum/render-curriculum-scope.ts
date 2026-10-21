@@ -1,7 +1,7 @@
 import 'server-only';
 import type { CurriculumScope } from './scope';
 
-// Chuỗi {curriculum_scope} cho tutor/v10 và guard/v10 (SPEC §8.1): bốn dòng, render từ scope_snapshot.
+// Chuỗi {curriculum_scope} cho tutor, guard và các prompt khác (SPEC §8.1): bốn dòng, render từ scope_snapshot.
 // "Chưa học" ưu tiên thuật ngữ của các bài kế tiếp (forbiddenTerms đã theo thứ tự bài) để prompt ngắn.
 const MAX_FORBIDDEN_TERMS = 25;
 const MAX_FORBIDDEN_METHODS = 8;

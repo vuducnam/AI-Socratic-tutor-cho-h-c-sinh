@@ -26,6 +26,7 @@ import {
   stepsCompletedBy,
 } from './student-message-analysis';
 import { confirmationWithheld, type TurnHints } from './tutor-prompt';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 import { keyPointsProgress, withheldPhrases } from './key-points-progress';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
@@ -150,6 +151,18 @@ async function produceTutorMessage(
       // Giai đoạn 0 chưa có learner model (Giai đoạn 1): không bịa nhận định.
       learnerSummary: 'Chưa đủ dữ liệu.',
       hints: args.hints,
+      knowledge: ctx.plan?.knowledge
+        ? {
+            subjectName: subjectName(ctx.scope.subject),
+            facts: ctx.keyFacts,
+            statedFactIds: keyPointsProgress({
+              plan: ctx.plan,
+              facts: ctx.keyFacts,
+              problemText: ctx.active?.problem.confirmed_text ?? '',
+              studentTexts: [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(args.studentMessage ? [args.studentMessage] : [])],
+            }).statedFactIds,
+          }
+        : undefined,
     },
     guard: guardInputFor(ctx, args.studentMessage, args.completedSteps, state),
   });

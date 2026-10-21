@@ -1,6 +1,7 @@
 import 'server-only';
 import type { LlmCallRecorder } from '@/server/dal/llm-calls-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 import type { CurriculumScope } from '@/server/domain/curriculum/scope';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { callLlm } from '@/server/llm/llm-gateway';
@@ -8,8 +9,8 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import { guardOutputSchema, type GuardOutput } from './tutor-output-schema';
 
-// Guard (guard/v10, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
-export const GUARD_PROMPT = 'guard/v10';
+// Guard (guard/v11, SPEC §8.2, §5d): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
+export const GUARD_PROMPT = 'guard/v11';
 
 export interface GuardInput {
   studentId: string;
@@ -40,6 +41,7 @@ export async function runGuard(input: GuardInput): Promise<GuardOutput & { llmCa
   const prompt = await loadPrompt(GUARD_PROMPT);
   const system = renderPrompt(prompt.content, {
     grade: input.grade,
+    subject_name: subjectName(input.scope.subject),
     problem_text: input.problemText,
     origin: input.origin,
     final_answer: input.plan ? `${input.plan.final_answer.value}` : '(bài mở, không có đáp án cố định)',

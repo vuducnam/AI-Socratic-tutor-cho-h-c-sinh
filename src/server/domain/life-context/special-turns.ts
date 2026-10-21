@@ -2,6 +2,7 @@ import 'server-only';
 import { z } from 'zod';
 import type { TurnWriter } from '@/server/dal/turns-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
 import { runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
 import { runHardChecks, type HardCheckContext } from '@/server/domain/dialogue/hard-checks';
 import type { TurnContext } from '@/server/domain/dialogue/turn-context';
@@ -12,6 +13,8 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 // Như mọi tin nhắn gửi con: kiểm tra cứng + Guard; bị chặn 2 lần → câu cố định đã duyệt sẵn.
 
 export const HOOK_PROMPT = 'hook/v5';
+// Môn kiến thức (SPEC §5d): chuyện đời thường quanh em, không nói ra ý chính của bài.
+export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v1';
 export const TRANSFER_PROMPT = 'transfer/v4';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';
@@ -96,8 +99,11 @@ async function checkedMessage(
 const skillNames = (ctx: TurnContext) => ctx.skillSource;
 
 export async function generateHook(input: SpecialTurnInput) {
-  const prompt = await loadPrompt(HOOK_PROMPT);
+  const knowledge = input.ctx.plan?.final_answer.kind === 'key_points';
+  const promptId = knowledge ? HOOK_KNOWLEDGE_PROMPT : HOOK_PROMPT;
+  const prompt = await loadPrompt(promptId);
   const system = renderPrompt(prompt.content, {
+    ...(knowledge ? { subject_name: subjectName(input.ctx.scope.subject) } : {}),
     display_name: input.ctx.student.display_name,
     student_name: input.ctx.student.display_name,
     grade: input.ctx.student.grade,
@@ -110,7 +116,7 @@ export async function generateHook(input: SpecialTurnInput) {
   const hardChecks = { ...input.hardChecks, maxSentences: 1, requiredQuestions: 0, maxQuestions: 0 };
   return checkedMessage(input, {
     purpose: 'hook',
-    promptId: HOOK_PROMPT,
+    promptId,
     system,
     schema: z.object({ hook: z.string().min(1).max(300) }),
     field: 'hook',
