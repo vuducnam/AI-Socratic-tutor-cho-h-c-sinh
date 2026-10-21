@@ -16,6 +16,8 @@ export function OwlAvatar({ size = 48, mood = 'calm' }: { size?: number; mood?: 
       ) : (
         <path d="M18 31 Q23 34 28 31 M36 31 Q41 34 46 31" stroke="var(--owl-eye)" strokeWidth="2.5" fill="none" strokeLinecap="round" />
       )}
+      <ellipse cx="16" cy="39" rx="3.5" ry="2.2" fill="var(--owl-cheek, transparent)" />
+      <ellipse cx="48" cy="39" rx="3.5" ry="2.2" fill="var(--owl-cheek, transparent)" />
       <path d="M29 36 L32 41 L35 36 Z" fill="var(--owl-beak)" />
     </svg>
   );

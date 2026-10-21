@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { requireStudentActor, UnauthenticatedError } from '@/server/auth/session';
 import { ServiceWorkerRegister } from '@/components/chat/service-worker-register';
+import { kidFontVariables } from '../../kid-fonts';
 import '../../learn.css';
 
 export const dynamic = 'force-dynamic';
@@ -15,7 +16,7 @@ export default async function LearnLayout({ children }: { children: ReactNode })
     throw err;
   }
   return (
-    <div className="learn-shell">
+    <div className={`learn-shell kid-theme ${kidFontVariables}`}>
       <div className="transparency-banner" role="note">
         Bố mẹ xem được cuộc trò chuyện này
       </div>
