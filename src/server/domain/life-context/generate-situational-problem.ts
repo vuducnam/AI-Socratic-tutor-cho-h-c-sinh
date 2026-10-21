@@ -44,7 +44,7 @@ export type SituationalProblemResult =
 
 /** Hình minh hoạ SVG cho đề tình huống (client vẽ bằng component math-visuals). */
 export interface SituationalVisual {
-  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box';
+  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box' | 'timeline';
   items: { label: string; value: number; unit: string }[];
 }
 

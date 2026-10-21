@@ -1,0 +1,1539 @@
+# Thư viện tình huống đời thật — Lịch sử và Địa lí 5 (SPEC §5b, §5d; quy tắc cứng 13).
+# NHÁP do Claude Code soạn ngày 2026-10-21 CHỈ từ ý chính trong data/key-facts/history_geography/grade5.yaml
+# (không thêm kiến thức). Mẫu không số (kind: question): fact_ids là các ý chính câu hỏi kiểm.
+# Chờ phụ huynh duyệt ở /parent › Duyệt › Tình huống đời thật; chưa duyệt thì Mít không dùng.
+subject: history_geography
+grade: 5
+contexts:
+  - id: HG5.B1.FLAG_CEREMONY
+    skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Sáng thứ Hai, cả trường đứng nghiêm chào cờ. Hà nhìn lá Quốc kì bay trên cột và nhớ cô giáo từng nói mỗi cánh sao đều có ý nghĩa riêng.
+      real_question: Năm cánh sao trên Quốc kì tượng trưng cho những tầng lớp nào?
+      fact_ids:
+        - HG5.SGK.B1.F10
+    safety:
+      adult_required: true
+      notes: Ở trường, có thầy cô.
+    approved: null
+  - id: HG5.B1.WALL_MAP_SHAPE
+    skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bố treo tấm bản đồ Việt Nam mới lên tường phòng khách. Bông ngắm một lúc rồi reo lên rằng phần đất liền trông giống một chữ cái.
+      real_question: Phần đất liền nước ta giống hình chữ gì, và kéo dài theo hướng nào?
+      fact_ids:
+        - HG5.SGK.B1.F5
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B1.PEN_PAL_LETTER
+    skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Minh có một người bạn qua thư ở nước ngoài. Trong thư mới, bạn ấy nhờ Minh tả xem Việt Nam nằm ở đâu và có những nước láng giềng nào.
+      real_question: Việt Nam nằm ở khu vực nào, và trên đất liền có chung biên giới với những nước nào?
+      fact_ids:
+        - HG5.SGK.B1.F1
+        - HG5.SGK.B1.F2
+    safety:
+      adult_required: false
+      notes: Bạn qua thư do bố mẹ biết và đồng ý; không gửi địa chỉ, ảnh mặt.
+    approved: null
+  - id: HG5.B1.STORM_NEWS
+    skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tối nay bản tin thời tiết trên ti vi lại báo một cơn bão sắp vào bờ biển. Bà ngồi cạnh Khôi thở dài, bảo năm nào cũng nghe tin bão như vậy.
+      real_question: Vì sao nước ta có nhiều thiên tai, nhất là bão?
+      fact_ids:
+        - HG5.SGK.B1.F3
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B2.WINTER_VIDEO_CALL
+    skill_id: HG.B02.NATURE
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tháng chạp, Huy ở miền Bắc gọi video cho chị họ ở miền Nam. Huy quấn áo ấm dày cộp, còn chị lại mặc áo cộc tay và kêu trời nóng.
+      real_question: Dãy núi nào ngăn cách hai miền khí hậu khác nhau như vậy?
+      fact_ids:
+        - HG5.SGK.B2.F7
+    safety:
+      adult_required: false
+      notes: Gọi video với người thân trong nhà.
+    approved: null
+  - id: HG5.B2.BALCONY_SOIL
+    skill_id: HG.B02.NATURE
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ông nội đang trồng rau trong mấy chậu ở ban công, Linh ngồi bên đưa hạt giống. Ông kể đất ở mỗi vùng quê mình một khác, trồng cây cũng khác.
+      real_question: Nước ta có hai nhóm đất chính nào, và mỗi nhóm có đặc điểm gì?
+      fact_ids:
+        - HG5.SGK.B2.F10
+    safety:
+      adult_required: false
+      notes: Ông làm cùng; không dùng dụng cụ sắc.
+    approved: null
+  - id: HG5.B2.CAR_TRIP_HILLS
+    skill_id: HG.B02.NATURE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trên đường về quê nội, Mai ngồi trong xe nhìn qua cửa kính. Đồi núi cứ nối tiếp nhau mãi, thỉnh thoảng mới thấy một cánh đồng.
+      real_question: Trên phần đất liền nước ta, đồi núi chiếm khoảng bao nhiêu phần diện tích?
+      fact_ids:
+        - HG5.SGK.B2.F1
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, ngồi trong xe, thắt dây an toàn.
+    approved: null
+  - id: HG5.B2.TREE_PLANTING_DAY
+    skill_id: HG.B02.NATURE
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Tú cùng cô giáo trồng cây con ở góc sân trường. Vừa tưới nước, cô vừa kể rằng rừng nước ta rất quý và cần được giữ gìn.
+      real_question: Rừng mang lại cho chúng ta những gì?
+      fact_ids:
+        - HG5.SGK.B2.F11
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo; không dùng cuốc, xẻng nặng.
+    approved: null
+  - id: HG5.B3.BAY_BOAT_TRIP
+    skill_id: HG.B03.SEA_ISLANDS
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cuối tuần, cả nhà Nam đi tàu thăm vịnh Hạ Long. Nam đếm những hòn đảo hai bên mạn tàu mãi mà không đếm xuể.
+      real_question: Vịnh Hạ Long có gần bao nhiêu đảo, và được UNESCO ghi danh là di sản gì?
+      fact_ids:
+        - HG5.SGK.B3.F4
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, mặc áo phao, ngồi trong khoang tàu.
+    approved: null
+  - id: HG5.B3.CLASS_MAP_ARCHIPELAGOS
+    skill_id: HG.B03.SEA_ISLANDS
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong giờ học, cô giáo treo tấm bản đồ lớn và chỉ vào hai quần đảo nằm xa ngoài khơi Biển Đông. Cả lớp nhao nhao muốn biết tên hai quần đảo ấy.
+      real_question: Hai quần đảo lớn nhất của nước ta tên là gì, thuộc thành phố và tỉnh nào?
+      fact_ids:
+        - HG5.SGK.B3.F3
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo.
+    approved: null
+  - id: HG5.B3.MUSEUM_OLD_MAP
+    skill_id: HG.B03.SEA_ISLANDS
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi bảo tàng cùng mẹ, Khoa dừng lại trước bản sao tấm bản đồ Đại Nam nhất thống toàn đồ được đặt trong tủ kính.
+      real_question: Vua nào cho vẽ tấm bản đồ này, và bản đồ ghi rõ điều gì về Hoàng Sa, Trường Sa?
+      fact_ids:
+        - HG5.SGK.B3.F9
+    safety:
+      adult_required: true
+      notes: Đi bảo tàng cùng mẹ.
+    approved: null
+  - id: HG5.B4.ETHNIC_COSTUME_FESTIVAL
+    skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trường của Linh tổ chức ngày hội văn hoá, mỗi lớp mặc trang phục của một dân tộc trên đất nước mình. Sân trường rực rỡ đủ màu váy áo.
+      real_question: Nước ta có bao nhiêu dân tộc cùng sinh sống, và dân tộc nào đông dân nhất?
+      fact_ids:
+        - HG5.SGK.B4.F9
+    safety:
+      adult_required: true
+      notes: Ở trường, có thầy cô.
+    approved: null
+  - id: HG5.B4.POPULATION_NEWS
+    skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Khang ngồi xem cùng bố bản tin nói về dân số các nước Đông Nam Á. Khang tò mò không biết nước mình đứng ở chỗ nào trong khu vực.
+      real_question: Năm 2024, Việt Nam đông dân thứ mấy ở Đông Nam Á, và những nước nào đông dân hơn?
+      fact_ids:
+        - HG5.SGK.B4.F1
+        - HG5.SGK.B4.F2
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B4.LONG_FAMILY_DRIVE
+    skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Nghỉ hè, Ngọc theo bố mẹ đi một chuyến xe dài qua nhiều vùng. Có nơi nhà cửa san sát, có nơi đi mãi mới thấy một mái nhà.
+      real_question: Dân cư nước ta tập trung đông ở những nơi nào, và thưa thớt ở vùng nào?
+      fact_ids:
+        - HG5.SGK.B4.F8
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, ngồi trong xe, thắt dây an toàn.
+    approved: null
+  - id: HG5.B4.GRANDMA_STORY_TAN_TRAO
+    skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tối nay bà kể cho Bảo nghe chuyện Bác Hồ ở Tân Trào. Bà bảo đồng bào nơi ấy gọi Bác bằng một cái tên rất thân thương.
+      real_question: Đồng bào các dân tộc ở Tân Trào đã giúp Bác thế nào, và gọi Bác là gì?
+      fact_ids:
+        - HG5.SGK.B4.F12
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B5.CO_LOA_VISIT
+    skill_id: HG.B05.VAN_LANG_AU_LAC
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chủ nhật, bố mẹ đưa Phương đi thăm khu di tích thành Cổ Loa. Phương thích thú đi dạo khắp khu di tích cùng bố và đọc các tấm biển giới thiệu.
+      real_question: Cổ Loa từng là kinh đô của nước nào, và ai là vua của nước ấy?
+      fact_ids:
+        - HG5.SGK.B5.F6
+        - HG5.SGK.B5.F5
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, không leo trèo lên tường thành.
+    approved: null
+  - id: HG5.B5.BRONZE_DRUM_SOUVENIR
+    skill_id: HG.B05.VAN_LANG_AU_LAC
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chú đi công tác về, tặng Quân một chiếc trống đồng nhỏ làm quà lưu niệm. Chú bảo đây là mô phỏng một hiện vật rất xưa của tổ tiên.
+      real_question: Cư dân Văn Lang, Âu Lạc đã biết đúc đồng để làm gì, và còn biết những nghề nào khác?
+      fact_ids:
+        - HG5.SGK.B5.F8
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B5.FLOOD_SEASON_TALE
+    skill_id: HG.B05.VAN_LANG_AU_LAC
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Mùa mưa năm nay, ti vi đưa tin nước sông dâng cao ở nhiều nơi. Mẹ ngồi bên Hân và kể lại truyện Sơn Tinh, Thuỷ Tinh.
+      real_question: Trong truyện, Thuỷ Tinh đánh bằng cách nào, còn Sơn Tinh chặn lũ ra sao?
+      fact_ids:
+        - HG5.SGK.B5.F9
+    safety:
+      adult_required: false
+      notes: Ở trong nhà xem tin, không ra gần chỗ nước lũ.
+    approved: null
+  - id: HG5.B5.HUNG_KINGS_HOLIDAY
+    skill_id: HG.B05.VAN_LANG_AU_LAC
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đạt xem tờ lịch treo tường và thấy sắp đến ngày nghỉ lễ Giỗ Tổ Hùng Vương. Đạt muốn biết thêm về nhà nước thời các vua Hùng.
+      real_question: Nhà nước Văn Lang do ai đứng đầu, và kinh đô đặt ở đâu?
+      fact_ids:
+        - HG5.SGK.B5.F3
+        - HG5.SGK.B5.F4
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B6.FLOATING_MARKET_STOVE
+    skill_id: HG.B06.FUNAN
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi chợ nổi miền Tây cùng bố mẹ, Thư thấy một cô bán hàng nấu đồ ăn bằng chiếc bếp đất nung đặt ngay trên thuyền.
+      real_question: Chiếc bếp ấy gọi là gì, và vì sao đặt được trên thuyền hay nhà sàn?
+      fact_ids:
+        - HG5.SGK.B6.F7
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, mặc áo phao; con chỉ quan sát, không lại gần bếp.
+    approved: null
+  - id: HG5.B6.LIBRARY_COMIC_LEGEND
+    skill_id: HG.B06.FUNAN
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Vy mượn ở thư viện trường một cuốn truyện tranh kể về nữ vương Liễu Diệp và chàng Hỗn Điền đi thuyền từ phương xa tới.
+      real_question: Theo truyền thuyết, cuộc gặp của Liễu Diệp và Hỗn Điền diễn ra thế nào, và kết cục ra sao?
+      fact_ids:
+        - HG5.SGK.B6.F3
+        - HG5.SGK.B6.F4
+    safety:
+      adult_required: false
+      notes: Đọc truyện ở nhà.
+    approved: null
+  - id: HG5.B6.DOCUMENTARY_WITH_GRANDPA
+    skill_id: HG.B06.FUNAN
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Xem phim tài liệu cùng ông, Lộc nghe nhắc đến một vương quốc cổ tên là Phù Nam. Lộc chưa biết vương quốc ấy có từ bao giờ và ở đâu.
+      real_question: Vương quốc Phù Nam ra đời vào khoảng thế kỉ nào, và cư dân sống chủ yếu ở vùng nào?
+      fact_ids:
+        - HG5.SGK.B6.F1
+        - HG5.SGK.B6.F2
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B7.MY_SON_FAMILY_TRIP
+    skill_id: HG.B07.CHAMPA
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Hè này cả nhà Vân đi thăm Thánh địa Mỹ Sơn. Vân đi theo bố mẹ, ngắm từng ngọn tháp cổ và để ý xem cửa tháp nhìn về phía nào.
+      real_question: Đền tháp Mỹ Sơn phần lớn được xây bằng vật liệu gì, và cửa quay về hướng nào?
+      fact_ids:
+        - HG5.SGK.B7.F6
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, không leo lên tháp.
+    approved: null
+  - id: HG5.B7.POSTCARD_PO_NAGAR
+    skill_id: HG.B07.CHAMPA
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cô út đi du lịch Khánh Hoà, gửi về cho Thịnh một tấm bưu thiếp in hình tháp Bà Pô Na-ga. Thịnh đặt tấm bưu thiếp lên bàn học và ngắm mãi.
+      real_question: Tháp Bà Pô Na-ga thờ ai, và người ấy đã dạy dân những việc gì?
+      fact_ids:
+        - HG5.SGK.B7.F12
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B7.BEDTIME_LEGEND_PO_ONG
+    skill_id: HG.B07.CHAMPA
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trước giờ ngủ, ông kể cho Diệp nghe một truyền thuyết của người Chăm về cậu bé Po Ong nghèo khổ, bị ghẻ lở khắp người.
+      real_question: Theo truyền thuyết, cậu bé Po Ong đã khỏi ghẻ và được làm vua như thế nào?
+      fact_ids:
+        - HG5.SGK.B7.F10
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B7.CLASS_QUIZ_GAME
+    skill_id: HG.B07.CHAMPA
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong giờ sinh hoạt lớp, cô cho cả lớp chơi đố vui về các vương quốc cổ. Đến lượt đội của Phúc, câu đố nói về Vương quốc Chăm-pa.
+      real_question: Vương quốc Chăm-pa được thành lập vào khoảng thời gian nào, và địa bàn chính ở đâu?
+      fact_ids:
+        - HG5.SGK.B7.F1
+        - HG5.SGK.B7.F2
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo.
+    approved: null
+  - id: HG5.B8.STREET_SIGN_HAI_BA_TRUNG
+    skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ngồi sau xe mẹ chở đi học, Hiếu đọc được tấm biển tên phố Hai Bà Trưng. Hiếu muốn biết hai bà đã làm nên chuyện gì.
+      real_question: Hai Bà Trưng khởi nghĩa ở đâu, và sau khi thắng lợi nước ta được độc lập trong bao lâu?
+      fact_ids:
+        - HG5.SGK.B8.F3
+    safety:
+      adult_required: true
+      notes: Mẹ chở, đội mũ bảo hiểm.
+    approved: null
+  - id: HG5.B8.MUSEUM_BATTLE_PAINTING
+    skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi bảo tàng cùng bố, Trí đứng rất lâu trước bức tranh lớn vẽ trận đánh của Ngô Quyền trên sông Bạch Đằng.
+      real_question: Chiến thắng Bạch Đằng của Ngô Quyền có ý nghĩa gì đối với đất nước ta?
+      fact_ids:
+        - HG5.SGK.B8.F9
+    safety:
+      adult_required: true
+      notes: Đi bảo tàng cùng bố.
+    approved: null
+  - id: HG5.B8.GRANDPA_TIDE_CALENDAR
+    skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ông nội làm nghề chài lưới, lúc nào cũng xem lịch con nước trước khi ra sông. Ông bảo Na rằng người xưa cũng từng nhờ con nước lên xuống mà thắng giặc.
+      real_question: Ngô Quyền đã dựa vào nước triều lên xuống thế nào để đánh tan thuyền giặc?
+      fact_ids:
+        - HG5.SGK.B8.F8
+    safety:
+      adult_required: false
+      notes: Ông kể ở nhà; con không ra sông.
+    approved: null
+  - id: HG5.B8.CLASS_PLAY_LY_BI
+    skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Mỹ chuẩn bị đóng kịch về Lý Bí. Mỹ được giao vai người đọc lời tuyên bố trong ngày nhà vua lên ngôi.
+      real_question: Khi lên ngôi, Lý Bí xưng là gì, và đặt tên nước là gì?
+      fact_ids:
+        - HG5.SGK.B8.F6
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo.
+    approved: null
+  - id: HG5.B9.COUSIN_LETTER_CAPITAL
+    skill_id: HG.B09.LY_DYNASTY_THANG_LONG
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chị họ ở Hà Nội gửi thư kể chuyện kinh thành xưa, hẹn hè này dẫn Uyên đi tham quan. Uyên tò mò ngày xưa kinh đô được dời về đây thế nào.
+      real_question: Vua nào đã dời đô ra thành Đại La, và dời từ đâu ra?
+      fact_ids:
+        - HG5.SGK.B9.F2
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B9.MID_AUTUMN_DRAGON_DANCE
+    skill_id: HG.B09.LY_DYNASTY_THANG_LONG
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đêm Trung thu, bố mẹ đưa Nhân đi xem múa rồng. Bố bảo tên kinh đô xưa của nước mình cũng gắn với một con rồng.
+      real_question: Tương truyền, vì sao kinh đô được vua Lý đặt tên là Thăng Long?
+      fact_ids:
+        - HG5.SGK.B9.F5
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ, nắm tay người lớn nơi đông người.
+    approved: null
+  - id: HG5.B9.SCHOOL_POEM_RECITAL
+    skill_id: HG.B09.LY_DYNASTY_THANG_LONG
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong buổi văn nghệ của trường, lớp của Thu ngâm bài thơ Nam quốc sơn hà thật hào hùng. Cô giáo nói bài thơ gắn với một cuộc kháng chiến thời Lý.
+      real_question: Tương truyền, bài thơ Nam quốc sơn hà được ngâm vang để làm gì, trong cuộc kháng chiến chống quân nào?
+      fact_ids:
+        - HG5.SGK.B9.F11
+        - HG5.SGK.B9.F9
+    safety:
+      adult_required: true
+      notes: Ở trường, có thầy cô.
+    approved: null
+  - id: HG5.B10.MARKET_ORANGES
+    skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi chợ cùng mẹ, Toàn chọn mấy quả cam chín vàng. Cầm quả cam trên tay, Toàn chợt nhớ đến câu chuyện về Trần Quốc Toản.
+      real_question: Vì sao Trần Quốc Toản bóp nát quả cam, và sau đó cậu đã làm gì?
+      fact_ids:
+        - HG5.SGK.B10.F11
+    safety:
+      adult_required: true
+      notes: Đi chợ cùng mẹ.
+    approved: null
+  - id: HG5.B10.CLASS_PRIZE_STORY
+    skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Ngân vừa có bạn đạt giải học sinh giỏi. Cô giáo khen cả lớp rồi kể về một cậu bé thời Trần đỗ Trạng nguyên khi tuổi còn rất nhỏ.
+      real_question: Cậu bé thời Trần ấy tên là gì, và đỗ Trạng nguyên khi bao nhiêu tuổi?
+      fact_ids:
+        - HG5.SGK.B10.F7
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo.
+    approved: null
+  - id: HG5.B10.FAMILY_MEETING_VOTE
+    skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà ngồi họp bàn chuyện đi chơi cuối tuần, ai cũng được nêu ý kiến. Ông cười bảo ngày xưa vua Trần cũng từng họp các bô lão để hỏi ý mọi người.
+      real_question: Ở điện Diên Hồng, Thượng hoàng hỏi các bô lão điều gì, và họ trả lời ra sao?
+      fact_ids:
+        - HG5.SGK.B10.F10
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B10.HISTORY_CARTOON_STAKES
+    skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tối qua, Hoà cùng bố xem một phim hoạt hình lịch sử về trận đánh của Trần Quốc Tuấn trên sông Bạch Đằng. Phim vừa đến đoạn hồi hộp nhất thì hết giờ.
+      real_question: Trần Quốc Tuấn đã đánh tan thuyền giặc trên sông Bạch Đằng bằng cách nào?
+      fact_ids:
+        - HG5.SGK.B10.F12
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B12.STREET_NAME_LE_LAI
+    skill_id: HG.B12.LAM_SON_LATER_LE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trên đường cùng bố mẹ về quê, Minh thấy tấm biển tên phố Lê Lai. Mẹ kể đây là người được nhớ ơn vì đã cứu chủ tướng Lê Lợi lúc nguy nan.
+      real_question: Ông Lê Lai đã làm gì để giúp nghĩa quân thoát khỏi vòng vây của giặc Minh?
+      fact_ids:
+        - HG5.SGK.B12.F5
+    safety:
+      adult_required: true
+      notes: Đi xe cùng bố mẹ
+    approved: null
+  - id: HG5.B12.SCHOOL_PLAY_WEIGHING_ELEPHANT
+    skill_id: HG.B12.LAM_SON_LATER_LE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Lan dựng tiểu phẩm về chuyện cân voi, Lan được phân vai một ông quan rất giỏi toán. Cô giáo dặn Lan tìm hiểu kĩ về nhân vật của mình.
+      real_question: Ông quan cân voi bằng thuyền và đá tên là gì, và ông đã soạn cuốn sách toán nào?
+      fact_ids:
+        - HG5.SGK.B12.F12
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo
+    approved: null
+  - id: HG5.B12.CLASS_TRIP_STONE_STELAE
+    skill_id: HG.B12.LAM_SON_LATER_LE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Khoa đi tham quan Văn Miếu cùng cô giáo và thấy những tấm bia đá dựng thành hàng dài. Hướng dẫn viên nói những tấm bia này gắn với một vị vua thời Hậu Lê.
+      real_question: Vị vua nào cho lập bia vinh danh người đỗ đạt ở Văn Miếu, và ông còn cho làm những việc gì?
+      fact_ids:
+        - HG5.SGK.B12.F10
+    safety:
+      adult_required: true
+      notes: Tham quan cùng lớp và cô giáo
+    approved: null
+  - id: HG5.B12.MOUNTAIN_PASS_ROAD_TRIP
+    skill_id: HG.B12.LAM_SON_LATER_LE
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Nghỉ hè, Hà cùng bố mẹ đi xe khách lên Lạng Sơn. Đến một đoạn đường núi, bố kể nghĩa quân Lam Sơn từng đánh một trận lớn ở ải Chi Lăng gần đây.
+      real_question: Ải Chi Lăng có địa hình thế nào, và nghĩa quân đã dùng cách gì để thắng quân Minh?
+      fact_ids:
+        - HG5.SGK.B12.F6
+        - HG5.SGK.B12.F7
+    safety:
+      adult_required: true
+      notes: Đi xe khách cùng bố mẹ; giọng kể nhẹ nhàng, không tả cảnh giao chiến
+    approved: null
+  - id: HG5.B13.FAMILY_TRIP_HUE
+    skill_id: HG.B13.NGUYEN_DYNASTY
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Kì nghỉ hè, Nam cùng bố mẹ vào Huế thăm kinh thành cũ của Triều Nguyễn. Đứng trước cổng thành, Nam tò mò muốn biết ai là vị vua đầu tiên của triều đại này.
+      real_question: Ai đã lên ngôi lập ra Triều Nguyễn, và vị vua ấy lấy niên hiệu là gì?
+      fact_ids:
+        - HG5.SGK.B13.F1
+    safety:
+      adult_required: true
+      notes: Du lịch cùng bố mẹ
+    approved: null
+  - id: HG5.B13.LETTER_FROM_GRANDPA_TEMPLE
+    skill_id: HG.B13.NGUYEN_DYNASTY
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ông nội ở quê gửi thư cho Linh, kể huyện ông sống có ngôi đền thờ một vị quan đã chiêu dân khai hoang lấn biển. Ông dặn Linh tìm trong sách sử xem vị quan ấy là ai.
+      real_question: Vị quan nào đã chiêu dân khai hoang lấn biển, và người dân gọi ông bằng tên gì?
+      fact_ids:
+        - HG5.SGK.B13.F7
+        - HG5.SGK.B13.F8
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B13.TV_NEWS_ISLANDS
+    skill_id: HG.B13.NGUYEN_DYNASTY
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Buổi tối, Bảo xem bản tin cùng bố và thấy phóng sự về các chiến sĩ đang canh giữ biển đảo quê hương. Bố kể từ xưa các vua Triều Nguyễn cũng đã quan tâm đến biển đảo.
+      real_question: Các vua Triều Nguyễn đã thực thi chủ quyền, nhất là ở những quần đảo nào của nước ta?
+      fact_ids:
+        - HG5.SGK.B13.F4
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà cùng bố
+    approved: null
+  - id: HG5.B13.CLASSROOM_MAP_PROVINCES
+    skill_id: HG.B13.NGUYEN_DYNASTY
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Nhìn bản đồ hành chính treo trong lớp, Thảo thấy nước ta được chia thành rất nhiều tỉnh, thành phố. Cô giáo kể việc chia cả nước thành các tỉnh từng được tiến hành dưới thời một vị vua Triều Nguyễn.
+      real_question: Vị vua nào đã cải cách hành chính, chia cả nước thành bao nhiêu tỉnh?
+      fact_ids:
+        - HG5.SGK.B13.F3
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo
+    approved: null
+  - id: HG5.B14.NATIONAL_DAY_TV
+    skill_id: HG.B14.AUGUST_REVOLUTION_1945
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Sáng ngày Quốc khánh, cả nhà Mai treo cờ trước cửa rồi cùng xem chương trình kỉ niệm trên ti vi. Trong phim tư liệu, Mai thấy Bác Hồ đứng đọc một bản tuyên ngôn trước rất đông người.
+      real_question: Bác Hồ đọc Tuyên ngôn Độc lập ở đâu, và bản tuyên ngôn ấy khai sinh ra nước nào?
+      fact_ids:
+        - HG5.SGK.B14.F12
+    safety:
+      adult_required: false
+      notes: Treo cờ ngay trước cửa nhà cùng người lớn, không leo trèo
+    approved: null
+  - id: HG5.B14.VETERANS_SCHOOL_EXCHANGE
+    skill_id: HG.B14.AUGUST_REVOLUTION_1945
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trường của Quân mời các bác cựu chiến binh đến giao lưu nhân dịp kỉ niệm ngày thành lập Quân đội nhân dân Việt Nam. Quân muốn hỏi các bác về đội quân đầu tiên.
+      real_question: Đội quân nào là tiền thân của Quân đội nhân dân Việt Nam, và ai đã thành lập đội ấy?
+      fact_ids:
+        - HG5.SGK.B14.F7
+        - HG5.SGK.B14.F8
+    safety:
+      adult_required: true
+      notes: Ở trường, có thầy cô
+    approved: null
+  - id: HG5.B14.RED_SCARF_CEREMONY
+    skill_id: HG.B14.AUGUST_REVOLUTION_1945
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Hôm được kết nạp Đội và đeo khăn quàng đỏ, Vy nghe anh phụ trách Đội kể chuyện về anh Kim Đồng. Vy muốn hiểu thêm về người anh hùng nhỏ tuổi ấy.
+      real_question: Anh Kim Đồng là người dân tộc nào, và anh đã làm gì để bảo vệ cán bộ?
+      fact_ids:
+        - HG5.SGK.B14.F9
+        - HG5.SGK.B14.F10
+    safety:
+      adult_required: true
+      notes: Ở trường; giọng kể nhẹ nhàng về sự hi sinh, không tả chi tiết
+    approved: null
+  - id: HG5.B15.STREET_NAMES
+    skill_id: HG.B15.DIEN_BIEN_PHU_1954
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ngồi sau xe mẹ đi qua phố Điện Biên Phủ, Khôi thắc mắc vì sao con phố lại có tên như vậy. Mẹ bảo đó là tên một chiến dịch lớn mà bộ đội ta đã giành thắng lợi.
+      real_question: Chiến dịch Điện Biên Phủ diễn ra từ ngày nào đến ngày nào?
+      fact_ids:
+        - HG5.SGK.B15.F1
+    safety:
+      adult_required: true
+      notes: Đi xe cùng mẹ, đội mũ bảo hiểm
+    approved: null
+  - id: HG5.B15.MUSIC_CLASS_PULLING_CANNON
+    skill_id: HG.B15.DIEN_BIEN_PHU_1954
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong giờ âm nhạc, lớp của Ngọc tập một bài hát về các chú bộ đội kéo pháo ở Điện Biên Phủ. Ngọc muốn biết ngày ấy việc kéo pháo vất vả thế nào.
+      real_question: Bộ đội ta đưa pháo vào trận địa bằng cách nào, và ai đã hi sinh để bảo vệ pháo?
+      fact_ids:
+        - HG5.SGK.B15.F7
+        - HG5.SGK.B15.F8
+    safety:
+      adult_required: true
+      notes: Ở trường; giọng kể nhẹ nhàng, không tả cảnh bị bắn phá
+    approved: null
+  - id: HG5.B15.WALL_MAP_WITH_GRANDPA
+    skill_id: HG.B15.DIEN_BIEN_PHU_1954
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trên tấm bản đồ treo tường ở nhà, ông chỉ cho Nhi chỗ có tên Điện Biên Phủ. Ông kể ngày trẻ ông rất hay nghe đài nói về chiến dịch ở nơi này.
+      real_question: Điện Biên Phủ có địa hình như thế nào, và nằm gần biên giới với nước nào?
+      fact_ids:
+        - HG5.SGK.B15.F2
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B15.MUSEUM_FLAG_PHOTO
+    skill_id: HG.B15.DIEN_BIEN_PHU_1954
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Tùng đi bảo tàng cùng cô giáo và dừng lại trước bức ảnh các chiến sĩ phất cờ trên nóc hầm chỉ huy của địch ở Điện Biên Phủ.
+      real_question: Lá cờ ấy có dòng chữ gì, và tổ xung kích của ai đã bắt sống tướng Đờ Ca-xtơ-ri?
+      fact_ids:
+        - HG5.SGK.B15.F9
+        - HG5.SGK.B15.F10
+    safety:
+      adult_required: true
+      notes: Tham quan cùng lớp và cô giáo
+    approved: null
+  - id: HG5.B16.HOLIDAY_ARCHIVE_FILM
+    skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Dịp nghỉ lễ kỉ niệm ngày giải phóng miền Nam, cả nhà Hương xem ti vi chiếu lại những thước phim tư liệu về Chiến dịch Hồ Chí Minh.
+      real_question: Chiến dịch Hồ Chí Minh bắt đầu lúc nào, và Quân Giải phóng tiến vào Dinh Độc Lập lúc mấy giờ?
+      fact_ids:
+        - HG5.SGK.B16.F2
+        - HG5.SGK.B16.F5
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà cùng gia đình
+    approved: null
+  - id: HG5.B16.VISIT_INDEPENDENCE_PALACE
+    skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bố mẹ đưa Mai đi tham quan Dinh Độc Lập ở Thành phố Hồ Chí Minh. Đứng ở sân, Mai ngước nhìn lá cờ đỏ sao vàng bay trên nóc dinh.
+      real_question: Năm xưa, lá cờ cách mạng tung bay trên nóc Dinh Độc Lập báo hiệu điều gì?
+      fact_ids:
+        - HG5.SGK.B16.F6
+    safety:
+      adult_required: true
+      notes: Tham quan cùng bố mẹ
+    approved: null
+  - id: HG5.B16.AIRPORT_WAITING_STORY
+    skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà Phong ra sân bay Tân Sơn Nhất đón bác ở xa về. Trong lúc chờ, bố kể ngày xưa có một phi đội đặc biệt của ta đã đánh vào chính sân bay này.
+      real_question: Phi đội Quyết thắng đã dùng loại máy bay nào để đánh sân bay Tân Sơn Nhất, và kết quả ra sao?
+      fact_ids:
+        - HG5.SGK.B16.F7
+        - HG5.SGK.B16.F9
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ; giọng kể bình tĩnh, không tả cảnh cháy nổ
+    approved: null
+  - id: HG5.B16.GRANDMA_RADIO_MEMORY
+    skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bà nội kể với Bảo rằng ngày đất nước toàn thắng, bà nghe tin qua chiếc đài nhỏ và cả xóm ai cũng xúc động.
+      real_question: Hôm ấy, ai đã lên Đài phát thanh tuyên bố chính quyền Sài Gòn đầu hàng không điều kiện?
+      fact_ids:
+        - HG5.SGK.B16.F10
+    safety:
+      adult_required: false
+      notes: Nghe bà kể ở nhà
+    approved: null
+  - id: HG5.B17.OLD_RATION_BOOK_IN_CUPBOARD
+    skill_id: HG.B17.DOI_MOI
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Phụ bà dọn tủ, Đức thấy một cuốn sổ giấy nâu đã cũ, bà gọi đó là sổ gạo. Bà bảo ngày xưa cả nhà phải giữ cuốn sổ này rất cẩn thận.
+      real_question: Cuốn sổ lương thực thời bao cấp ghi những gì, và người ta dùng nó để làm gì?
+      fact_ids:
+        - HG5.SGK.B17.F3
+    safety:
+      adult_required: false
+      notes: Dọn tủ cùng bà, không trèo lên cao
+    approved: null
+  - id: HG5.B17.RICE_STALL_AT_MARKET
+    skill_id: HG.B17.DOI_MOI
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi chợ cùng mẹ, Hằng thấy quầy gạo bày đầy những bao gạo đủ loại. Mẹ bảo ngày bà còn trẻ, gạo không dễ mua như bây giờ.
+      real_question: Từ khi Đổi mới, nước ta đã thay đổi thế nào về lương thực, nhất là gạo?
+      fact_ids:
+        - HG5.SGK.B17.F8
+        - HG5.SGK.B17.F9
+    safety:
+      adult_required: true
+      notes: Đi chợ cùng mẹ
+    approved: null
+  - id: HG5.B17.GRANDPA_SHOPPING_STORY
+    skill_id: HG.B17.DOI_MOI
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ông ngoại kể với Ngân rằng hồi ông còn trẻ, đi mua thịt, mắm hay muối không chỉ cần mang tiền như bây giờ.
+      real_question: Thời bao cấp, người dân mua thịt, mắm, muối bằng gì, và lương thực được chia ra sao?
+      fact_ids:
+        - HG5.SGK.B17.F2
+        - HG5.SGK.B17.F4
+    safety:
+      adult_required: false
+      notes: Nghe ông kể ở nhà
+    approved: null
+  - id: HG5.B17.CLASS_NOTICE_BOARD
+    skill_id: HG.B17.DOI_MOI
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cô giáo giao cho nhóm của Duy làm một bảng tin về những đổi thay của đất nước sau thời bao cấp. Duy được phân công viết phần mở đầu.
+      real_question: Thời kì Đổi mới bắt đầu từ năm nào, và đời sống của nhân dân đã thay đổi ra sao?
+      fact_ids:
+        - HG5.SGK.B17.F8
+        - HG5.SGK.B17.F10
+    safety:
+      adult_required: true
+      notes: Ở trường, làm việc nhóm
+    approved: null
+  - id: HG5.B18.NEW_WORLD_MAP_IN_ROOM
+    skill_id: HG.B18.CHINA
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Khánh cùng bố treo tấm bản đồ thế giới mới lên tường phòng. Nhìn bản đồ, Khánh thấy nước Trung Quốc chiếm một vùng đất rất rộng.
+      real_question: Trung Quốc rộng khoảng bao nhiêu, và đứng thứ mấy thế giới về diện tích?
+      fact_ids:
+        - HG5.SGK.B18.F1
+    safety:
+      adult_required: false
+      notes: Bố treo bản đồ, không leo trèo
+    approved: null
+  - id: HG5.B18.DOCUMENTARY_LONG_WALL
+    skill_id: HG.B18.CHINA
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cuối tuần, Lan cùng bố xem một phim tài liệu về Vạn Lý Trường Thành uốn lượn trên những dãy núi. Trên tường thành, Lan thấy cứ một quãng lại có một ngọn tháp.
+      real_question: Vạn Lý Trường Thành được xây để làm gì, và những tháp canh trên tường thành dùng vào việc gì?
+      fact_ids:
+        - HG5.SGK.B18.F8
+        - HG5.SGK.B18.F10
+    safety:
+      adult_required: false
+      notes: Xem phim ở nhà cùng bố
+    approved: null
+  - id: HG5.B18.POSTCARD_FROM_AUNT
+    skill_id: HG.B18.CHINA
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cô của Phúc đi công tác ở Bắc Kinh, gửi về một tấm bưu thiếp in hình Cố cung. Cô viết rằng có một người Việt từng góp công xây dựng nơi này.
+      real_question: Cố cung Bắc Kinh là hoàng cung của những triều nào, và người Việt góp công xây dựng nó tên là gì?
+      fact_ids:
+        - HG5.SGK.B18.F11
+        - HG5.SGK.B18.F12
+    safety:
+      adult_required: false
+      notes: Nhận bưu thiếp ở nhà
+    approved: null
+  - id: HG5.B18.FAMILY_QUIZ_GAME
+    skill_id: HG.B18.CHINA
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong trò đố vui cuối tuần của cả nhà, đến lượt Hà bốc phải thẻ câu hỏi về các dân tộc ở Trung Quốc.
+      real_question: Trung Quốc có bao nhiêu dân tộc, và dân tộc nào đông nhất?
+      fact_ids:
+        - HG5.SGK.B18.F6
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B19.TEXTBOOK_MAP_NEIGHBOURS
+    skill_id: HG.B19.LAOS
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Giờ Lịch sử và Địa lí, cô giáo treo lược đồ nước Lào lên bảng. Tuấn muốn đếm xem nước bạn có bao nhiêu nước láng giềng.
+      real_question: Trên đất liền, Lào giáp với những nước nào?
+      fact_ids:
+        - HG5.SGK.B19.F1
+    safety:
+      adult_required: true
+      notes: Ở trường, có cô giáo
+    approved: null
+  - id: HG5.B19.BEACH_TRIP_WONDER
+    skill_id: HG.B19.LAOS
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi biển cùng bố mẹ, Nhi chợt nghĩ tới các bạn nhỏ ở nước láng giềng Lào. Nhi tự hỏi các bạn ấy có được đi biển gần nhà như mình không.
+      real_question: Nước Lào có giáp biển không, và con sông lớn nhất chảy qua Lào là sông nào?
+      fact_ids:
+        - HG5.SGK.B19.F2
+        - HG5.SGK.B19.F4
+    safety:
+      adult_required: true
+      notes: Đi biển cùng bố mẹ; tình huống chỉ là suy nghĩ, không có hoạt động bơi lội
+    approved: null
+  - id: HG5.B19.BANKNOTE_SOUVENIR
+    skill_id: HG.B19.LAOS
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chú của Hiền đi công tác Lào về, tặng Hiền một tờ tiền Lào làm kỉ niệm. Trên tờ tiền có in hình một ngôi tháp lớn.
+      real_question: Ngôi tháp in trên tờ tiền Lào tên là gì, và nằm ở thành phố nào?
+      fact_ids:
+        - HG5.SGK.B19.F10
+        - HG5.SGK.B19.F11
+    safety:
+      adult_required: false
+      notes: ""
+    approved: null
+  - id: HG5.B19.EVENING_NEWS_STONE_JARS
+    skill_id: HG.B19.LAOS
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bản tin buổi tối nói về một di tích khảo cổ ở Lào có rất nhiều chum đá khổng lồ nằm rải rác. Long chăm chú xem cùng mẹ.
+      real_question: Di tích có nhiều chum đá ấy tên là gì, và nằm trên cao nguyên nào?
+      fact_ids:
+        - HG5.SGK.B19.F8
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà cùng mẹ
+    approved: null
+  - id: HG5.B20.SCHOOL_FESTIVAL_FLAGS
+    skill_id: HG.B20.CAMBODIA
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong ngày hội ở trường, lớp của Vinh trang trí cờ của các nước láng giềng. Vinh thấy trên một lá cờ có hình một ngôi đền.
+      real_question: Lá cờ có hình ngôi đền là của nước nào, và ngôi đền ấy tên là gì?
+      fact_ids:
+        - HG5.SGK.B20.F10
+    safety:
+      adult_required: true
+      notes: Ở trường, có thầy cô; người lớn treo cờ
+    approved: null
+  - id: HG5.B20.RIVER_BOAT_TRIP
+    skill_id: HG.B20.CAMBODIA
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Nghỉ hè, Thư cùng bố mẹ đi thuyền tham quan sông nước miền Tây. Bố kể nước láng giềng Cam-pu-chia có một hồ nước ngọt rất nổi tiếng.
+      real_question: Hồ nước ngọt lớn nhất Đông Nam Á ở Cam-pu-chia tên là gì, và vào mùa mưa hồ thay đổi ra sao?
+      fact_ids:
+        - HG5.SGK.B20.F4
+        - HG5.SGK.B20.F5
+    safety:
+      adult_required: true
+      notes: Đi thuyền du lịch cùng bố mẹ, mặc áo phao
+    approved: null
+  - id: HG5.B20.PHOTO_FROM_AUNT_IN_CAPITAL
+    skill_id: HG.B20.CAMBODIA
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Dì của Khôi đang làm việc ở thủ đô Cam-pu-chia, gửi về ảnh chụp một tượng đài giữa thành phố. Dì viết rằng tượng đài này có ý nghĩa với cả hai nước.
+      real_question: Thủ đô Cam-pu-chia tên là gì, và tượng đài hữu nghị ở đó tượng trưng cho điều gì?
+      fact_ids:
+        - HG5.SGK.B20.F7
+        - HG5.SGK.B20.F12
+    safety:
+      adult_required: false
+      notes: Xem ảnh ở nhà
+    approved: null
+  - id: HG5.B20.WOODEN_BLOCK_TEMPLE_MODEL
+    skill_id: HG.B20.CAMBODIA
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Xếp mô hình đền tháp bằng khối gỗ, Mai phải dùng băng dính cho tháp khỏi đổ. Bố kể ở Cam-pu-chia có quần thể Ăng-co Vát cao lớn mà người xưa xây rất khéo.
+      real_question: Người xưa đã xây Ăng-co Vát bằng cách nào, và tháp giữa cao bao nhiêu?
+      fact_ids:
+        - HG5.SGK.B20.F9
+    safety:
+      adult_required: false
+      notes: Đồ chơi khối gỗ ở nhà, không dùng dụng cụ sắc
+    approved: null
+  - id: HG5.B21.FLAG_DRAWING_SCHOOL_FAIR
+    skill_id: HG.B21.ASEAN
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Lan chuẩn bị vẽ cờ ASEAN để treo trong ngày hội của trường. Lan tô xong viền ngoài nhưng còn băn khoăn về hình vẽ ở giữa lá cờ.
+      real_question: Hình ở giữa cờ ASEAN là hình gì, và hình đó tượng trưng cho điều gì?
+      fact_ids:
+        - HG5.SGK.B21.F7
+    safety:
+      adult_required: false
+      notes: Hoạt động vẽ trên lớp.
+    approved: null
+  - id: HG5.B21.POSTCARD_SOUTHEAST_ASIA_MAP
+    skill_id: HG.B21.ASEAN
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chú của Minh đi công tác ở Lào gửi về một tấm bưu thiếp in bản đồ Đông Nam Á. Minh thấy có nước nằm trên đất liền, có nước lại nằm giữa biển.
+      real_question: Đông Nam Á có bao nhiêu quốc gia, và được chia thành những phần nào?
+      fact_ids:
+        - HG5.SGK.B21.F2
+    safety:
+      adult_required: false
+      notes: Xem bưu thiếp ở nhà.
+    approved: null
+  - id: HG5.B21.TV_NEWS_VIETNAM_JOINS
+    skill_id: HG.B21.ASEAN
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tối nay bản tin truyền hình nhắc đến ngày Việt Nam trở thành thành viên ASEAN. Bà nội của Hà kể rằng hôm ấy cả nhà đã ngồi xem tin cùng nhau.
+      real_question: Việt Nam gia nhập ASEAN vào năm nào, và là thành viên thứ mấy?
+      fact_ids:
+        - HG5.SGK.B21.F8
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà cùng gia đình.
+    approved: null
+  - id: HG5.B21.MARKET_GOODS_FROM_NEIGHBOURS
+    skill_id: HG.B21.ASEAN
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi siêu thị cùng mẹ, Khoa thấy nhiều món hàng ghi xuất xứ từ các nước Đông Nam Á. Mẹ kể hồi mẹ còn nhỏ hiếm khi thấy nhiều hàng như vậy.
+      real_question: Việc gia nhập ASEAN đã giúp kinh tế Việt Nam như thế nào?
+      fact_ids:
+        - HG5.SGK.B21.F9
+    safety:
+      adult_required: true
+      notes: Đi siêu thị cùng mẹ; không nêu tên nhãn hàng hay tên siêu thị.
+    approved: null
+  - id: HG5.B22.GLOBE_AT_HOME
+    skill_id: HG.B22.CONTINENTS_OCEANS
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bố mua cho Lan một quả Địa Cầu đặt trên bàn học. Lan xoay thử và thấy phần lớn quả Địa Cầu là màu xanh của biển.
+      real_question: Trên Trái Đất có những đại dương nào, và đại dương nào rộng nhất?
+      fact_ids:
+        - HG5.SGK.B22.F11
+        - HG5.SGK.B22.F12
+    safety:
+      adult_required: false
+      notes: Ở nhà.
+    approved: null
+  - id: HG5.B22.PENGUIN_DOCUMENTARY
+    skill_id: HG.B22.CONTINENTS_OCEANS
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà Nam xem phim tài liệu về đàn chim cánh cụt đi lạch bạch thành hàng dài. Nam muốn biết chúng sống ở châu lục nào.
+      real_question: Chim cánh cụt trong phim sống ở châu lục nào, và khí hậu ở đó ra sao?
+      fact_ids:
+        - HG5.SGK.B22.F10
+    safety:
+      adult_required: false
+      notes: Xem phim ở nhà cùng gia đình.
+    approved: null
+  - id: HG5.B22.TEACHER_STORY_HIGHEST_PEAK
+    skill_id: HG.B22.CONTINENTS_OCEANS
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cô giáo kể cho lớp nghe về những nhà leo núi đã lên tới đỉnh núi cao nhất thế giới. Cả lớp nhao nhao muốn biết đỉnh núi ấy ở đâu.
+      real_question: Đỉnh núi cao nhất thế giới tên là gì, và thuộc dãy núi nào?
+      fact_ids:
+        - HG5.SGK.B22.F4
+    safety:
+      adult_required: false
+      notes: Nghe kể chuyện trên lớp; trẻ không leo trèo.
+    approved: null
+  - id: HG5.B22.DESERT_SAND_SOUVENIR
+    skill_id: HG.B22.CONTINENTS_OCEANS
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Chú của Vy đi công tác ở châu Phi về, tặng Vy một lọ thuỷ tinh nhỏ đựng cát lấy từ một hoang mạc rộng mênh mông.
+      real_question: Hoang mạc rộng lớn ở châu Phi tên là gì, và khí hậu châu Phi như thế nào?
+      fact_ids:
+        - HG5.SGK.B22.F6
+    safety:
+      adult_required: false
+      notes: Quà lưu niệm xem ở nhà.
+    approved: null
+  - id: HG5.B23.TV_NEWS_WORLD_POPULATION
+    skill_id: HG.B23.WORLD_POPULATION_RACES
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bản tin tối nói dân số thế giới vẫn đang tăng. Ông nội của Bảo bảo rằng từ xưa thế giới ít người hơn bây giờ rất nhiều.
+      real_question: Ngày xưa thế giới có khoảng bao nhiêu người, còn hiện nay là khoảng bao nhiêu?
+      fact_ids:
+        - HG5.SGK.B23.F1
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà cùng ông.
+    approved: null
+  - id: HG5.B23.MAP_QUIZ_GAME_SIBLINGS
+    skill_id: HG.B23.WORLD_POPULATION_RACES
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Ở nhà, hai anh em Chi và Tùng chơi đố nhau bên tấm bản đồ thế giới treo tường. Tùng chỉ vào từng châu lục và hỏi chỗ nào đông người nhất.
+      real_question: Châu lục nào đông dân nhất, và châu lục nào ít dân nhất?
+      fact_ids:
+        - HG5.SGK.B23.F2
+        - HG5.SGK.B23.F3
+    safety:
+      adult_required: false
+      notes: Trò chơi đố ở nhà.
+    approved: null
+  - id: HG5.B23.PARK_VISITORS_MANY_COUNTRIES
+    skill_id: HG.B23.WORLD_POPULATION_RACES
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cuối tuần đi chơi công viên cùng bố mẹ, Mai gặp nhiều gia đình khách du lịch đến từ các nước khác nhau. Mọi người cùng vui vẻ ngắm hồ nước.
+      real_question: Trên thế giới có mấy chủng tộc chính, đó là những chủng tộc nào?
+      fact_ids:
+        - HG5.SGK.B23.F4
+    safety:
+      adult_required: true
+      notes: Đi cùng bố mẹ. Lời lẽ trung tính, không so sánh hay nhận xét ngoại hình.
+    approved: null
+  - id: HG5.B23.WELCOME_NEW_CLASSMATE
+    skill_id: HG.B23.WORLD_POPULATION_RACES
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Phúc đón một bạn mới có bố mẹ đến từ một châu lục khác. Cô giáo nhắc cả lớp chào đón bạn thật thân thiện.
+      real_question: Theo sách, người thuộc các chủng tộc khác nhau có quyền như thế nào với nhau?
+      fact_ids:
+        - HG5.SGK.B23.F10
+    safety:
+      adult_required: false
+      notes: Tôn trọng khác biệt; không nêu đặc điểm ngoại hình của bạn mới.
+    approved: null
+  - id: HG5.B24.PYRAMID_BUILDING_TOY
+    skill_id: HG.B24.EGYPT_CIVILIZATION
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Mẹ mua cho Minh một bộ đồ chơi xếp kim tự tháp bằng gỗ. Xếp xong, Minh tò mò không biết ngày xưa người ta xây những công trình to như vậy để làm gì.
+      real_question: Người Ai Cập cổ đại xây kim tự tháp để làm gì, và xây bằng vật liệu gì?
+      fact_ids:
+        - HG5.SGK.B24.F5
+    safety:
+      adult_required: false
+      notes: Đồ chơi gỗ ở nhà, không nêu tên nhãn hàng.
+    approved: null
+  - id: HG5.B24.SUNDIAL_MODEL_SCHOOLYARD
+    skill_id: HG.B24.EGYPT_CIVILIZATION
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong sân trường của Ngọc có một mô hình đồng hồ mặt trời do học sinh khoá trước làm tặng trường. Ngọc thắc mắc chiếc đồng hồ không kim ấy xem giờ thế nào.
+      real_question: Đồng hồ mặt trời do người nước nào phát minh, và người ta xem giờ bằng cách nào?
+      fact_ids:
+        - HG5.SGK.B24.F4
+        - HG5.SGK.B24.F7
+    safety:
+      adult_required: false
+      notes: Trong khuôn viên trường.
+    approved: null
+  - id: HG5.B24.RIVER_DOCUMENTARY
+    skill_id: HG.B24.EGYPT_CIVILIZATION
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà Khoa xem phim tài liệu về một dòng sông dài chảy qua vùng đất khô cằn, hai bên bờ là những cánh đồng xanh. Bố nói đó là con sông nổi tiếng nhất của Ai Cập.
+      real_question: Vì sao người ta nói Ai Cập là món quà của sông Nin?
+      fact_ids:
+        - HG5.SGK.B24.F3
+    safety:
+      adult_required: false
+      notes: Xem phim ở nhà cùng gia đình.
+    approved: null
+  - id: HG5.B24.BEDTIME_STORY_QUEEN
+    skill_id: HG.B24.EGYPT_CIVILIZATION
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Tối nay bố đọc cho Linh nghe truyện về một nữ hoàng nổi tiếng của Ai Cập cổ đại. Linh muốn biết nữ hoàng ấy lên ngôi khi bao nhiêu tuổi.
+      real_question: Nữ hoàng Cờ-lê-ô-pát lên ngôi năm bao nhiêu tuổi, và bà có tài gì?
+      fact_ids:
+        - HG5.SGK.B24.F10
+    safety:
+      adult_required: false
+      notes: Đọc truyện ở nhà.
+    approved: null
+  - id: HG5.B25.OLYMPIC_OPENING_ON_TV
+    skill_id: HG.B25.GREEK_CIVILIZATION
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà Nam cùng xem lễ khai mạc Ô-lim-píc trên ti vi. Ông kể đại hội này bắt nguồn từ một lễ hội rất xưa ở Hy Lạp.
+      real_question: Lễ hội Ô-lim-píc thời xưa được tổ chức để làm gì, và bao lâu tổ chức một lần?
+      fact_ids:
+        - HG5.SGK.B25.F10
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà.
+    approved: null
+  - id: HG5.B25.SCHOOL_RACE_PRIZE
+    skill_id: HG.B25.GREEK_CIVILIZATION
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trong hội thao của trường, Lan về nhất môn chạy và được cô giáo trao một tấm giấy khen. Lan thắc mắc ngày xưa người thắng ở Ô-lim-píc được nhận gì.
+      real_question: Ở lễ hội Ô-lim-píc thời Hy Lạp cổ, người thắng cuộc được nhận phần thưởng gì?
+      fact_ids:
+        - HG5.SGK.B25.F11
+    safety:
+      adult_required: false
+      notes: Hội thao trong trường, có thầy cô.
+    approved: null
+  - id: HG5.B25.LIBRARY_HERITAGE_POSTER
+    skill_id: HG.B25.GREEK_CIVILIZATION
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trên tấm áp phích về di sản thế giới ở thư viện trường, Bảo thấy biểu tượng của UNESCO là hình một ngôi đền có nhiều hàng cột.
+      real_question: Biểu tượng của UNESCO lấy hình mặt tiền ngôi đền nào, và đền đó thờ vị thần nào?
+      fact_ids:
+        - HG5.SGK.B25.F6
+        - HG5.SGK.B25.F4
+    safety:
+      adult_required: false
+      notes: Trong thư viện trường.
+    approved: null
+  - id: HG5.B25.OLIVE_OIL_SALAD
+    skill_id: HG.B25.GREEK_CIVILIZATION
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Mẹ dùng dầu ô liu để trộn đĩa rau cho bữa tối, Vy phụ mẹ bày đĩa. Mẹ kể cây ô liu có trong một truyện thần thoại Hy Lạp.
+      real_question: Trong truyện, nữ thần A-tê-na trồng cây ô liu với mong muốn mang lại điều gì?
+      fact_ids:
+        - HG5.SGK.B25.F9
+    safety:
+      adult_required: false
+      notes: Trẻ chỉ bày đĩa; không dùng bếp, dao. Không nêu tên nhãn hàng.
+    approved: null
+  - id: HG5.B26.SCHOOL_TREE_PLANTING
+    skill_id: HG.B26.GREEN_CLEAN_WORLD
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Trường của Huy phát động tết trồng cây, mỗi lớp nhận chăm sóc một cây non trong sân trường. Huy muốn làm thêm nhiều việc khác để giữ môi trường xanh.
+      real_question: Ngoài trồng cây, còn những biện pháp nào giúp xây dựng thế giới xanh – sạch – đẹp?
+      fact_ids:
+        - HG5.SGK.B26.F10
+        - HG5.SGK.B26.F11
+    safety:
+      adult_required: false
+      notes: Trồng cây trong sân trường có thầy cô hướng dẫn.
+    approved: null
+  - id: HG5.B26.POLLUTED_LAKE_WALK
+    skill_id: HG.B26.GREEN_CLEAN_WORLD
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Đi dạo cùng bố quanh hồ gần nhà, Mai thấy mặt nước đục ngầu và nổi nhiều túi ni lông. Bố bảo mọi người không nên đi gần mép nước.
+      real_question: Nước, đất và không khí bị ô nhiễm thì ảnh hưởng thế nào đến sức khoẻ con người?
+      fact_ids:
+        - HG5.SGK.B26.F7
+    safety:
+      adult_required: true
+      notes: Đi cùng bố, đứng xa mép nước.
+    approved: null
+  - id: HG5.B26.MELTING_ICE_DOCUMENTARY
+    skill_id: HG.B26.GREEN_CLEAN_WORLD
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cả nhà Tùng xem phim tài liệu có cảnh những tảng băng lớn ở Bắc Cực đang tan chảy. Mẹ nói đây là một dấu hiệu của biến đổi khí hậu.
+      real_question: Biến đổi khí hậu thể hiện qua những hiện tượng nào?
+      fact_ids:
+        - HG5.SGK.B26.F5
+    safety:
+      adult_required: false
+      notes: Xem phim ở nhà cùng gia đình.
+    approved: null
+  - id: HG5.B26.HOME_WASTE_SORTING
+    skill_id: HG.B26.GREEN_CLEAN_WORLD
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Cuối tuần cả nhà Ngọc cùng phân loại rác, Ngọc phụ trách xếp giấy và chai nhựa. Ngọc tự hỏi thiên nhiên đã giúp con người những gì.
+      real_question: Thiên nhiên có những vai trò gì đối với cuộc sống của con người?
+      fact_ids:
+        - HG5.SGK.B26.F1
+        - HG5.SGK.B26.F2
+    safety:
+      adult_required: false
+      notes: Phân loại rác khô ở nhà; không đụng mảnh vỡ thuỷ tinh.
+    approved: null
+  - id: HG5.B27.PEACE_DRAWING_CONTEST
+    skill_id: HG.B27.WORLD_PEACE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Lớp của Chi thi vẽ tranh chủ đề hoà bình, nhiều bạn vẽ chú chim bồ câu trắng ngậm một cành lá xanh. Chi muốn biết hình ảnh ấy có từ câu chuyện nào.
+      real_question: Theo truyền thuyết, chim bồ câu ngậm cành ô liu bay về báo hiệu điều gì?
+      fact_ids:
+        - HG5.SGK.B27.F2
+        - HG5.SGK.B27.F3
+    safety:
+      adult_required: false
+      notes: Hoạt động vẽ trên lớp.
+    approved: null
+  - id: HG5.B27.OLYMPIC_RINGS_TSHIRT
+    skill_id: HG.B27.WORLD_PEACE
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Anh họ tặng Phúc một chiếc áo thể thao in biểu tượng các vòng tròn đan vào nhau của Ô-lim-píc. Phúc mặc áo đi đá bóng cùng bố và các bạn.
+      real_question: Các vòng tròn đan nhau của Ô-lim-píc tượng trưng cho điều gì?
+      fact_ids:
+        - HG5.SGK.B27.F5
+    safety:
+      adult_required: true
+      notes: Đá bóng cùng bố. Biểu tượng Ô-lim-píc không phải tên nhãn hàng; không nêu hãng áo.
+    approved: null
+  - id: HG5.B27.BLOOD_DONATION_WITH_MOM
+    skill_id: HG.B27.WORLD_PEACE
+    theme: other
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Minh đi cùng mẹ đến điểm hiến máu do hội Chữ thập đỏ của phường tổ chức. Minh ngồi chờ và nhìn thấy lá cờ chữ thập màu đỏ treo ở cửa.
+      real_question: Phong trào Chữ thập đỏ hoạt động nhằm mục đích gì?
+      fact_ids:
+        - HG5.SGK.B27.F6
+    safety:
+      adult_required: true
+      notes: Đi cùng mẹ; trẻ chỉ ngồi chờ, không tham gia hiến máu.
+    approved: null
+  - id: HG5.B27.TV_NEWS_PEACEKEEPERS
+    skill_id: HG.B27.WORLD_PEACE
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      kind: question
+      setup: Bản tin truyền hình chiếu cảnh các chú bộ đội Việt Nam lên đường làm nhiệm vụ giữ hoà bình của Liên hợp quốc ở nước ngoài. Hà và bố cùng vẫy tay chào theo màn hình.
+      real_question: Quân nhân Việt Nam tham gia giữ hoà bình của Liên hợp quốc ở nước nào?
+      fact_ids:
+        - HG5.SGK.B27.F10
+    safety:
+      adult_required: false
+      notes: Xem ti vi ở nhà.
+    approved: null

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
-import { factsBeyondQuestion, keyPointsProgress, withheldPhrases } from './key-points-progress';
+import { factsBeyondQuestion, keyPointsProgress, statedTimeline, withheldPhrases } from './key-points-progress';
 
 // Code chấm câu trả lời môn kiến thức (SPEC §5d): cộng dồn qua các lượt, không tính lời nhắc lại đề.
 
@@ -49,5 +49,20 @@ describe('key-points-progress', () => {
     expect(withheldPhrases({ plan: plan({}), facts: FACTS, problemText: QUESTION, statedFactIds: ['B15.F2'] })).toEqual([
       { fact_id: 'B15.F3', phrases: ['7 – 5 – 1954', 'ngày 7 tháng 5', '7 5 1954'] },
     ]);
+  });
+});
+
+describe('statedTimeline', () => {
+  const facts = [
+    { fact_id: 'A', statement: 'Cách mạng tháng Tám thành công năm 1945 trên cả nước.' },
+    { fact_id: 'B', statement: 'Chiến dịch Điện Biên Phủ kết thúc năm 1954.' },
+    { fact_id: 'C', statement: 'Chiến dịch Hồ Chí Minh toàn thắng năm 1975.' },
+  ];
+  it('chỉ vẽ mốc năm của ý con đã nêu, theo thứ tự năm; dưới hai mốc thì không vẽ', () => {
+    expect(statedTimeline(facts, ['B'])).toBeNull();
+    const t = statedTimeline(facts, ['C', 'A']);
+    expect(t?.kind).toBe('timeline');
+    expect(t?.items.map((i) => i.value)).toEqual([1945, 1975]);
+    expect(t?.items[0]!.label).toBe('Cách mạng tháng Tám thành công…');
   });
 });

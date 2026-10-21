@@ -27,7 +27,7 @@ import {
 } from './student-message-analysis';
 import { confirmationWithheld, type TurnHints } from './tutor-prompt';
 import { subjectName } from '@/server/domain/curriculum/subject-config';
-import { keyPointsProgress, withheldPhrases } from './key-points-progress';
+import { keyPointsProgress, statedTimeline, withheldPhrases } from './key-points-progress';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
 
@@ -608,7 +608,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
       done: position.state === 'DONE',
       paused: position.state === 'PAUSE',
       source: outcome.generated?.source ?? 'fixed',
-      visual: outcome.parallel?.visual ?? null,
+      // Môn kiến thức: con nêu đủ ý thì xem lại các mốc năm con vừa tự nêu trên trục thời gian.
+      visual: outcome.parallel?.visual ?? (knowledge && position.state === 'CONSOLIDATE' ? statedTimeline(ctx.keyFacts, knowledge.statedFactIds) : null),
     };
     const { message: _omit, ...stored } = result;
     await saveIdempotentResult(input.sessionId, input.idempotencyKey, stored);

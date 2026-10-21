@@ -1,5 +1,6 @@
 import 'server-only';
 import { matchedPhrase, type MatchableFact } from '@/lib/key-point-matcher';
+import type { SituationalVisual } from '@/server/domain/life-context/generate-situational-problem';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 
 // Tiến độ của con với câu hỏi môn kiến thức (SPEC §5d, quy tắc cứng 7): code tính con đã tự nêu ý chính nào qua
@@ -47,4 +48,28 @@ export function withheldPhrases(input: { plan: SolutionPlan; facts: MatchableFac
   return factsBeyondQuestion(input.facts, input.problemText)
     .filter((f) => k.required_fact_ids.includes(f.fact_id) && !stated.has(f.fact_id) && f.accept.length > 0)
     .map((f) => ({ fact_id: f.fact_id, phrases: f.accept }));
+}
+
+const YEAR = /(?<!\d)(1\d{3}|20\d{2})(?!\d)/g;
+const LABEL_WORDS = 6;
+
+/**
+ * Trục thời gian (SPEC §5d): mốc năm trong các ý chính con ĐÃ tự nêu (không lộ ý chưa nêu). Mỗi năm một mốc, nhãn là
+ * vài chữ đầu của ý chính. Ít hơn hai năm khác nhau thì không vẽ.
+ */
+export function statedTimeline(facts: { fact_id: string; statement: string }[], statedFactIds: string[]): SituationalVisual | null {
+  const byYear = new Map<number, string>();
+  for (const id of statedFactIds) {
+    const fact = facts.find((f) => f.fact_id === id);
+    if (!fact) continue;
+    for (const m of fact.statement.matchAll(YEAR)) {
+      const year = Number(m[1]);
+      if (byYear.has(year)) continue;
+      const words = fact.statement.split(/\s+/);
+      byYear.set(year, words.slice(0, LABEL_WORDS).join(' ') + (words.length > LABEL_WORDS ? '…' : ''));
+    }
+  }
+  if (byYear.size < 2) return null;
+  const items = [...byYear.entries()].sort((a, b) => a[0] - b[0]).map(([value, label]) => ({ label, value, unit: '' }));
+  return { kind: 'timeline', items };
 }

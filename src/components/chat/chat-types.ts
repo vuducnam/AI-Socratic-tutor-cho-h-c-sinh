@@ -1,7 +1,7 @@
 // Kiểu dữ liệu phía client của /learn (khớp JSON từ /api/learn/*, /api/chat — không import từ src/server).
 
 export interface Visual {
-  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box';
+  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box' | 'timeline';
   items: { label: string; value: number; unit: string }[];
 }
 
