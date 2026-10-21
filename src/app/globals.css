@@ -93,126 +93,124 @@ input, select, textarea { font: inherit; padding: 0.45rem 0.6rem; border-radius:
 .stack-form label { display: flex; flex-direction: column; gap: 0.25rem; }
 .stack-form label.checkbox { flex-direction: row; align-items: center; gap: 0.5rem; }
 
-/* ── Giao diện học sinh: "sách sticker tươi sáng" (khu /learn và trang đăng nhập) ──
-   Bốn màu, mỗi màu một vai trò: xanh trời = Mít và nút chính, bạc hà = lời của bạn và nút Gửi,
-   san hô = micro, vàng nắng = Gợi ý. Chiều sâu chỉ bằng bóng đặc dưới chân (sticker), ấn thì lún xuống. */
+/* ── Giao diện học sinh: "pastel vui tươi" (khu /learn và trang đăng nhập) ──
+   Nền bạc hà nhạt, bề mặt trắng bo tròn, KHÔNG viền dày, KHÔNG bóng đặc. Mỗi màu một vai trò:
+   xanh lá = hành động chính (Gửi, Vào, chọn), san hô = micro, vàng bơ = lời của bạn, tím nhạt = Gợi ý và
+   chuyện đời thường, xanh trời = Mít (tiêu đề, nút nghe). */
 .kid-theme {
-  --k-ink: oklch(27% 0.04 255);
-  --k-muted: oklch(45% 0.03 255);
-  --k-bg: oklch(97% 0.025 225);
-  --k-card: oklch(99.5% 0.004 225);
-  --k-line: oklch(88% 0.04 230);
-  --k-sky: oklch(55% 0.16 245);
-  --k-sky-deep: oklch(42% 0.13 250);
-  --k-sky-soft: oklch(93% 0.045 230);
-  --k-sun: oklch(86% 0.15 88);
-  --k-sun-deep: oklch(66% 0.14 70);
-  --k-sun-soft: oklch(96% 0.05 95);
-  --k-coral: oklch(58% 0.17 40);
-  --k-coral-deep: oklch(46% 0.15 36);
-  --k-coral-soft: oklch(95% 0.04 45);
-  --k-mint: oklch(80% 0.13 165);
-  --k-mint-deep: oklch(56% 0.11 168);
-  --k-mint-soft: oklch(94% 0.05 165);
-  --k-on-color: oklch(99% 0 0);
-  --k-focus: oklch(50% 0.22 290);
-  --k-danger: oklch(50% 0.17 28);
-  --k-r: 16px;
-  --k-r-sm: 12px;
-  --k-press: 4px;
+  --k-ink: #22302A;
+  --k-muted: #4E6159;
+  --k-bg: #EEF7F2;
+  --k-card: #FFFFFF;
+  --k-tint: #E3F1EA;
+  --k-tint-hover: #D6EBE0;
+  --k-disabled-bg: #DDE8E2;
+  --k-disabled-ink: #55645D;
+  --k-green: #2E7F5B;
+  --k-green-hover: #276F4F;
+  --k-green-ink: #245F45;
+  --k-coral: #FF8F70;
+  --k-coral-hover: #FF7F5C;
+  --k-coral-deep: #E8613D;
+  --k-coral-ink: #4A1D0F;
+  --k-coral-soft: #FFE3DA;
+  --k-butter: #FFE9A8;
+  --k-lilac: #F3E9FF;
+  --k-lilac-ink: #5B3A8C;
+  --k-sky-soft: #E2F0FD;
+  --k-sky-ink: #2D5B8C;
+  --k-focus: #2D7BD8;
+  --k-danger: #B4361C;
+  --k-r: 22px;
+  --k-r-card: 28px;
+  --k-r-sm: 14px;
   --k-s1: 0.5rem;
   --k-s2: 0.75rem;
   --k-s3: 1rem;
   --k-s4: 1.5rem;
   --k-s5: 2.5rem;
   --k-ease: cubic-bezier(0.25, 1, 0.5, 1);
-  --owl-body: oklch(62% 0.15 245);
-  --owl-dark: oklch(45% 0.13 250);
-  --owl-belly: oklch(93% 0.08 92);
-  --owl-face: oklch(99% 0.01 95);
-  --owl-eye: oklch(25% 0.04 255);
-  --owl-beak: oklch(76% 0.17 60);
-  --owl-cheek: oklch(82% 0.1 20);
-  font-family: var(--font-body), 'Nunito', system-ui, sans-serif;
+  --owl-body: #7DB4F5;
+  --owl-dark: #5C9DE8;
+  --owl-belly: #FFF0BF;
+  --owl-face: #FFFFFF;
+  --owl-eye: #22302A;
+  --owl-beak: #FFA36C;
+  --owl-cheek: #FFB3A7;
+  font-family: var(--font-body), 'Quicksand', system-ui, sans-serif;
+  font-weight: 500;
   color: var(--k-ink);
-  background-color: var(--k-bg);
-  background-image:
-    radial-gradient(56rem 28rem at 0% 0%, oklch(94% 0.07 95 / 0.7), transparent 65%),
-    radial-gradient(48rem 28rem at 100% 100%, oklch(93% 0.06 165 / 0.6), transparent 65%);
-  background-attachment: fixed;
+  background: var(--k-bg);
 }
 .kid-theme h1,
-.kid-theme h2 { font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif; line-height: 1.15; text-wrap: balance; }
+.kid-theme h2 { font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif; font-weight: 700; line-height: 1.15; color: var(--k-sky-ink); text-wrap: balance; }
 
-/* Nút sticker: bóng đặc dưới chân, rê chuột nhấc lên, ấn lún xuống. */
+/* Nút: viên thuốc phẳng, không viền, không bóng. Rê chuột đậm màu, ấn thu nhỏ một chút. */
 .kid-theme button {
-  min-height: 52px;
+  min-height: 48px;
   padding: 0 var(--k-s4);
   border: 0;
   border-radius: 999px;
-  font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif;
+  font-family: inherit;
   font-weight: 700;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-  background: var(--k-sky);
-  color: var(--k-on-color);
-  box-shadow: 0 var(--k-press) 0 var(--k-sky-deep);
+  font-size: 17px;
+  background: var(--k-green);
+  color: #FFFFFF;
   cursor: pointer;
-  transition: transform 120ms var(--k-ease), box-shadow 120ms var(--k-ease), background-color 150ms var(--k-ease);
+  transition: background-color 150ms var(--k-ease), transform 100ms var(--k-ease);
 }
-.kid-theme button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 calc(var(--k-press) + 1px) 0 var(--k-sky-deep); }
-.kid-theme button:active:not(:disabled) { transform: translateY(var(--k-press)); box-shadow: 0 0 0 var(--k-sky-deep); }
-.kid-theme button:disabled { background: var(--k-line); color: var(--k-muted); box-shadow: 0 var(--k-press) 0 oklch(80% 0.03 230); opacity: 1; cursor: not-allowed; }
-.kid-theme button.ghost { background: var(--k-card); color: var(--k-sky-deep); box-shadow: inset 0 0 0 2px var(--k-line), 0 var(--k-press) 0 var(--k-line); }
-.kid-theme button.ghost:hover:not(:disabled) { box-shadow: inset 0 0 0 2px var(--k-sky), 0 calc(var(--k-press) + 1px) 0 var(--k-line); }
-.kid-theme button.ghost:active:not(:disabled) { box-shadow: inset 0 0 0 2px var(--k-sky), 0 0 0 var(--k-line); }
+.kid-theme button:hover:not(:disabled) { background: var(--k-green-hover); }
+.kid-theme button:active:not(:disabled) { transform: scale(0.97); }
+.kid-theme button:disabled { background: var(--k-disabled-bg); color: var(--k-disabled-ink); opacity: 1; cursor: not-allowed; }
+.kid-theme button.ghost { background: var(--k-tint); color: var(--k-green-ink); }
+.kid-theme button.ghost:hover:not(:disabled) { background: var(--k-tint-hover); }
 .kid-theme button:focus-visible,
 .kid-theme input:focus-visible,
 .kid-theme textarea:focus-visible,
-.kid-theme select:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 3px; }
+.kid-theme select:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
 
 .kid-theme input,
 .kid-theme textarea {
   font-family: inherit;
-  font-size: 1.1rem;
+  font-weight: 500;
+  font-size: 18px;
   color: var(--k-ink);
-  background: var(--k-card);
-  border: 2px solid var(--k-line);
+  background: var(--k-bg);
+  border: 0;
   border-radius: var(--k-r);
-  padding: var(--k-s2) var(--k-s3);
-  transition: border-color 150ms var(--k-ease);
+  padding: var(--k-s2) var(--k-s4);
+  box-shadow: inset 0 0 0 2px transparent;
+  transition: box-shadow 150ms var(--k-ease);
 }
 .kid-theme input:focus,
-.kid-theme textarea:focus { border-color: var(--k-sky); }
+.kid-theme textarea:focus { box-shadow: inset 0 0 0 3px var(--k-green); }
+/* Ô nhập: vòng xanh lá bên trong là dấu focus duy nhất (không chồng thêm outline). */
+.kid-theme input:focus-visible,
+.kid-theme textarea:focus-visible { outline: none; }
 .kid-theme input::placeholder,
-.kid-theme textarea::placeholder { color: var(--k-muted); }
+.kid-theme textarea::placeholder { color: #66776F; }
 .kid-theme .muted { color: var(--k-muted); }
-.kid-theme .form-error { color: var(--k-danger); font-weight: 600; }
+.kid-theme .form-error { color: var(--k-danger); font-weight: 700; }
 
 /* Trang đăng nhập (chung cho con và bố mẹ). */
 .kid-theme.login-page { max-width: none; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--k-s3); padding: var(--k-s5) 16px; }
 .kid-theme.login-page > * { width: 100%; max-width: 440px; }
 .login-hero { display: flex; flex-direction: column; align-items: center; gap: var(--k-s1); text-align: center; }
-.login-hero .owl { filter: drop-shadow(0 6px 0 oklch(85% 0.05 230)); }
 .login-hero p { margin: 0; font-size: 1.1rem; }
-.kid-theme.login-page h1 { margin: 0; font-size: 3rem; font-weight: 800; color: var(--k-sky-deep); }
-.kid-theme.login-page .card { background: var(--k-card); border: 2px solid var(--k-line); border-radius: var(--k-r); box-shadow: 0 6px 0 var(--k-line); padding: var(--k-s4); margin: 0; }
-.kid-theme .tabs { display: flex; gap: var(--k-s1); padding: 6px; margin-bottom: var(--k-s4); border-radius: 999px; background: var(--k-sky-soft); }
-.kid-theme .tabs button { flex: 1; min-height: 48px; background: transparent; color: var(--k-sky-deep); box-shadow: none; }
-.kid-theme .tabs button:hover:not(:disabled) { transform: none; box-shadow: none; background: oklch(89% 0.06 230); }
-.kid-theme .tabs button[aria-selected='true'] { background: var(--k-sky); color: var(--k-on-color); box-shadow: 0 3px 0 var(--k-sky-deep); }
+.kid-theme.login-page h1 { margin: 0; font-size: 3rem; }
+.kid-theme.login-page .card { background: var(--k-card); border: 0; border-radius: var(--k-r-card); padding: var(--k-s4); margin: 0; }
+.kid-theme .tabs { display: flex; gap: 4px; padding: 4px; margin-bottom: var(--k-s4); border-radius: 999px; background: var(--k-bg); }
+.kid-theme .tabs button { flex: 1; min-height: 44px; background: transparent; color: var(--k-green-ink); }
+.kid-theme .tabs button:hover:not(:disabled) { background: var(--k-tint); }
+.kid-theme .tabs button[aria-selected='true'] { background: var(--k-green); color: #FFFFFF; }
 .kid-theme .login-form { gap: var(--k-s3); }
-.kid-theme .login-form label { font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif; font-weight: 600; font-size: 1.05rem; }
-.kid-theme .login-form button[type='submit'] { background: var(--k-mint); color: var(--k-ink); box-shadow: 0 var(--k-press) 0 var(--k-mint-deep); font-size: 1.2rem; }
-.kid-theme .login-form button[type='submit']:hover:not(:disabled) { box-shadow: 0 calc(var(--k-press) + 1px) 0 var(--k-mint-deep); }
-.kid-theme .login-form button[type='submit']:active:not(:disabled) { box-shadow: 0 0 0 var(--k-mint-deep); }
-.kid-theme .login-form button[type='submit']:disabled { background: var(--k-line); color: var(--k-muted); box-shadow: 0 var(--k-press) 0 oklch(80% 0.03 230); }
+.kid-theme .login-form label { font-weight: 700; font-size: 1rem; }
+.kid-theme .login-form button[type='submit'] { min-height: 52px; font-size: 1.1rem; }
 .kid-theme.login-page .small { font-size: 0.9rem; text-align: center; }
 
 @media (prefers-reduced-motion: reduce) {
   .kid-theme button,
   .kid-theme input,
   .kid-theme textarea { transition: none; }
-  .kid-theme button:hover:not(:disabled),
   .kid-theme button:active:not(:disabled) { transform: none; }
 }

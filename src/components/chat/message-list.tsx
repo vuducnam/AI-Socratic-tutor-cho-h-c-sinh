@@ -45,7 +45,32 @@ function ListenButton({ turnId, speech }: { turnId: string; speech: Speech }) {
   );
 }
 
-export function MessageList({ lines, busyText, speech }: { lines: ChatLine[]; busyText: string | null; speech?: Speech }) {
+/** Chữ cái đầu của tên gọi (không dựa vào giới tính, quy tắc cứng 9); tên trống → "B" (bạn). */
+export function nameInitial(name: string): string {
+  const first = name.trim().normalize('NFC').charAt(0);
+  return first ? first.toLocaleUpperCase('vi') : 'B';
+}
+
+// Biểu tượng người nói: cú cho Mít, vòng tròn chữ cái đầu tên cho con.
+function StudentAvatar({ name }: { name: string }) {
+  return (
+    <span className="me-avatar" aria-hidden="true">
+      {nameInitial(name)}
+    </span>
+  );
+}
+
+export function MessageList({
+  lines,
+  busyText,
+  speech,
+  studentName = '',
+}: {
+  lines: ChatLine[];
+  busyText: string | null;
+  speech?: Speech;
+  studentName?: string;
+}) {
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -55,9 +80,12 @@ export function MessageList({ lines, busyText, speech }: { lines: ChatLine[]; bu
     <ol className="messages" aria-live="polite">
       {lines.map((line) => (
         <li key={line.turnId} className={`msg msg-${line.from} ${line.kind === 'hook' ? 'msg-hook' : ''}`}>
-          {line.from === 'cu' && <OwlAvatar size={36} />}
+          {line.from === 'cu' ? <OwlAvatar size={40} /> : <StudentAvatar name={studentName} />}
           <div className="bubble">
-            <p>{line.text}</p>
+            <p>
+              <span className="sr-only">{line.from === 'cu' ? 'Mít: ' : 'Bạn: '}</span>
+              {line.text}
+            </p>
             {line.visual && <VisualFor visual={line.visual} />}
             {speech && isSpeakableLine(line) && <ListenButton turnId={line.turnId} speech={speech} />}
           </div>
@@ -65,7 +93,7 @@ export function MessageList({ lines, busyText, speech }: { lines: ChatLine[]; bu
       ))}
       {busyText && (
         <li className="msg msg-cu msg-busy">
-          <OwlAvatar size={36} mood="thinking" />
+          <OwlAvatar size={40} mood="thinking" />
           <div className="bubble">
             <p>
               {busyText}

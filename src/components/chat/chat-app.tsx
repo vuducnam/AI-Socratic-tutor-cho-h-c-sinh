@@ -5,6 +5,7 @@ import { FriendlyError, OfflineError, postJson, postSse } from '@/lib/sse-client
 import { linesFromTurn, type ChatLine, type ClientVoicePrefs, type ProblemResultDto, type StartDto, type TurnResultDto } from './chat-types';
 import { Composer } from './composer';
 import { MessageList } from './message-list';
+import { OwlAvatar } from './owl-avatar';
 import { OcrConfirmPanel, ProblemEntryPanel } from './problem-entry-panels';
 import { BlockedScreen, EndOfProblem, IntroScreen, RestingScreen, SessionEndedScreen } from './simple-screens';
 import { speakableTurnIds } from './tts-playback-logic';
@@ -196,7 +197,11 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
 
   return (
     <div className="chat">
-      <MessageList lines={lines} busyText={busy} speech={tts} />
+      <header className="chat-head">
+        <OwlAvatar size={72} />
+        <p className="chat-hello">Chào {studentName}!</p>
+      </header>
+      <MessageList lines={lines} busyText={busy} speech={tts} studentName={studentName} />
       {notice && (
         <p className="notice err" role="alert">
           {notice}
