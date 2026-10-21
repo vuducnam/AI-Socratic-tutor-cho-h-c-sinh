@@ -4,6 +4,7 @@ API:
 - `GET /health` → `{status, models_loaded, models}` (chỉ tên model, không có dữ liệu của con).
 - `POST /transcribe` multipart: `audio` (webm/ogg/wav/mp4/m4a), `language` (vi|en), `model` tuỳ chọn
   (phải nằm trong danh sách đã cấu hình cho ngôn ngữ đó) → `{text, model, language, latency_ms}`.
+  Bản ghi không có tiếng nói (xem `app.speech_activity`) → `text` rỗng, không gọi model.
 
 Mã lỗi (`{"detail": "<code>"}`): 400 thiếu/sai trường hoặc audio không giải mã được; 413 quá dung lượng
 hoặc quá số giây; 415 định dạng không hỗ trợ; 503 model không nạp được; 500 lỗi khi suy luận.
@@ -22,7 +23,7 @@ from collections.abc import AsyncIterator, Callable
 from typing import Any
 
 import numpy as np
-from fastapi import FastAPI, File, Form, Request, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.responses import JSONResponse
 
 from app.audio_decode import (
@@ -33,7 +34,9 @@ from app.audio_decode import (
     decode_with_ffmpeg,
     detect_format,
 )
+from app.body_limit import BodyLimitMiddleware
 from app.settings import LANGUAGES, Settings, load_settings
+from app.speech_activity import has_speech
 from app.speech_engine import ModelUnavailableError, SpeechEngine, TranscriberLoader
 
 AudioDecoder = Callable[[str, AudioFormat, int], np.ndarray]
@@ -103,13 +106,7 @@ def create_app(
     app = FastAPI(title="stt-local", docs_url=None, redoc_url=None, openapi_url=None, lifespan=lifespan)
     app.state.engine = engine
 
-    @app.middleware("http")
-    async def limit_body_size(request: Request, call_next):  # type: ignore[no-untyped-def]
-        declared = request.headers.get("content-length")
-        limit = config.max_bytes + MULTIPART_OVERHEAD_BYTES
-        if declared is not None and (not declared.isdigit() or int(declared) > limit):
-            return _error(413, "audio_too_large")
-        return await call_next(request)
+    app.add_middleware(BodyLimitMiddleware, max_body_bytes=config.max_bytes + MULTIPART_OVERHEAD_BYTES)
 
     @app.get("/health")
     def health() -> dict[str, Any]:
@@ -158,6 +155,11 @@ def create_app(
                 # Xoá ngay sau khi giải mã, không đợi suy luận xong.
                 _remove_quietly(temp_path)
             audio_seconds = samples.size / SAMPLE_RATE
+            if not has_speech(samples, SAMPLE_RATE):
+                # Không gọi model: Whisper gặp im lặng hay bịa chữ. Chữ rỗng → app nhắc con nói lại.
+                outcome = "no_speech"
+                latency_ms = round((time.perf_counter() - started) * 1000)
+                return JSONResponse({"text": "", "model": model_name, "language": language, "latency_ms": latency_ms})
 
             try:
                 text = engine.transcribe(model_name, samples, language)

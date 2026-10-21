@@ -82,6 +82,12 @@ jobs:
         run: |
           pip install -e ".[test]"
           pytest -q
+      # Không cần GPU hay model: test dùng loader/decoder giả; gồm kiểm audio tạm bị xoá (quy tắc cứng 10).
+      - name: stt-local pytest
+        working-directory: services/stt-local
+        run: |
+          pip install -e ".[test]"
+          pytest -q
 
   gitleaks:
     runs-on: ubuntu-latest

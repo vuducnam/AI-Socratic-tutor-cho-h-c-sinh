@@ -16,9 +16,10 @@ RUN apt-get update \
 WORKDIR /srv
 COPY pyproject.toml ./
 # torch đã có trong base image (Python hệ thống 3.12); chỉ thêm phần còn lại (khớp pyproject.toml: dependencies + extra `ml`).
+# Pin đúng bản đã chạy thật trên GPU tại nhà (2026-10-21) để build lại ra cùng kết quả; nâng bản thì chạy stt-bench lại.
 # Image dùng Python hệ thống có đánh dấu PEP 668; container chỉ chạy một service nên cài thẳng là an toàn.
-RUN PIP_BREAK_SYSTEM_PACKAGES=1 pip install --no-cache-dir "fastapi>=0.115" "uvicorn>=0.32" "python-multipart>=0.0.18" "numpy>=2" \
-    "transformers>=4.56,<6" "huggingface_hub>=0.34"
+RUN PIP_BREAK_SYSTEM_PACKAGES=1 pip install --no-cache-dir fastapi==0.156.4 uvicorn==0.54.0 python-multipart==0.0.32 numpy==2.5.3 \
+    transformers==5.20.2 huggingface_hub==2.2.0
 COPY app ./app
 
 # Chạy non-root; thư mục /models tạo sẵn với chủ là user này để named volume kế thừa quyền ghi.

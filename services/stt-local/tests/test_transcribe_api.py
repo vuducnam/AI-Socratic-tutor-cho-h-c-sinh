@@ -178,6 +178,42 @@ def test_body_over_content_length_limit_rejected_early(make_settings: SettingsFa
     assert leftover_files(work_dir) == []
 
 
+def _chunked_multipart(audio: bytes, chunk: int = 8192):  # type: ignore[no-untyped-def]
+    """Multipart gửi dạng chunked (không có Content-Length), như một client không khai độ dài."""
+    boundary = "cu-test-boundary"
+    head = (
+        f"--{boundary}\r\nContent-Disposition: form-data; name=\"language\"\r\n\r\nvi\r\n"
+        f"--{boundary}\r\nContent-Disposition: form-data; name=\"audio\"; filename=\"mic.webm\"\r\n"
+        "Content-Type: audio/webm\r\n\r\n"
+    ).encode()
+    body = head + audio + f"\r\n--{boundary}--\r\n".encode()
+
+    def stream():  # type: ignore[no-untyped-def]
+        for start in range(0, len(body), chunk):
+            yield body[start : start + chunk]
+
+    return stream(), {"content-type": f"multipart/form-data; boundary={boundary}"}
+
+
+def test_chunked_body_over_limit_rejected_while_receiving(make_settings: SettingsFactory, work_dir: Path) -> None:
+    decoder = FakeDecoder()
+    content, headers = _chunked_multipart(b"\x1a\x45\xdf\xa3" + b"\x00" * (MULTIPART_OVERHEAD_BYTES + 5000))
+    with _client(make_settings(max_bytes=1000), FakeLoader(), decoder) as client:
+        response = client.post("/transcribe", content=content, headers=headers)
+    assert response.status_code == 413
+    assert response.json() == {"detail": "audio_too_large"}
+    assert decoder.seen == []
+    assert leftover_files(work_dir) == []
+
+
+def test_chunked_body_within_limit_is_transcribed(make_settings: SettingsFactory) -> None:
+    content, headers = _chunked_multipart(b"\x1a\x45\xdf\xa3" + b"\x00" * 2048)
+    with _client(make_settings(), FakeLoader(), FakeDecoder()) as client:
+        response = client.post("/transcribe", content=content, headers=headers)
+    assert response.status_code == 200
+    assert response.json()["text"] == FAKE_TRANSCRIPT
+
+
 def test_audio_over_duration_limit_rejected(make_settings: SettingsFactory, work_dir: Path) -> None:
     decoder = FakeDecoder(error=AudioTooLongError())
     loader = FakeLoader()
@@ -208,6 +244,16 @@ def test_unexpected_decoder_crash_still_removes_temp_file(make_settings: Setting
         response = _post(client, {"language": "vi"})
     assert response.status_code == 500
     assert decoder.seen[0][1] is True
+    assert leftover_files(work_dir) == []
+
+
+def test_silent_recording_returns_empty_text_without_inference(make_settings: SettingsFactory, work_dir: Path) -> None:
+    loader = FakeLoader()
+    with _client(make_settings(), loader, FakeDecoder(silent=True)) as client:
+        response = _post(client, {"language": "vi"})
+    assert response.status_code == 200
+    assert response.json()["text"] == ""
+    assert loader.calls == []
     assert leftover_files(work_dir) == []
 
 

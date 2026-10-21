@@ -40,9 +40,10 @@ class FakeLoader:
 
 @dataclass
 class FakeDecoder:
-    """Trả `seconds` giây im lặng; ghi lại file tạm có tồn tại lúc giải mã hay không."""
+    """Trả `seconds` giây âm 220 Hz (như có tiếng nói), hoặc im lặng khi `silent`; ghi lại file tạm có tồn tại lúc giải mã hay không."""
 
     seconds: float = 2.0
+    silent: bool = False
     error: Exception | None = None
     seen: list[tuple[str, bool, AudioFormat]] = field(default_factory=list)
 
@@ -50,7 +51,10 @@ class FakeDecoder:
         self.seen.append((path, os.path.exists(path), audio_format))
         if self.error is not None:
             raise self.error
-        return np.zeros(int(self.seconds * SAMPLE_RATE), dtype=np.float32)
+        count = int(self.seconds * SAMPLE_RATE)
+        if self.silent:
+            return np.zeros(count, dtype=np.float32)
+        return (0.1 * np.sin(2 * np.pi * 220 * np.arange(count) / SAMPLE_RATE)).astype(np.float32)
 
 
 @pytest.fixture

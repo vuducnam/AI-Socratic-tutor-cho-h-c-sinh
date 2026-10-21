@@ -87,7 +87,8 @@ services:
     networks: [verifier]
 
   # Nhận dạng giọng nói trên GPU (quy tắc 10: giọng của con không rời PC). Mạng `stt` internal: không ra
-  # internet, chỉ app/admin/worker gọi được; HF_HUB_OFFLINE=1 nên chỉ đọc model đã có trong volume.
+  # internet, chỉ app gọi được (chỉ /api/stt của học sinh dùng); HF_HUB_OFFLINE=1 và volume model mount
+  # chỉ đọc, nên chỉ dùng model đã tải sẵn.
   # Audio chỉ nằm trên tmpfs /tmp trong lúc giải mã rồi bị xoá.
   stt-local:
     <<: *stt-image
@@ -99,6 +100,7 @@ services:
       # Mặc định cuda: mất GPU thì container dừng khi nạp model (app thấy local hỏng) thay vì lặng lẽ
       # chạy CPU chậm quá thời gian chờ. Dev không có GPU: đặt STT_DEVICE=auto hoặc cpu trong .env.
       STT_DEVICE: ${STT_DEVICE:-cuda}
+    volumes: ["stt-models:/models:ro"]
     tmpfs: ["/tmp:size=256m"]
     deploy:
       resources:
@@ -165,7 +167,7 @@ services:
     depends_on:
       migrate: { condition: service_completed_successfully }
       redis: { condition: service_healthy }
-    networks: [data, verifier, stt, admin-host]
+    networks: [data, verifier, admin-host]
 
   worker:
     <<: *app-image
@@ -180,7 +182,7 @@ services:
     depends_on:
       migrate: { condition: service_completed_successfully }
       redis: { condition: service_healthy }
-    networks: [data, verifier, stt, egress]
+    networks: [data, verifier, egress]
 
   cloudflared:
     image: cloudflare/cloudflared:2026.10.1
@@ -206,7 +208,7 @@ networks:
     internal: true
   verifier:
     internal: true
-  # app/admin/worker ↔ stt-local; không ra internet.
+  # app ↔ stt-local; không ra internet.
   stt:
     internal: true
   # Tunnel ↔ app, và ra internet cho cloudflared + LLM của app.
