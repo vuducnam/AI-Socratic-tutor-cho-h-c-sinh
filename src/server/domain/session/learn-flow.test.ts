@@ -61,13 +61,21 @@ describe('learn flow', () => {
       primary: scriptedAnthropic([PLAN, { hook: 'Ở chợ có hai bó rau.' }, PASS, { message: 'Đề hỏi gì nhỉ?', short_message: 'Đề hỏi gì nhỉ?', question_type: 'clarify', step_addressed: 's1', student_state_guess: 'progressing' }, PASS]).provider,
       fallback: null,
     });
-    const r = await learn.submitTypedProblem(w.actor, { studentId: w.studentId, sessionId: opened.sessionId, text: 'Số nào lớn hơn: 0,45 hay 0,5?' });
+    // Đề đọc bằng giọng: con sửa "không phẩy bốn lăm" thành số; chữ STT gốc giữ ở extracted_text cho bố mẹ xem.
+    const r = await learn.submitTypedProblem(w.actor, {
+      studentId: w.studentId,
+      sessionId: opened.sessionId,
+      text: 'Số nào lớn hơn: 0,45 hay 0,5?',
+      rawStt: 'số nào lớn hơn không phẩy bốn lăm hay không phẩy năm',
+    });
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.turn.before?.[0]?.kind).toBe('hook');
     expect(r.turn.message).toBe('Đề hỏi gì nhỉ?');
-    const p = await appDb().query('SELECT confirmed_text, confirmed_by_student FROM problems WHERE session_id = $1', [opened.sessionId]);
-    expect(p.rows).toEqual([{ confirmed_text: 'Số nào lớn hơn: 0,45 hay 0,5?', confirmed_by_student: true }]);
+    const p = await appDb().query('SELECT extracted_text, confirmed_text, confirmed_by_student FROM problems WHERE session_id = $1', [opened.sessionId]);
+    expect(p.rows).toEqual([
+      { extracted_text: 'số nào lớn hơn không phẩy bốn lăm hay không phẩy năm', confirmed_text: 'Số nào lớn hơn: 0,45 hay 0,5?', confirmed_by_student: true },
+    ]);
   });
 
   it('phiên bỏ dở quá 30 phút → worker đóng với end_reason timeout', async () => {

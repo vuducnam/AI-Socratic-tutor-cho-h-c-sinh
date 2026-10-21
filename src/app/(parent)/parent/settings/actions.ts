@@ -7,7 +7,8 @@ import { hitRateLimit } from '@/server/auth/rate-limit';
 import { currentAppSession, requireParentActor } from '@/server/auth/session';
 import { revokeOtherSessions } from '@/server/auth/session-store';
 import { encryptTotpSecret, verifyTotpCode } from '@/server/auth/totp';
-import { updateStudentPreferences } from '@/server/dal/parent-settings-dal';
+import { updateStudentPreferences, updateStudentVoicePrefs } from '@/server/dal/parent-settings-dal';
+import { STT_LANGUAGES } from '@/server/dal/voice-prefs-dal';
 import { changeOwnPassword, getOwnAccount, setOwnTotpSecret } from '@/server/dal/users-dal';
 import { errorMessage, noticeUrl } from '../_lib/parent-page-helpers';
 
@@ -50,6 +51,36 @@ export async function updatePreferencesAction(form: FormData) {
     error = errorMessage(err, 'Thông tin chưa hợp lệ');
   }
   back(error ? { err: error } : { ok: 'Đã lưu hồ sơ' }, studentId);
+}
+
+// Ô checkbox chỉ gửi giá trị khi được tích; không có trong form nghĩa là tắt.
+const voicePrefsForm = z.object({
+  studentId: z.uuid(),
+  ttsAutoplay: z.literal('on').optional(),
+  sttCloudFallback: z.literal('on').optional(),
+  sttLanguage: z.enum(STT_LANGUAGES, { error: 'Ngôn ngữ nói chưa hợp lệ' }),
+});
+
+export async function updateVoicePrefsAction(form: FormData) {
+  const actor = await requireParentActor();
+  const parsed = voicePrefsForm.safeParse({
+    studentId: form.get('studentId'),
+    ttsAutoplay: form.get('ttsAutoplay') ?? undefined,
+    sttCloudFallback: form.get('sttCloudFallback') ?? undefined,
+    sttLanguage: form.get('sttLanguage'),
+  });
+  if (!parsed.success) back({ err: parsed.error.issues[0]?.message ?? 'Thông tin chưa hợp lệ' });
+  const { studentId, ttsAutoplay, sttCloudFallback, sttLanguage } = parsed.data;
+  let error: string | null = null;
+  try {
+    await updateStudentVoicePrefs(actor, {
+      studentId,
+      prefs: { ttsAutoplay: ttsAutoplay === 'on', sttCloudFallback: sttCloudFallback === 'on', sttLanguage },
+    });
+  } catch (err) {
+    error = errorMessage(err, 'Thông tin chưa hợp lệ');
+  }
+  back(error ? { err: error } : { ok: 'Đã lưu cài đặt giọng nói' }, studentId);
 }
 
 // Phiên bị chiếm không được dùng form này để dò mật khẩu hiện tại.

@@ -92,3 +92,93 @@ input, select, textarea { font: inherit; padding: 0.45rem 0.6rem; border-radius:
 .button-link.danger, button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
 .stack-form label { display: flex; flex-direction: column; gap: 0.25rem; }
 .stack-form label.checkbox { flex-direction: row; align-items: center; gap: 0.5rem; }
+
+/* ── Học sinh /learn: nói với Mít (micro là cách nhập chính), chọn ngôn ngữ, nút nghe ──
+   Dùng token --l-* của .learn-shell (learn.css); selector `.learn-shell .x` để thắng `.learn-shell button`. */
+.composer-row-voice { display: flex; align-items: center; gap: var(--l-s2, 0.75rem); }
+.composer-row-voice input,
+.composer-row-voice textarea { flex: 1; min-width: 0; font-size: 1rem; }
+
+.learn-shell .mic-button {
+  position: relative;
+  flex: none;
+  width: 76px;
+  height: 76px;
+  min-height: 76px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  /* Vòng sáng theo mức âm lượng: --level (0..1) do JS ghi lên form, không render lại React. */
+  box-shadow: 0 0 0 calc(var(--level, 0) * 14px) oklch(52% 0.12 250 / 0.25);
+}
+.learn-shell .mic-button svg { width: 32px; height: 32px; }
+.learn-shell .mic-button.is-recording {
+  background: var(--danger);
+  border-color: var(--danger);
+  box-shadow: 0 0 0 calc(var(--level, 0) * 14px) oklch(55% 0.16 30 / 0.3);
+}
+.learn-shell .mic-button.is-recording::after {
+  content: '';
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 3px solid var(--danger);
+  pointer-events: none;
+  animation: mic-pulse 1.6s ease-out infinite;
+}
+.learn-shell .mic-button[aria-busy='true'] { opacity: 0.75; }
+@keyframes mic-pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(1.25); opacity: 0; }
+}
+
+.voice-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--l-s2, 0.75rem); }
+.lang-toggle { display: inline-flex; border: 2px solid var(--l-accent, var(--accent)); border-radius: 999px; overflow: hidden; }
+.learn-shell .lang-toggle button {
+  min-height: 44px;
+  padding: 0 var(--l-s3, 1rem);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--l-accent, var(--accent));
+  font-size: 0.9rem;
+}
+.learn-shell .lang-toggle button[aria-pressed='true'] { background: var(--l-accent, var(--accent)); color: var(--l-accent-ink, #fff); }
+/* Nhóm có overflow: hidden nên viền focus vẽ vào trong nút để không bị cắt. */
+.learn-shell .lang-toggle button:focus-visible { outline-offset: -5px; }
+.voice-status { flex: 1; min-width: 12rem; margin: 0; color: var(--l-muted, var(--muted)); font-size: 0.95rem; }
+.voice-status.is-error { color: var(--danger); }
+.voice-meter { display: inline-flex; align-items: center; gap: var(--l-s1, 0.5rem); }
+.voice-level { width: 80px; height: 8px; border-radius: 999px; background: var(--l-line, var(--border)); overflow: hidden; }
+.voice-level span { display: block; height: 100%; background: var(--danger); transform-origin: left center; transform: scaleX(var(--level, 0)); }
+.voice-timer { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--danger); }
+
+.learn-shell .listen-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 44px;
+  margin-top: var(--l-s1, 0.5rem);
+  padding: 0 var(--l-s2, 0.75rem);
+  border: 1px solid var(--l-line, var(--border));
+  background: var(--l-card, var(--card));
+  color: var(--l-accent, var(--accent));
+  font-size: 0.85rem;
+}
+.learn-shell .listen-button svg { width: 18px; height: 18px; }
+.learn-shell .listen-button.is-active { background: var(--l-accent, var(--accent)); border-color: var(--l-accent, var(--accent)); color: var(--l-accent-ink, #fff); }
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-shell .mic-button.is-recording::after { animation: none; transform: none; opacity: 0.6; }
+}
+@media (max-width: 480px) {
+  .learn-shell .mic-button { width: 64px; height: 64px; min-height: 64px; }
+  .learn-shell .mic-button svg { width: 28px; height: 28px; }
+  .voice-status { min-width: 0; flex-basis: 100%; }
+}

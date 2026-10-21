@@ -39,7 +39,7 @@ Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là
 | DB | **PostgreSQL 16 + Prisma** (migration có SQL thuần cho trigger append-only và `purge_student()`) |
 | Job nền | BullMQ + Redis, chạy trong **process `worker` riêng** cùng codebase (không chạy job trong route handler) |
 | Math verifier | Python FastAPI sidecar + sympy (`services/math-verifier`) |
-| STT | **Local**: PhoWhisper-large trên GPU (`services/stt-local`) — giọng con không rời PC. Dự phòng/A-B: OpenRouter `/audio/transcriptions` |
+| STT | **Local**: PhoWhisper-large (tiếng Việt) + Whisper large-v3-turbo (tiếng Anh) trên GPU (`services/stt-local`) — giọng con không rời PC. Dự phòng/A-B: OpenRouter `/audio/transcriptions` |
 | LLM chính | Claude API trực tiếp (`@anthropic-ai/sdk`) — dùng credit Max 20x |
 | LLM dự phòng | Claude qua OpenRouter khi Claude API trả lỗi hết credit / 5xx |
 | TTS, sinh ảnh | OpenRouter (`/audio/speech`, `/images`) — đầu vào là lời của Cú, không phải dữ liệu của con |
@@ -58,7 +58,7 @@ Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là
 | Đọc ảnh đề (vision) | `claude-sonnet-5-5` |
 | Việc offline không tương tác (nháp misconception, báo cáo tuần) | Message Batches API |
 | Eval hội thoại nhiều lượt | API đồng bộ, API key và trần chi phí riêng, không fallback OpenRouter |
-| STT | Chính: `vinai/PhoWhisper-large` local (GPU). A/B và dự phòng: OpenRouter `openai/gpt-transcribe`, `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
+| STT | Chính (local, GPU, theo ngôn ngữ con chọn): tiếng Việt `vinai/PhoWhisper-large`, tiếng Anh `openai/whisper-large-v3-turbo`. A/B và dự phòng: OpenRouter `openai/gpt-transcribe`, `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
 | TTS | `google/gemini-3.8-flash-tts` qua OpenRouter, `response_format: mp3` |
 | Sinh ảnh | `openai/gpt-image-2` qua OpenRouter — chỉ cho avatar và minh hoạ ngữ cảnh. **Hình toán học vẽ bằng SVG từ code**, không dùng image gen |
 

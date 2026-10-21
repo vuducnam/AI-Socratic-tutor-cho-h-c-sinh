@@ -37,11 +37,30 @@ const configSchema = z.object({
       max_tokens: z.number().int().positive(),
     }),
   ),
+  // STT: local trên PC là chính; cloud chỉ là dự phòng khi phụ huynh bật (quy tắc cứng 10).
+  stt: z.object({
+    local_url_env: z.string().min(1),
+    local_models: z.object({ vi: z.string().min(1), en: z.string().min(1) }),
+    cloud_fallback: z.string().min(1),
+    cloud_candidates: z.array(z.string().min(1)).min(1),
+    cloud_pricing_usd_per_second: z.record(z.string(), z.number().nonnegative()),
+    max_seconds: z.number().int().positive(),
+    max_bytes: z.number().int().positive(),
+  }),
+  tts: z.object({
+    model: z.string().min(1),
+    // Gemini TTS qua OpenRouter chỉ trả PCM; server bọc thành WAV (src/server/voice/pcm-to-wav.ts).
+    response_format: z.literal('pcm'),
+    default_voice: z.string().min(1),
+    pricing: z.object({ input_per_token: z.number().nonnegative(), output_per_token: z.number().nonnegative() }),
+  }),
 });
 
 export type ModelsConfig = z.infer<typeof configSchema>;
 export type RoleConfig = ModelsConfig['roles'][string];
 export type ModelSpec = ModelsConfig['models'][string];
+export type SttConfig = ModelsConfig['stt'];
+export type TtsConfig = ModelsConfig['tts'];
 
 let cached: ModelsConfig | undefined;
 
@@ -50,6 +69,9 @@ export function loadModelsConfig(path = resolve(/*turbopackIgnore: true*/ proces
   const config = configSchema.parse(parse(readFileSync(path, 'utf8')));
   for (const [role, r] of Object.entries(config.roles)) {
     if (!config.models[r.model]) throw new Error(`config/models.yaml: vai trò ${role} dùng model chưa khai báo ${r.model}`);
+  }
+  if (!config.stt.cloud_candidates.includes(config.stt.cloud_fallback)) {
+    throw new Error(`config/models.yaml: stt.cloud_fallback ${config.stt.cloud_fallback} không nằm trong stt.cloud_candidates`);
   }
   cached = config;
   return config;
@@ -66,4 +88,16 @@ export function modelSpec(model: string): ModelSpec {
   const spec = loadModelsConfig().models[model];
   if (!spec) throw new Error(`config/models.yaml: thiếu model ${model}`);
   return spec;
+}
+
+export function sttConfig(): SttConfig {
+  return loadModelsConfig().stt;
+}
+
+export function ttsConfig(): TtsConfig {
+  return loadModelsConfig().tts;
+}
+
+export function openRouterConfig(): ModelsConfig['providers']['openrouter'] {
+  return loadModelsConfig().providers.openrouter;
 }

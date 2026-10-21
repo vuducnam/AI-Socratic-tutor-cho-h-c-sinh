@@ -46,12 +46,24 @@ roles:
   judge:            { model: claude-sonnet-5-5, effort: medium, thinking: adaptive, max_tokens: 4000 }
   smoke:            { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 64 }
 
-# STT (Giai đoạn 1): giữ A/B qua cấu hình; model thắng do WER đo trên giọng thật.
+# STT: giữ A/B qua cấu hình; model thắng do WER đo trên giọng thật (eval/stt-bench). Giọng con chỉ xử lý ở PC
+# (services/stt-local); cloud chỉ dùng khi local lỗi VÀ phụ huynh bật stt_cloud_fallback (quy tắc cứng 10).
 stt:
-  primary: local:vinai/PhoWhisper-large
-  cloud_candidates: [openai/gpt-transcribe, mistralai/voxtral-mini-transcribe]   # slug đã kiểm trên OpenRouter 2026-10-21
+  local_url_env: STT_LOCAL_URL                # http://stt-local:8000 trong mạng Docker
+  local_models:                               # theo ngôn ngữ con chọn trên màn hình chat
+    vi: vinai/PhoWhisper-large                # chỉ tiếng Việt
+    en: openai/whisper-large-v3-turbo         # đa ngôn ngữ, dùng cho tiếng Anh
+  cloud_fallback: openai/gpt-transcribe       # slug đã kiểm trên OpenRouter 2026-10-21
+  cloud_candidates: [openai/gpt-transcribe, mistralai/voxtral-mini-transcribe]
+  # Giá OpenRouter (pricing.prompt, USD / giây audio — đơn vị kiểm lại trên hoá đơn đầu tiên), 2026-10-21.
+  cloud_pricing_usd_per_second: { openai/gpt-transcribe: 0.000075, mistralai/voxtral-mini-transcribe: 0.00005 }
+  max_seconds: 60
+  max_bytes: 10485760
 tts:
   model: google/gemini-3.8-flash-tts
-  response_format: mp3
+  response_format: pcm                        # Gemini TTS trên OpenRouter chỉ trả PCM 24 kHz; server bọc thành WAV
+  default_voice: Kore                         # đổi theo students.companion.tts_voice nếu có; nghe thử tiếng Việt trước khi chốt
+  # Giá OpenRouter USD / token (prompt = chữ vào, completion = audio ra), 2026-10-21.
+  pricing: { input_per_token: 0.0000005, output_per_token: 0.000009 }
 image:
   model: openai/gpt-image-2

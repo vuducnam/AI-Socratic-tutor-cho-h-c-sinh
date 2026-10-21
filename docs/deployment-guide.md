@@ -44,6 +44,20 @@ docker compose -f docker-compose.yml --profile prod run --rm admin node_modules/
   `app`, `admin`, `worker` (kết nối bằng `cu_app`) → `cloudflared` khi `app` healthy.
 - Sau seed, kiểm mỗi skill số thập phân có ≥ 1 misconception và ≥ 1 tình huống đã duyệt (trang `/parent` › Duyệt).
 
+### Giọng nói (stt-local, GPU)
+
+Cần Docker Desktop + WSL2 có GPU NVIDIA (`docker run --rm --gpus all nvidia/cuda:12.6.0-base-ubuntu24.04 nvidia-smi` chạy được).
+
+```powershell
+docker compose -f docker-compose.yml build stt-local
+docker compose -f docker-compose.yml --profile setup run --rm stt-models-download   # tải model một lần vào volume stt-models (cần internet)
+docker compose -f docker-compose.yml up -d stt-local
+```
+
+- `stt-local` nằm trong mạng internal `stt` (không ra internet, `HF_HUB_OFFLINE=1`); chỉ `app`, `admin`, `worker` gọi được qua `http://stt-local:8000`. Dev: publish `127.0.0.1:8002`, đặt `STT_LOCAL_URL=http://localhost:8002` trong `.env`.
+- Model theo ngôn ngữ trong `config/models.yaml` (`stt.local_models`); đổi model thắng sau khi chạy `eval/stt-bench` trên giọng thật.
+- Dự phòng cloud (`openai/gpt-transcribe`) chỉ chạy khi phụ huynh bật ở `/parent/settings` và cần `OPENROUTER_API_KEY`. TTS cũng dùng `OPENROUTER_API_KEY`.
+
 ## 3. Cloudflare (gói Free, làm tay trên dashboard)
 
 1. **Tunnel**: Zero Trust › Networks › Tunnels › Create (Cloudflared). Public hostname `cu.<tên-miền>` →

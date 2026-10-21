@@ -138,7 +138,8 @@ function ProblemsSection({ problems }: { problems: SessionTranscript['problems']
           <dl className="kv">
             <dt>Ảnh đề (lưu trữ)</dt>
             <dd>{p.image_uri ? <code>{p.image_uri}</code> : '—'}</dd>
-            <dt>Chữ đọc từ ảnh</dt>
+            {/* extracted_text: đề chụp ảnh → chữ đọc từ ảnh; đề nói bằng giọng → chữ STT nguyên bản. */}
+            <dt>{p.image_uri ? 'Chữ đọc từ ảnh' : 'Chữ STT gốc (con đọc đề)'}</dt>
             <dd>{p.extracted_text ?? '—'}</dd>
             <dt>Skill</dt>
             <dd>{p.skill_ids.length ? p.skill_ids.join(', ') : '—'}</dd>

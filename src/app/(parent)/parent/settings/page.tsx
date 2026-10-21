@@ -3,9 +3,10 @@ import { requireParentActor } from '@/server/auth/session';
 import { MIN_PASSWORD_LENGTH } from '@/server/auth/password';
 import { getStudentProfile } from '@/server/dal/students-dal';
 import { getOwnAccount } from '@/server/dal/users-dal';
+import { readVoicePrefs } from '@/server/dal/voice-prefs-dal';
 import { ChildTabs, Notices } from '../_components/child-tabs';
 import { loadSelectedChild } from '../_lib/parent-page-helpers';
-import { changePasswordAction, disableTotpAction, enableTotpAction, updatePreferencesAction } from './actions';
+import { changePasswordAction, disableTotpAction, enableTotpAction, updatePreferencesAction, updateVoicePrefsAction } from './actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,8 +15,8 @@ function numberPref(prefs: unknown, key: string, fallback: number): number {
   return typeof value === 'number' ? value : fallback;
 }
 
-// Cấu hình (SPEC §11.1): hồ sơ của con (sở thích đã khai, thời lượng) và tài khoản của phụ huynh
-// (đổi mật khẩu, bật/tắt TOTP).
+// Cấu hình (SPEC §11.1): hồ sơ của con (sở thích đã khai, thời lượng), giọng nói (tự đọc, ngôn ngữ nói,
+// STT dự phòng qua dịch vụ ngoài) và tài khoản của phụ huynh (đổi mật khẩu, bật/tắt TOTP).
 export default async function ParentSettingsPage({
   searchParams,
 }: {
@@ -25,6 +26,7 @@ export default async function ParentSettingsPage({
   const query = await searchParams;
   const [{ children, selected }, account] = await Promise.all([loadSelectedChild(actor, query.studentId), getOwnAccount(actor)]);
   const profile = selected ? await getStudentProfile(actor, { studentId: selected.id }) : null;
+  const voice = profile ? readVoicePrefs(profile.learning_prefs) : null;
   // Secret mới chỉ sinh khi phụ huynh bấm bật; được xác nhận bằng mã 6 số trước khi lưu.
   const setupSecret = query.totpSetup === '1' && !account.totp_secret_enc ? newTotpSecret() : null;
 
@@ -62,6 +64,34 @@ export default async function ParentSettingsPage({
               />
             </label>
             <button type="submit">Lưu hồ sơ</button>
+          </form>
+        </section>
+      )}
+
+      {selected && profile && voice && (
+        <section className="card">
+          <h2>Giọng nói của {profile.display_name}</h2>
+          <form action={updateVoicePrefsAction} className="stack-form">
+            <input type="hidden" name="studentId" value={profile.id} />
+            <label className="checkbox">
+              <input type="checkbox" name="ttsAutoplay" defaultChecked={voice.ttsAutoplay} /> Mít tự đọc câu trả lời
+            </label>
+            <label>
+              Ngôn ngữ nói mặc định
+              <select name="sttLanguage" defaultValue={voice.sttLanguage}>
+                <option value="vi">Tiếng Việt</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+            <label className="checkbox">
+              <input type="checkbox" name="sttCloudFallback" defaultChecked={voice.sttCloudFallback} /> Cho phép gửi giọng nói lên dịch
+              vụ ngoài khi máy ở nhà lỗi (mặc định tắt)
+            </label>
+            <p className="muted small">
+              Bình thường giọng của con chỉ được chuyển thành chữ trên máy ở nhà và xoá ngay sau đó. Khi bật, nếu máy ở nhà lỗi, đoạn
+              ghi âm được gửi tới OpenRouter để chuyển thành chữ; mỗi lần gửi đều có trong lịch sử gọi model của phiên.
+            </p>
+            <button type="submit">Lưu cài đặt giọng nói</button>
           </form>
         </section>
       )}

@@ -14,6 +14,12 @@ services:
     ports:
       - "127.0.0.1:8001:8001"
     networks: [verifier, dev-host]
+  # Cổng 8001 đã dành cho math-verifier nên stt-local dùng 8002 (STT_LOCAL_URL trong .env).
+  # HF_HUB_OFFLINE=1 vẫn giữ: dù dev-host có internet, stt-local không gọi ra ngoài.
+  stt-local:
+    ports:
+      - "127.0.0.1:8002:8000"
+    networks: [stt, dev-host]
 
 networks:
   dev-host: {}

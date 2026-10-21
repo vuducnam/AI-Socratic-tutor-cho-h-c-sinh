@@ -3,6 +3,7 @@ import type { Actor } from './actor';
 import { AuthorizationError, assertStudentAccess } from './actor-authorization';
 import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
+import { ttsCacheUriFor } from '@/server/voice/tts-cache';
 
 // Trang Dữ liệu của phụ huynh: xem access_log và xoá toàn bộ dữ liệu của con (SPEC §11.1, quy tắc cứng 2, 3, 14).
 
@@ -49,6 +50,8 @@ export async function purgeStudentData(
       select: { id: true },
     });
     await tx.$executeRaw`SELECT purge_student(${request.id}::uuid)`;
+    // Cache giọng đọc lời Mít (có thể gọi tên con) nằm trên đĩa: xoá sau commit, cùng hàng chờ với ảnh đề.
+    await tx.pendingFileDeletion.create({ data: { uri: ttsCacheUriFor(input.studentId) } });
   });
 }
 

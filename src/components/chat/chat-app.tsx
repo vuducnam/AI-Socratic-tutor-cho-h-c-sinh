@@ -2,14 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FriendlyError, OfflineError, postJson, postSse } from '@/lib/sse-client';
-import { linesFromTurn, type ChatLine, type ProblemResultDto, type StartDto, type TurnResultDto } from './chat-types';
+import { linesFromTurn, type ChatLine, type ClientVoicePrefs, type ProblemResultDto, type StartDto, type TurnResultDto } from './chat-types';
 import { Composer } from './composer';
 import { MessageList } from './message-list';
-import { PhotoProblem } from './photo-problem';
+import { OcrConfirmPanel, ProblemEntryPanel } from './problem-entry-panels';
 import { BlockedScreen, EndOfProblem, IntroScreen, RestingScreen } from './simple-screens';
+import { speakableTurnIds } from './tts-playback-logic';
+import { useTtsPlayer } from './use-tts-player';
+import type { SubmitMeta } from './voice-input-logic';
 
 // Luồng chat của con (SPEC §15.12): mở phiên → nộp đề (gõ / chụp + khoanh vùng + xác nhận) → Cú mở bài →
 // hỏi đáp (SSE) → chuyển giao → chấm vui/chán. Lỗi mạng → "Cú đang nghỉ"; không bao giờ hiện lỗi kỹ thuật.
+// Trả lời bằng giọng là cách chính (micro trong Composer); Mít đọc to tin của mình (nút "nghe", tự đọc nếu bố mẹ bật).
 
 type Phase = 'loading' | 'intro' | 'blocked' | 'offline' | 'problem' | 'confirm' | 'chat' | 'done';
 const INTRO_KEY = 'cu_intro_seen_v1';
@@ -22,7 +26,7 @@ function readIntroSeen(): boolean {
   }
 }
 
-export function ChatApp({ studentName }: { studentName: string }) {
+export function ChatApp({ studentName, voicePrefs }: { studentName: string; voicePrefs: ClientVoicePrefs }) {
   const [phase, setPhase] = useState<Phase>('loading');
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [lines, setLines] = useState<ChatLine[]>([]);
@@ -33,6 +37,7 @@ export function ChatApp({ studentName }: { studentName: string }) {
   const [rated, setRated] = useState(false);
   // Mốc lúc Cú vừa nói (đo thời gian con trả lời cho tín hiệu đoán bừa); 0 = chưa có.
   const lastCuAt = useRef(0);
+  const tts = useTtsPlayer();
 
   const handleError = useCallback((err: unknown) => {
     if (err instanceof OfflineError) setPhase('offline');
@@ -66,19 +71,22 @@ export function ChatApp({ studentName }: { studentName: string }) {
   };
 
   const showTurn = (turn: TurnResultDto) => {
-    setLines((prev) => [...prev, ...linesFromTurn(turn)]);
+    const added = linesFromTurn(turn);
+    setLines((prev) => [...prev, ...added]);
+    if (voicePrefs.ttsAutoplay) tts.autoplay(speakableTurnIds(added));
     lastCuAt.current = Date.now();
     setPhase(turn.done || turn.paused ? 'done' : 'chat');
   };
 
-  async function sendProblem(text: string, problemId?: string) {
+  async function sendProblem(text: string, problemId?: string, meta?: SubmitMeta) {
     if (!sessionId) return;
     setNotice(null);
     setLines((prev) => [...prev, { turnId: `p-${Date.now()}`, from: 'student', text, kind: 'problem' }]);
     setPhase('chat');
     setBusy('Mít đang đọc kỹ đề bài');
     try {
-      const r = await postSse<ProblemResultDto>('/api/learn/problem', { sessionId, text, problemId }, setBusy);
+      const voiceMeta = meta?.inputModality === 'voice' ? { inputModality: 'voice', ...(meta.rawStt ? { rawStt: meta.rawStt } : {}) } : {};
+      const r = await postSse<ProblemResultDto>('/api/learn/problem', { sessionId, text, problemId, ...voiceMeta }, setBusy);
       if (r.ok) showTurn(r.turn);
       else {
         setLines((prev) => [...prev, { turnId: `r-${Date.now()}`, from: 'cu', text: r.message, kind: 'notice' }]);
@@ -117,7 +125,7 @@ export function ChatApp({ studentName }: { studentName: string }) {
     }
   }
 
-  async function sendMessage(text: string, hint = false) {
+  async function sendMessage(text: string, meta: SubmitMeta, hint = false) {
     if (!sessionId || busy) return;
     const key = crypto.randomUUID();
     const responseTimeMs = lastCuAt.current ? Date.now() - lastCuAt.current : 0;
@@ -125,7 +133,8 @@ export function ChatApp({ studentName }: { studentName: string }) {
     setLines((prev) => [...prev, { turnId: `s-${key}`, from: 'student', text, kind: 'normal' }]);
     setBusy('Mít đang nghĩ');
     try {
-      const r = await postSse<TurnResultDto & { timeUp?: boolean }>('/api/chat', { sessionId, text, idempotencyKey: key, hint, responseTimeMs });
+      const body = { sessionId, text, idempotencyKey: key, hint, responseTimeMs, inputModality: meta.inputModality, ...(meta.rawStt ? { rawStt: meta.rawStt } : {}) };
+      const r = await postSse<TurnResultDto & { timeUp?: boolean }>('/api/chat', body);
       if (r.timeUp) {
         setBlocked(r.message);
         setPhase('blocked');
@@ -166,34 +175,27 @@ export function ChatApp({ studentName }: { studentName: string }) {
 
   return (
     <div className="chat">
-      <MessageList lines={lines} busyText={busy} />
+      <MessageList lines={lines} busyText={busy} speech={tts} />
       {notice && (
         <p className="notice err" role="alert">
           {notice}
         </p>
       )}
-      {phase === 'problem' && !busy && (
-        <section className="problem-entry">
-          <h2>Bạn gửi đề bài cho Mít nhé</h2>
-          <Composer disabled={!!busy} multiline placeholder="Gõ đề bài ở đây" submitLabel="Gửi đề" onSubmit={(t) => void sendProblem(t)} />
-          <p className="or">hoặc</p>
-          <PhotoProblem disabled={!!busy} onSend={(f, c) => void sendPhoto(f, c)} />
-        </section>
-      )}
+      {phase === 'problem' && !busy && <ProblemEntryPanel
+          voice={sessionId ? { sessionId, defaultLanguage: voicePrefs.sttLanguage, onRecordingStart: tts.stop } : undefined}
+          onText={(t, meta) => void sendProblem(t, undefined, meta)}
+          onPhoto={(f, c) => void sendPhoto(f, c)}
+        />}
       {phase === 'confirm' && ocr && (
-        <section className="problem-entry">
-          <h2>Mít đọc được đề thế này. Bạn xem đúng chưa?</h2>
-          <p className="muted">Chỗ nào sai hoặc có dấu [?], bạn sửa lại cho đúng với đề nhé.</p>
-          <textarea className="ocr-text" value={ocr.text} rows={4} onChange={(e) => setOcr({ ...ocr, text: e.target.value })} aria-label="Đề bài Mít đọc được" />
-          <div className="composer-actions">
-            <button type="button" className="ghost" onClick={() => { setOcr(null); setPhase('problem'); }}>
-              Chụp lại
-            </button>
-            <button type="button" disabled={ocr.text.trim().length < 3} onClick={() => void sendProblem(ocr.text.trim(), ocr.problemId)}>
-              Đúng rồi, bắt đầu
-            </button>
-          </div>
-        </section>
+        <OcrConfirmPanel
+          text={ocr.text}
+          onChange={(text) => setOcr({ ...ocr, text })}
+          onRetake={() => {
+            setOcr(null);
+            setPhase('problem');
+          }}
+          onConfirm={(text) => void sendProblem(text, ocr.problemId)}
+        />
       )}
       {phase === 'chat' && (
         <Composer
@@ -201,8 +203,9 @@ export function ChatApp({ studentName }: { studentName: string }) {
           placeholder="Bạn trả lời Mít ở đây"
           submitLabel="Gửi"
           showHint
-          onSubmit={(t) => void sendMessage(t)}
-          onHint={() => void sendMessage('Mình cần gợi ý', true)}
+          voice={sessionId ? { sessionId, defaultLanguage: voicePrefs.sttLanguage, onRecordingStart: tts.stop } : undefined}
+          onSubmit={(t, meta) => void sendMessage(t, meta)}
+          onHint={() => void sendMessage('Mình cần gợi ý', { inputModality: 'text' }, true)}
         />
       )}
       {phase === 'done' && (

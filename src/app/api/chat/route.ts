@@ -7,12 +7,17 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // Một lượt chat (SPEC §6): xác thực → zod → domain; stream SSE. idempotencyKey do client sinh.
+// Tin nói (SPEC §10): `text` là chữ con đã xem/sửa sau STT, `rawStt` là chữ STT nguyên bản — chỉ lưu
+// khi inputModality = voice (tin gõ thì bỏ qua rawStt).
 const bodySchema = z.object({
   sessionId: z.uuid(),
   text: z.string().trim().min(1).max(1000),
   idempotencyKey: z.string().min(8).max(100),
   hint: z.boolean().optional(),
   responseTimeMs: z.number().int().min(0).max(3_600_000).optional(),
+  inputModality: z.enum(['text', 'voice']).optional(),
+  // Cắt khoảng trắng; chuỗi rỗng coi như không có bản STT.
+  rawStt: z.string().trim().max(2000).nullish().transform((v) => v || null),
 });
 
 export async function POST(request: Request) {
@@ -36,6 +41,8 @@ export async function POST(request: Request) {
       idempotencyKey: input.idempotencyKey,
       hintRequested: input.hint,
       responseTimeMs: input.responseTimeMs,
+      inputModality: input.inputModality ?? 'text',
+      rawStt: input.inputModality === 'voice' ? input.rawStt : null,
     });
     send('result', turn);
   });

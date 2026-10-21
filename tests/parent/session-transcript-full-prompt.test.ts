@@ -95,5 +95,8 @@ describe('purge từ phía phụ huynh', () => {
     expect((await appDb().query('SELECT 1 FROM parent_student WHERE student_id = $1', [victim.studentId])).rowCount).toBe(0);
     const log = await appDb().query<{ action: string }>('SELECT action FROM access_log WHERE student_id = $1', [victim.studentId]);
     expect(log.rows.map((r) => r.action)).toEqual(['purge_student']);
+    // Cache giọng đọc lời Mít của con vào hàng chờ xoá file.
+    const queued = await appDb().query('SELECT 1 FROM pending_file_deletions WHERE uri = $1', [`tts-cache:${victim.studentId.toLowerCase()}`]);
+    expect(queued.rowCount).toBe(1);
   });
 });

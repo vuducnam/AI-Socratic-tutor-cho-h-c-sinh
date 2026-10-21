@@ -6,6 +6,9 @@ import { NumberLine } from '@/components/math-visuals/number-line';
 import { SegmentBar } from '@/components/math-visuals/segment-bar';
 import type { ChatLine, Visual } from './chat-types';
 import { OwlAvatar } from './owl-avatar';
+import { isSpeakableLine } from './tts-playback-logic';
+import type { TtsPlayer } from './use-tts-player';
+import { SpeakerIcon } from './voice-controls';
 
 function VisualFor({ visual }: { visual: Visual }) {
   if (visual.kind === 'segment_bar' || visual.kind === 'box') {
@@ -21,7 +24,28 @@ function VisualFor({ visual }: { visual: Visual }) {
   return <FractionGrid parts={100} filled={Math.round(first * 100) % 101} />;
 }
 
-export function MessageList({ lines, busyText }: { lines: ChatLine[]; busyText: string | null }) {
+type Speech = Pick<TtsPlayer, 'activeId' | 'loading' | 'unavailable' | 'toggle'>;
+
+// Nút "nghe" nhỏ dưới mỗi tin của Mít; server không có tiếng cho lượt đó → không hiện nút.
+function ListenButton({ turnId, speech }: { turnId: string; speech: Speech }) {
+  if (speech.unavailable.has(turnId)) return null;
+  const active = speech.activeId === turnId;
+  const loading = active && speech.loading;
+  return (
+    <button
+      type="button"
+      className={`listen-button${active ? ' is-active' : ''}`}
+      aria-label={active ? 'Dừng đọc' : 'Nghe Mít đọc tin này'}
+      aria-busy={loading}
+      onClick={() => speech.toggle(turnId)}
+    >
+      <SpeakerIcon />
+      <span aria-hidden="true">{loading ? 'đang tải' : active ? 'dừng' : 'nghe'}</span>
+    </button>
+  );
+}
+
+export function MessageList({ lines, busyText, speech }: { lines: ChatLine[]; busyText: string | null; speech?: Speech }) {
   const endRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
@@ -35,6 +59,7 @@ export function MessageList({ lines, busyText }: { lines: ChatLine[]; busyText: 
           <div className="bubble">
             <p>{line.text}</p>
             {line.visual && <VisualFor visual={line.visual} />}
+            {speech && isSpeakableLine(line) && <ListenButton turnId={line.turnId} speech={speech} />}
           </div>
         </li>
       ))}

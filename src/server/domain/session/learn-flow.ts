@@ -92,18 +92,25 @@ async function assertTimeLeft(actor: Actor, studentId: string, sessionId: string
   return null;
 }
 
-/** Con gõ đề bài về nhà: đề con gõ chính là confirmed_text (giữ nguyên, SPEC §5b.2). */
-export async function submitTypedProblem(actor: Actor, input: { studentId: string; sessionId: string; text: string }): Promise<ProblemStartResult> {
+/**
+ * Con gõ hoặc đọc đề bài về nhà: đề con gửi chính là confirmed_text (giữ nguyên, SPEC §5b.2). Đọc bằng giọng thì
+ * chữ STT gốc (trước khi con sửa) lưu ở extracted_text, giống chữ đọc từ ảnh.
+ */
+export async function submitTypedProblem(
+  actor: Actor,
+  input: { studentId: string; sessionId: string; text: string; rawStt?: string | null },
+): Promise<ProblemStartResult> {
   const limit = await assertTimeLeft(actor, input.studentId, input.sessionId);
   if (limit) return { ok: false, message: limit, reason: 'time_limit' };
   const problemId = await createProblem(actor, {
     studentId: input.studentId,
     sessionId: input.sessionId,
     origin: 'homework',
+    extractedText: input.rawStt ?? null,
     confirmedText: input.text,
     confirmedByStudent: true,
   });
-  return presolveAndOpen(actor, { ...input, problemId });
+  return presolveAndOpen(actor, { studentId: input.studentId, sessionId: input.sessionId, text: input.text, problemId });
 }
 
 /** Ảnh đề: làm sạch + cắt vùng → OCR → trả đề để con xác nhận (chưa giải). */

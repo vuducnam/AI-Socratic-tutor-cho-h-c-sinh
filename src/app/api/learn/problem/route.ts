@@ -10,6 +10,10 @@ const bodySchema = z.object({
   sessionId: z.uuid(),
   text: z.string().trim().min(3).max(2000),
   problemId: z.uuid().optional(),
+  // Đề đọc bằng giọng: rawStt là chữ STT gốc (lưu vào problems.extracted_text để bố mẹ xem được).
+  inputModality: z.enum(['text', 'voice']).optional(),
+  // Cắt khoảng trắng; chuỗi rỗng coi như không có bản STT.
+  rawStt: z.string().trim().max(2000).nullish().transform((v) => v || null),
 });
 
 export async function POST(request: Request) {
@@ -17,12 +21,12 @@ export async function POST(request: Request) {
   if (actor instanceof Response) return actor;
   const parsed = bodySchema.safeParse(await request.json().catch(() => null));
   if (!parsed.success) return Response.json({ error: 'invalid', message: 'Đề bài chưa hợp lệ.' }, { status: 400 });
-  const { sessionId, text, problemId } = parsed.data;
+  const { sessionId, text, problemId, inputModality, rawStt } = parsed.data;
   return sseResponse(async (send) => {
     send('status', { message: 'Mít đang đọc kỹ đề bài…' });
     const result = problemId
       ? await confirmImageProblem(actor, { studentId: actor.id, sessionId, problemId, text })
-      : await submitTypedProblem(actor, { studentId: actor.id, sessionId, text });
+      : await submitTypedProblem(actor, { studentId: actor.id, sessionId, text, rawStt: inputModality === 'voice' ? rawStt : null });
     send('result', result);
   });
 }

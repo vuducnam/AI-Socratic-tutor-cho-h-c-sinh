@@ -38,3 +38,9 @@ export function linesFromTurn(turn: TurnResultDto): ChatLine[] {
     { turnId: turn.tutorTurnId, from: 'cu', text: turn.message, kind: 'normal', visual: turn.visual ?? null },
   ];
 }
+
+/** Cài đặt giọng nói của con do phụ huynh đặt (trang server truyền xuống; client không import src/server). */
+export interface ClientVoicePrefs {
+  ttsAutoplay: boolean;
+  sttLanguage: 'vi' | 'en';
+}

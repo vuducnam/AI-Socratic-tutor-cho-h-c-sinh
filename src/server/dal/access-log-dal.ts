@@ -2,6 +2,7 @@ import 'server-only';
 import type { Actor } from './actor';
 import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
+import type { Prisma } from './generated/client';
 
 // access_log [AO]: chỉ có hàm append, không có update/delete (SPEC §3.3).
 
@@ -27,8 +28,11 @@ function safeIp(ip: string | null | undefined): string | null {
   return /^[0-9a-fA-F:.]{2,45}$/.test(v) ? v : null;
 }
 
-export async function appendAccessLog(input: AccessLogInput): Promise<void> {
-  await prisma.accessLog.create({
+/** Nơi ghi log: client chung, hoặc transaction để dòng log commit cùng (hoặc rollback cùng) thay đổi nó ghi lại. */
+export type AccessLogWriter = Pick<Prisma.TransactionClient, 'accessLog'>;
+
+export async function appendAccessLog(input: AccessLogInput, db: AccessLogWriter = prisma): Promise<void> {
+  await db.accessLog.create({
     data: {
       actor_type: input.actorType,
       actor_id: input.actorId ?? null,
@@ -46,13 +50,17 @@ export async function appendAccessLog(input: AccessLogInput): Promise<void> {
 export async function appendActorAccessLog(
   actor: Actor,
   entry: { studentId?: string | null; action: string; resource?: string | null; request?: RequestContext },
+  db: AccessLogWriter = prisma,
 ): Promise<void> {
-  await appendAccessLog({
-    actorType: actor.type,
-    actorId: actor.id,
-    reason: actor.reason ?? null,
-    ...entry,
-  });
+  await appendAccessLog(
+    {
+      actorType: actor.type,
+      actorId: actor.id,
+      reason: actor.reason ?? null,
+      ...entry,
+    },
+    db,
+  );
 }
 
 export const authorizationFixtures: Record<string, AuthorizationFixture> = {
