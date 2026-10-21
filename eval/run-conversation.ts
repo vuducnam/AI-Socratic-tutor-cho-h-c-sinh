@@ -1,4 +1,6 @@
 import { createHash } from 'node:crypto';
+import { listKeyFactsByIds } from '@/server/dal/key-facts-dal';
+import { keyPointsProgress, withheldPhrases } from '@/server/domain/dialogue/key-points-progress';
 import { readFileSync } from 'node:fs';
 import { z } from 'zod';
 import { compileTermSet } from '@/lib/term-pattern-matcher';
@@ -205,11 +207,21 @@ export async function runConversation(
   const problems = await listSessionProblemsWithPlans(actor, { studentId, sessionId: opened.sessionId });
   const preset = loadPreset('grade5');
   const records: TutorMessageRecord[] = [];
-  for (const t of turns.filter((x) => x.role !== 'student')) {
+  for (const [index, t] of turns.entries()) {
+    if (t.role === 'student') continue;
     const owner = problems.find((p) => p.problem.id === t.problem_id) ?? problems[0]!;
     const plan = solutionPlanSchema.parse(owner.plan.plan);
     const scope: CurriculumScope = applyHomeworkExtension(opened.scope, owner.plan.scope_extension as HomeworkExtension | null);
     const isProblemText = owner.problem.origin === 'generated' && t.content === owner.problem.confirmed_text;
+    // Môn kiến thức: ý chính con chưa tự nêu TÍNH ĐẾN lượt này (giống kiểm tra cứng lúc chạy thật).
+    let withheldFacts: { fact_id: string; phrases: string[] }[] = [];
+    if (plan.knowledge && !['CONSOLIDATE', 'TRANSFER', 'DONE'].includes(t.state_after ?? '')) {
+      const facts = await listKeyFactsByIds([...plan.knowledge.required_fact_ids, ...plan.knowledge.context_fact_ids]);
+      const problemText = owner.problem.confirmed_text ?? '';
+      const studentTexts = turns.slice(0, index).filter((x) => x.role === 'student' && x.problem_id === t.problem_id).map((x) => x.content);
+      const statedFactIds = keyPointsProgress({ plan, facts, problemText, studentTexts }).statedFactIds;
+      withheldFacts = withheldPhrases({ plan, facts, problemText, statedFactIds });
+    }
     const hard = runHardChecks(t.content, {
       maxSentences: t.turn_kind === 'hook' ? 1 : isProblemText ? preset.max_sentences_situational : preset.max_sentences,
       maxWords: isProblemText ? preset.max_words_per_turn * 2 : preset.max_words_per_turn,
@@ -224,6 +236,7 @@ export async function runConversation(
       problemText: owner.problem.confirmed_text ?? '',
       givenNumbers: plan.given_numbers,
       forbiddenTerms: [],
+      withheldFacts,
     });
     records.push({
       text: t.content,

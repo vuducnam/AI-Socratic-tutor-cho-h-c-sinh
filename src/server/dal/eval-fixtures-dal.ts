@@ -20,6 +20,21 @@ export function assertEvalDatabase(): void {
   if (!/\/(cu_eval|cu_test)(\?|$)/.test(url)) throw new NotEvalDatabaseError();
 }
 
+/**
+ * Chỉ DB eval/test: coi ý chính và tình huống của môn `subject` là đã duyệt để eval chạy được trước khi phụ huynh duyệt
+ * bản thật. Không ghi vào YAML; seed lại DB eval sẽ trả về đúng trạng thái duyệt của YAML.
+ */
+export async function approveSubjectDataForEval(actor: Actor, input: { subject: string }): Promise<{ facts: number; contexts: number }> {
+  assertSystem(actor);
+  assertEvalDatabase();
+  const approver = await prisma.user.findFirst({ where: { role: 'admin' }, orderBy: { created_at: 'asc' }, select: { id: true } });
+  if (!approver) throw new Error('DB eval chưa có tài khoản admin (pnpm admin:create)');
+  const facts = await prisma.keyFact.updateMany({ where: { subject: input.subject, approved_by: null }, data: { approved_by: approver.id, approved_at: new Date() } });
+  const skills = (await prisma.skill.findMany({ where: { subject: input.subject }, select: { skill_id: true } })).map((s) => s.skill_id);
+  const contexts = await prisma.lifeContext.updateMany({ where: { skill_id: { in: skills }, approved_by: null }, data: { approved_by: approver.id, approved_at: new Date() } });
+  return { facts: facts.count, contexts: contexts.count };
+}
+
 export interface EvalPersonaInput {
   displayName: string;
   gender: 'male' | 'female';
@@ -97,6 +112,7 @@ export async function listRecordedTutorRequests(actor: Actor, input: { promptVer
 }
 
 export const authorizationFixtures: Record<string, AuthorizationFixture> = {
+  approveSubjectDataForEval: { kind: 'system-only', call: (a) => approveSubjectDataForEval(a, { subject: 'NOPE' }) },
   assertEvalDatabase: { kind: 'no-actor', reason: 'chỉ kiểm tên database, không đọc dữ liệu' },
   listRecordedTutorRequests: { kind: 'system-only', call: (a) => listRecordedTutorRequests(a, { promptVersion: 'tutor/v1', limit: 1 }) },
   createEvalPersona: {

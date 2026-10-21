@@ -18,7 +18,8 @@ export const acceptanceProblemSchema = z.object({
 
 export type AcceptanceProblem = z.infer<typeof acceptanceProblemSchema>;
 
-export function loadAcceptanceProblems(dir = process.env.EVAL_PROBLEMS_DIR ?? 'eval/problems'): AcceptanceProblem[] {
+/** Đề của môn `subject` (khoá `subject` đầu file; file không ghi môn coi là Toán). */
+export function loadAcceptanceProblems(dir = process.env.EVAL_PROBLEMS_DIR ?? 'eval/problems', subject = process.env.EVAL_SUBJECT ?? 'math'): AcceptanceProblem[] {
   const files: string[] = [];
   const walk = (d: string) => {
     for (const e of readdirSync(d, { withFileTypes: true })) {
@@ -28,7 +29,8 @@ export function loadAcceptanceProblems(dir = process.env.EVAL_PROBLEMS_DIR ?? 'e
   };
   walk(dir);
   return files.flatMap((f) => {
-    const doc = parse(readFileSync(f, 'utf8')) as { problems?: unknown[] };
+    const doc = parse(readFileSync(f, 'utf8')) as { subject?: string; problems?: unknown[] };
+    if ((doc.subject ?? 'math') !== subject) return [];
     return (doc.problems ?? []).map((p) => acceptanceProblemSchema.parse(p));
   });
 }
