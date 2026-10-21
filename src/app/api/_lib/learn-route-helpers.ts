@@ -19,6 +19,8 @@ export function friendlyError(err: unknown): { status: number; code: string; mes
   if (err instanceof ProblemFinishedError) return { status: 409, code: 'problem_finished', message: 'Bài này xong rồi, bạn gửi bài mới nhé.' };
   if (err instanceof ProblemImageError) return { status: 400, code: 'bad_image', message: err.message };
   if (err instanceof LlmUnavailableError) return { status: 503, code: 'llm_unavailable', message: err.friendlyMessage };
+  // Lỗi chưa lường trước: con chỉ thấy câu thân thiện, nên phải ghi lỗi gốc ra log server để còn sửa được.
+  console.error('[learn] lỗi không lường trước:', err);
   return { status: 500, code: 'error', message: 'Mít đang mệt, bạn thử lại sau nhé.' };
 }
 

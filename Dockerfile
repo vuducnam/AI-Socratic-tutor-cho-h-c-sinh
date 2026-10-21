@@ -15,12 +15,15 @@ COPY . .
 # Site key Turnstile là giá trị công khai, cần lúc build cho client bundle.
 ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
+# server.js standalone tự chdir vào .next/standalone, còn code đọc config/ và prompts/ theo process.cwd():
+# symlink hai thư mục đó vào standalone để app dùng đúng bản trong /app.
 RUN pnpm prisma generate \
   && pnpm build \
   && pnpm exec esbuild worker/index.ts --bundle --platform=node --target=node20 --format=esm \
        --conditions=react-server --packages=external --outfile=dist/worker/index.mjs \
   && cp -r public .next/standalone/public \
-  && mkdir -p .next/standalone/.next && cp -r .next/static .next/standalone/.next/static
+  && mkdir -p .next/standalone/.next && cp -r .next/static .next/standalone/.next/static \
+  && ln -s /app/config .next/standalone/config && ln -s /app/prompts .next/standalone/prompts
 
 FROM node:20-bookworm-slim AS runner
 ENV NODE_ENV=production NEXT_TELEMETRY_DISABLED=1 PNPM_HOME=/pnpm PATH=/pnpm:$PATH HOSTNAME=0.0.0.0 PORT=3000
