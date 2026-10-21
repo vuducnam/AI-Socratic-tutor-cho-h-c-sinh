@@ -15,9 +15,9 @@ Không tạo hồ sơ thật cho con khi chưa tick đủ:
 - [ ] Phase 15 (`/learn`), 16 (`/parent`) đã merge và `pnpm eval:ci` đạt (nhãn `eval-passed`).
 - [ ] Mục lục, skill, misconception, tình huống đời thật đã duyệt (xem mục 4).
 
-## 1. Biến môi trường (`.env` trên PC, không bao giờ commit)
+## 1. Biến môi trường (`.env` cho dev, `.env.prod` cho prod; không bao giờ commit)
 
-Sao chép `.env.example` thành `.env` rồi điền. Bắt buộc cho prod:
+Dev dùng `.env` (sao chép từ `.env.example`, Turnstile test key). Prod dùng `.env.prod`: sao chép `.env` rồi thay các giá trị dưới đây; `pnpm prod:up`/`prod:down` đọc file này qua `--env-file`. Bắt buộc cho prod:
 
 | Biến | Ghi chú |
 | --- | --- |
@@ -34,16 +34,16 @@ Sao chép `.env.example` thành `.env` rồi điền. Bắt buộc cho prod:
 ## 2. Chạy lần đầu
 
 ```powershell
-pnpm prod:up                       # = docker compose -f docker-compose.yml --profile prod up -d --build
-docker compose -f docker-compose.yml --profile prod run --rm admin node_modules/.bin/tsx --conditions=react-server scripts/create-first-admin.ts
-docker compose -f docker-compose.yml --profile prod run --rm admin node_modules/.bin/tsx --conditions=react-server prisma/seed.ts
+pnpm prod:up                       # = docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --build
+docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm admin node_modules/.bin/tsx --conditions=react-server scripts/create-first-admin.ts
+docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm admin node_modules/.bin/tsx --conditions=react-server prisma/seed.ts
 ```
 
 - `prod:up` chỉ dùng `docker-compose.yml`, **không** gộp `docker-compose.override.yml` (file dev mở cổng
   localhost cho Postgres/Redis/math-verifier). Ở prod không service dữ liệu nào publish cổng.
 - Thứ tự tự động: `postgres`/`redis` healthy → `migrate` (`prisma migrate deploy` bằng `cu_owner`) xong →
   `app`, `admin`, `worker` (kết nối bằng `cu_app`) → `cloudflared` khi `app` healthy.
-- Kiểm `docker compose -f docker-compose.yml --profile prod ps`: `cloudflared` phải `running`. Thiếu `CLOUDFLARE_TUNNEL_TOKEN` thì nó báo lỗi và khởi động lại liên tục (compose không chặn lúc đọc file để dev chạy được mà không cần token).
+- Kiểm `docker compose --env-file .env.prod -f docker-compose.yml --profile prod ps`: `cloudflared` phải `running`. Thiếu `CLOUDFLARE_TUNNEL_TOKEN` thì nó báo lỗi và khởi động lại liên tục (compose không chặn lúc đọc file để dev chạy được mà không cần token).
 - Sau seed, kiểm mỗi skill số thập phân có ≥ 1 misconception và ≥ 1 tình huống đã duyệt (trang `/parent` › Duyệt).
 
 ### Giọng nói (stt-local, GPU)
@@ -102,6 +102,6 @@ chỉ ở `127.0.0.1:3001` và đăng nhập được với Turnstile test key; 
 ## 6. Vận hành
 
 - Cập nhật: `git pull` → `pnpm prod:up` (build lại image, migrate tự chạy).
-- Log: `docker compose -f docker-compose.yml --profile prod logs -f app worker`.
+- Log: `docker compose --env-file .env.prod -f docker-compose.yml --profile prod logs -f app worker`.
 - Backup không thuộc phạm vi dự án: chủ dự án tự backup ở mức PC (volume `pgdata`, `storage`, thư mục `data/`).
 - Dừng: `pnpm prod:down`.
