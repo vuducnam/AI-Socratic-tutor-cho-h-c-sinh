@@ -360,6 +360,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         const guard = hard.pass
           ? await runGuard({
               ...guardInputFor(parallelCtx, text, [], 'PARALLEL'),
+              // Tin nhắn là đề bài tương tự, không phải lời gợi ý: Guard kiểm theo luật đề tình huống.
+              messageKind: 'parallel_problem',
               studentId: input.studentId,
               sessionId: input.sessionId,
               turnId: tutorTurnId,
