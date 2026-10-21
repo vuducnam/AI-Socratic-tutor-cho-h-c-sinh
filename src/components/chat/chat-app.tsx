@@ -6,7 +6,7 @@ import { linesFromTurn, type ChatLine, type ClientVoicePrefs, type ProblemResult
 import { Composer } from './composer';
 import { MessageList } from './message-list';
 import { OcrConfirmPanel, ProblemEntryPanel } from './problem-entry-panels';
-import { BlockedScreen, EndOfProblem, IntroScreen, RestingScreen } from './simple-screens';
+import { BlockedScreen, EndOfProblem, IntroScreen, RestingScreen, SessionEndedScreen } from './simple-screens';
 import { speakableTurnIds } from './tts-playback-logic';
 import { useTtsPlayer } from './use-tts-player';
 import type { SubmitMeta } from './voice-input-logic';
@@ -15,7 +15,7 @@ import type { SubmitMeta } from './voice-input-logic';
 // hỏi đáp (SSE) → chuyển giao → chấm vui/chán. Lỗi mạng → "Cú đang nghỉ"; không bao giờ hiện lỗi kỹ thuật.
 // Trả lời bằng giọng là cách chính (micro trong Composer); Mít đọc to tin của mình (nút "nghe", tự đọc nếu bố mẹ bật).
 
-type Phase = 'loading' | 'intro' | 'blocked' | 'offline' | 'problem' | 'confirm' | 'chat' | 'done';
+type Phase = 'loading' | 'intro' | 'blocked' | 'offline' | 'problem' | 'confirm' | 'chat' | 'done' | 'ended';
 const INTRO_KEY = 'cu_intro_seen_v1';
 
 function readIntroSeen(): boolean {
@@ -35,6 +35,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
   const [blocked, setBlocked] = useState('');
   const [ocr, setOcr] = useState<{ problemId: string; text: string } | null>(null);
   const [rated, setRated] = useState(false);
+  const [finishing, setFinishing] = useState(false);
   // Mốc lúc Cú vừa nói (đo thời gian con trả lời cho tín hiệu đoán bừa); 0 = chưa có.
   const lastCuAt = useRef(0);
   const tts = useTtsPlayer();
@@ -85,7 +86,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     setPhase('chat');
     setBusy('Mít đang đọc kỹ đề bài');
     try {
-      const voiceMeta = meta?.inputModality === 'voice' ? { inputModality: 'voice', ...(meta.rawStt ? { rawStt: meta.rawStt } : {}) } : {};
+      const voiceMeta = meta?.inputModality === 'voice' ? { inputModality: 'voice', ...(meta.sttPieces ? { sttPieces: meta.sttPieces } : {}) } : {};
       const r = await postSse<ProblemResultDto>('/api/learn/problem', { sessionId, text, problemId, ...voiceMeta }, setBusy);
       if (r.ok) showTurn(r.turn);
       else {
@@ -133,7 +134,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     setLines((prev) => [...prev, { turnId: `s-${key}`, from: 'student', text, kind: 'normal' }]);
     setBusy('Mít đang nghĩ');
     try {
-      const body = { sessionId, text, idempotencyKey: key, hint, responseTimeMs, inputModality: meta.inputModality, ...(meta.rawStt ? { rawStt: meta.rawStt } : {}) };
+      const body = { sessionId, text, idempotencyKey: key, hint, responseTimeMs, inputModality: meta.inputModality, ...(meta.sttPieces ? { sttPieces: meta.sttPieces } : {}) };
       const r = await postSse<TurnResultDto & { timeUp?: boolean }>('/api/chat', body);
       if (r.timeUp) {
         setBlocked(r.message);
@@ -154,9 +155,29 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     await postJson('/api/learn/feedback', { sessionId, rating, end: false }).catch(() => undefined);
   }
 
+  // "Xong hôm nay": đóng phiên (student_done) để báo cáo phiên tới bố mẹ ngay, không đợi 30 phút không hoạt động.
+  async function finishToday() {
+    if (!sessionId || finishing) return;
+    setFinishing(true);
+    setNotice(null);
+    try {
+      await postJson('/api/learn/feedback', { sessionId, rating: null, end: true });
+      tts.stop();
+      setSessionId(null);
+      setLines([]);
+      setRated(false);
+      setPhase('ended');
+    } catch (err) {
+      handleError(err);
+    } finally {
+      setFinishing(false);
+    }
+  }
+
   if (phase === 'loading') return <RestingPlaceholder />;
   if (phase === 'offline') return <RestingScreen onRetry={retry} />;
   if (phase === 'blocked') return <BlockedScreen message={blocked} />;
+  if (phase === 'ended') return <SessionEndedScreen onContinue={retry} />;
   if (phase === 'intro') {
     return (
       <IntroScreen
@@ -211,7 +232,9 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
       {phase === 'done' && (
         <EndOfProblem
           rated={rated}
+          finishing={finishing}
           onRate={(r) => void rate(r)}
+          onFinish={() => void finishToday()}
           onNewProblem={() => {
             setRated(false);
             setPhase('problem');

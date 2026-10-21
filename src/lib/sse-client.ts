@@ -29,7 +29,7 @@ export async function postSse<T>(url: string, body: unknown, onStatus?: (message
   if (res.status >= 502) throw new OfflineError();
   if (!res.ok || !res.body) {
     const data = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
-    throw new FriendlyError(data.error ?? 'error', data.message ?? 'Mít chưa hiểu, con thử lại nhé.');
+    throw new FriendlyError(data.error ?? 'error', data.message ?? 'Mít chưa hiểu, bạn thử lại nhé.');
   }
 
   const reader = res.body.getReader();
@@ -69,6 +69,6 @@ export async function postJson<T>(url: string, body?: unknown): Promise<T> {
   }
   if (res.status >= 502) throw new OfflineError();
   const data = (await res.json().catch(() => ({}))) as T & { message?: string; error?: string };
-  if (!res.ok && res.status !== 200) throw new FriendlyError(data.error ?? 'error', data.message ?? 'Mít chưa hiểu, con thử lại nhé.');
+  if (!res.ok && res.status !== 200) throw new FriendlyError(data.error ?? 'error', data.message ?? 'Mít chưa hiểu, bạn thử lại nhé.');
   return data;
 }
