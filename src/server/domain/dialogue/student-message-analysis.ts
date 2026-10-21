@@ -103,6 +103,13 @@ const REASON_WORDS = /(?<![\p{L}\p{M}\p{N}])(vì|tại|bởi|nên|do|cho nên|l�
 // Thêm cách nói suy luận hay gặp ở trẻ ("nếu… thì", "giống như…", "vậy 7 đứng ở…"; "vậy là 0,3?" không tính).
 const INFERENCE_WORDS = /(?<![p{L}p{M}p{N}])(nếu|giống như|khớp|vậy(?!s+là))(?![p{L}p{M}p{N}])/u;
 
+const CONFIRMATION_REQUEST = /(?<![p{L}p{M}])(đúng không|đúng hông|đúng ko|phải không|phải hông|đúng hay sai|đúng chưa|có đúng|nói đúng)(?![p{L}p{M}])/u;
+
+/** Con xin Mít xác nhận ("đúng không?", "nói đúng hay sai thôi"). */
+export function asksForConfirmation(text: string): boolean {
+  return CONFIRMATION_REQUEST.test(normalizeForMatching(text));
+}
+
 /** Con có nêu lý do ("vì…", "nên…", "nếu…"), kể cả khi vẫn hỏi lại "đúng không?". */
 export function givesReason(text: string): boolean {
   const lower = normalizeForMatching(text);

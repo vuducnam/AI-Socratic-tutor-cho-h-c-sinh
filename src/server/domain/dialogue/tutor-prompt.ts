@@ -29,6 +29,8 @@ export interface TurnHints {
   unsure?: boolean;
   /** Tin của con có nêu lý do (student-message-analysis.givesReason). */
   reasoned?: boolean;
+  /** Con xin xác nhận đúng/sai (student-message-analysis.asksForConfirmation). */
+  asksConfirmation?: boolean;
 }
 
 // Hướng dẫn ngắn theo trạng thái: code chọn trạng thái, prompt chỉ nói Cú cần làm gì ở trạng thái đó.
@@ -45,11 +47,12 @@ const STATE_GUIDANCE: Record<DialogueState, string> = {
 };
 
 /**
- * Con ra đúng đáp án nhưng đoán / chưa chắc và không nêu lý do: chưa được xác nhận đúng (kiểm tra cứng chặn
- * "Đúng rồi"). Con có lý do mà chỉ hỏi lại "đúng không?" thì vẫn được xác nhận.
+ * Con ra đúng đáp án nhưng đoán / chưa chắc / chỉ xin "đúng không?" mà không nêu lý do: chưa được xác nhận đúng
+ * (kiểm tra cứng chặn "Đúng rồi"), để con đoán lần lượt từng đáp án không được gật đầu. Con có lý do mà chỉ hỏi
+ * lại "đúng không?" thì vẫn được xác nhận.
  */
 export function confirmationWithheld(state: DialogueState, hints: TurnHints = {}): boolean {
-  return state === 'CONSOLIDATE' && !!(hints.guessing || hints.unsure) && !hints.reasoned;
+  return state === 'CONSOLIDATE' && !!(hints.guessing || hints.unsure || hints.asksConfirmation) && !hints.reasoned;
 }
 
 /** Chỉ dẫn cho Tutor ở lượt này: theo trạng thái, cộng thêm chỉ dẫn cho tín hiệu code phát hiện. */

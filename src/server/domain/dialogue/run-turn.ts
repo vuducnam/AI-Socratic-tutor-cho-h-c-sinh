@@ -17,6 +17,7 @@ import { detectFrustration, detectGuessing, noProgressStreak, soundsUnsure } fro
 import { nextState, type DialoguePosition, type DialogueState } from './state-machine';
 import {
   answerMatchesFinal,
+  asksForConfirmation,
   detectAdultNeeded,
   detectBeyondScopeCuriosity,
   givesReason,
@@ -269,7 +270,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const frustrated = detectFrustration(text, ctx.recentStudentTexts).frustrated;
     const guessing = detectGuessing([...ctx.answerAttempts, { answer, responseTimeMs: input.responseTimeMs ?? Number.NaN }]);
     const dotDecimal = findDotDecimals(text).length > 0;
-    const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text), reasoned: givesReason(text) };
+    const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text), reasoned: givesReason(text), asksConfirmation: asksForConfirmation(text) };
     const next = nextState({
       current: ctx.position,
       mode: ctx.session.mode as 'solve' | 'argue',

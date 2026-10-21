@@ -42,3 +42,13 @@ describe('planFallbackQuestion', () => {
     expect(DONE_MESSAGE).not.toContain('?');
   });
 });
+
+describe('confirmationWithheld', () => {
+  it('chỉ xin "đúng không?" mà không có lý do → chưa xác nhận; có lý do → được xác nhận', async () => {
+    const { confirmationWithheld } = await import('./tutor-prompt');
+    expect(confirmationWithheld('CONSOLIDATE', { asksConfirmation: true })).toBe(true);
+    expect(confirmationWithheld('CONSOLIDATE', { asksConfirmation: true, reasoned: true })).toBe(false);
+    expect(confirmationWithheld('CONSOLIDATE', {})).toBe(false);
+    expect(confirmationWithheld('PROBE', { unsure: true })).toBe(false);
+  });
+});
