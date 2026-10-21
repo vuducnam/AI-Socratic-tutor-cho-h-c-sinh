@@ -99,6 +99,26 @@ describe('fillVariables', () => {
     }
   });
 
+  it('bài luyện số thập phân (biến bước lẻ) không bao giờ ra toàn số tròn, kể cả khi lần rút đầu trúng số tròn', () => {
+    const t = template({
+      conditions: ['a > b'],
+      answer_expression: 'a - b',
+      variables: { a: { min: 200, max: 400, step: 50, unit: 'm' }, b: { min: 85.5, max: 190.5, step: 0.5, unit: 'm' } },
+    });
+    // Lần rút đầu: a = 200, b = 86 (số tròn); các lần sau ngẫu nhiên.
+    const firstDraws = [0, 0.003];
+    let i = 0;
+    const random = () => (i < firstDraws.length ? firstDraws[i++]! : Math.random());
+    const f = fillVariables(t, { random });
+    expect([f.values.a, f.values.b].some((v) => v!.includes('.'))).toBe(true);
+    for (let k = 0; k < 200; k++) expect(Object.values(fillVariables(t).values).some((v) => v.includes('.'))).toBe(true);
+  });
+
+  it('template toàn số nguyên vẫn cho ra số nguyên', () => {
+    const t = template({ variables: { a: { min: 1, max: 9, step: 1, unit: '' }, b: { min: 1, max: 9, step: 1, unit: '' } } });
+    expect(Object.values(fillVariables(t).values).every((v) => !v.includes('.'))).toBe(true);
+  });
+
   it('không tìm được bộ số → lỗi rõ ràng', () => {
     const t = template({ answer_expression: 'a / b', max_answer_decimals: 0, variables: { a: { min: 1, max: 1, step: 1, unit: '' }, b: { min: 3, max: 3, step: 1, unit: '' } } });
     expect(() => fillVariables(t, { maxTries: 20 })).toThrow(/đáp án sạch/);

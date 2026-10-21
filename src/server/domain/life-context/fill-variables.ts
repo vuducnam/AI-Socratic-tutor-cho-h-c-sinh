@@ -23,12 +23,20 @@ function gridValue(min: number, max: number, step: number, random: Random): Frac
   return Fraction.ofNumber(min).add(Fraction.ofNumber(step).mul(Fraction.ofNumber(k)));
 }
 
+/** Template có biến bước lẻ (0,5; 0,05…) là bài luyện số thập phân. */
+function wantsDecimal(template: LifeContextTemplate): boolean {
+  return Object.values(template.variables).some((v) => !Number.isInteger(v.step) || !Number.isInteger(v.min));
+}
+
 export function fillVariables(template: LifeContextTemplate, options: { random?: Random; maxTries?: number; thousands?: ThousandsSeparator } = {}): FilledVariables {
   const random = options.random ?? Math.random;
   const tries = options.maxTries ?? 500;
+  const needsDecimal = wantsDecimal(template);
   for (let attempt = 0; attempt < tries; attempt++) {
     const vars: Record<string, Fraction> = {};
     for (const [name, v] of Object.entries(template.variables)) vars[name] = gridValue(v.min, v.max, v.step, random);
+    // Bài luyện số thập phân mà rút trúng toàn số tròn (ví dụ 200 m − 145 m) thì không luyện được kỹ năng: rút lại.
+    if (needsDecimal && Object.values(vars).every((f) => (f.decimalPlaces() ?? 0) === 0)) continue;
     let answer: Fraction;
     try {
       if (!template.conditions.every((c) => evaluateCondition(c, vars))) continue;
