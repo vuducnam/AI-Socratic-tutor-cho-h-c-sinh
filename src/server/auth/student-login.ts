@@ -20,7 +20,7 @@ import { verifyTurnstileToken } from './turnstile-verify';
 
 // Đăng nhập học sinh: tên đăng nhập + PIN 6 số (SPEC §2.2 bước 4–5). Thứ tự bắt buộc:
 // rate limit IP → Turnstile (sai thì 403, KHÔNG tính vào số lần sai) → rate limit tài khoản → tra hồ sơ →
-// khoá theo loại thiết bị → kiểm PIN. Thông báo lỗi giống nhau cho sai tên và sai PIN.
+// khoá của tài khoản → kiểm PIN. Thông báo lỗi giống nhau cho sai tên và sai PIN.
 
 export interface StudentLoginInput {
   username: string;
@@ -70,7 +70,7 @@ export async function loginStudent(input: StudentLoginInput): Promise<StudentLog
   const turnstile = await verifyTurnstileToken(input.turnstileToken);
   if (!turnstile.ok) {
     await logFailure(null, `turnstile:${turnstile.reason}`, input.request);
-    return { ok: false, status: 403, code: 'turnstile', message: 'Chưa xác minh được, con thử lại nhé.' };
+    return { ok: false, status: 403, code: 'turnstile', message: 'Chưa xác minh được, bạn thử lại nhé.' };
   }
 
   const username = input.username.trim().toLowerCase();
@@ -79,8 +79,9 @@ export async function loginStudent(input: StudentLoginInput): Promise<StudentLog
     !!student && !!input.deviceToken && (await isTrustedDevice(student.id, hashDeviceToken(input.deviceToken)));
   const deviceClass: DeviceClass = deviceTrusted ? 'trusted' : 'unknown';
 
-  // Rate limit tài khoản tách theo loại thiết bị: người lạ dò PIN không chặn được tablet của con.
-  if (!(await hitRateLimit(LOGIN_RATE_LIMITS.perAccount, `student:${username}:${deviceClass}`)).allowed) {
+  // Rate limit và khoá PIN tính theo tài khoản (chủ dự án chốt 2026-10-21, đúng SPEC): dò PIN từ thiết bị nào
+  // cũng khoá cả tài khoản, bố mẹ được báo và mở khoá. deviceClass chỉ còn để ghi log và cờ.
+  if (!(await hitRateLimit(LOGIN_RATE_LIMITS.perAccount, `student:${username}`)).allowed) {
     return { ok: false, status: 429, code: 'rate_limited', message: 'Thử lại sau ít phút nhé.' };
   }
 
@@ -90,14 +91,14 @@ export async function loginStudent(input: StudentLoginInput): Promise<StudentLog
     return { ok: false, status: 401, code: 'invalid', message: GENERIC_INVALID };
   }
 
-  const lock = await getPinLockState(student.id, deviceClass);
+  const lock = await getPinLockState(student.id);
   if (lock.hardLocked) {
     await logFailure(student.id, `hard_locked:${deviceClass}`, input.request);
-    return { ok: false, status: 423, code: 'hard_locked', message: 'Tài khoản đang tạm khoá. Con nhờ bố mẹ mở giúp nhé.' };
+    return { ok: false, status: 423, code: 'hard_locked', message: 'Tài khoản đang tạm khoá. Bạn nhờ bố mẹ mở giúp nhé.' };
   }
   if (lock.lockedUntil && lock.lockedUntil.getTime() > Date.now()) {
     await logFailure(student.id, `soft_locked:${deviceClass}`, input.request);
-    return { ok: false, status: 423, code: 'locked', message: 'Con đợi 15 phút rồi thử lại nhé.' };
+    return { ok: false, status: 423, code: 'locked', message: 'Bạn đợi 15 phút rồi thử lại nhé.' };
   }
 
   if (!(await verifySecret(student.pin_hash, input.pin))) {
@@ -105,21 +106,21 @@ export async function loginStudent(input: StudentLoginInput): Promise<StudentLog
     await logFailure(student.id, `wrong_pin:${deviceClass}:${outcome.failedCount}`, input.request);
     if (outcome.lock === 'hard') {
       await flagLock(student.id, 'pin_hard_locked', deviceClass);
-      return { ok: false, status: 423, code: 'hard_locked', message: 'Tài khoản đang tạm khoá. Con nhờ bố mẹ mở giúp nhé.' };
+      return { ok: false, status: 423, code: 'hard_locked', message: 'Tài khoản đang tạm khoá. Bạn nhờ bố mẹ mở giúp nhé.' };
     }
     if (outcome.lock === 'soft') {
       await flagLock(student.id, 'pin_soft_locked', deviceClass);
-      return { ok: false, status: 423, code: 'locked', message: 'Con đợi 15 phút rồi thử lại nhé.' };
+      return { ok: false, status: 423, code: 'locked', message: 'Bạn đợi 15 phút rồi thử lại nhé.' };
     }
     return { ok: false, status: 401, code: 'invalid', message: GENERIC_INVALID };
   }
 
   if (!student.is_family && !(await hasActiveConsent(student.id))) {
     await logFailure(student.id, 'consent_missing', input.request);
-    return { ok: false, status: 403, code: 'consent_required', message: 'Hồ sơ của con chưa sẵn sàng. Con nhờ bố mẹ nhé.' };
+    return { ok: false, status: 403, code: 'consent_required', message: 'Hồ sơ của bạn chưa sẵn sàng. Bạn nhờ bố mẹ nhé.' };
   }
 
-  await clearPinFailures(student.id, deviceClass);
+  await clearPinFailures(student.id);
   let newDeviceToken: string | null = null;
   if (!deviceTrusted) {
     newDeviceToken = randomBytes(32).toString('base64url');

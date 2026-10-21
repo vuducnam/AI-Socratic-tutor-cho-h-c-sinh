@@ -44,6 +44,7 @@ async function lockState(studentId: string, deviceClass: 'trusted' | 'unknown') 
 // Bỏ qua 15 phút khoá mềm trong test bằng cách lùi mốc khoá về quá khứ.
 async function expireSoftLock(studentId: string) {
   await ownerDb().query(`UPDATE pin_lockouts SET locked_until = now() - interval '1 minute' WHERE student_id = $1`, [studentId]);
+  await ownerDb().query(`UPDATE students SET pin_locked_until = now() - interval '1 minute' WHERE id = $1`, [studentId]);
 }
 
 describe('đăng nhập học sinh', () => {
@@ -108,7 +109,7 @@ describe('đăng nhập học sinh', () => {
     expect((await attempt(w.username, w.pin)).ok).toBe(true);
   });
 
-  it('thiết bị lạ sai 10 lần → thiết bị tin cậy của con vẫn đăng nhập được', async () => {
+  it('khoá tính theo tài khoản: thiết bị lạ sai 10 lần thì tablet tin cậy của con cũng bị khoá tới khi bố mẹ mở', async () => {
     const w = await createAdminWorld();
     const first = await attempt(w.username, w.pin);
     if (!first.ok) throw new Error('đăng nhập đầu tiên phải thành công');
@@ -119,11 +120,31 @@ describe('đăng nhập học sinh', () => {
       if (i === 5) await expireSoftLock(w.studentId);
     }
     expect(await lockState(w.studentId, 'unknown')).toMatchObject({ hard_locked: true });
-    expect(await attempt(w.username, w.pin)).toMatchObject({ code: 'hard_locked' });
+    expect(await attempt(w.username, w.pin, { deviceToken: trustedToken })).toMatchObject({ status: 423, code: 'hard_locked' });
 
+    await unlockStudentPin(mintActor('parent', w.parentId), { studentId: w.studentId });
     const fromTablet = await attempt(w.username, w.pin, { deviceToken: trustedToken });
     expect(fromTablet.ok).toBe(true);
     if (fromTablet.ok) expect(fromTablet.deviceToken).toBeNull();
+  });
+
+  it('lần sai cộng dồn giữa các thiết bị; đăng nhập đúng xoá bộ đếm của cả tài khoản', async () => {
+    const w = await createAdminWorld();
+    const first = await attempt(w.username, w.pin);
+    if (!first.ok) throw new Error('đăng nhập đầu tiên phải thành công');
+    const trustedToken = first.deviceToken!;
+
+    for (let i = 1; i <= 3; i++) await attempt(w.username, '000000');
+    expect(await attempt(w.username, '000000', { deviceToken: trustedToken })).toMatchObject({ code: 'invalid' });
+    // Lần sai thứ 5 (từ thiết bị lạ) → khoá mềm cả tài khoản, tablet cũng phải đợi.
+    expect(await attempt(w.username, '000000')).toMatchObject({ status: 423, code: 'locked' });
+    expect(await attempt(w.username, w.pin, { deviceToken: trustedToken })).toMatchObject({ code: 'locked' });
+
+    await expireSoftLock(w.studentId);
+    expect((await attempt(w.username, w.pin, { deviceToken: trustedToken })).ok).toBe(true);
+    expect(await lockState(w.studentId, 'unknown')).toBeUndefined();
+    const { rows } = await appDb().query('SELECT pin_failed_count FROM students WHERE id = $1', [w.studentId]);
+    expect(rows[0]).toEqual({ pin_failed_count: 0 });
   });
 
   it('học sinh ngoài gia đình chưa có consent không đăng nhập được; có consent thì được', async () => {

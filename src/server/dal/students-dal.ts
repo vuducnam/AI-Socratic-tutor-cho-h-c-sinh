@@ -10,7 +10,7 @@ import { assertAdmin } from './role-guards';
 
 export type DeviceClass = 'trusted' | 'unknown';
 
-/** Sai 5 lần → khoá 15 phút; sai 10 lần liên tiếp → khoá tới khi phụ huynh mở (mỗi loại thiết bị). */
+/** Tính cho cả tài khoản: sai 5 lần → khoá 15 phút; sai 10 lần liên tiếp → khoá tới khi phụ huynh mở. */
 export const PIN_SOFT_LOCK_AFTER = 5;
 export const PIN_SOFT_LOCK_MINUTES = 15;
 export const PIN_HARD_LOCK_AFTER = 10;
@@ -52,29 +52,37 @@ export interface PinLockState {
   hardLocked: boolean;
 }
 
-export async function getPinLockState(studentId: string, deviceClass: DeviceClass): Promise<PinLockState> {
-  const row = await prisma.pinLockout.findUnique({
-    where: { student_id_device_class: { student_id: studentId, device_class: deviceClass } },
-  });
+/**
+ * Trạng thái khoá của cả tài khoản (chủ dự án chốt 2026-10-21, đúng SPEC "khoá tài khoản học sinh"): sai PIN
+ * từ thiết bị nào cũng cộng vào một bộ đếm; khoá cứng ở bất kỳ thiết bị nào là khoá cả tài khoản.
+ */
+export async function getPinLockState(studentId: string): Promise<PinLockState> {
+  const [student, hard] = await Promise.all([
+    prisma.student.findUnique({ where: { id: studentId }, select: { pin_failed_count: true, pin_locked_until: true } }),
+    prisma.pinLockout.findFirst({ where: { student_id: studentId, hard_locked: true }, select: { student_id: true } }),
+  ]);
   return {
-    failedCount: row?.failed_count ?? 0,
-    lockedUntil: row?.locked_until ?? null,
-    hardLocked: row?.hard_locked ?? false,
+    failedCount: student?.pin_failed_count ?? 0,
+    lockedUntil: student?.pin_locked_until ?? null,
+    hardLocked: hard !== null,
   };
 }
 
 export type PinFailureOutcome = { failedCount: number; lock: 'none' | 'soft' | 'hard' };
 
-/** Tăng bộ đếm sai PIN atomic (UPDATE … + 1 RETURNING) và áp khoá theo ngưỡng. */
+/**
+ * Tăng bộ đếm sai PIN của tài khoản atomic (UPDATE … + 1 RETURNING) và áp khoá theo ngưỡng. Dòng pin_lockouts
+ * theo loại thiết bị chỉ để bố mẹ/admin thấy lần sai đến từ đâu.
+ */
 export async function registerPinFailure(studentId: string, deviceClass: DeviceClass): Promise<PinFailureOutcome> {
-  const rows = await prisma.$queryRaw<{ failed_count: number }[]>`
+  await prisma.$executeRaw`
     INSERT INTO pin_lockouts (student_id, device_class, failed_count, updated_at)
     VALUES (${studentId}::uuid, ${deviceClass}, 1, now())
     ON CONFLICT (student_id, device_class)
-    DO UPDATE SET failed_count = pin_lockouts.failed_count + 1, updated_at = now()
-    RETURNING failed_count`;
-  await prisma.$executeRaw`UPDATE students SET pin_failed_count = pin_failed_count + 1 WHERE id = ${studentId}::uuid`;
-  const failedCount = Number(rows[0]?.failed_count ?? 0);
+    DO UPDATE SET failed_count = pin_lockouts.failed_count + 1, updated_at = now()`;
+  const rows = await prisma.$queryRaw<{ pin_failed_count: number }[]>`
+    UPDATE students SET pin_failed_count = pin_failed_count + 1 WHERE id = ${studentId}::uuid RETURNING pin_failed_count`;
+  const failedCount = Number(rows[0]?.pin_failed_count ?? 0);
 
   if (failedCount >= PIN_HARD_LOCK_AFTER) {
     await prisma.pinLockout.update({
@@ -95,10 +103,12 @@ export async function registerPinFailure(studentId: string, deviceClass: DeviceC
   return { failedCount, lock: 'none' };
 }
 
-/** Đăng nhập đúng: xoá bộ đếm của loại thiết bị đó (lần sai "liên tiếp" bắt đầu lại). */
-export async function clearPinFailures(studentId: string, deviceClass: DeviceClass): Promise<void> {
-  await prisma.pinLockout.deleteMany({ where: { student_id: studentId, device_class: deviceClass } });
-  await prisma.student.update({ where: { id: studentId }, data: { pin_failed_count: 0, pin_locked_until: null } });
+/** Đăng nhập đúng: xoá bộ đếm của cả tài khoản (lần sai "liên tiếp" bắt đầu lại). */
+export async function clearPinFailures(studentId: string): Promise<void> {
+  await prisma.$transaction([
+    prisma.pinLockout.deleteMany({ where: { student_id: studentId } }),
+    prisma.student.update({ where: { id: studentId }, data: { pin_failed_count: 0, pin_locked_until: null } }),
+  ]);
 }
 
 export async function isTrustedDevice(studentId: string, tokenHash: string): Promise<boolean> {
