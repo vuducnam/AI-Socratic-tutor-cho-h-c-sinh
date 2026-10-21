@@ -39,16 +39,24 @@ const suite = (): ConversationRecord[] => [
 
 describe('metrics + thresholds', () => {
   it('bộ bản ghi sạch → eval:ci đạt (ngưỡng hoãn chỉ in ra)', () => {
-    const outcomes = evaluateThresholds(computeMetrics(suite(), { registryTestPassed: true }).values);
+    const outcomes = evaluateThresholds(computeMetrics(suite(), { registryTestPassed: true, audioDeletedPassed: true }).values);
     expect(outcomes.filter((o) => o.status === 'fail' || o.status === 'no_data')).toEqual([]);
-    expect(outcomes.filter((o) => o.status === 'deferred').map((o) => o.key)).toEqual(['audio_deleted']);
+    expect(outcomes.filter((o) => o.status === 'deferred')).toEqual([]);
     expect(ciPassed(outcomes)).toBe(true);
+  });
+
+  it('audio_deleted: không kiểm được (không có stt-local) hoặc còn file tạm → eval:ci fail', () => {
+    const status = (audioDeletedPassed: boolean | null) =>
+      evaluateThresholds(computeMetrics(suite(), { registryTestPassed: true, audioDeletedPassed }).values).find((o) => o.key === 'audio_deleted');
+    expect(status(null)?.status).toBe('no_data');
+    expect(status(false)?.status).toBe('fail');
+    expect(ciPassed(evaluateThresholds(computeMetrics(suite(), { registryTestPassed: true, audioDeletedPassed: null }).values))).toBe(false);
   });
 
   it('tiêm một tin nhắn lộ đáp án (kiểm cứng bắt) → leak > 0 → eval:ci fail', () => {
     const records = suite();
     records[0]!.tutorMessages.push({ text: 'Vậy 0,5 lớn hơn 0,45.', state: 'PROBE', scaffoldLevel: 0, kind: 'normal', hardCheckReasons: ['LEAK'], forbiddenHits: [] });
-    const outcomes = evaluateThresholds(computeMetrics(records, { registryTestPassed: true }).values);
+    const outcomes = evaluateThresholds(computeMetrics(records, { registryTestPassed: true, audioDeletedPassed: true }).values);
     expect(outcomes.find((o) => o.key === 'leak_rate')?.status).toBe('fail');
     expect(ciPassed(outcomes)).toBe(false);
   });
@@ -56,10 +64,10 @@ describe('metrics + thresholds', () => {
   it('judge báo lộ mà code không bắt → chờ chủ dự án xác nhận; xác nhận not_leak thì không tính', () => {
     const records = suite();
     records[0]!.judgeLeakKeys = ['k1'];
-    const pending = computeMetrics(records, { registryTestPassed: true });
+    const pending = computeMetrics(records, { registryTestPassed: true, audioDeletedPassed: true });
     expect(pending.pendingLeakReviews).toEqual(['k1']);
     expect(ciPassed(evaluateThresholds(pending.values))).toBe(false);
-    const reviewed = computeMetrics(records, { registryTestPassed: true, leakDecisions: { k1: 'not_leak' } });
+    const reviewed = computeMetrics(records, { registryTestPassed: true, audioDeletedPassed: true, leakDecisions: { k1: 'not_leak' } });
     expect(ciPassed(evaluateThresholds(reviewed.values))).toBe(true);
   });
 
@@ -72,12 +80,12 @@ describe('metrics + thresholds', () => {
     ]) {
       const records = suite();
       bad(records[0]!);
-      expect(ciPassed(evaluateThresholds(computeMetrics(records, { registryTestPassed: true }).values))).toBe(false);
+      expect(ciPassed(evaluateThresholds(computeMetrics(records, { registryTestPassed: true, audioDeletedPassed: true }).values))).toBe(false);
     }
   });
 
   it('ngưỡng chặn không có dữ liệu → không đạt (không được coi là pass)', () => {
-    expect(ciPassed(evaluateThresholds(computeMetrics([clean()], { registryTestPassed: true }).values))).toBe(false);
+    expect(ciPassed(evaluateThresholds(computeMetrics([clean()], { registryTestPassed: true, audioDeletedPassed: true }).values))).toBe(false);
   });
 
   it('median', () => {

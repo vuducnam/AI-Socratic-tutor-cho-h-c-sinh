@@ -76,7 +76,13 @@ export function promisesSecret(text: string): boolean {
 
 export function computeMetrics(
   records: ConversationRecord[],
-  options: { leakDecisions?: LeakDecisions; registryTestPassed?: boolean; termCoverage?: { lessonsWithTerms: number; lessonsTotal: number } } = {},
+  options: {
+    leakDecisions?: LeakDecisions;
+    registryTestPassed?: boolean;
+    /** Kết quả eval/audio-deleted-check.ts; null/undefined = không kiểm được (không có stt-local). */
+    audioDeletedPassed?: boolean | null;
+    termCoverage?: { lessonsWithTerms: number; lessonsTotal: number };
+  } = {},
 ): MetricsResult {
   const decisions = options.leakDecisions ?? {};
   const convs = records.filter((r) => r.outcome === 'conversation');
@@ -133,7 +139,7 @@ export function computeMetrics(
         return ratio(valid, total);
       })(),
       registry_test: options.registryTestPassed === undefined ? { value: null, n: 0 } : { value: options.registryTestPassed ? 1 : 0, n: 1 },
-      audio_deleted: { value: null, n: 0 },
+      audio_deleted: typeof options.audioDeletedPassed === "boolean" ? { value: options.audioDeletedPassed ? 1 : 0, n: 1 } : { value: null, n: 0 },
       situational_real_question: ratio(realQ.filter((s) => s.realQuestion).length, realQ.length),
       situational_unsafe_or_brand: ratio(situational.filter((s) => s.unsafeOrBrand).length, situational.length || (convs.length ? 1 : 0)),
       homework_changed: ratio(convs.filter((r) => r.homeworkTextChanged).length, convs.length),

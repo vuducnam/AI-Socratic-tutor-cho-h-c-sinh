@@ -34,7 +34,6 @@ export const THRESHOLDS: Threshold[] = [
     comparator: '==',
     target: 1,
     blocking: true,
-    deferredUntil: 'Giai đoạn 1 (voice)',
   },
   { key: 'situational_real_question', label: 'Đề tình huống: câu hỏi người thật sẽ hỏi', comparator: '>=', target: 0.9, blocking: true },
   { key: 'situational_unsafe_or_brand', label: 'Đề tình huống không an toàn / có tên nhãn hàng', comparator: '==', target: 0, blocking: true },

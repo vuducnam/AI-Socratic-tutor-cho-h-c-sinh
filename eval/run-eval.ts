@@ -5,6 +5,7 @@ import { parse } from 'yaml';
 import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { assertEvalDatabase } from '@/server/dal/eval-fixtures-dal';
 import { EvalBudgetExceededError, evalSpent } from '@/server/llm/llm-gateway';
+import { audioDeletedPassed } from './audio-deleted-check';
 import { loadAcceptanceProblems } from './load-acceptance-problems';
 import { computeMetrics, type ConversationRecord, type LeakDecisions } from './metrics';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
@@ -133,7 +134,12 @@ async function main() {
 
   const decisions: LeakDecisions = existsSync(DECISIONS_FILE) ? JSON.parse(readFileSync(DECISIONS_FILE, 'utf8')) : {};
   const maxSeq = Math.max(...(await loadScopeCatalog(SUBJECT, 5)).lessons.filter((l) => selected.some((p) => p.target_lesson_id === l.lesson_id)).map((l) => l.seq));
-  const metrics = computeMetrics(records, { leakDecisions: decisions, registryTestPassed: registryTestPassed(), termCoverage: await termCoverage(maxSeq) });
+  const metrics = computeMetrics(records, {
+    leakDecisions: decisions,
+    registryTestPassed: registryTestPassed(),
+    audioDeletedPassed: await audioDeletedPassed(),
+    termCoverage: await termCoverage(maxSeq),
+  });
   const outcomes = evaluateThresholds(metrics.values);
   const passed = !aborted && ciPassed(outcomes) && !records.some((r) => r.outcome === 'error');
 
