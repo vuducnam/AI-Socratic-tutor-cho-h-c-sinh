@@ -14,7 +14,7 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 
 export const HOOK_PROMPT = 'hook/v5';
 // Môn kiến thức (SPEC §5d): chuyện đời thường quanh em, không nói ra ý chính của bài.
-export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v1';
+export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v2';
 export const TRANSFER_PROMPT = 'transfer/v4';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';

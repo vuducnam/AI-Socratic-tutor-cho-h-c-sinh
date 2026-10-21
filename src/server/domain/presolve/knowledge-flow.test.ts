@@ -97,7 +97,7 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
 
     // Prompt riêng của môn kiến thức; Guard bản có luật LEAK cho ý chính.
     const versions = await appDb().query(`SELECT DISTINCT prompt_version FROM llm_calls WHERE session_id = $1 ORDER BY 1`, [w.sessionId]);
-    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard/v11', 'hook_knowledge/v1', 'presolve_knowledge/v1', 'tutor_knowledge/v1']);
+    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard/v11', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'tutor_knowledge/v1']);
   });
 
   it('câu hỏi ý kiến chạy chế độ argue: không chấm đúng sai, con nêu lý do thì sang CONSOLIDATE', async () => {
