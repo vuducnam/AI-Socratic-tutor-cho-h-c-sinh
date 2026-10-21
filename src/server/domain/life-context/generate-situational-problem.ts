@@ -47,6 +47,20 @@ export interface SituationalVisual {
   items: { label: string; value: number; unit: string }[];
 }
 
+/**
+ * Hình minh hoạ đề tình huống. Chỉ vẽ khi mọi đại lượng cùng đơn vị: đặt 3 m cạnh 7 dm trên cùng một thang độ
+ * dài là sai toán (thanh 7 dài hơn thanh 3), nên khác đơn vị thì không vẽ.
+ */
+export function situationalVisual(
+  template: { svg_kind: SituationalVisual['kind'] | 'none'; variables: Record<string, { unit: string; label?: string }> },
+  values: Record<string, string>,
+): SituationalVisual | null {
+  if (template.svg_kind === 'none') return null;
+  const items = Object.entries(values).map(([k, v]) => ({ label: template.variables[k]!.label ?? k, value: Number(v), unit: template.variables[k]!.unit }));
+  if (new Set(items.map((i) => i.unit)).size > 1) return null;
+  return { kind: template.svg_kind, items };
+}
+
 const BRAND = /\b(coca|pepsi|vinamilk|kfc|lotte|samsung|iphone|honda|yamaha|grab|shopee|lazada|tiki|circle ?k|highlands)\b/i;
 
 /** Kiểm bằng code đề do LLM viết: đủ mọi số đã điền, không thêm số lạ, ≤ N câu, kết bằng câu hỏi. */
@@ -169,14 +183,7 @@ export async function generateSituationalProblem(actor: Actor, input: Situationa
       presolved.ok &&
       (presolved.plan.final_answer.kind !== 'number' || normalizeNumber(String(presolved.plan.final_answer.canonical)) === normalizeNumber(filled.answer));
     if (presolved.ok && agrees) {
-      const visual: SituationalVisual | null =
-        template.svg_kind === 'none'
-          ? null
-          : {
-              kind: template.svg_kind,
-              items: Object.entries(filled.values).map(([k, v]) => ({ label: template.variables[k]!.label ?? k, value: Number(v), unit: template.variables[k]!.unit })),
-            };
-      return { ok: true, problemId, problemText, contextId: row.id, values: filled.values, visual };
+      return { ok: true, problemId, problemText, contextId: row.id, values: filled.values, visual: situationalVisual(template, filled.values) };
     }
   }
   return { ok: false, reason: 'generation_failed', tried };

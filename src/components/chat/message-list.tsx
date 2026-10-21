@@ -12,7 +12,7 @@ import { SpeakerIcon } from './voice-controls';
 
 function VisualFor({ visual }: { visual: Visual }) {
   if (visual.kind === 'segment_bar' || visual.kind === 'box') {
-    return <SegmentBar items={visual.items} unit={visual.items[0]?.unit ?? ''} />;
+    return <SegmentBar items={visual.items} />;
   }
   if (visual.kind === 'number_line') {
     const values = visual.items.map((i) => i.value);
