@@ -1,7 +1,10 @@
 import 'server-only';
 
 // Giới hạn phiên/ngày theo hồ sơ (SPEC §13): hết giờ thì Cú chào và khoá /learn tới hôm sau.
-// Thời lượng tính từ started_at tới last_activity_at (hoặc ended_at) của các phiên trong ngày (giờ VN).
+// Thời lượng tính từ started_at tới lượt hoạt động cuối (last_activity_at) của các phiên trong ngày (giờ VN).
+// ended_at chỉ được tính khi sát lượt cuối (con bấm "Xong hôm nay", hết giờ): phiên bỏ dở bị worker đóng
+// sau 30 phút không hoạt động có ended_at = lúc đóng, khoảng ngồi không đó không phải thời gian học.
+const END_GRACE_MS = 5 * 60_000;
 
 export const DAILY_LIMIT_MESSAGE = 'Hôm nay mình học đủ rồi. Bạn nghỉ ngơi nhé, mai Mít chờ bạn!';
 export const SESSION_LIMIT_MESSAGE = 'Mình học được một lúc rồi. Bạn nghỉ một chút rồi quay lại nhé!';
@@ -23,7 +26,9 @@ export function minutesUsed(sessions: SessionSpan[], now = new Date()): number {
   const dayStart = startOfVietnamDay(now).getTime();
   return sessions.reduce((sum, s) => {
     const start = Math.max(s.started_at.getTime(), dayStart);
-    const end = (s.ended_at ?? s.last_activity_at).getTime();
+    const lastActivity = s.last_activity_at.getTime();
+    const ended = s.ended_at?.getTime();
+    const end = ended !== undefined && ended - lastActivity <= END_GRACE_MS ? Math.max(ended, lastActivity) : lastActivity;
     return sum + Math.max(0, end - start) / 60_000;
   }, 0);
 }

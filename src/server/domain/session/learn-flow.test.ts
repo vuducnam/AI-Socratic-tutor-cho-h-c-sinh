@@ -107,4 +107,22 @@ describe('learn flow', () => {
       ),
     ).toBe(30);
   });
+
+  it('phiên bỏ dở bị đóng vì quá 30 phút không hoạt động: chỉ tính tới lượt cuối, không tính khoảng ngồi không', () => {
+    const now = new Date('2026-10-19T12:00:00Z');
+    const at = (hhmm: string) => new Date(`2026-10-19T${hhmm}:00Z`);
+    expect(
+      minutesUsed(
+        [
+          // Học 10 phút rồi bỏ, worker đóng lúc 09:45 (timeout) → 10 phút.
+          { started_at: at('09:00'), last_activity_at: at('09:10'), ended_at: at('09:45') },
+          // Mở phiên không làm gì, đóng sau 34 phút → 0 phút.
+          { started_at: at('10:00'), last_activity_at: at('10:00'), ended_at: at('10:34') },
+          // Học 8 phút, 2 phút sau bấm "Xong hôm nay" → 10 phút.
+          { started_at: at('11:00'), last_activity_at: at('11:08'), ended_at: at('11:10') },
+        ],
+        now,
+      ),
+    ).toBe(20);
+  });
 });
