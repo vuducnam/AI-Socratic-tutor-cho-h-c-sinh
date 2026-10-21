@@ -82,11 +82,14 @@ describe('micErrorMessage', () => {
 });
 
 describe('interpretSttResponse', () => {
-  it('200 → chữ đã gom khoảng trắng', () => {
-    expect(interpretSttResponse(200, { text: '  không phẩy\n bốn mươi lăm ', model: 'm', source: 'local', latencyMs: 10 })).toEqual({
-      ok: true,
-      text: 'không phẩy bốn mươi lăm',
-    });
+  it('200 → chữ đã gom khoảng trắng, kèm biên nhận của server', () => {
+    expect(
+      interpretSttResponse(200, { text: '  không phẩy\n bốn mươi lăm ', receipt: 'sig', model: 'm', source: 'local', latencyMs: 10 }),
+    ).toEqual({ ok: true, text: 'không phẩy bốn mươi lăm', receipt: 'sig' });
+  });
+
+  it('200 thiếu biên nhận → vẫn dùng được chữ (server sẽ không lưu raw_stt)', () => {
+    expect(interpretSttResponse(200, { text: 'ba phần tư' })).toEqual({ ok: true, text: 'ba phần tư', receipt: '' });
   });
 
   it('200 nhưng chữ rỗng → nhắc nói lại; thân sai dạng → lỗi thân thiện', () => {
@@ -145,18 +148,18 @@ describe('mergeTranscript', () => {
 });
 
 describe('submitMetaFor', () => {
-  it('có bản chép giọng nói → voice kèm rawStt nguyên văn (kể cả khi con đã sửa chữ)', () => {
-    expect(submitMetaFor('không phẩy bốn lăm', TRANSCRIPT_LIMITS.chat)).toEqual({ inputModality: 'voice', rawStt: 'không phẩy bốn lăm' });
+  const piece = (text: string) => ({ text, receipt: `r-${text}` });
+
+  it('có đoạn nghe từ micro → voice kèm mọi đoạn theo thứ tự (kể cả khi con đã sửa chữ)', () => {
+    expect(submitMetaFor([piece('không phẩy'), piece('bốn lăm')])).toEqual({
+      inputModality: 'voice',
+      sttPieces: [piece('không phẩy'), piece('bốn lăm')],
+    });
   });
 
-  it('không có bản chép → text, không gửi rawStt', () => {
-    expect(submitMetaFor(null, TRANSCRIPT_LIMITS.chat)).toEqual({ inputModality: 'text' });
-    expect(submitMetaFor('  ', TRANSCRIPT_LIMITS.chat)).toEqual({ inputModality: 'text' });
-  });
-
-  it('rawStt cắt theo giới hạn của ô', () => {
-    expect(submitMetaFor('a'.repeat(1500), TRANSCRIPT_LIMITS.chat).rawStt).toHaveLength(1000);
-    expect(submitMetaFor('a'.repeat(1500), TRANSCRIPT_LIMITS.problem).rawStt).toHaveLength(1500);
+  it('không có đoạn nào (hoặc chỉ khoảng trắng) → text, không gửi sttPieces', () => {
+    expect(submitMetaFor([])).toEqual({ inputModality: 'text' });
+    expect(submitMetaFor([piece('  ')])).toEqual({ inputModality: 'text' });
   });
 });
 

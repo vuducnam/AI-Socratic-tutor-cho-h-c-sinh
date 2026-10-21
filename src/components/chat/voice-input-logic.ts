@@ -5,10 +5,16 @@ export type SttLanguage = 'vi' | 'en';
 export type InputModality = 'text' | 'voice';
 export type RecorderStatus = 'idle' | 'requesting' | 'recording' | 'transcribing' | 'error';
 
+/** Một lần bấm micro: chữ server đã nghe kèm biên nhận server ký (server tự ghép raw_stt từ các đoạn này). */
+export interface SttPiece {
+  text: string;
+  receipt: string;
+}
+
 /** Siêu dữ liệu đi kèm tin con gửi: gõ chữ, hay nói rồi (có thể) sửa lại chữ. */
 export interface SubmitMeta {
   inputModality: InputModality;
-  rawStt?: string;
+  sttPieces?: SttPiece[];
 }
 
 /**
@@ -83,7 +89,7 @@ export function micErrorMessage(err: unknown): string {
 }
 
 export type SttOutcome =
-  | { ok: true; text: string }
+  | { ok: true; text: string; receipt: string }
   | { ok: false; reason: 'unauthenticated' | 'too_large' | 'unavailable' | 'empty' | 'error'; message: string };
 
 function serverMessage(body: unknown): string | null {
@@ -92,13 +98,15 @@ function serverMessage(body: unknown): string | null {
   return typeof message === 'string' && message.trim() ? message.trim().slice(0, 200) : null;
 }
 
-/** Diễn giải phản hồi của POST /api/stt: 200 {text}, 401, 413 / 503 {error, message}. */
+/** Diễn giải phản hồi của POST /api/stt: 200 {text, receipt}, 401, 413 / 503 {error, message}. */
 export function interpretSttResponse(status: number, body: unknown): SttOutcome {
   if (status === 200) {
-    const text = typeof body === 'object' && body !== null && 'text' in body ? (body as { text: unknown }).text : null;
-    if (typeof text !== 'string') return { ok: false, reason: 'error', message: MESSAGES.unavailable };
-    const cleaned = text.replace(/\s+/g, ' ').trim();
-    return cleaned ? { ok: true, text: cleaned.slice(0, MAX_TRANSCRIPT_CHARS) } : { ok: false, reason: 'empty', message: MESSAGES.empty };
+    const fields = typeof body === 'object' && body !== null ? (body as { text?: unknown; receipt?: unknown }) : {};
+    if (typeof fields.text !== 'string') return { ok: false, reason: 'error', message: MESSAGES.unavailable };
+    // Server đã gộp khoảng trắng trước khi ký biên nhận; gộp lại ở đây không đổi chữ nên biên nhận vẫn khớp.
+    const cleaned = fields.text.replace(/\s+/g, ' ').trim();
+    const receipt = typeof fields.receipt === 'string' ? fields.receipt : '';
+    return cleaned ? { ok: true, text: cleaned.slice(0, MAX_TRANSCRIPT_CHARS), receipt } : { ok: false, reason: 'empty', message: MESSAGES.empty };
   }
   if (status === 401) return { ok: false, reason: 'unauthenticated', message: MESSAGES.unauthenticated };
   // 413: quá dung lượng (route) hoặc quá số giây (stt-local) — server gửi câu nhắc riêng cho từng trường hợp.
@@ -115,10 +123,10 @@ export function mergeTranscript(current: string, addition: string, maxChars: num
   return merged.slice(0, maxChars);
 }
 
-/** Tin gửi đi: có bản chép giọng nói → voice (kể cả khi con đã sửa chữ), còn lại là text. */
-export function submitMetaFor(rawStt: string | null, maxChars: number): SubmitMeta {
-  const raw = rawStt?.trim();
-  return raw ? { inputModality: 'voice', rawStt: raw.slice(0, maxChars) } : { inputModality: 'text' };
+/** Tin gửi đi: có đoạn nghe từ micro → voice kèm các đoạn (kể cả khi con đã sửa chữ), còn lại là text. */
+export function submitMetaFor(pieces: readonly SttPiece[]): SubmitMeta {
+  const heard = pieces.filter((p) => p.text.trim());
+  return heard.length ? { inputModality: 'voice', sttPieces: [...heard] } : { inputModality: 'text' };
 }
 
 /** "0:42" — số giây còn lại, làm tròn lên để không hiện 0:00 khi vẫn đang ghi. */

@@ -9,6 +9,7 @@ import { sttConfig } from '@/server/llm/model-config';
 import { AUDIO_FORMAT_MIME, baseAudioMime, detectAudioFormat, type AudioFormat } from './audio-format';
 import { OPENROUTER_DATA_POLICY, OpenRouterAudioError, openRouterAudioConfigured, postOpenRouterAudio } from './openrouter-audio-client';
 import { toVietnameseNumberStyle } from './english-number-format';
+import { normalizeTranscript, signSttReceipt } from './stt-receipt';
 import { SttAudioTooLongError, SttUnavailableError, UnsupportedAudioError, VoiceSessionClosedError } from './voice-errors';
 
 // STT (quy tắc cứng 10, SPEC §10): giọng con xử lý ở PC (services/stt-local). Chỉ khi local lỗi VÀ phụ
@@ -220,9 +221,12 @@ export async function transcribe(input: TranscribeInput): Promise<TranscribeResu
 export async function transcribeStudentAudio(
   actor: Actor,
   input: { studentId: string; sessionId: string; audio: Uint8Array; mimeType: string; language: SttLanguage },
-): Promise<TranscribeResult> {
+): Promise<TranscribeResult & { receipt: string }> {
   const session = await getLearningSession(actor, { studentId: input.studentId, sessionId: input.sessionId });
   if (session.ended_at) throw new VoiceSessionClosedError();
   const prefs = await getStudentVoicePrefs(actor, input.studentId);
-  return transcribe({ ...input, cloudFallbackAllowed: prefs.sttCloudFallback });
+  const result = await transcribe({ ...input, cloudFallbackAllowed: prefs.sttCloudFallback });
+  const text = normalizeTranscript(result.text);
+  // Biên nhận cho đúng chữ trả về: tin gửi sau đó chỉ lưu raw_stt từ chữ có biên nhận (stt-receipt.ts).
+  return { ...result, text, receipt: signSttReceipt({ studentId: input.studentId, sessionId: input.sessionId, text }) };
 }

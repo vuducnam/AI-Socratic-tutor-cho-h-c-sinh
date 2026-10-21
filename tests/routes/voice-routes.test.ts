@@ -65,6 +65,8 @@ beforeAll(async () => {
 });
 beforeEach(async () => {
   session.actor = mintActor('student', a.studentId);
+  // Biên nhận STT ký bằng SESSION_SECRET.
+  vi.stubEnv('SESSION_SECRET', 'test-session-secret-0123456789');
   cacheDir = await mkdtemp(join(tmpdir(), 'cu-tts-route-'));
   vi.stubEnv('TTS_CACHE_DIR', cacheDir);
 });
@@ -110,7 +112,9 @@ describe('POST /api/stt', () => {
     stubVoiceFetch({ local: localOk });
     const res = await sttRoute(await sttRequest({}));
     expect(res.status).toBe(200);
-    expect(await res.json()).toMatchObject({ text: 'không phẩy năm', model: 'vinai/PhoWhisper-large', source: 'local' });
+    const body = await res.json();
+    expect(body).toMatchObject({ text: 'không phẩy năm', model: 'vinai/PhoWhisper-large', source: 'local' });
+    expect(body.receipt).toMatch(/^[A-Za-z0-9_-]{43}$/);
   });
 
   it('phụ huynh không gọi được (chỉ phiên học sinh)', async () => {
@@ -244,32 +248,48 @@ describe('POST /api/tts', () => {
   });
 });
 
+/** Đoạn STT kèm biên nhận lấy thật từ /api/stt (stt-local giả trả `text`). */
+async function heardPiece(text: string): Promise<{ text: string; receipt: string }> {
+  stubVoiceFetch({ local: () => jsonResponse(200, { text, model: 'vinai/PhoWhisper-large', language: 'vi', latency_ms: 90 }) });
+  const body = (await (await sttRoute(await sttRequest({}))).json()) as { text: string; receipt: string };
+  vi.unstubAllGlobals();
+  return { text: body.text, receipt: body.receipt };
+}
+
 describe('POST /api/chat (voice)', () => {
   const base = () => ({ sessionId: a.sessionId, text: 'Con nghĩ là 0,5', idempotencyKey: randomUUID() });
 
-  it('chuyển inputModality và rawStt tới runStudentTurn', async () => {
+  it('raw_stt ghép từ các đoạn có biên nhận của /api/stt, theo thứ tự nói', async () => {
+    const pieces = [await heardPiece('con nghĩ là'), await heardPiece('  không phẩy\n năm ')];
+    expect(pieces[1]!.text).toBe('không phẩy năm');
     runTurn.calls.length = 0;
-    const res = await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', rawStt: 'con nghĩ là không phẩy năm' }));
-    await res.text();
+    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', sttPieces: pieces }))).text();
     expect(runTurn.calls.at(-1)).toMatchObject({ inputModality: 'voice', rawStt: 'con nghĩ là không phẩy năm', text: 'Con nghĩ là 0,5' });
   });
 
-  it('tin gõ: mặc định text, bỏ qua rawStt', async () => {
+  it('chữ bị sửa sau khi ký, biên nhận giả hoặc của phiên khác → không lưu raw_stt (tin vẫn gửi)', async () => {
+    const piece = await heardPiece('không phẩy năm');
     runTurn.calls.length = 0;
-    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), rawStt: 'bỏ qua' }))).text();
+    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', sttPieces: [{ ...piece, text: 'không phẩy sáu' }] }))).text();
+    expect(runTurn.calls.at(-1)).toMatchObject({ inputModality: 'voice', rawStt: null });
+    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', sttPieces: [{ text: 'tự khai', receipt: 'abc' }] }))).text();
+    expect(runTurn.calls.at(-1)).toMatchObject({ rawStt: null });
+    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), sessionId: b.sessionId, inputModality: 'voice', sttPieces: [piece] }))).text();
+    expect(runTurn.calls.at(-1)).toMatchObject({ rawStt: null });
+  });
+
+  it('tin gõ: mặc định text, bỏ qua sttPieces', async () => {
+    const piece = await heardPiece('bỏ qua');
+    runTurn.calls.length = 0;
+    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), sttPieces: [piece] }))).text();
     expect(runTurn.calls.at(-1)).toMatchObject({ inputModality: 'text', rawStt: null });
   });
 
-  it('rawStt được cắt khoảng trắng; chỉ toàn khoảng trắng → null', async () => {
-    runTurn.calls.length = 0;
-    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', rawStt: '  không phẩy năm \n' }))).text();
-    expect(runTurn.calls.at(-1)).toMatchObject({ inputModality: 'voice', rawStt: 'không phẩy năm' });
-    await (await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', rawStt: '   ' }))).text();
-    expect(runTurn.calls.at(-1)).toMatchObject({ inputModality: 'voice', rawStt: null });
-  });
-
-  it('rawStt quá 2000 ký tự hoặc inputModality lạ → 400', async () => {
-    expect((await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', rawStt: 'a'.repeat(2001) }))).status).toBe(400);
+  it('đoạn quá 2000 ký tự, quá 20 đoạn hoặc inputModality lạ → 400', async () => {
+    const big = [{ text: 'a'.repeat(2001), receipt: 'x' }];
+    const many = Array.from({ length: 21 }, () => ({ text: 'a', receipt: 'x' }));
+    expect((await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', sttPieces: big }))).status).toBe(400);
+    expect((await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'voice', sttPieces: many }))).status).toBe(400);
     expect((await chatRoute(jsonRequest('http://app.test/api/chat', { ...base(), inputModality: 'video' }))).status).toBe(400);
   });
 });
@@ -277,13 +297,14 @@ describe('POST /api/chat (voice)', () => {
 describe('POST /api/learn/problem (voice)', () => {
   const base = () => ({ sessionId: a.sessionId, text: 'Tính 4,5 + 1', inputModality: 'voice' });
 
-  it('rawStt được cắt khoảng trắng; rỗng → null; tin gõ bỏ qua rawStt', async () => {
+  it('raw_stt từ đoạn có biên nhận; không có đoạn hoặc tin gõ → null', async () => {
+    const piece = await heardPiece('tính bốn phẩy năm cộng một');
     typedProblem.calls.length = 0;
-    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), rawStt: ' tính bốn phẩy năm cộng một  ' }))).text();
+    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), sttPieces: [piece] }))).text();
     expect(typedProblem.calls.at(-1)).toMatchObject({ text: 'Tính 4,5 + 1', rawStt: 'tính bốn phẩy năm cộng một' });
-    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), rawStt: '' }))).text();
+    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), sttPieces: [] }))).text();
     expect(typedProblem.calls.at(-1)).toMatchObject({ rawStt: null });
-    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), inputModality: 'text', rawStt: 'bỏ qua' }))).text();
+    await (await problemRoute(jsonRequest('http://app.test/api/learn/problem', { ...base(), inputModality: 'text', sttPieces: [piece] }))).text();
     expect(typedProblem.calls.at(-1)).toMatchObject({ rawStt: null });
   });
 });

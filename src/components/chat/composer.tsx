@@ -12,6 +12,7 @@ import {
   TRANSCRIPT_LIMITS,
   writeStoredLanguage,
   type SttLanguage,
+  type SttPiece,
   type SubmitMeta,
 } from './voice-input-logic';
 
@@ -47,8 +48,8 @@ export function Composer({
   // Ô nhiều dòng là ô nhập đề (/api/learn/problem), ô một dòng là tin chat (/api/chat).
   const maxChars = multiline ? TRANSCRIPT_LIMITS.problem : TRANSCRIPT_LIMITS.chat;
   const [text, setText] = useState('');
-  // Bản chép nguyên văn từ STT của tin đang soạn (null = tin gõ tay). Gửi kèm để bố mẹ xem được.
-  const [rawStt, setRawStt] = useState<string | null>(null);
+  // Các đoạn STT (kèm biên nhận) của tin đang soạn; rỗng = tin gõ tay. Server ghép thành raw_stt cho bố mẹ xem.
+  const [sttPieces, setSttPieces] = useState<SttPiece[]>([]);
   const [keyboard, setKeyboard] = useState(false);
   const [language, setLanguageState] = useState<SttLanguage>(() => readStoredLanguage(browserStorage(), voice?.defaultLanguage ?? 'vi'));
   const inputRef = useRef<HTMLTextAreaElement & HTMLInputElement>(null);
@@ -61,9 +62,9 @@ export function Composer({
     language,
     levelTarget: formRef,
     onStart: () => voice?.onRecordingStart(),
-    onTranscript: (heard) => {
+    onTranscript: (heard, receipt) => {
       setText((t) => mergeTranscript(t, heard, maxChars));
-      setRawStt((r) => mergeTranscript(r ?? '', heard, maxChars));
+      setSttPieces((pieces) => [...pieces, { text: heard, receipt }]);
       // Đưa con tới nút Gửi; không focus ô nhập để bàn phím ảo không che màn hình trên tablet.
       requestAnimationFrame(() => sendRef.current?.focus());
     },
@@ -78,7 +79,7 @@ export function Composer({
 
   const updateText = (next: string) => {
     setText(next);
-    if (!next.trim()) setRawStt(null); // con xoá hết để gõ lại: tin mới là tin gõ tay
+    if (!next.trim()) setSttPieces([]); // con xoá hết để gõ lại: tin mới là tin gõ tay
   };
 
   const insert = (s: string) => {
@@ -97,9 +98,9 @@ export function Composer({
     e.preventDefault();
     const value = text.trim();
     if (!value || disabled || voiceBusy) return;
-    onSubmit(value, submitMetaFor(rawStt, maxChars));
+    onSubmit(value, submitMetaFor(sttPieces));
     setText('');
-    setRawStt(null);
+    setSttPieces([]);
     recorder.clearMessage();
   }
 

@@ -25,7 +25,7 @@ export interface VoiceRecorderOptions {
   /** Phần tử nhận biến CSS `--level` (0..1) để vẽ mức âm lượng mà không render lại React mỗi khung hình. */
   levelTarget: RefObject<HTMLElement | null>;
   onStart: () => void;
-  onTranscript: (text: string) => void;
+  onTranscript: (text: string, receipt: string) => void;
 }
 
 export interface VoiceRecorder {
@@ -105,7 +105,7 @@ export function useVoiceRecorder(options: VoiceRecorderOptions): VoiceRecorder {
     if (outcome.ok) {
       setStatus('idle');
       setMessage(MESSAGES.review);
-      latest.current.onTranscript(outcome.text);
+      latest.current.onTranscript(outcome.text, outcome.receipt);
       return;
     }
     if (outcome.reason === 'unauthenticated') router.replace('/login');
