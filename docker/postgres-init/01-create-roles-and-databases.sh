@@ -7,7 +7,8 @@ set -euo pipefail
 
 : "${CU_OWNER_PASSWORD:?CU_OWNER_PASSWORD chưa đặt}"
 : "${CU_APP_PASSWORD:?CU_APP_PASSWORD chưa đặt}"
-DATABASES="${CU_DATABASES:-cu cu_test cu_eval}"
+# cu: dev, cu_test: vitest, cu_eval: eval, cu_prod: chạy thật (tách hẳn khỏi dev).
+DATABASES="${CU_DATABASES:-cu cu_test cu_eval cu_prod}"
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname postgres \
   -v owner_pw="$CU_OWNER_PASSWORD" -v app_pw="$CU_APP_PASSWORD" <<'SQL'

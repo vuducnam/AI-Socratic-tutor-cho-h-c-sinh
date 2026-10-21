@@ -23,6 +23,7 @@ Dev dùng `.env` (sao chép từ `.env.example`, Turnstile test key). Prod dùng
 | --- | --- |
 | `POSTGRES_PASSWORD`, `CU_OWNER_PASSWORD`, `CU_APP_PASSWORD` | Mật khẩu ngẫu nhiên dài; role tạo lúc volume Postgres còn trống (`docker/postgres-init`) |
 | `REDIS_PASSWORD` | |
+| `CU_DATABASE=cu_prod`, `REDIS_DB=1` | Prod dùng database và Redis DB riêng, tách khỏi dev (`cu`, DB 0) trên cùng PC. `cu_prod` được tạo khi volume Postgres còn trống; cụm đã có sẵn thì chạy `docker exec -e CU_DATABASES=cu_prod -e POSTGRES_USER=postgres -u postgres cu-postgres-1 bash /docker-entrypoint-initdb.d/01-create-roles-and-databases.sh` (Git Bash: thêm `MSYS_NO_PATHCONV=1` phía trước) |
 | `SESSION_SECRET`, `ADMIN_SESSION_SECRET`, `TOTP_ENCRYPTION_KEY` | ≥ 32 ký tự ngẫu nhiên, ba giá trị khác nhau |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Từ Cloudflare › Turnstile (chế độ Managed). Site key vào image lúc build |
 | `CLOUDFLARE_TUNNEL_TOKEN` | Token tunnel (mục 3) |
