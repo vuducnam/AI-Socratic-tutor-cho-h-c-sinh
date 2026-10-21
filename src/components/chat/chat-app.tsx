@@ -102,6 +102,27 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
     }
   }
 
+  // "Mít ra đề cho bạn": đề tình huống hiện như một tin của Mít; không được thì quay lại màn nhập đề kèm lời nhắn.
+  async function requestPractice() {
+    if (!sessionId || busy) return;
+    setNotice(null);
+    setPhase('chat');
+    setBusy('Mít đang nghĩ một đề hay cho bạn');
+    try {
+      const r = await postSse<ProblemResultDto>('/api/learn/practice', { sessionId }, setBusy);
+      if (r.ok) showTurn(r.turn);
+      else {
+        setLines((prev) => [...prev, { turnId: `r-${Date.now()}`, from: 'cu', text: r.message, kind: 'notice' }]);
+        setPhase('problem');
+      }
+    } catch (err) {
+      handleError(err);
+      setPhase((p) => (p === 'offline' ? p : 'problem'));
+    } finally {
+      setBusy(null);
+    }
+  }
+
   async function sendPhoto(file: File, crop: { x: number; y: number; width: number; height: number } | null) {
     if (!sessionId) return;
     setBusy('Mít đang đọc ảnh');
@@ -211,6 +232,7 @@ export function ChatApp({ studentName, voicePrefs }: { studentName: string; voic
           voice={sessionId ? { sessionId, defaultLanguage: voicePrefs.sttLanguage, onRecordingStart: tts.stop } : undefined}
           onText={(t, meta) => void sendProblem(t, undefined, meta)}
           onPhoto={(f, c) => void sendPhoto(f, c)}
+          onPractice={() => void requestPractice()}
         />}
       {phase === 'confirm' && ocr && (
         <OcrConfirmPanel

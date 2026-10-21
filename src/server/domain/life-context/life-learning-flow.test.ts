@@ -193,3 +193,63 @@ describe('học từ đời sống', () => {
     expect(kinds.rows.find((r) => r.turn_kind === 'transfer_answer')?.content).toBe('khi đi chợ so giá tiền');
   });
 });
+
+describe('Mít ra đề cho bạn', () => {
+  const BLOCK = { verdict: 'block', reasons: ['CONTEXT'], explanation: 'câu hỏi không tự nhiên' };
+
+  it('đề tình huống từ context đã duyệt, cho skill đã học; tin của Mít chính là đề và đề thành bài đang làm', async () => {
+    await setApprovedParallelContext(true);
+    const w = await studentWithSession('FX5.T1.B4');
+    const scripted = scriptedAnthropic([{ problem_text: PARALLEL_TEXT }, PARALLEL_PLAN, PASS]);
+    setGatewayDependencies({ primary: scripted.provider, fallback: null });
+    const { startPracticeProblem } = await import('@/server/domain/session/practice-problem');
+    const r = await startPracticeProblem(w.student, { studentId: w.studentId, sessionId: w.sessionId });
+    expect(r).toMatchObject({ ok: true, turn: { message: PARALLEL_TEXT, state: 'ELICIT' } });
+
+    const problems = await appDb().query(
+      `SELECT p.id, p.origin, p.context_variables, lc.approved_by FROM problems p JOIN life_contexts lc ON lc.id = p.life_context_id WHERE p.session_id = $1`,
+      [w.sessionId],
+    );
+    expect(problems.rows).toHaveLength(1);
+    expect(problems.rows[0]).toMatchObject({ origin: 'generated' });
+    expect(problems.rows[0].approved_by).toBeTruthy();
+    expect(problems.rows[0].context_variables.parallel_of).toBeNull();
+    const turns = await appDb().query(`SELECT role, content, problem_id FROM turns WHERE session_id = $1 ORDER BY seq`, [w.sessionId]);
+    expect(turns.rows).toEqual([{ role: 'tutor', content: PARALLEL_TEXT, problem_id: problems.rows[0].id }]);
+    // Guard kiểm đề như một đề luyện (không phải lời gợi ý cho bài về nhà).
+    expect(JSON.stringify(scripted.requests[2]!.system)).toContain('practice_problem');
+
+    // Con trả lời → lượt chạy trên chính đề này.
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Bạn so phần nguyên trước nhé?'), PASS]).provider, fallback: null });
+    const next = await runStudentTurn(w.student, {
+      studentId: w.studentId,
+      sessionId: w.sessionId,
+      text: 'mình chưa biết',
+      idempotencyKey: crypto.randomUUID(),
+      responseTimeMs: 9000,
+    });
+    const last = await appDb().query(`SELECT problem_id FROM turns WHERE id = $1`, [next.tutorTurnId]);
+    expect(last.rows[0].problem_id).toBe(problems.rows[0].id);
+  });
+
+  it('Guard chặn đề → không hiện gì, báo con gửi đề của mình', async () => {
+    await setApprovedParallelContext(true);
+    const w = await studentWithSession('FX5.T1.B4');
+    setGatewayDependencies({ primary: scriptedAnthropic([{ problem_text: PARALLEL_TEXT }, PARALLEL_PLAN, BLOCK]).provider, fallback: null });
+    const { startPracticeProblem, PRACTICE_UNAVAILABLE } = await import('@/server/domain/session/practice-problem');
+    const r = await startPracticeProblem(w.student, { studentId: w.studentId, sessionId: w.sessionId });
+    expect(r).toEqual({ ok: false, message: PRACTICE_UNAVAILABLE, reason: 'blocked' });
+    const turns = await appDb().query(`SELECT count(*)::int AS n FROM turns WHERE session_id = $1`, [w.sessionId]);
+    expect(turns.rows[0].n).toBe(0);
+  });
+
+  it('chưa có tình huống đã duyệt cho bài đã học → từ chối, không gọi model', async () => {
+    await setApprovedParallelContext(false);
+    const w = await studentWithSession('FX5.T1.B4');
+    const scripted = scriptedAnthropic([]);
+    setGatewayDependencies({ primary: scripted.provider, fallback: null });
+    const { startPracticeProblem } = await import('@/server/domain/session/practice-problem');
+    expect(await startPracticeProblem(w.student, { studentId: w.studentId, sessionId: w.sessionId })).toMatchObject({ ok: false, reason: 'no_context' });
+    expect(scripted.requests).toHaveLength(0);
+  });
+});

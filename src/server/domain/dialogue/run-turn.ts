@@ -240,6 +240,90 @@ export async function openProblemTurn(actor: Actor, input: { studentId: string; 
   });
 }
 
+/**
+ * Đề luyện "Mít ra đề cho bạn": tin của Mít CHÍNH LÀ đề tình huống (đã qua Pre-solver + sympy khi sinh). Đề cũng
+ * qua kiểm tra cứng (≤ 3 câu, đúng 1 câu hỏi) và Guard (messageKind practice_problem); bị chặn → null, không hiện
+ * đề nào (không bao giờ đưa bài trơn).
+ */
+export async function openPracticeProblemTurn(
+  actor: Actor,
+  input: { studentId: string; sessionId: string; problemId: string; problemText: string; visual: SituationalVisual | null; evalMode?: 'live' | 'eval' },
+): Promise<TurnResult | null> {
+  return withSessionLock(input.sessionId, async () => {
+    const ctx = await loadTurnContext(actor, { ...input, forceProblemId: input.problemId });
+    if (!ctx.active || ctx.active.problem.id !== input.problemId) throw new NoActiveProblemError();
+    const tutorTurnId = randomUUID();
+    const position = ctx.position;
+    return withTurnTransaction(actor, input, async (writer) => {
+      const hard = runHardChecks(input.problemText, {
+        ...hardCheckContext(ctx, position.state),
+        maxSentences: ctx.preset.max_sentences_situational,
+        maxWords: ctx.preset.max_words_per_turn * 2,
+      });
+      const guard = hard.pass
+        ? await runGuard({
+            ...guardInputFor(ctx, '', [], position.state),
+            messageKind: 'practice_problem',
+            studentId: input.studentId,
+            sessionId: input.sessionId,
+            // Chưa biết đề có qua không: lượt gọi Guard chỉ gắn với phiên (bị chặn thì không có lượt nào để trỏ tới).
+            turnId: null,
+            message: input.problemText,
+            recorder: writer.recorder,
+            evalMode: input.evalMode,
+          })
+        : null;
+      const passed = guard?.verdict === 'pass';
+      const verdictTurnId = passed ? tutorTurnId : null;
+      await writer.appendGuardVerdict({
+        sessionId: input.sessionId,
+        turnId: verdictTurnId,
+        checker: 'code',
+        llmCallId: null,
+        tutorLlmCallId: null,
+        attempt: 1,
+        verdict: hard.pass ? 'pass' : 'block',
+        reasons: hard.reasons,
+      });
+      if (guard) {
+        await writer.appendGuardVerdict({
+          sessionId: input.sessionId,
+          turnId: verdictTurnId,
+          checker: 'llm',
+          llmCallId: guard.llmCallId,
+          tutorLlmCallId: null,
+          attempt: 1,
+          verdict: guard.verdict,
+          reasons: guard.reasons,
+        });
+      }
+      if (!passed) return null;
+      await writer.appendTurn({
+        id: tutorTurnId,
+        sessionId: input.sessionId,
+        role: 'tutor',
+        content: input.problemText,
+        stateBefore: position.state,
+        stateAfter: position.state,
+        scaffoldLevel: position.scaffoldLevel,
+        problemId: input.problemId,
+        signals: { completed_steps: [], made_progress: true, student_answers: [], response_times_ms: [], source: 'practice_problem' },
+      });
+      return {
+        studentTurnId: null,
+        tutorTurnId,
+        message: input.problemText,
+        state: position.state,
+        scaffoldLevel: position.scaffoldLevel,
+        done: false,
+        paused: false,
+        source: 'tutor',
+        visual: input.visual,
+      } satisfies TurnResult;
+    });
+  });
+}
+
 export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Promise<TurnResult> {
   const cached = await getIdempotentResult<Omit<TurnResult, 'message'>>(input.sessionId, input.idempotencyKey);
   if (cached) {

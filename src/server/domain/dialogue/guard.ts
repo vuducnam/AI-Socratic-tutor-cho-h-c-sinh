@@ -8,19 +8,20 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 import type { Preset } from './preset';
 import { guardOutputSchema, type GuardOutput } from './tutor-output-schema';
 
-// Guard (guard/v9, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
-export const GUARD_PROMPT = 'guard/v9';
+// Guard (guard/v10, SPEC §8.2): model riêng kiểm mọi tin nhắn gửi con sau kiểm tra cứng.
+export const GUARD_PROMPT = 'guard/v10';
 
 export interface GuardInput {
   studentId: string;
   sessionId: string;
-  turnId: string;
+  /** Lượt sẽ chứa tin nhắn; null khi chưa chắc lượt được ghi (đề luyện có thể bị chặn, không có lượt nào). */
+  turnId: string | null;
   message: string;
   studentMessage: string;
   /** Tên Cú gọi học sinh (address.student hoặc tên hiển thị), để Guard không coi đó là nhân vật lạ. */
   studentName: string;
   /** Loại tin nhắn đang kiểm; mặc định lời Tutor. */
-  messageKind?: 'tutor' | 'hook' | 'transfer_question' | 'parallel_problem';
+  messageKind?: 'tutor' | 'hook' | 'transfer_question' | 'parallel_problem' | 'practice_problem';
   grade: number;
   preset: Preset;
   scope: CurriculumScope;

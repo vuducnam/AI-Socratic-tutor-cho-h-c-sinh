@@ -190,6 +190,9 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z'/%3E%3Ccircle cx='12' cy='13' r='4'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 .photo-pick input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+/* "Mít ra đề cho bạn": tím nhạt như Gợi ý (Mít giúp một tay), cùng dáng viên thuốc với nút chụp ảnh. */
+.learn-shell .practice-button { display: flex; justify-content: center; align-items: center; gap: var(--k-s1); min-height: 64px; background: var(--k-lilac); color: var(--k-lilac-ink); font-size: 17px; }
+.learn-shell .practice-button:hover:not(:disabled) { background: #E9DAFD; }
 .photo-pick:focus-within { outline: 3px solid var(--k-focus); outline-offset: 2px; }
 .crop-box { position: relative; touch-action: none; user-select: none; border-radius: var(--k-r-sm); overflow: hidden; }
 .crop-box img { display: block; width: 100%; height: auto; }
