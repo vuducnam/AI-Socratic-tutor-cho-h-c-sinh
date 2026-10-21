@@ -69,7 +69,16 @@ const config = [
   },
   {
     files: ['src/server/dal/**'],
-    rules: { 'no-restricted-imports': restrict([], [...systemActorPatterns]) },
+    rules: {
+      'no-restricted-imports': restrict(
+        [],
+        [
+          ...systemActorPatterns,
+          // DAL là tầng dưới cùng: không gọi ngược tầng voice (file, mạng). Hợp đồng dùng chung đặt ở src/server/storage.
+          { group: ['@/server/voice', '@/server/voice/**', '**/server/voice/**'], message: 'DAL không import tầng voice.' },
+        ],
+      ),
+    },
   },
   {
     files: ['src/server/dal/mint-actor.ts', 'src/server/auth/session.ts'],

@@ -3,7 +3,7 @@ import type { Actor } from './actor';
 import { AuthorizationError, assertStudentAccess } from './actor-authorization';
 import type { AuthorizationFixture } from './authorization-fixtures';
 import { prisma } from './client';
-import { ttsCacheUriFor } from '@/server/voice/tts-cache';
+import { ttsCacheUriFor } from '@/server/storage/tts-cache-uri';
 
 // Trang Dữ liệu của phụ huynh: xem access_log và xoá toàn bộ dữ liệu của con (SPEC §11.1, quy tắc cứng 2, 3, 14).
 

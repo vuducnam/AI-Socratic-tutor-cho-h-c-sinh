@@ -4,7 +4,8 @@ import {
   recordPendingFileDeletionFailure,
 } from '@/server/dal/pending-file-deletions-dal';
 import { deleteStorageFile } from '@/server/storage/local-file-storage';
-import { deleteStudentTtsCache, TTS_CACHE_URI_SCHEME } from '@/server/voice/tts-cache';
+import { TTS_CACHE_URI_SCHEME } from '@/server/storage/tts-cache-uri';
+import { deleteStudentTtsCache } from '@/server/voice/tts-cache';
 import { systemActor } from '../actor';
 
 // Xoá file ảnh/scan đã được purge_student() gom vào pending_file_deletions, và thư mục cache giọng đọc của con. Lỗi thì tăng attempts,

@@ -2,6 +2,7 @@ import 'server-only';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
+import { studentIdFromTtsCacheUri } from '@/server/storage/tts-cache-uri';
 
 // Cache WAV lời của Mít trên đĩa (ngoài web root): TTS_CACHE_DIR/<student_id>/<sha256(model+voice+spoken)>.wav.
 // Tách thư mục theo học sinh để xoá được toàn bộ khi purge (lời của Mít có thể gọi tên con).
@@ -15,19 +16,9 @@ export function ttsCacheRoot(): string {
   return resolve(/*turbopackIgnore: true*/ dir);
 }
 
-/** URI hàng chờ xoá (pending_file_deletions) cho toàn bộ cache của một học sinh khi purge. */
-export const TTS_CACHE_URI_SCHEME = 'tts-cache:';
-
-export function ttsCacheUriFor(studentId: string): string {
-  if (!UUID_RE.test(studentId)) throw new Error('studentId không hợp lệ');
-  return `${TTS_CACHE_URI_SCHEME}${studentId.toLowerCase()}`;
-}
-
 /** Xoá cả thư mục cache của một học sinh (idempotent). Chỉ nhận URI do ttsCacheUriFor tạo. */
 export async function deleteStudentTtsCache(uri: string): Promise<void> {
-  const studentId = uri.startsWith(TTS_CACHE_URI_SCHEME) ? uri.slice(TTS_CACHE_URI_SCHEME.length) : '';
-  if (!UUID_RE.test(studentId)) throw new Error(`URI cache TTS không hợp lệ: ${uri}`);
-  await rm(join(ttsCacheRoot(), studentId.toLowerCase()), { recursive: true, force: true });
+  await rm(join(ttsCacheRoot(), studentIdFromTtsCacheUri(uri)), { recursive: true, force: true });
 }
 
 /** Khoá cache: sha256 của [model, voice, spoken] (JSON để không nhập nhằng ranh giới giữa các phần). */

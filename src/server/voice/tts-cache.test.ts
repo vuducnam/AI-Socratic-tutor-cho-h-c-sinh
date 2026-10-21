@@ -3,7 +3,8 @@ import { mkdtemp, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { deleteStudentTtsCache, readTtsCache, ttsCacheKey, ttsCacheUriFor, writeTtsCache } from './tts-cache';
+import { ttsCacheUriFor } from '@/server/storage/tts-cache-uri';
+import { deleteStudentTtsCache, readTtsCache, ttsCacheKey, writeTtsCache } from './tts-cache';
 
 const stillThere = async () => true;
 
