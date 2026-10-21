@@ -27,12 +27,30 @@ const METRIC_LABELS: Record<string, string> = {
 
 type Metric = { value: number | null; numerator?: number; denominator?: number; status?: string; reason?: string };
 
-function ClaimList({ claims }: { claims: Claim[] }) {
+/**
+ * `verbatim`: mục lập luận nguyên văn — hiện câu trích của con. Còn lại hiện nhận định của model (`text`),
+ * câu trích (nếu có) đi sau làm bằng chứng, không thay chỗ nhận định.
+ */
+function ClaimList({ claims, verbatim = false }: { claims: Claim[]; verbatim?: boolean }) {
   return (
     <ul>
       {claims.map((c, i) => (
         <li key={i}>
-          {c.quote ? <q>{c.quote}</q> : c.text}{' '}
+          {verbatim ? (
+            c.quote ? <q>{c.quote}</q> : c.text
+          ) : (
+            <>
+              {c.text}
+              {c.quote && c.quote !== c.text && (
+                <>
+                  {' '}
+                  <span className="muted">
+                    (con nói: <q>{c.quote}</q>)
+                  </span>
+                </>
+              )}
+            </>
+          )}{' '}
           {c.evidence_turn_ids.map((id) => (
             <a key={id} href={`#turn-${id}`} className="small">
               [lượt]
@@ -82,7 +100,7 @@ export function SessionReportCard({ report }: { report: { metrics: unknown; narr
       {!!narrative.student_reasoning_quotes?.length && (
         <>
           <h3>Lập luận của con (nguyên văn)</h3>
-          <ClaimList claims={narrative.student_reasoning_quotes} />
+          <ClaimList claims={narrative.student_reasoning_quotes} verbatim />
         </>
       )}
       <h3>Điều cần chú ý</h3>
