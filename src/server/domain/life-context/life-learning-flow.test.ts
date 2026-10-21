@@ -144,6 +144,24 @@ describe('học từ đời sống', () => {
     expect(alerts.rows[0].n).toBeGreaterThan(0);
   });
 
+  it('bài Mít tạo cho skill chưa học → từ chối out_of_scope, không kêu cảnh báo thư viện cạn', async () => {
+    await setApprovedParallelContext(true);
+    const w = await homeworkWorld();
+    const { generateSituationalProblem } = await import('./generate-situational-problem');
+    const before = await appDb().query(`SELECT count(*)::int AS n FROM system_alerts WHERE type = 'context_pool_exhausted'`);
+    const r = await generateSituationalProblem(w.student, {
+      studentId: w.studentId,
+      sessionId: w.sessionId,
+      student: { id: w.studentId, display_name: 'Minh', gender: 'male', grade: 5, preset: 'grade5', address: {}, companion: {}, interests_declared: [], learning_prefs: {} },
+      scope: { ...w.scope, allowedSkillIds: [] },
+      catalog: w.catalog,
+      targetSkillIds: ['FX.DEC.COMPARE'],
+    });
+    expect(r).toEqual({ ok: false, reason: 'out_of_scope', tried: [] });
+    const after = await appDb().query(`SELECT count(*)::int AS n FROM system_alerts WHERE type = 'context_pool_exhausted'`);
+    expect(after.rows[0].n).toBe(before.rows[0].n);
+  });
+
   it('giải xong + giải thích → câu hỏi chuyển giao; con trả lời → DONE, câu trả lời lưu nguyên văn', async () => {
     const w = await homeworkWorld();
     setGatewayDependencies({ primary: scriptedAnthropic([{ hook: 'Đi chợ so giá.' }, PASS, tutor('Đề hỏi gì?'), PASS]).provider, fallback: null });

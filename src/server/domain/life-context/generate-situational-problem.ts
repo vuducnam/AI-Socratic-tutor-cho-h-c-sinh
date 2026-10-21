@@ -39,7 +39,7 @@ export interface SituationalProblemInput {
 
 export type SituationalProblemResult =
   | { ok: true; problemId: string; problemText: string; contextId: string; values: Record<string, string>; visual: SituationalVisual | null }
-  | { ok: false; reason: 'context_pool_exhausted' | 'generation_failed'; tried: string[] };
+  | { ok: false; reason: 'out_of_scope' | 'context_pool_exhausted' | 'generation_failed'; tried: string[] };
 
 /** Hình minh hoạ SVG cho đề tình huống (client vẽ bằng component math-visuals). */
 export interface SituationalVisual {
@@ -68,6 +68,11 @@ export function situationalTextProblems(text: string, values: Record<string, str
 const CHARACTERS = ['bạn An', 'bạn Lan', 'bạn Minh', 'bạn Hoa', 'bạn Nam', 'bạn Mai', 'bạn Khôi', 'bạn Linh'];
 
 export async function generateSituationalProblem(actor: Actor, input: SituationalProblemInput): Promise<SituationalProblemResult> {
+  // Không skill đích nào trong phạm vi đã học → từ chối đúng quy tắc cứng 15, không phải thư viện cạn:
+  // không kêu system_alert (bố mẹ chỉ nên thấy cảnh báo khi thư viện thật sự thiếu context).
+  if (!input.targetSkillIds.some((s) => input.scope.allowedSkillIds.includes(s))) {
+    return { ok: false, reason: 'out_of_scope', tried: [] };
+  }
   const preset = loadPreset(input.student.preset);
   const random = input.random ?? Math.random;
   const contexts = await listContextsForSkills(input.targetSkillIds);
