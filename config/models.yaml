@@ -49,7 +49,7 @@ roles:
 # STT (Giai đoạn 1): giữ A/B qua cấu hình; model thắng do WER đo trên giọng thật.
 stt:
   primary: local:vinai/PhoWhisper-large
-  cloud_candidates: [openai/gpt-4o-transcribe, mistralai/voxtral-mini-transcribe]   # kiểm lại slug trước khi dùng
+  cloud_candidates: [openai/gpt-transcribe, mistralai/voxtral-mini-transcribe]   # slug đã kiểm trên OpenRouter 2026-10-21
 tts:
   model: google/gemini-3.8-flash-tts
   response_format: mp3

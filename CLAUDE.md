@@ -58,7 +58,7 @@ Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là
 | Đọc ảnh đề (vision) | `claude-sonnet-5-5` |
 | Việc offline không tương tác (nháp misconception, báo cáo tuần) | Message Batches API |
 | Eval hội thoại nhiều lượt | API đồng bộ, API key và trần chi phí riêng, không fallback OpenRouter |
-| STT | Chính: `vinai/PhoWhisper-large` local (GPU). A/B và dự phòng: OpenRouter `openai/gpt-4o-transcribe` (hoặc GPT Transcribe), `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
+| STT | Chính: `vinai/PhoWhisper-large` local (GPU). A/B và dự phòng: OpenRouter `openai/gpt-transcribe`, `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
 | TTS | `google/gemini-3.8-flash-tts` qua OpenRouter, `response_format: mp3` |
 | Sinh ảnh | `openai/gpt-image-2` qua OpenRouter — chỉ cho avatar và minh hoạ ngữ cảnh. **Hình toán học vẽ bằng SVG từ code**, không dùng image gen |
 
