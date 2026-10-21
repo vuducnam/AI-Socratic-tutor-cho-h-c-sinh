@@ -39,6 +39,7 @@ vi.mock('@/server/auth/session', () => {
 vi.mock('next/headers', () => ({ headers: async () => new Headers({ 'user-agent': 'vitest' }) }));
 
 const { acknowledgeFlagAction } = await import('@/app/(parent)/parent/flags/actions');
+const { unlockStudentPinAction } = await import('@/app/(parent)/parent/overview-actions');
 const { updatePreferencesAction } = await import('@/app/(parent)/parent/settings/actions');
 const { purgeStudentAction } = await import('@/app/(parent)/parent/data/actions');
 const { createIndependentResultAction, setTopicArmAction } = await import('@/app/(parent)/parent/independent/actions');
@@ -83,7 +84,7 @@ function form(entries: Record<string, string | string[]>): FormData {
 async function snapshotOfA() {
   const db = appDb();
   const [student, flag, results, arms] = await Promise.all([
-    db.query('SELECT interests_declared, learning_prefs FROM students WHERE id = $1', [a.studentId]),
+    db.query('SELECT interests_declared, learning_prefs, pin_failed_count FROM students WHERE id = $1', [a.studentId]),
     db.query('SELECT acknowledged_at FROM flags WHERE id = $1', [flagId]),
     db.query('SELECT count(*)::int AS n FROM independent_results WHERE student_id = $1', [a.studentId]),
     db.query('SELECT skill_id, arm FROM topic_arms WHERE student_id = $1 ORDER BY skill_id', [a.studentId]),
@@ -130,9 +131,12 @@ describe('DAL khu /parent: phụ huynh B với con của A', () => {
 
 describe('Server Action, trang và route khu /parent: phụ huynh B với con của A', () => {
   it('mọi Server Action bị từ chối và dữ liệu của A không đổi', async () => {
+    // A đang bị khoá PIN: B không được mở khoá hộ.
+    await appDb().query('UPDATE students SET pin_failed_count = 7 WHERE id = $1', [a.studentId]);
     const before = await snapshotOfA();
     const attempts: [string, () => Promise<unknown>][] = [
       ['acknowledgeFlagAction', () => acknowledgeFlagAction(form({ studentId: a.studentId, flagId }))],
+      ['unlockStudentPinAction', () => unlockStudentPinAction(form({ studentId: a.studentId }))],
       [
         'updatePreferencesAction',
         () => updatePreferencesAction(form({ studentId: a.studentId, interests: 'x', sessionMinutes: '10', dailyLimitMinutes: '20' })),

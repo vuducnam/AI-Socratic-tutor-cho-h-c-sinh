@@ -3,7 +3,7 @@ import { getParentOverview } from '@/server/dal/parent-views-dal';
 import { listSystemAlerts } from '@/server/dal/system-alerts-dal';
 import { Notices } from './_components/child-tabs';
 import { formatDateTime, SEVERITY_LABELS } from './_lib/parent-page-helpers';
-import { acknowledgeSystemAlertAction } from './overview-actions';
+import { acknowledgeSystemAlertAction, unlockStudentPinAction } from './overview-actions';
 
 export const dynamic = 'force-dynamic';
 
@@ -55,6 +55,20 @@ export default async function ParentOverviewPage({ searchParams }: { searchParam
               <strong>{child.unacknowledgedFlags}</strong>
             </a>
           </p>
+          {child.pinLock && (
+            <div className="notice err">
+              <p>
+                {child.pinLock.kind === 'hard'
+                  ? `Mã PIN đang bị khoá sau ${child.pinLock.failedCount} lần nhập sai liên tiếp. Con chỉ đăng nhập lại được khi bố mẹ mở khoá.`
+                  : `Mã PIN đang tạm khoá tới ${formatDateTime(child.pinLock.until)} sau ${child.pinLock.failedCount} lần nhập sai.`}{' '}
+                Xem nhật ký đăng nhập ở mục Dữ liệu nếu không phải con nhập sai.
+              </p>
+              <form action={unlockStudentPinAction} className="inline-form">
+                <input type="hidden" name="studentId" value={child.id} />
+                <button type="submit">Mở khoá PIN</button>
+              </form>
+            </div>
+          )}
           <h3>Phiên gần nhất</h3>
           {child.recentSessions.length === 0 ? (
             <p className="muted">Chưa có phiên học nào.</p>

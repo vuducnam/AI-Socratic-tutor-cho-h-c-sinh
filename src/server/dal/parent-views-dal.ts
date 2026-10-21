@@ -19,11 +19,30 @@ export async function getParentOverview(actor: Actor) {
   const links = await prisma.parentStudent.findMany({
     where: { parent_id: actor.id },
     orderBy: { created_at: 'asc' },
-    select: { student: { select: { id: true, display_name: true, grade: true, status: true } } },
+    select: {
+      student: {
+        select: {
+          id: true,
+          display_name: true,
+          grade: true,
+          status: true,
+          pin_failed_count: true,
+          pin_locked_until: true,
+          pin_lockouts: { where: { hard_locked: true }, select: { device_class: true } },
+        },
+      },
+    },
   });
   const children = [];
-  for (const { student } of links) {
+  for (const { student: row } of links) {
+    const { pin_lockouts: hardLocks, pin_locked_until: lockedUntil, pin_failed_count: pinFailedCount, ...student } = row;
     await assertStudentAccess(actor, student.id, { action: 'read', resource: 'overview' });
+    // Khoá PIN tính theo tài khoản: khoá cứng ở bất kỳ thiết bị nào, hoặc khoá 15 phút còn hiệu lực.
+    const pinLock = hardLocks.length
+      ? ({ kind: 'hard', failedCount: pinFailedCount } as const)
+      : lockedUntil && lockedUntil > new Date()
+        ? ({ kind: 'soft', failedCount: pinFailedCount, until: lockedUntil } as const)
+        : null;
     const [recentSessions, unacknowledgedFlags] = await Promise.all([
       prisma.session.findMany({
         where: { student_id: student.id },
@@ -33,7 +52,7 @@ export async function getParentOverview(actor: Actor) {
       }),
       prisma.flag.count({ where: { student_id: student.id, acknowledged_at: null } }),
     ]);
-    children.push({ ...student, recentSessions, unacknowledgedFlags });
+    children.push({ ...student, pinLock, recentSessions, unacknowledgedFlags });
   }
   return children;
 }
