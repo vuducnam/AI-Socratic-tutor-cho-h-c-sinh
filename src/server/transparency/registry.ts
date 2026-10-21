@@ -98,6 +98,7 @@ export const NON_STUDENT_TABLES = [
   'curriculum_lessons',
   'beyond_scope_terms',
   'life_contexts',
+  'key_facts',
   'system_alerts',
   'pending_file_deletions',
   'prompt_versions',
