@@ -79,6 +79,8 @@ Trong app vẫn có rate limit theo IP (`CF-Connecting-IP`) và theo tài khoả
 
 ## 4. Quản trị qua Tailscale
 
+Tạo tài khoản, hồ sơ học sinh và việc quản trị hằng ngày: xem `admin-guide.md`.
+
 - Admin console Tailscale: bật MagicDNS + HTTPS Certificates; tắt key expiry cho PC.
 - Trên PC: `tailscale serve --bg --https=443 http://localhost:3001`
 - Mở `https://<tên-pc>.<tailnet>.ts.net/admin` từ thiết bị trong tailnet.
