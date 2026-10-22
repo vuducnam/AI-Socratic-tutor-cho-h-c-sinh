@@ -1,0 +1,34 @@
+# Chỉ dùng cho DEV (docker compose tự gộp file này khi không chỉ định -f).
+# Mở cổng localhost để app chạy ngoài Docker (pnpm dev) gọi được. Prod: pnpm prod:up (không gộp file này).
+services:
+  postgres:
+    ports:
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5442}:5432"
+    networks: [data, dev-host]
+  redis:
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks: [data, dev-host]
+  # Docker chỉ publish cổng khi container có mạng không-internal nên dev gắn thêm `dev-host`.
+  math-verifier:
+    ports:
+      - "127.0.0.1:8001:8001"
+    networks: [verifier, dev-host]
+  # Cổng 8001 đã dành cho math-verifier nên stt-local dùng 8002 (STT_LOCAL_URL trong .env).
+  # HF_HUB_OFFLINE=1 vẫn giữ: dù dev-host có internet, stt-local không gọi ra ngoài.
+  stt-local:
+    ports:
+      - "127.0.0.1:8002:8000"
+    networks: [stt, dev-host]
+  # Hộp thư thử cho dev: nhận email báo phụ huynh (SMTP_URL=smtp://localhost:1025 trong .env.example),
+  # không gửi ra ngoài. Xem thư ở http://localhost:8025. Prod dùng SMTP thật.
+  mailpit:
+    image: axllent/mailpit:v1.31.4
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:8025:8025"
+    networks: [dev-host]
+
+networks:
+  dev-host: {}

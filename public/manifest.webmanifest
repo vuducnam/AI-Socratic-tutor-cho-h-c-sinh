@@ -1,0 +1,12 @@
+{
+  "name": "Mít — bạn học",
+  "short_name": "Mít",
+  "start_url": "/learn",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f8f4ea",
+  "theme_color": "#1f3a5f",
+  "lang": "vi",
+  "icons": [{ "src": "/icons/owl.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

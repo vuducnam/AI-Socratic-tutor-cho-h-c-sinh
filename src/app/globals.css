@@ -1,0 +1,216 @@
+:root {
+  --bg: #f7f5ef;
+  --fg: #1d2433;
+  --muted: #5b6475;
+  --accent: #1f3a5f;
+  --accent-soft: #dfe8f3;
+  --danger: #a33a2c;
+  --border: #d9d4c7;
+  --card: #ffffff;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+a { color: var(--accent); }
+
+/* ── Khung chung ── */
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; margin: 1rem 0; }
+.notice { padding: 0.6rem 1rem; border-radius: 10px; }
+.notice.ok { background: #e3f2e6; }
+.notice.err { background: #f8e1dd; color: var(--danger); }
+button { font: inherit; padding: 0.45rem 0.9rem; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+button.link-button { background: none; color: var(--accent); border: none; text-decoration: underline; }
+input, select, textarea { font: inherit; padding: 0.45rem 0.6rem; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+
+/* ── Đăng nhập ── */
+.login-page { max-width: 420px; margin: 0 auto; padding: 2rem 16px; text-align: center; }
+.login-page h1 { font-size: 2.4rem; margin-bottom: 0; }
+.login-form { display: flex; flex-direction: column; gap: 0.9rem; text-align: left; }
+.login-form label { display: flex; flex-direction: column; gap: 0.3rem; font-weight: 600; }
+.login-form input { font-size: 1.2rem; }
+.form-error { color: var(--danger); margin: 0; }
+.tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.tabs button { flex: 1; background: var(--accent-soft); color: var(--accent); }
+.tabs button[aria-selected='true'] { background: var(--accent); color: #fff; }
+.turnstile { min-height: 65px; }
+
+/* ── Quản trị ── */
+.admin-shell { max-width: 1200px; margin: 0 auto; padding: 0 16px 3rem; font-size: 16px; }
+.admin-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.admin-main table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.admin-main th, .admin-main td { text-align: left; padding: 0.4rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.admin-main .actions form { display: inline-flex; gap: 0.3rem; margin: 0 0.3rem 0.3rem 0; }
+.inline-form { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.stack-form { display: flex; flex-direction: column; gap: 0.6rem; max-width: 560px; }
+.chip { display: inline-flex; align-items: center; gap: 0.25rem; background: var(--accent-soft); border-radius: 999px; padding: 0 0.2rem 0 0.6rem; margin: 0 0.2rem 0.2rem 0; }
+.chip button { padding: 0 0.4rem; background: none; color: var(--accent); border: none; }
+
+/* ── Phụ huynh ── */
+.parent-shell { max-width: 1100px; margin: 0 auto; padding: 0 16px 3rem; font-size: 16px; }
+.parent-header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+.parent-header nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+.parent-main details { margin-top: 1rem; }
+
+/* ── Phụ huynh: bảng, transcript, dữ liệu gốc ── */
+.parent-main .tabs a { padding: 0.3rem 0.8rem; border-radius: 10px; background: var(--accent-soft); text-decoration: none; }
+.parent-main .tabs a[aria-current='true'] { background: var(--accent); color: #fff; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.data-table th, .data-table td { text-align: left; padding: 0.4rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.data-table tr.row-highlight td { background: #fff4c7; }
+.plain-list { list-style: none; padding: 0; }
+.kv { display: grid; grid-template-columns: minmax(10rem, max-content) 1fr; gap: 0.2rem 1rem; margin: 0.5rem 0; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; overflow-wrap: anywhere; }
+.json-block { margin: 0.5rem 0; }
+.json-label { font-weight: 600; font-size: 0.85rem; }
+.json-block pre, .parent-main pre { background: #f3f1ea; border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem; overflow: auto; max-height: 32rem; font-size: 0.8rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.transcript { list-style: none; padding: 0; }
+.turn { border-left: 4px solid var(--border); padding: 0.4rem 0.8rem; margin: 0.6rem 0; }
+.turn-student { border-left-color: #6b9bd1; }
+.turn-tutor { border-left-color: #d1a96b; }
+.turn-content { white-space: pre-wrap; margin: 0.3rem 0; }
+.badge { background: var(--accent-soft); border-radius: 999px; padding: 0 0.5rem; font-size: 0.8rem; }
+.badge-danger, .text-danger { color: var(--danger); }
+.llm-call { border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0.6rem; margin: 0.4rem 0; }
+.problem { border-top: 1px solid var(--border); padding-top: 0.5rem; margin-top: 0.5rem; }
+.severity-high { border-left: 4px solid var(--danger); }
+.severity-warning { border-left: 4px solid #d1a96b; }
+.evidence-link { margin-right: 0.5rem; }
+.pre-wrap { white-space: pre-wrap; }
+.danger-zone { border-color: var(--danger); }
+.button-link { display: inline-block; padding: 0.45rem 0.9rem; border-radius: 10px; background: var(--accent); color: #fff; text-decoration: none; }
+.button-link.danger, button.danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.stack-form label { display: flex; flex-direction: column; gap: 0.25rem; }
+.stack-form label.checkbox { flex-direction: row; align-items: center; gap: 0.5rem; }
+
+/* ── Giao diện học sinh: "pastel vui tươi" (khu /learn và trang đăng nhập) ──
+   Nền bạc hà nhạt, bề mặt trắng bo tròn, KHÔNG viền dày, KHÔNG bóng đặc. Mỗi màu một vai trò:
+   xanh lá = hành động chính (Gửi, Vào, chọn), san hô = micro, vàng bơ = lời của bạn, tím nhạt = Gợi ý và
+   chuyện đời thường, xanh trời = Mít (tiêu đề, nút nghe). */
+.kid-theme {
+  --k-ink: #22302A;
+  --k-muted: #4E6159;
+  --k-bg: #EEF7F2;
+  --k-card: #FFFFFF;
+  --k-tint: #E3F1EA;
+  --k-tint-hover: #D6EBE0;
+  --k-disabled-bg: #DDE8E2;
+  --k-disabled-ink: #55645D;
+  --k-green: #2E7F5B;
+  --k-green-hover: #276F4F;
+  --k-green-ink: #245F45;
+  --k-coral: #FF8F70;
+  --k-coral-hover: #FF7F5C;
+  --k-coral-deep: #E8613D;
+  --k-coral-ink: #4A1D0F;
+  --k-coral-soft: #FFE3DA;
+  --k-butter: #FFE9A8;
+  --k-lilac: #F3E9FF;
+  --k-lilac-ink: #5B3A8C;
+  --k-sky-soft: #E2F0FD;
+  --k-sky-ink: #2D5B8C;
+  --k-focus: #2D7BD8;
+  --k-danger: #B4361C;
+  --k-r: 22px;
+  --k-r-card: 28px;
+  --k-r-sm: 14px;
+  --k-s1: 0.5rem;
+  --k-s2: 0.75rem;
+  --k-s3: 1rem;
+  --k-s4: 1.5rem;
+  --k-s5: 2.5rem;
+  --k-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --owl-body: #7DB4F5;
+  --owl-dark: #5C9DE8;
+  --owl-belly: #FFF0BF;
+  --owl-face: #FFFFFF;
+  --owl-eye: #22302A;
+  --owl-beak: #FFA36C;
+  --owl-cheek: #FFB3A7;
+  font-family: var(--font-body), 'Quicksand', system-ui, sans-serif;
+  font-weight: 500;
+  color: var(--k-ink);
+  background: var(--k-bg);
+}
+.kid-theme h1,
+.kid-theme h2 { font-family: var(--font-display), 'Baloo 2', system-ui, sans-serif; font-weight: 700; line-height: 1.15; color: var(--k-sky-ink); text-wrap: balance; }
+
+/* Nút: viên thuốc phẳng, không viền, không bóng. Rê chuột đậm màu, ấn thu nhỏ một chút. */
+.kid-theme button {
+  min-height: 48px;
+  padding: 0 var(--k-s4);
+  border: 0;
+  border-radius: 999px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 17px;
+  background: var(--k-green);
+  color: #FFFFFF;
+  cursor: pointer;
+  transition: background-color 150ms var(--k-ease), transform 100ms var(--k-ease);
+}
+.kid-theme button:hover:not(:disabled) { background: var(--k-green-hover); }
+.kid-theme button:active:not(:disabled) { transform: scale(0.97); }
+.kid-theme button:disabled { background: var(--k-disabled-bg); color: var(--k-disabled-ink); opacity: 1; cursor: not-allowed; }
+.kid-theme button.ghost { background: var(--k-tint); color: var(--k-green-ink); }
+.kid-theme button.ghost:hover:not(:disabled) { background: var(--k-tint-hover); }
+.kid-theme button:focus-visible,
+.kid-theme input:focus-visible,
+.kid-theme textarea:focus-visible,
+.kid-theme select:focus-visible { outline: 3px solid var(--k-focus); outline-offset: 2px; }
+
+.kid-theme input,
+.kid-theme textarea {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--k-ink);
+  background: var(--k-bg);
+  border: 0;
+  border-radius: var(--k-r);
+  padding: var(--k-s2) var(--k-s4);
+  box-shadow: inset 0 0 0 2px transparent;
+  transition: box-shadow 150ms var(--k-ease);
+}
+.kid-theme input:focus,
+.kid-theme textarea:focus { box-shadow: inset 0 0 0 3px var(--k-green); }
+/* Ô nhập: vòng xanh lá bên trong là dấu focus duy nhất (không chồng thêm outline). */
+.kid-theme input:focus-visible,
+.kid-theme textarea:focus-visible { outline: none; }
+.kid-theme input::placeholder,
+.kid-theme textarea::placeholder { color: #66776F; }
+.kid-theme .muted { color: var(--k-muted); }
+.kid-theme .form-error { color: var(--k-danger); font-weight: 700; }
+
+/* Trang đăng nhập (chung cho con và bố mẹ). */
+.kid-theme.login-page { max-width: none; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--k-s3); padding: var(--k-s5) 16px; }
+.kid-theme.login-page > * { width: 100%; max-width: 440px; }
+.login-hero { display: flex; flex-direction: column; align-items: center; gap: var(--k-s1); text-align: center; }
+.login-hero p { margin: 0; font-size: 1.1rem; }
+.kid-theme.login-page h1 { margin: 0; font-size: 3rem; }
+.kid-theme.login-page .card { background: var(--k-card); border: 0; border-radius: var(--k-r-card); padding: var(--k-s4); margin: 0; }
+.kid-theme .tabs { display: flex; gap: 4px; padding: 4px; margin-bottom: var(--k-s4); border-radius: 999px; background: var(--k-bg); }
+.kid-theme .tabs button { flex: 1; min-height: 44px; background: transparent; color: var(--k-green-ink); }
+.kid-theme .tabs button:hover:not(:disabled) { background: var(--k-tint); }
+.kid-theme .tabs button[aria-selected='true'] { background: var(--k-green); color: #FFFFFF; }
+.kid-theme .login-form { gap: var(--k-s3); }
+.kid-theme .login-form label { font-weight: 700; font-size: 1rem; }
+.kid-theme .login-form button[type='submit'] { min-height: 52px; font-size: 1.1rem; }
+.kid-theme.login-page .small { font-size: 0.9rem; text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .kid-theme button,
+  .kid-theme input,
+  .kid-theme textarea { transition: none; }
+  .kid-theme button:active:not(:disabled) { transform: none; }
+}

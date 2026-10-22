@@ -1,0 +1,34 @@
+# Fixture test (không phải dữ liệu thật). URL trỏ taphuan nhưng bài/trang là giả.
+subject: math
+grade: 5
+skills:
+  - skill_id: FIXTURE.DECIMAL.COMPARE
+    name: So sánh số thập phân (fixture)
+    subject: math
+    grade_introduced: 5
+    prerequisites: [FIXTURE.DECIMAL.READ]
+    leads_to: []
+    misconceptions:
+      - id: LONGER_IS_BIGGER
+        description: "Nghĩ 0,45 > 0,5 vì 45 > 5"
+        probe: "Cắt bánh thành 10 phần và 100 phần, phần nào to hơn?"
+        approved: { by: "__APPROVER__", at: 2026-10-19 }
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      lesson: "Bài fixture"
+      pages: "1-2"
+      official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/fixture"
+      imported_at: 2026-10-19
+  - skill_id: FIXTURE.DECIMAL.READ
+    name: Đọc, viết số thập phân (fixture)
+    subject: math
+    grade_introduced: 5
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      lesson: "Bài fixture 2"
+      official_url: "https://taphuan.nxbgd.vn/tap-huan/doc-sach/fixture"
+      imported_at: 2026-10-19

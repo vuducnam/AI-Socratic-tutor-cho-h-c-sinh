@@ -1,0 +1,220 @@
+# Cú — PC tại nhà (SPEC §14b).
+# Dev  : docker compose up -d postgres redis math-verifier stt-local mailpit   (docker-compose.override.yml tự gộp: mở cổng localhost)
+# Prod : pnpm prod:up   (= docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d — KHÔNG gộp override,
+#        nên postgres/redis/math-verifier/stt-local không publish cổng nào)
+# Model STT tải một lần trước khi chạy stt-local: docker compose run --rm stt-models-download
+name: cu
+
+x-app-env: &app-env
+  NODE_ENV: production
+  # Prod đặt CU_DATABASE=cu_prod, REDIS_DB=1 trong .env.prod: dữ liệu, phiên đăng nhập và hàng đợi job tách khỏi dev.
+  DATABASE_URL: postgresql://cu_app:${CU_APP_PASSWORD}@postgres:5432/${CU_DATABASE:-cu}
+  REDIS_URL: redis://:${REDIS_PASSWORD}@redis:6379/${REDIS_DB:-0}
+  MATH_VERIFIER_URL: http://math-verifier:8001
+  STT_LOCAL_URL: http://stt-local:8000
+  STORAGE_DIR: /data/storage
+  LIFE_CONTEXTS_DIR: /app/data/life-contexts
+  SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET chưa đặt}
+  ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?ADMIN_SESSION_SECRET chưa đặt}
+  TOTP_ENCRYPTION_KEY: ${TOTP_ENCRYPTION_KEY:-}
+  TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:?TURNSTILE_SECRET_KEY chưa đặt}
+  CLAUDE_API_KEY: ${CLAUDE_API_KEY:-}
+  CLAUDE_WORKSPACE_ID: ${CLAUDE_WORKSPACE_ID:-}
+  OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+  SMTP_URL: ${SMTP_URL:-}
+  SMTP_FROM: ${SMTP_FROM:-}
+  APP_BASE_URL: ${APP_BASE_URL:-}
+
+x-app-image: &app-image
+  image: cu-app:latest
+  build:
+    context: .
+    args:
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+  restart: unless-stopped
+
+# stt-local và service tải model dùng chung image + cấu hình model (services/stt-local/app/settings.py).
+x-stt-image: &stt-image
+  image: cu-stt-local:latest
+  build: ./services/stt-local
+  read_only: true
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+  volumes: [stt-models:/models]
+
+x-stt-env: &stt-env
+  STT_MODELS_VI: ${STT_MODELS_VI:-vinai/PhoWhisper-large}
+  STT_MODELS_EN: ${STT_MODELS_EN:-openai/whisper-large-v3-turbo}
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD chưa đặt}
+      CU_OWNER_PASSWORD: ${CU_OWNER_PASSWORD:?CU_OWNER_PASSWORD chưa đặt}
+      CU_APP_PASSWORD: ${CU_APP_PASSWORD:?CU_APP_PASSWORD chưa đặt}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks: [data]
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:?REDIS_PASSWORD chưa đặt}", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"$$REDIS_PASSWORD\" --no-auth-warning ping | grep PONG"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    networks: [data]
+
+  # Mạng `verifier` internal: không ra internet, chỉ app/admin/worker gọi được (không chung mạng với DB).
+  math-verifier:
+    build: ./services/math-verifier
+    restart: unless-stopped
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    networks: [verifier]
+
+  # Nhận dạng giọng nói trên GPU (quy tắc 10: giọng của con không rời PC). Mạng `stt` internal: không ra
+  # internet, chỉ app gọi được (chỉ /api/stt của học sinh dùng); HF_HUB_OFFLINE=1 và volume model mount
+  # chỉ đọc, nên chỉ dùng model đã tải sẵn.
+  # Audio chỉ nằm trên tmpfs /tmp trong lúc giải mã rồi bị xoá.
+  stt-local:
+    <<: *stt-image
+    restart: unless-stopped
+    environment:
+      <<: *stt-env
+      HF_HUB_OFFLINE: "1"
+      STT_PRELOAD: ${STT_PRELOAD:-all}
+      # Mặc định cuda: mất GPU thì container dừng khi nạp model (app thấy local hỏng) thay vì lặng lẽ
+      # chạy CPU chậm quá thời gian chờ. Dev không có GPU: đặt STT_DEVICE=auto hoặc cpu trong .env.
+      STT_DEVICE: ${STT_DEVICE:-cuda}
+    volumes: ["stt-models:/models:ro"]
+    tmpfs: ["/tmp:size=256m"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks: [stt]
+
+  # Tải model một lần vào volume `stt-models` (cần internet nên không dùng mạng `stt`):
+  #   docker compose run --rm stt-models-download
+  # Chỉ tải file model công khai từ Hugging Face, không gửi dữ liệu nào của con.
+  stt-models-download:
+    <<: *stt-image
+    profiles: [setup]
+    restart: "no"
+    command: ["python", "-m", "app.download"]
+    environment:
+      <<: *stt-env
+      HF_HUB_OFFLINE: "0"
+    tmpfs: ["/tmp:size=64m"]
+    networks: [egress]
+
+  # ───────────── Prod ─────────────
+  # Migration chạy một lần bằng cu_owner trước app/admin/worker.
+  migrate:
+    <<: *app-image
+    profiles: [prod]
+    restart: "no"
+    command: ["node_modules/.bin/prisma", "migrate", "deploy"]
+    environment:
+      DATABASE_OWNER_URL: postgresql://cu_owner:${CU_OWNER_PASSWORD}@postgres:5432/${CU_DATABASE:-cu}
+    depends_on:
+      postgres: { condition: service_healthy }
+    networks: [data]
+
+  # Cổng công khai: chỉ vào qua Cloudflare Tunnel; KHÔNG publish cổng ra máy host. /admin → 404.
+  app:
+    <<: *app-image
+    profiles: [prod]
+    environment:
+      <<: *app-env
+      ADMIN_ENABLED: "false"
+    volumes: [storage:/data/storage]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks: [data, verifier, stt, edge]
+
+  # Quản trị: chỉ 127.0.0.1:3001, Tailscale Serve trỏ tới (KHÔNG tailscale funnel, không port forwarding).
+  admin:
+    <<: *app-image
+    profiles: [prod]
+    environment:
+      <<: *app-env
+      ADMIN_ENABLED: "true"
+    ports:
+      - "127.0.0.1:3001:3000"
+    volumes:
+      - storage:/data/storage
+      # Màn hình Duyệt ghi trạng thái duyệt ngược vào YAML (data/life-contexts) để seed DB khác mang theo.
+      - ./data/life-contexts:/app/data/life-contexts
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks: [data, verifier, admin-host]
+
+  worker:
+    <<: *app-image
+    profiles: [prod]
+    command: ["node", "--conditions=react-server", "dist/worker/index.mjs"]
+    healthcheck:
+      disable: true
+    environment:
+      <<: *app-env
+      ADMIN_ENABLED: "false"
+    volumes: [storage:/data/storage]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      redis: { condition: service_healthy }
+    networks: [data, verifier, egress]
+
+  cloudflared:
+    image: cloudflare/cloudflared:2026.10.1
+    profiles: [prod]
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "run"]
+    environment:
+      # Không dùng ${VAR:?}: compose kiểm biến của mọi service kể cả khi profile prod không bật, nên dev cũng bị chặn.
+      # Thiếu token thì cloudflared báo lỗi và khởi động lại liên tục (docker compose ps thấy ngay) — kiểm ở mục 2 deployment-guide.
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    depends_on:
+      app: { condition: service_healthy }
+    networks: [edge]
+
+volumes:
+  pgdata:
+  storage:
+  # Cache Hugging Face của stt-local (PhoWhisper-large + whisper-large-v3-turbo, vài GB).
+  stt-models:
+
+networks:
+  data:
+    internal: true
+  verifier:
+    internal: true
+  # app ↔ stt-local; không ra internet.
+  stt:
+    internal: true
+  # Tunnel ↔ app, và ra internet cho cloudflared + LLM của app.
+  edge: {}
+  # Admin publish cổng localhost cần một mạng không-internal (và gọi LLM khi cần).
+  admin-host: {}
+  # Worker gọi Claude API / OpenRouter / SMTP.
+  egress: {}

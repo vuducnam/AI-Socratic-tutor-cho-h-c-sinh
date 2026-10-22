@@ -1,0 +1,141 @@
+name: ci
+
+# Chạy trên runner của GitHub; KHÔNG có self-hosted runner trên PC tại nhà (runner dùng chung Docker
+# với prod sẽ đọc được DB thật của con). CI không cần secret nào.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: ci-superuser
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 3s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      # Mật khẩu chỉ dùng cho DB tạm của CI, không phải secret.
+      POSTGRES_USER: postgres
+      PGHOST: localhost
+      PGPASSWORD: ci-superuser
+      CU_OWNER_PASSWORD: ci-owner
+      CU_APP_PASSWORD: ci-app
+      CU_DATABASES: cu_test
+      DATABASE_URL: postgresql://cu_app:ci-app@localhost:5432/cu_test
+      DATABASE_OWNER_URL: postgresql://cu_owner:ci-owner@localhost:5432/cu_test
+      REDIS_URL: redis://localhost:6379/1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 20
+          cache: pnpm
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+      - run: pnpm install --frozen-lockfile
+      - name: Tạo role và database (giống docker/postgres-init)
+        run: bash docker/postgres-init/01-create-roles-and-databases.sh
+      - run: pnpm db:migrate
+      - run: pnpm test
+      - name: math-verifier pytest
+        working-directory: services/math-verifier
+        run: |
+          pip install -e ".[test]"
+          pytest -q
+      # Không cần GPU hay model: test dùng loader/decoder giả; gồm kiểm audio tạm bị xoá (quy tắc cứng 10).
+      - name: stt-local pytest
+        working-directory: services/stt-local
+        run: |
+          pip install -e ".[test]"
+          pytest -q
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Quét secret và dữ liệu cá nhân
+        env:
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" | tar -xz gitleaks
+          ./gitleaks git --config .gitleaks.toml --redact --verbose --exit-code 1 .
+
+  # PR chạm danh sách đường dẫn eval (định nghĩa duy nhất: phase 14) phải có nhãn `eval-passed`,
+  # chủ dự án gắn sau khi chạy `pnpm eval:ci` trên PC và dán tóm tắt vào PR.
+  eval-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            eval:
+              - 'prompts/**'
+              - 'src/lib/**'
+              - 'src/server/domain/**'
+              - 'src/server/llm/**'
+              - 'config/**'
+              - 'data/**'
+              - 'eval/**'
+      - name: Kiểm nhãn eval-passed
+        env:
+          TOUCHES_EVAL: ${{ steps.filter.outputs.eval }}
+          HAS_LABEL: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'eval-passed') }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT" != "pull_request" ]; then echo "push: eval-gate chỉ áp cho PR"; exit 0; fi
+          if [ "$TOUCHES_EVAL" != "true" ]; then echo "eval không bắt buộc: PR không chạm đường dẫn eval"; exit 0; fi
+          if [ "$HAS_LABEL" = "true" ]; then echo "có nhãn eval-passed"; exit 0; fi
+          echo "::error::PR chạm đường dẫn eval nhưng chưa có nhãn eval-passed (chạy pnpm eval:ci trên PC rồi gắn nhãn)."
+          exit 1

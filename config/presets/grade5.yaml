@@ -1,0 +1,13 @@
+# Preset lớp 5 (SPEC §4.2). Quyền xem của phụ huynh không đổi theo preset.
+id: grade5
+socratic_intensity: guided
+max_sentences: 2
+max_words_per_turn: 35
+max_questions_per_turn: 1
+# Đề tình huống do Cú tạo: tối đa 3 câu (CLAUDE.md › Quy ước code chung).
+max_sentences_situational: 3
+session_minutes: 15
+daily_limit_minutes: 30
+escalation_threshold: 2
+# Phân cách hàng nghìn khi Cú hiển thị số: none | space | dot. Đổi sau khi đối chiếu cách SGK trình bày.
+thousands_separator: none

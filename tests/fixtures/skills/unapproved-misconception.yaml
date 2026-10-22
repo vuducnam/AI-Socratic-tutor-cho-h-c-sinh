@@ -1,0 +1,28 @@
+subject: math
+grade: 5
+skills:
+  - skill_id: FIXTURE.UNAPPROVED
+    name: Misconception chưa duyệt
+    subject: math
+    grade_introduced: 5
+    misconceptions:
+      - id: DRAFT_BY_CLAUDE
+        description: "Nháp, chưa có approved"
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      lesson: "Bài 1"
+      official_url: "https://taphuan.nxbgd.vn/x"
+      imported_at: 2026-10-19
+  - skill_id: FIXTURE.THIRD_PARTY
+    name: Nguồn bên thứ ba
+    subject: math
+    grade_introduced: 5
+    source:
+      series: "Kết nối tri thức với cuộc sống"
+      publisher: "NXB Giáo dục Việt Nam"
+      book: "Toán 5, Tập 1"
+      lesson: "Bài 1"
+      official_url: "https://loigiaihay.com/x"
+      imported_at: 2026-10-19

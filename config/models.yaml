@@ -1,0 +1,72 @@
+# Model theo vai trò (CLAUDE.md › Model theo vai trò). Không hard-code model trong code.
+# Giá USD / 1 triệu token, kiểm lại 2026-10-19 (Claude API và OpenRouter cùng mức). Đổi giá → sửa ở đây.
+
+monthly_budget_usd: 200          # credit Max 20x (chủ dự án xác nhận 2026-10-19)
+budget_alert_ratio: 0.8          # cảnh báo phụ huynh/admin khi dùng 80% credit tháng
+
+providers:
+  anthropic:
+    api_key_env: CLAUDE_API_KEY
+    workspace_id_env: CLAUDE_WORKSPACE_ID            # bắt buộc nếu key không gắn workspace
+    eval_api_key_env: ANTHROPIC_API_KEY_EVAL
+    eval_workspace_id_env: ANTHROPIC_WORKSPACE_ID_EVAL
+  openrouter:
+    api_key_env: OPENROUTER_API_KEY
+    base_url: https://openrouter.ai/api/v1
+
+models:
+  claude-opus-5-5:
+    openrouter_slug: anthropic/claude-opus-5.5
+    # Opus 5.5 không tắt được thinking; điều khiển bằng effort.
+    thinking_off_mode: none
+    pricing: { input: 4.00, output: 20.00, cache_write: 5.00, cache_read: 0.20 }
+  claude-sonnet-5-5:
+    openrouter_slug: anthropic/claude-sonnet-5.5
+    # Sonnet 5.5: tắt thinking bằng {type: between_tools} (chỉ ở effort ≤ high).
+    thinking_off_mode: between_tools
+    pricing: { input: 2.00, output: 10.00, cache_write: 2.50, cache_read: 0.20 }
+  claude-haiku-5-5:
+    openrouter_slug: anthropic/claude-haiku-5.5
+    thinking_off_mode: disabled
+    pricing: { input: 0.10, output: 0.50, cache_write: 0.125, cache_read: 0.01 }
+
+# effort: low | medium | high | xhigh | max. thinking: off | adaptive.
+roles:
+  tutor:            { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 1024 }
+  guard:            { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 512 }
+  learner_summary:  { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 1024 }
+  presolve:         { model: claude-opus-5-5,   effort: high,   thinking: adaptive, max_tokens: 16000 }
+  ocr:              { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 2048 }
+  # Câu mở bài: Haiku hay viết thành câu hỏi hoặc chép số của đề (73% rơi về câu dự phòng); Sonnet 30/30 đúng dạng (thử 2026-10-21).
+  hook:             { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 512 }
+  contextualize:    { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 1024 }
+  transfer:         { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 512 }
+  report_narrative: { model: claude-sonnet-5-5, effort: medium, thinking: adaptive, max_tokens: 8000 }
+  # Eval (phase 14): học sinh giả và judge.
+  simulated_student: { model: claude-sonnet-5-5, effort: low,   thinking: off,      max_tokens: 512 }
+  judge:            { model: claude-sonnet-5-5, effort: medium, thinking: adaptive, max_tokens: 4000 }
+  smoke:            { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 64 }
+
+# STT: giữ A/B qua cấu hình; model thắng do WER đo trên giọng thật (eval/stt-bench). Giọng con chỉ xử lý ở PC
+# (services/stt-local); cloud chỉ dùng khi local lỗi VÀ phụ huynh bật stt_cloud_fallback (quy tắc cứng 10).
+stt:
+  local_url_env: STT_LOCAL_URL                # http://stt-local:8000 trong mạng Docker
+  local_models:                               # theo ngôn ngữ con chọn trên màn hình chat
+    vi: vinai/PhoWhisper-large                # chỉ tiếng Việt
+    en: openai/whisper-large-v3-turbo         # đa ngôn ngữ, dùng cho tiếng Anh
+  cloud_fallback: openai/gpt-transcribe       # slug đã kiểm trên OpenRouter 2026-10-21
+  cloud_candidates: [openai/gpt-transcribe, mistralai/voxtral-mini-transcribe]
+  # Giá OpenRouter (pricing.prompt, USD / giây audio — đơn vị kiểm lại trên hoá đơn đầu tiên), 2026-10-21.
+  cloud_pricing_usd_per_second: { openai/gpt-transcribe: 0.000075, mistralai/voxtral-mini-transcribe: 0.00005 }
+  max_seconds: 60
+  max_bytes: 10485760
+tts:
+  model: google/gemini-3.8-flash-tts
+  response_format: pcm                        # Gemini TTS trên OpenRouter chỉ trả PCM 24 kHz; server bọc thành WAV
+  default_voice: Sulafat                      # chủ dự án chọn 2026-10-21; students.companion.tts_voice ghi đè nếu có
+  # Chỉ dẫn phong cách (gửi kèm, không bị đọc to — đã kiểm bằng STT nghe lại). Gemini không có giọng theo vùng miền.
+  style_instructions: "Giọng nữ miền Nam Việt Nam, nhẹ nhàng, ấm áp, tốc độ nói bình thường, như một người bạn thân đang nói chuyện với bạn nhỏ lớp 5."
+  # Không có cấu hình giá: /audio/speech không trả số token nên llm_calls.cost_usd để trống (không ước lượng);
+  # chi phí thật đối chiếu bằng generation_id trên OpenRouter.
+image:
+  model: openai/gpt-image-2

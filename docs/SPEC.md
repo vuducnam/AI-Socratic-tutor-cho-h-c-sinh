@@ -17,8 +17,8 @@ Một agent chat Socratic: đặt câu hỏi để học sinh tự tư duy, tự
 
 | Giai đoạn | Phạm vi | Gate để sang giai đoạn sau |
 | --- | --- | --- |
-| 0 — Prototype | Toán 5, chủ đề số thập phân; text + ảnh đề; Tutor + Guard + Pre-solver có sympy; hồ sơ học sinh; **log bất biến + parent view xem 100% dữ liệu gốc**; **câu mở chuyện đời + câu hỏi chuyển giao; thư viện `life_contexts` cho số thập phân; bài tương tự/bài luyện dạng tình huống**; **phạm vi kiến thức theo tiến độ trên lớp (mục 5c)** | Leak 0% trên eval; con tự nguyện dùng ≥ 3 phiên/tuần trong 2 tuần |
-| 1 — Toán 5 đầy đủ | Voice in/out; learner model + spaced repetition (bài ôn dạng tình huống); báo cáo phiên/tuần; `DIRECT_TEACH`; cá nhân hoá đề theo sở thích; **nhiệm vụ đời thật** (missions) làm cùng bố mẹ; đánh giá 8 tuần | Tỷ lệ tự sửa lỗi tăng qua 4 tuần; bài ôn sau 7 ngày đúng ≥ 70% |
+| 0 — Prototype | Toán 5, chủ đề số thập phân; **giọng nói vào/ra là cách dùng chính** (STT ở PC, tiếng Việt và tiếng Anh; Mít đọc câu trả lời bằng TTS), text + ảnh đề; Tutor + Guard + Pre-solver có sympy; hồ sơ học sinh; **log bất biến + parent view xem 100% dữ liệu gốc**; **câu mở chuyện đời + câu hỏi chuyển giao; thư viện `life_contexts` cho số thập phân; bài tương tự/bài luyện dạng tình huống**; **phạm vi kiến thức theo tiến độ trên lớp (mục 5c)** | Leak 0% trên eval; con tự nguyện dùng ≥ 3 phiên/tuần trong 2 tuần |
+| 1 — Toán 5 đầy đủ | Learner model + spaced repetition (bài ôn dạng tình huống); báo cáo phiên/tuần; `DIRECT_TEACH`; cá nhân hoá đề theo sở thích; **nhiệm vụ đời thật** (missions) làm cùng bố mẹ; đánh giá 8 tuần | Tỷ lệ tự sửa lỗi tăng qua 4 tuần; bài ôn sau 7 ngày đúng ≥ 70% |
 | 2 — Chế độ argue | Tiếng Việt (đọc hiểu, nêu ý kiến), Khoa học | Judge chấm "không áp đặt kết luận" ≥ 95% |
 | 3 — Lớp 6 | Skill graph THCS nối với lớp 5; preset `challenge`; Lịch sử – Địa lí, Đạo đức/GDCD | — |
 
@@ -468,7 +468,7 @@ computeScope({ lessons, progress, beyondTerms, grade, subject, problem? }): {
 3. **State machine** tính trạng thái (mục 7).
 4. **Tutor** sinh tin nhắn JSON (mục 8.1), Zod validate.
 5. **Kiểm tra cứng bằng code**: số từ, số dấu hỏi, chứa `final_answer` dạng chuẩn hoá, khớp `forbiddenTerms` của phạm vi → fail thì coi như Guard block.
-6. **Guard** (mục 8.2). `block` → Tutor sinh lại kèm lý do; block lần 2 → dùng câu hỏi dự phòng từ `plan` cho step hiện tại.
+6. **Guard** (mục 8.2). `block` (của kiểm tra cứng hoặc Guard) → Tutor sửa chính bản nháp bị chặn, kèm lý do; tối đa 3 lần viết, vẫn block → dùng câu hỏi dự phòng từ `plan` cho step hiện tại.
 7. Lưu `turns`, trả về client qua SSE: text hiển thị ngay; TTS chạy song song (text qua `toSpoken()`), phát khi có audio.
 8. Enqueue job cập nhật learner model (không chặn lượt hội thoại).
 
@@ -490,11 +490,13 @@ Trạng thái: `ELICIT` (luôn mở bằng lượt `hook`), `PROBE`, `SCAFFOLD` 
 | SCAFFOLD(3) → PARALLEL | Vẫn bế tắc ở level 3 |
 | PARALLEL → PROBE | Xong bài tương tự, quay về bài gốc |
 | PROBE → CONSOLIDATE | solve: đáp án khớp `final_answer`; argue: con đã nêu lập luận có lý do |
+| SCAFFOLD → CONSOLIDATE | Đang được gợi ý mà con đã tự ra đáp án cuối khớp `final_answer` (không bắt quay lại PROBE rồi mới củng cố) |
 | CONSOLIDATE → DONE | Con giải thích được cách làm hoặc chỗ từng nhầm |
 | * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn |
 | CONSOLIDATE → TRANSFER → DONE | Sau khi con giải thích được: Cú hỏi câu chuyển giao; con trả lời (hoặc bỏ qua) thì DONE |
 
 - `no_progress_streak`, tín hiệu nản (danh sách cụm từ + câu trả lời ≤ 2 từ lặp lại), phát hiện đoán bừa (đổi đáp án ≥ 2 lần trong 3 lượt, phản hồi < 3 giây) là **hàm thuần trong `src/server/domain/dialogue/signals.ts`**, có unit test.
+- Đoán bừa không có dòng chuyển trạng thái riêng: giữ trạng thái hiện tại, tín hiệu được đưa vào prompt Tutor (Cú hỏi con vì sao chọn đáp án đó) và ghi vào `turns.signals` cho báo cáo phụ huynh.
 - `student_state_guess` của Tutor chỉ là một input, không tự quyết định chuyển trạng thái.
 - `DONE` → lên lịch ôn: 1, 3, 7, 21 ngày.
 
@@ -606,10 +608,11 @@ Trả về JSON {"verdict": "pass|block", "reasons": [...]}. Block nếu:
 
 ## 10. Voice và hình ảnh
 
-- STT chính: `services/stt-local` — FastAPI, `POST /transcribe` nhận audio (wav/webm), trả `{text, model, latency_ms}`. Model `vinai/PhoWhisper-large` (BSD-3), chạy fp16 trên GPU; thử convert sang CTranslate2/faster-whisper nếu cần nhanh hơn. Khởi động sẵn model khi container lên (không load theo request). Xoá file audio ngay sau khi trả kết quả.
+- Voice đưa lên Giai đoạn 0 theo quyết định chủ dự án 2026-10-21 ("ưu tiên voice trước text"): micro là cách nhập chính, chữ nhận được hiện trong ô nhập để con xem/sửa rồi mới gửi (`input_modality = voice`, `raw_stt` lưu nguyên). Con chọn ngôn ngữ nói (Tiếng Việt / English) trên màn hình chat; mặc định theo cài đặt phụ huynh. Cài đặt `stt_cloud_fallback`, `tts_autoplay`, `stt_language` nằm trong `students.learning_prefs`, phụ huynh sửa ở `/parent/settings`.
+- STT chính: `services/stt-local` — FastAPI, `POST /transcribe` nhận audio (wav/webm/mp4) và `language` (vi|en), trả `{text, model, language, latency_ms}`. Model theo ngôn ngữ trong `config/models.yaml` (`stt.local_models`): tiếng Việt `vinai/PhoWhisper-large` (BSD-3, chỉ tiếng Việt), tiếng Anh `openai/whisper-large-v3-turbo` (đa ngôn ngữ); chạy fp16 trên GPU; thử convert sang CTranslate2/faster-whisper nếu cần nhanh hơn. Khởi động sẵn model khi container lên (không load theo request). Xoá file audio ngay sau khi trả kết quả.
 - STT dự phòng / A-B: `POST https://openrouter.ai/api/v1/audio/transcriptions`, model theo `config/models.yaml`. Chỉ dùng khi phụ huynh bật `stt_cloud_fallback` trong cấu hình.
 - Benchmark: script `eval/stt-bench` tính WER trên bộ ghi âm thật của các con (phụ huynh tự ghi, lưu cục bộ, không đưa vào repo, không gửi ra ngoài khi chạy bản local). Model thắng được đặt trong `config/models.yaml`.
-- TTS: `POST https://openrouter.ai/api/v1/audio/speech`, `model: google/gemini-3.8-flash-tts`, `response_format: mp3`. Cache theo `hash(voice + text_spoken)`. Thử inline tag cảm xúc ([warm], [excited]) — chỉ bật sau khi nghe thử với tiếng Việt.
+- TTS: `POST https://openrouter.ai/api/v1/audio/speech`, `model: google/gemini-3.8-flash-tts`, `response_format: pcm` (model chỉ trả PCM 24 kHz mono; xin mp3 bị từ chối), server bọc thành WAV trả cho trình duyệt. Giọng và chỉ dẫn phong cách (`instructions`) cấu hình ở `config/models.yaml`. Cache trên đĩa theo `sha256(model + voice|instructions + text_spoken)`, tách thư mục theo học sinh; `purge_student` đưa thư mục đó vào `pending_file_deletions` để worker xoá. Thử inline tag cảm xúc ([warm], [excited]) — chỉ bật sau khi nghe thử với tiếng Việt.
 - Sinh ảnh: `POST https://openrouter.ai/api/v1/images`, `model: openai/gpt-image-2`, chạy nền BullMQ. Chỉ cho avatar (sinh một lần) và minh hoạ ngữ cảnh. Hình toán (sơ đồ đoạn thẳng, hình chia phần, trục số, hình học) vẽ bằng component SVG có tham số trong `src/components/math-visuals`.
 
 ---

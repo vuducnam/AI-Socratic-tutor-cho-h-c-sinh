@@ -1,0 +1,764 @@
+// Schema theo SPEC §3 (kèm các lệch có chủ đích ghi trong plan phase 02).
+// - Mọi model có @@map("snake_case") để TransparencyRegistry khoá theo tên bảng thật trong DB.
+// - Tên cột giữ snake_case giống DB để raw SQL, registry và export dùng chung một tên.
+// - CHECK, trigger append-only, FK deferrable, purge_student() và GRANT nằm trong migration SQL
+//   (Prisma không biểu diễn được), xem prisma/migrations/*.
+// - Bảng [AO] (append-only): turns, llm_calls, guard_verdicts, mastery_events, label_corrections,
+//   access_log, school_progress_events.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/server/dal/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ───────────────────────── Người dùng và truy cập ─────────────────────────
+
+model User {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  role            String // check: admin | parent
+  name            String
+  email           String    @unique
+  password_hash   String
+  totp_secret_enc String?
+  status          String    @default("active") // check: active | disabled
+  created_by      String?   @db.Uuid
+  created_at      DateTime  @default(now()) @db.Timestamptz(6)
+  last_login_at   DateTime? @db.Timestamptz(6)
+
+  creator                 User?               @relation("UserCreatedBy", fields: [created_by], references: [id], onDelete: Restrict)
+  created_users           User[]              @relation("UserCreatedBy")
+  created_students        Student[]           @relation("StudentCreatedBy")
+  parent_links            ParentStudent[]
+  consents_as_parent      Consent[]           @relation("ConsentParent")
+  consents_recorded       Consent[]           @relation("ConsentRecordedBy")
+  approved_misconceptions Misconception[]
+  approved_sources        AllowedSource[]
+  approved_life_contexts  LifeContext[]
+  progress_set            SchoolProgress[]
+  independent_results     IndependentResult[]
+  decisions               Decision[]
+  system_alerts_acked     SystemAlert[]
+  purge_requests          PurgeRequest[]
+
+  @@map("users")
+}
+
+model Consent {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id         String    @db.Uuid
+  parent_id          String    @db.Uuid
+  version            String
+  text_snapshot      String
+  document_uri       String?
+  child_acknowledged Boolean   @default(false)
+  recorded_by        String    @db.Uuid
+  signed_at          DateTime  @db.Timestamptz(6)
+  withdrawn_at       DateTime? @db.Timestamptz(6)
+  created_at         DateTime  @default(now()) @db.Timestamptz(6)
+
+  student  Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  parent   User    @relation("ConsentParent", fields: [parent_id], references: [id], onDelete: Restrict)
+  recorder User    @relation("ConsentRecordedBy", fields: [recorded_by], references: [id], onDelete: Restrict)
+
+  @@index([student_id])
+  @@map("consents")
+}
+
+model Student {
+  id                 String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  username           String    @unique
+  display_name       String
+  gender             String // check: male | female — chỉ dùng cho xưng hô, ngữ pháp (quy tắc cứng 9)
+  pin_hash           String
+  // Bộ đếm sai PIN tổng (thông tin); khoá thật theo từng loại thiết bị ở bảng pin_lockouts.
+  pin_failed_count   Int       @default(0)
+  pin_locked_until   DateTime? @db.Timestamptz(6)
+  status             String    @default("active") // check: active | disabled
+  created_by         String    @db.Uuid
+  grade              Int
+  preset             String
+  address            Json
+  companion          Json
+  is_family          Boolean
+  interests_declared String[]  @default([])
+  learning_prefs     Json      @default("{}")
+  created_at         DateTime  @default(now()) @db.Timestamptz(6)
+  updated_at         DateTime  @default(now()) @updatedAt @db.Timestamptz(6)
+
+  creator                User                   @relation("StudentCreatedBy", fields: [created_by], references: [id], onDelete: Restrict)
+  parent_links           ParentStudent[]
+  consents               Consent[]
+  pin_lockouts           PinLockout[]
+  trusted_devices        TrustedDevice[]
+  school_progress        SchoolProgress[]
+  school_progress_events SchoolProgressEvent[]
+  progress_suggestions   ProgressSuggestion[]
+  sessions               Session[]
+  problems               Problem[]
+  llm_calls              LlmCall[]
+  mastery                Mastery[]
+  mastery_events         MasteryEvent[]
+  learner_misconceptions LearnerMisconception[]
+  review_schedule        ReviewSchedule[]
+  flags                  Flag[]
+  label_corrections      LabelCorrection[]
+  independent_results    IndependentResult[]
+  topic_arms             TopicArm[]
+  reports                Report[]
+  decisions              Decision[]
+  missions               Mission[]
+  mission_artifacts      MissionArtifact[]
+  session_feedback       SessionFeedback[]
+
+  @@map("students")
+}
+
+model ParentStudent {
+  parent_id  String   @db.Uuid
+  student_id String   @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  parent  User    @relation(fields: [parent_id], references: [id], onDelete: Restrict)
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@id([parent_id, student_id])
+  @@index([student_id])
+  @@map("parent_student")
+}
+
+// Khoá PIN đếm riêng theo loại thiết bị (thiết bị tin cậy / thiết bị lạ), SPEC §2.2 bước 5.
+model PinLockout {
+  student_id   String    @db.Uuid
+  device_class String // check: trusted | unknown
+  failed_count Int       @default(0)
+  locked_until DateTime? @db.Timestamptz(6)
+  // Khoá cứng sau 10 lần sai liên tiếp: chỉ phụ huynh/admin mở.
+  hard_locked  Boolean   @default(false)
+  updated_at   DateTime  @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@id([student_id, device_class])
+  @@map("pin_lockouts")
+}
+
+// Thiết bị đã từng đăng nhập đúng (cookie thiết bị tin cậy). Chỉ lưu hash của token.
+model TrustedDevice {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id   String    @db.Uuid
+  token_hash   String    @unique
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+  last_used_at DateTime  @default(now()) @db.Timestamptz(6)
+  revoked_at   DateTime? @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id])
+  @@map("trusted_devices")
+}
+
+// ───────────────────────── Chương trình học ─────────────────────────
+
+model Skill {
+  skill_id         String   @id
+  subject          String
+  grade_introduced Int
+  name             String
+  prerequisites    String[] @default([])
+  leads_to         String[] @default([])
+  source           Json // check: có official_url và lesson
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+
+  misconceptions Misconception[]
+  life_contexts  LifeContext[]
+
+  @@map("skills")
+}
+
+model Misconception {
+  id          String    @id
+  skill_id    String
+  description String
+  probe       String?
+  approved_by String?   @db.Uuid
+  approved_at DateTime? @db.Timestamptz(6)
+  created_at  DateTime  @default(now()) @db.Timestamptz(6)
+
+  skill    Skill @relation(fields: [skill_id], references: [skill_id], onDelete: Restrict)
+  approver User? @relation(fields: [approved_by], references: [id], onDelete: Restrict)
+
+  learner_misconceptions LearnerMisconception[]
+
+  @@map("misconceptions")
+}
+
+model AllowedSource {
+  id           Int       @id @default(autoincrement())
+  name         String
+  official_url String
+  approved_by  String?   @db.Uuid
+  approved_at  DateTime? @db.Timestamptz(6)
+
+  approver User? @relation(fields: [approved_by], references: [id], onDelete: Restrict)
+
+  @@map("allowed_sources")
+}
+
+model CurriculumLesson {
+  lesson_id        String   @id
+  subject          String
+  grade            Int
+  seq              Int
+  book             String // tên tập sách ("Toán 5, Tập 1"), không phải id
+  topic            String
+  lesson_no        Int
+  title            String
+  skill_ids        String[] @default([])
+  introduces_terms Json     @default("[]")
+  methods          String[] @default([])
+  source           Json // check: có official_url
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+
+  school_progress      SchoolProgress[]
+  progress_suggestions ProgressSuggestion[]
+
+  @@unique([subject, grade, seq])
+  @@map("curriculum_lessons")
+}
+
+model BeyondScopeTerm {
+  id               Int      @id @default(autoincrement())
+  subject          String
+  for_grade        Int
+  term             String
+  patterns         String[]
+  introduced_grade Int
+  note             String?
+  source           Json
+
+  @@unique([subject, for_grade, term])
+  @@map("beyond_scope_terms")
+}
+
+// ───────────────────────── Tiến độ trên lớp ─────────────────────────
+
+model SchoolProgress {
+  student_id             String   @db.Uuid
+  subject                String
+  frontier_lesson_id     String?
+  preview_lesson_ids     String[] @default([])
+  stale_reminder_enabled Boolean  @default(true)
+  set_by                 String   @db.Uuid
+  set_at                 DateTime @default(now()) @db.Timestamptz(6)
+
+  student  Student           @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  frontier CurriculumLesson? @relation(fields: [frontier_lesson_id], references: [lesson_id], onDelete: Restrict)
+  setter   User              @relation(fields: [set_by], references: [id], onDelete: Restrict)
+
+  @@id([student_id, subject])
+  @@map("school_progress")
+}
+
+// [AO]
+model SchoolProgressEvent {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id    String   @db.Uuid
+  subject       String
+  action        String // check: set_frontier | allow_preview | revoke_preview | grade_up | set_stale_reminder
+  lesson_id     String?
+  via           String // check: parent | admin | suggestion
+  suggestion_id String?  @db.Uuid
+  actor_id      String?  @db.Uuid
+  detail        Json?
+  created_at    DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id, created_at])
+  @@map("school_progress_events")
+}
+
+model ProgressSuggestion {
+  id                  String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id          String    @db.Uuid
+  subject             String
+  lesson_id           String
+  evidence_problem_id String    @db.Uuid
+  status              String    @default("pending") // check: pending | accepted | rejected
+  decided_by          String?   @db.Uuid
+  decided_at          DateTime? @db.Timestamptz(6)
+  created_at          DateTime  @default(now()) @db.Timestamptz(6)
+
+  student          Student          @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  lesson           CurriculumLesson @relation(fields: [lesson_id], references: [lesson_id], onDelete: Restrict)
+  evidence_problem Problem          @relation(fields: [evidence_problem_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id, status])
+  @@map("progress_suggestions")
+}
+
+// ───────────────────────── Phiên học ─────────────────────────
+
+model Session {
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id       String    @db.Uuid
+  subject          String
+  mode             String // check: solve | argue
+  scope_snapshot   Json
+  // Phiên con tự mở hay mở từ lời nhắc (metric voluntary_sessions_per_week).
+  opened_via       String    @default("student") // check: student | reminder
+  started_at       DateTime  @default(now()) @db.Timestamptz(6)
+  last_activity_at DateTime  @default(now()) @db.Timestamptz(6)
+  ended_at         DateTime? @db.Timestamptz(6)
+  end_reason       String?
+
+  student          Student           @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  problems         Problem[]
+  turns            Turn[]
+  llm_calls        LlmCall[]
+  guard_verdicts   GuardVerdict[]
+  flags            Flag[]
+  session_feedback SessionFeedback[]
+
+  @@index([student_id, started_at])
+  @@map("sessions")
+}
+
+model Problem {
+  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id           String   @db.Uuid
+  student_id           String   @db.Uuid
+  origin               String // check: homework | generated | mission
+  life_context_id      String? // bắt buộc khi origin in (generated, mission)
+  // Giá trị biến đã điền cho bài tình huống (code sinh, SPEC §5b.3 bước 2).
+  context_variables    Json?
+  image_uri            String?
+  extracted_text       String?
+  confirmed_text       String?
+  confirmed_by_student Boolean  @default(false)
+  skill_ids            String[] @default([])
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+
+  session              Session              @relation(fields: [session_id], references: [id], onDelete: Restrict)
+  student              Student              @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  life_context         LifeContext?         @relation(fields: [life_context_id], references: [id], onDelete: Restrict)
+  solution_plans       SolutionPlan[]
+  progress_suggestions ProgressSuggestion[]
+
+  @@index([session_id])
+  @@index([student_id])
+  @@map("problems")
+}
+
+model SolutionPlan {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  problem_id      String   @db.Uuid
+  plan            Json
+  final_answer    Json
+  scope_extension Json?
+  verified        Boolean
+  verifier_output Json?
+  llm_call_id     String?  @db.Uuid
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+
+  problem  Problem  @relation(fields: [problem_id], references: [id], onDelete: Restrict)
+  llm_call LlmCall? @relation(fields: [llm_call_id], references: [id], onDelete: Restrict)
+
+  @@index([problem_id])
+  @@map("solution_plans")
+}
+
+// [AO]
+model Turn {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id          String   @db.Uuid
+  seq                 Int
+  role                String // check: student | tutor | system
+  content             String
+  input_modality      String?
+  raw_stt             String?
+  normalized_content  String?
+  state_before        String?
+  state_after         String?
+  scaffold_level      Int?
+  question_type       String?
+  turn_kind           String   @default("normal") // check: normal | hook | transfer_question | transfer_answer
+  step_addressed      String?
+  student_state_guess String?
+  // Tín hiệu do code tính (đoán bừa, nản) để metrics guessing_rate.
+  signals             Json?
+  problem_id          String?  @db.Uuid
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+
+  session   Session   @relation(fields: [session_id], references: [id], onDelete: Restrict)
+  llm_calls LlmCall[]
+
+  @@unique([session_id, seq])
+  @@map("turns")
+}
+
+// [AO]
+model LlmCall {
+  id                 String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id         String?  @db.Uuid
+  session_id         String?  @db.Uuid
+  turn_id            String?  @db.Uuid // FK DEFERRABLE INITIALLY DEFERRED (migration SQL)
+  purpose            String
+  mode               String   @default("live") // check: live | eval
+  provider           String
+  model              String
+  prompt_version     String?
+  request            Json
+  response           Json?
+  input_tokens       Int?
+  output_tokens      Int?
+  cache_read_tokens  Int?
+  cache_write_tokens Int?
+  cost_usd           Decimal? @db.Decimal(12, 6)
+  latency_ms         Int?
+  error              String?
+  created_at         DateTime @default(now()) @db.Timestamptz(6)
+
+  student        Student?       @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  session        Session?       @relation(fields: [session_id], references: [id], onDelete: Restrict)
+  turn           Turn?          @relation(fields: [turn_id], references: [id], onDelete: Restrict)
+  solution_plans SolutionPlan[]
+  guard_verdicts GuardVerdict[] @relation("GuardLlmCall")
+  guarded        GuardVerdict[] @relation("GuardTutorLlmCall")
+  reports        Report[]
+
+  @@index([student_id, created_at])
+  @@index([session_id])
+  @@index([turn_id])
+  @@index([created_at])
+  @@map("llm_calls")
+}
+
+// [AO]
+model GuardVerdict {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id        String   @db.Uuid
+  turn_id           String?  @db.Uuid
+  checker           String // check: code | llm
+  llm_call_id       String?  @db.Uuid // bắt buộc khi checker = llm
+  tutor_llm_call_id String?  @db.Uuid
+  attempt           Int      @default(1)
+  verdict           String // check: pass | block
+  reasons           String[] @default([])
+  created_at        DateTime @default(now()) @db.Timestamptz(6)
+
+  session        Session  @relation(fields: [session_id], references: [id], onDelete: Restrict)
+  llm_call       LlmCall? @relation("GuardLlmCall", fields: [llm_call_id], references: [id], onDelete: Restrict)
+  tutor_llm_call LlmCall? @relation("GuardTutorLlmCall", fields: [tutor_llm_call_id], references: [id], onDelete: Restrict)
+
+  @@index([session_id])
+  @@map("guard_verdicts")
+}
+
+// ───────────────────────── Learner model ─────────────────────────
+
+model Mastery {
+  student_id String   @db.Uuid
+  skill_id   String
+  p_mastery  Decimal  @db.Decimal(5, 4)
+  updated_at DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@id([student_id, skill_id])
+  @@map("mastery")
+}
+
+// [AO]
+model MasteryEvent {
+  id                String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id        String   @db.Uuid
+  skill_id          String
+  p_before          Decimal  @db.Decimal(5, 4)
+  p_after           Decimal  @db.Decimal(5, 4)
+  evidence_turn_ids String[] @db.Uuid
+  created_at        DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id])
+  @@map("mastery_events")
+}
+
+model LearnerMisconception {
+  student_id        String   @db.Uuid
+  misconception_id  String
+  status            String // check: active | self_corrected | stable
+  evidence_turn_ids String[] @db.Uuid
+  updated_at        DateTime @default(now()) @db.Timestamptz(6)
+
+  student       Student       @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  misconception Misconception @relation(fields: [misconception_id], references: [id], onDelete: Restrict)
+
+  @@id([student_id, misconception_id])
+  @@map("learner_misconceptions")
+}
+
+model ReviewSchedule {
+  student_id    String   @db.Uuid
+  skill_id      String
+  due_at        DateTime @db.Timestamptz(6)
+  interval_days Int
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@id([student_id, skill_id])
+  @@map("review_schedule")
+}
+
+model Flag {
+  id                String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id        String    @db.Uuid
+  session_id        String?   @db.Uuid
+  type              String
+  severity          String // check: info | warning | high
+  detail            Json?
+  evidence_turn_ids String[]  @db.Uuid
+  acknowledged_by   String?   @db.Uuid
+  acknowledged_at   DateTime? @db.Timestamptz(6)
+  created_at        DateTime  @default(now()) @db.Timestamptz(6)
+
+  student Student  @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  session Session? @relation(fields: [session_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id, created_at])
+  @@map("flags")
+}
+
+// [AO]
+model LabelCorrection {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id   String   @db.Uuid
+  target_table String
+  target_id    String
+  old_value    Json?
+  new_value    Json?
+  corrected_by String   @db.Uuid
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@index([student_id])
+  @@map("label_corrections")
+}
+
+// ───────────────────────── Đánh giá trung thực ─────────────────────────
+
+model IndependentResult {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id String   @db.Uuid
+  type       String // check: class_test | paper_quiz | teacher_note
+  skill_ids  String[] @default([])
+  score      Decimal? @db.Decimal(8, 2)
+  max_score  Decimal? @db.Decimal(8, 2)
+  note       String?
+  taken_on   DateTime @db.Date
+  entered_by String   @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  enterer User    @relation(fields: [entered_by], references: [id], onDelete: Restrict)
+
+  @@index([student_id])
+  @@map("independent_results")
+}
+
+model TopicArm {
+  student_id  String   @db.Uuid
+  skill_id    String
+  arm         String // check: with_cu | without_cu
+  assigned_at DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@id([student_id, skill_id])
+  @@map("topic_arms")
+}
+
+model Report {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id   String   @db.Uuid
+  session_id   String?  @db.Uuid
+  type         String // check: session | weekly | eight_week
+  period_start DateTime @db.Timestamptz(6)
+  period_end   DateTime @db.Timestamptz(6)
+  metrics      Json
+  narrative    Json?
+  llm_call_id  String?  @db.Uuid
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  student   Student    @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  llm_call  LlmCall?   @relation(fields: [llm_call_id], references: [id], onDelete: Restrict)
+  decisions Decision[]
+
+  @@index([student_id, created_at])
+  @@map("reports")
+}
+
+model Decision {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id String   @db.Uuid
+  report_id  String?  @db.Uuid
+  decision   String // check: continue | adjust | stop
+  reason     String
+  decided_by String   @db.Uuid
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  report  Report? @relation(fields: [report_id], references: [id], onDelete: Restrict)
+  decider User    @relation(fields: [decided_by], references: [id], onDelete: Restrict)
+
+  @@map("decisions")
+}
+
+// ───────────────────────── Học từ đời sống ─────────────────────────
+
+model LifeContext {
+  id           String    @id
+  skill_id     String
+  theme        String // check: market | cooking | sport | nature | animals | travel | home | game | school | other
+  template     Json
+  min_grade    Int
+  max_grade    Int
+  safety       Json
+  content_hash String
+  approved_by  String?   @db.Uuid
+  approved_at  DateTime? @db.Timestamptz(6)
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+
+  skill    Skill     @relation(fields: [skill_id], references: [skill_id], onDelete: Restrict)
+  approver User?     @relation(fields: [approved_by], references: [id], onDelete: Restrict)
+  problems Problem[]
+  missions Mission[]
+
+  @@index([skill_id])
+  @@map("life_contexts")
+}
+
+model Mission {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id      String    @db.Uuid
+  life_context_id String
+  skill_ids       String[]  @default([])
+  instructions    String
+  adult_required  Boolean
+  status          String    @default("assigned") // check: assigned | done | skipped
+  assigned_at     DateTime  @default(now()) @db.Timestamptz(6)
+  completed_at    DateTime? @db.Timestamptz(6)
+
+  student      Student           @relation(fields: [student_id], references: [id], onDelete: Restrict)
+  life_context LifeContext       @relation(fields: [life_context_id], references: [id], onDelete: Restrict)
+  artifacts    MissionArtifact[]
+
+  @@index([student_id])
+  @@map("missions")
+}
+
+model MissionArtifact {
+  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  mission_id           String   @db.Uuid
+  student_id           String   @db.Uuid
+  image_uri            String?
+  extracted_data       Json?
+  confirmed_by_student Boolean  @default(false)
+  created_at           DateTime @default(now()) @db.Timestamptz(6)
+
+  mission Mission @relation(fields: [mission_id], references: [id], onDelete: Restrict)
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@map("mission_artifacts")
+}
+
+model SessionFeedback {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  session_id String   @db.Uuid
+  student_id String   @db.Uuid
+  rating     String // check: fun | ok | boring
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  session Session @relation(fields: [session_id], references: [id], onDelete: Restrict)
+  student Student @relation(fields: [student_id], references: [id], onDelete: Restrict)
+
+  @@unique([session_id])
+  @@map("session_feedback")
+}
+
+// ───────────────────────── Minh bạch và vận hành ─────────────────────────
+
+// [AO] student_id cố ý KHÔNG có FK: dòng log purge phải còn sau khi xoá học sinh.
+model AccessLog {
+  id         BigInt   @id @default(autoincrement())
+  actor_type String // check: admin | parent | student | system | anonymous
+  actor_id   String?  @db.Uuid
+  student_id String?  @db.Uuid
+  action     String
+  resource   String?
+  reason     String?
+  ip         String?  @db.Inet
+  user_agent String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@index([student_id, created_at])
+  @@index([actor_id, created_at])
+  @@map("access_log")
+}
+
+// Không phải dữ liệu học sinh: credit 80%, gateway lỗi, thư viện tình huống cạn.
+model SystemAlert {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  type            String
+  severity        String // check: info | warning | high
+  detail          Json      @default("{}")
+  dedupe_key      String?   @unique
+  created_at      DateTime  @default(now()) @db.Timestamptz(6)
+  acknowledged_by String?   @db.Uuid
+  acknowledged_at DateTime? @db.Timestamptz(6)
+
+  acknowledger User? @relation(fields: [acknowledged_by], references: [id], onDelete: Restrict)
+
+  @@map("system_alerts")
+}
+
+// student_id không FK để purge_student() đọc được sau khi đã xoá dữ liệu.
+model PurgeRequest {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_id   String   @db.Uuid
+  requested_by String   @db.Uuid
+  reason       String?
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  requester User @relation(fields: [requested_by], references: [id], onDelete: Restrict)
+
+  @@map("purge_requests")
+}
+
+// Không link học sinh: worker xoá file ảnh sau khi purge commit, có retry.
+model PendingFileDeletion {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  uri        String
+  attempts   Int      @default(0)
+  last_error String?
+  created_at DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("pending_file_deletions")
+}
+
+// Không sửa, chỉ thêm version mới; id = "<name>/<version>".
+model PromptVersion {
+  id           String   @id
+  name         String
+  content      String
+  content_hash String
+  created_at   DateTime @default(now()) @db.Timestamptz(6)
+
+  @@map("prompt_versions")
+}

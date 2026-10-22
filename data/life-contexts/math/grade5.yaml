@@ -1,0 +1,2072 @@
+# Thư viện tình huống đời thật — Toán 5, số thập phân (SPEC §5b, quy tắc cứng 13).
+# Tối thiểu 8 tình huống cho MỖI skill số thập phân (Bài 10–14, 19–24).
+# Claude soạn nháp 2026-10-20; chủ dự án duyệt cả 72 mục qua chat cùng ngày. Mục mới duyệt ở /parent › Duyệt › Tình huống.
+#
+# Tiêu chuẩn: câu hỏi là câu người thật sẽ hỏi; số liệu hợp lý với đời sống Việt Nam, giá cả dùng "giả sử";
+# market không quá 1/3 thư viện của một skill; adult_required = true cho bếp, dao, điện, ra ngoài, leo trèo;
+# không tên nhãn hàng.
+#
+# Mọi số trong setup/real_question phải là biến {ten} khai trong variables (code điền số, LLM không đặt số).
+# answer_expression tính đáp án từ biến để code chọn bộ số cho đáp án sạch.
+# approved: do màn hình /parent › Duyệt ghi (không sửa tay); sửa mẫu sau khi duyệt → hash đổi → mất duyệt.
+#
+# Mẫu một mục:
+#  - id: MATH5.DECIMAL.COMPARE.JUMP
+#    skill_id: <skill thật>
+#    theme: sport
+#    min_grade: 5
+#    max_grade: 5
+#    template:
+#      setup: "Trong giờ thể dục, Lan nhảy xa {a} và Hùng nhảy xa {b}."
+#      real_question: "Bạn nào nhảy xa hơn?"
+#      variables:
+#        a: { min: 2.5, max: 3.6, step: 0.05, unit: "m" }
+#        b: { min: 2.5, max: 3.6, step: 0.05, unit: "m" }
+#      answer_expression: "a - b"
+#      max_answer_decimals: 2
+#      conditions: ["a != b"]
+#      svg_kind: segment_bar
+#    safety: { adult_required: false, notes: "" }
+subject: math
+grade: 5
+contexts:
+  - id: MATH5.DECIMAL.CONCEPT.CHOCOLATE_BAR
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Thanh sô-cô-la ở nhà có {n} ô bằng nhau, Minh đã ăn {a} ô.
+      real_question: Phần sô-cô-la Minh đã ăn viết thành số thập phân là bao nhiêu?
+      variables:
+        n:
+          min: 10
+          max: 10
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 9
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: fraction_grid
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 26555d97ee245e2e }
+  - id: MATH5.DECIMAL.CONCEPT.FLOOR_MAT
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Tấm thảm ghép trong phòng khách gồm {n} miếng vuông bằng nhau, trong đó có {a} miếng màu xanh.
+      real_question: Phần thảm màu xanh chiếm bao nhiêu của cả tấm thảm, viết bằng số thập phân?
+      variables:
+        n:
+          min: 100
+          max: 100
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 99
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: fraction_grid
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 9429511782d03054 }
+  - id: MATH5.DECIMAL.CONCEPT.RUNNING_TRACK
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Đường chạy quanh sân trường được cắm cọc chia thành {n} đoạn bằng nhau. An đã chạy được {a} đoạn.
+      real_question: An đã chạy được bao nhiêu phần của vòng chạy, viết bằng số thập phân?
+      variables:
+        n:
+          min: 10
+          max: 10
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 9
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d58de29e5c5514ec }
+  - id: MATH5.DECIMAL.CONCEPT.SEED_TRAY
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bố gieo hạt rau vào khay ươm có {n} ô bằng nhau. Sau mấy ngày, đã có {a} ô nảy mầm.
+      real_question: Phần khay đã nảy mầm viết bằng số thập phân là bao nhiêu?
+      variables:
+        n:
+          min: 100
+          max: 100
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 99
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: fraction_grid
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: a0328843e4cff627 }
+  - id: MATH5.DECIMAL.CONCEPT.JIGSAW_PUZZLE
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bộ tranh xếp hình của Lan có {n} mảnh. Lan đã ghép được {a} mảnh.
+      real_question: Lan đã ghép được bao nhiêu phần bức tranh, viết bằng số thập phân?
+      variables:
+        n:
+          min: 1000
+          max: 1000
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 999
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 97387d166fa48c3b }
+  - id: MATH5.DECIMAL.CONCEPT.VET_SCALE_READING
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở phòng khám thú y, cân ghi con mèo nhà Hoa nặng {w}.
+      real_question: Số trên cân đọc thế nào, phần nguyên và phần thập phân của nó là gì?
+      variables:
+        w:
+          min: 2.15
+          max: 5.85
+          step: 0.1
+          unit: kg
+      answer_expression: w
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: Con đi cùng gia đình đưa mèo khám; chỉ đọc số trên cân.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c9e7ebd43ea4bc25 }
+  - id: MATH5.DECIMAL.CONCEPT.ROAD_SIGN_READING
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Trên đường về quê bằng ô tô, cả nhà thấy biển chỉ đường ghi còn {d} nữa đến thị trấn.
+      real_question: Số trên biển đọc thế nào, và phần nguyên của nó là bao nhiêu?
+      variables:
+        d:
+          min: 10.1
+          max: 49.9
+          step: 0.2
+          unit: km
+      answer_expression: d
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: Con ngồi trong xe cùng gia đình, chỉ đọc biển.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: cc8f432c0641190a }
+  - id: MATH5.DECIMAL.CONCEPT.WATER_BOTTLE_MARKS
+    skill_id: MATH.DECIMAL.CONCEPT
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Chai nước mang đi học của Nam có vạch chia thành {n} phần bằng nhau. Sau giờ ra chơi, nước còn tới vạch thứ {a}.
+      real_question: Chai còn bao nhiêu phần nước, viết bằng số thập phân?
+      variables:
+        n:
+          min: 10
+          max: 10
+          step: 1
+          unit: ""
+        a:
+          min: 1
+          max: 9
+          step: 1
+          unit: ""
+      answer_expression: a / n
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: fraction_grid
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 29569b856ceda0af }
+  - id: MATH5.DECIMAL.COMPARE.LONG_JUMP
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Trong giờ thể dục, Lan nhảy xa được {a}, còn Hùng nhảy xa được {b}.
+      real_question: Bạn nào nhảy xa hơn?
+      variables:
+        a:
+          min: 2.5
+          max: 3.6
+          step: 0.01
+          unit: m
+          label: Lan
+        b:
+          min: 2.5
+          max: 3.6
+          step: 0.01
+          unit: m
+          label: Hùng
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 041d39f8482be72b }
+  - id: MATH5.DECIMAL.COMPARE.KITTEN_WEIGHTS
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: "Bà cân các chú mèo nhà mình: mèo Mướp nặng {a}, mèo Mun nặng {b}, mèo Vàng nặng {c}."
+      real_question: Chú mèo nào nặng nhất?
+      variables:
+        a:
+          min: 1.2
+          max: 3.8
+          step: 0.05
+          unit: kg
+          label: Mướp
+        b:
+          min: 1.2
+          max: 3.8
+          step: 0.05
+          unit: kg
+          label: Mun
+        c:
+          min: 1.2
+          max: 3.8
+          step: 0.05
+          unit: kg
+          label: Vàng
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+        - a != c
+        - b != c
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: e20a181a0b5481a6 }
+  - id: MATH5.DECIMAL.COMPARE.CLASS_LINE_UP
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: "Cô đo chiều cao trong tổ: Mai cao {a}, Nam cao {b}, Hà cao {c}, Tuấn cao {d}."
+      real_question: Cô muốn xếp hàng từ bạn thấp đến bạn cao, thứ tự thế nào?
+      variables:
+        a:
+          min: 1.25
+          max: 1.55
+          step: 0.01
+          unit: m
+          label: Mai
+        b:
+          min: 1.25
+          max: 1.55
+          step: 0.01
+          unit: m
+          label: Nam
+        c:
+          min: 1.25
+          max: 1.55
+          step: 0.01
+          unit: m
+          label: Hà
+        d:
+          min: 1.25
+          max: 1.55
+          step: 0.01
+          unit: m
+          label: Tuấn
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+        - a != c
+        - a != d
+        - b != c
+        - b != d
+        - c != d
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 8bd8d61a3a9d50db }
+  - id: MATH5.DECIMAL.COMPARE.WATERMELON_CHOICE
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở chợ, quả dưa hấu vỏ xanh nặng {a}, quả dưa hấu vỏ sọc nặng {b}.
+      real_question: Mẹ muốn chọn quả nặng hơn, mẹ nên lấy quả nào?
+      variables:
+        a:
+          min: 1.5
+          max: 4
+          step: 0.05
+          unit: kg
+          label: Vỏ xanh
+        b:
+          min: 1.5
+          max: 4
+          step: 0.05
+          unit: kg
+          label: Vỏ sọc
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: Con đi chợ cùng mẹ.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 7662b6a1032c7049 }
+  - id: MATH5.DECIMAL.COMPARE.BEAN_SPROUTS
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả lớp trồng đậu trong cốc nhựa. Cây đậu của Minh cao {a}, cây đậu của Hoa cao {b}.
+      real_question: Cây đậu của ai cao hơn?
+      variables:
+        a:
+          min: 8.5
+          max: 15.5
+          step: 0.1
+          unit: cm
+          label: Minh
+        b:
+          min: 8.5
+          max: 15.5
+          step: 0.1
+          unit: cm
+          label: Hoa
+      answer_expression: a
+      max_answer_decimals: 1
+      conditions:
+        - a != b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ca440a63949fdb8a }
+  - id: MATH5.DECIMAL.COMPARE.PARK_ROUTES
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Từ nhà đến công viên, đường đi qua cầu dài {a}, còn đường ven sông dài {b}.
+      real_question: Bố muốn đưa cả nhà đi đường ngắn hơn, nên đi đường nào?
+      variables:
+        a:
+          min: 1.2
+          max: 3.5
+          step: 0.05
+          unit: km
+          label: Qua cầu
+        b:
+          min: 1.2
+          max: 3.5
+          step: 0.05
+          unit: km
+          label: Ven sông
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Đi ra ngoài cùng bố; con không tự đi.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: e9b671d99cef06b4 }
+  - id: MATH5.DECIMAL.COMPARE.TOY_CAR_RACE
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả nhóm đua xe đồ chơi trên đường đua trong sân. Xe của Bình về đích sau {a}, xe của Lan sau {b}, xe của Khoa sau {c}.
+      real_question: Xe của bạn nào về đích nhanh nhất?
+      variables:
+        a:
+          min: 5.2
+          max: 9.8
+          step: 0.01
+          unit: giây
+          label: Bình
+        b:
+          min: 5.2
+          max: 9.8
+          step: 0.01
+          unit: giây
+          label: Lan
+        c:
+          min: 5.2
+          max: 9.8
+          step: 0.01
+          unit: giây
+          label: Khoa
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+        - a != c
+        - b != c
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b046c7c0c02c8cd2 }
+  - id: MATH5.DECIMAL.COMPARE.LEMONADE_JUGS
+    skill_id: MATH.DECIMAL.COMPARE
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Nhà có khách, mẹ pha nước chanh vào bình thuỷ tinh đựng được {a}, bà pha vào bình nhựa đựng được {b}.
+      real_question: Bình nào đựng được nhiều nước chanh hơn?
+      variables:
+        a:
+          min: 1.25
+          max: 2.5
+          step: 0.05
+          unit: l
+          label: Bình thuỷ tinh
+        b:
+          min: 1.25
+          max: 2.5
+          step: 0.05
+          unit: l
+          label: Bình nhựa
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions:
+        - a != b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: Người lớn pha nước; con chỉ so sánh dung tích bình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 44abeb687a21d4f0 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.HEALTH_BOOK_HEIGHT
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Hôm khám sức khoẻ ở trường, cô đo chiều cao của Lan được {m} {cm}.
+      real_question: Sổ sức khoẻ ghi chiều cao bằng mét, cô phải viết số nào?
+      variables:
+        m:
+          min: 1
+          max: 1
+          step: 1
+          unit: m
+        cm:
+          min: 20
+          max: 60
+          step: 1
+          unit: cm
+      answer_expression: m + cm / 100
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 284efe86d465ecb2 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.WATERMELON_WEIGHT
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở chợ, quả dưa hấu mẹ chọn cân được {kg} {g}.
+      real_question: Mẹ muốn ghi vào sổ bằng ki-lô-gam, mẹ viết thế nào?
+      variables:
+        kg:
+          min: 1
+          max: 3
+          step: 1
+          unit: kg
+        g:
+          min: 100
+          max: 900
+          step: 50
+          unit: g
+      answer_expression: kg + g / 1000
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: Con đi chợ cùng mẹ.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 1540996a0bfae1e8 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.CURTAIN_WIDTH
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bố đo cửa sổ phòng con để đặt may rèm, chiều rộng cửa sổ là {m} {cm}.
+      real_question: Tiệm may cần số đo bằng mét, bố ghi thế nào?
+      variables:
+        m:
+          min: 1
+          max: 1
+          step: 1
+          unit: m
+        cm:
+          min: 1
+          max: 99
+          step: 1
+          unit: cm
+      answer_expression: m + cm / 100
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: Bố đo; con chỉ đổi số đo.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 59c3ade9858c6934 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.JUMP_RESULT
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Trong giờ thể dục, Hoa nhảy xa được {m} {dm}.
+      real_question: Bảng thành tích ghi bằng mét, cô ghi kết quả của Hoa là bao nhiêu?
+      variables:
+        m:
+          min: 2
+          max: 3
+          step: 1
+          unit: m
+        dm:
+          min: 1
+          max: 9
+          step: 1
+          unit: dm
+      answer_expression: m + dm / 10
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 8ef6dfc66ff7d51b }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.FLOWER_BED_AREA
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mảnh đất trồng hoa trước hiên nhà bà có diện tích {sqm} {sqdm}.
+      real_question: Bà muốn biết diện tích đó viết bằng mét vuông là bao nhiêu?
+      variables:
+        sqm:
+          min: 2
+          max: 6
+          step: 1
+          unit: m²
+        sqdm:
+          min: 1
+          max: 99
+          step: 1
+          unit: dm²
+      answer_expression: sqm + sqdm / 100
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 534b4034cc774977 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.KITTEN_CHECKUP
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Chú mèo con nhà Minh đi tiêm phòng, cân được {g}.
+      real_question: Sổ tiêm phòng ghi cân nặng bằng ki-lô-gam, bác sĩ thú y ghi số nào?
+      variables:
+        g:
+          min: 300
+          max: 950
+          step: 10
+          unit: g
+      answer_expression: g / 1000
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: Con đi cùng gia đình đưa mèo đi tiêm.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 53771589c3edd876 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.SUITCASE_WEIGHT
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả nhà đi du lịch bằng máy bay. Ở sân bay, chiếc vali của nhà cân được {kg} {g}.
+      real_question: Phiếu gửi hành lý ghi bằng ki-lô-gam, số trên phiếu là bao nhiêu?
+      variables:
+        kg:
+          min: 12
+          max: 19
+          step: 1
+          unit: kg
+        g:
+          min: 50
+          max: 950
+          step: 50
+          unit: g
+      answer_expression: kg + g / 1000
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: Con đi cùng gia đình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 2dce7198ca58d0f8 }
+  - id: MATH5.DECIMAL.MEASURE_NOTATION.PLAY_MAT_AREA
+    skill_id: MATH.DECIMAL.MEASURE_NOTATION
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Tấm bảng xếp hình nam châm của em Bin có diện tích {sqdm}.
+      real_question: Viết diện tích tấm bảng bằng mét vuông thì là bao nhiêu?
+      variables:
+        sqdm:
+          min: 30
+          max: 99
+          step: 1
+          unit: dm²
+      answer_expression: sqdm / 100
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: fraction_grid
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 974f4e521d33414c }
+  - id: MATH5.DECIMAL.ROUND.SPRINT_TIME
+    skill_id: MATH.DECIMAL.ROUND
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở hội khoẻ Phù Đổng của trường, đồng hồ bấm giờ ghi Nam chạy hết {a}.
+      real_question: Cô chỉ ghi số giây làm tròn đến số tự nhiên gần nhất, cô ghi mấy giây?
+      variables:
+        a:
+          min: 9.1
+          max: 14.9
+          step: 0.01
+          unit: giây
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b62651487592f68c }
+  - id: MATH5.DECIMAL.ROUND.PUMPKIN_SCALE
+    skill_id: MATH.DECIMAL.ROUND
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở chợ, cân của cô bán rau ghi quả bí đỏ nặng {a}.
+      real_question: Nếu làm tròn đến hàng phần trăm thì quả bí nặng khoảng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 1.201
+          max: 3.999
+          step: 0.001
+          unit: kg
+      answer_expression: a
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: Con đi chợ cùng người lớn.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d50007eb5ab5a67a }
+  - id: MATH5.DECIMAL.ROUND.SCHOOLYARD_TREE
+    skill_id: MATH.DECIMAL.ROUND
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Thầy giáo cho biết cây bàng ở sân trường cao {a}.
+      real_question: Làm tròn đến số tự nhiên gần nhất, cây bàng cao khoảng mấy mét?
+      variables:
+        a:
+          min: 4.1
+          max: 9.9
+          step: 0.01
+          unit: m
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 6c6e55cb55331c93 }
+  - id: MATH5.DECIMAL.ROUND.TRIP_DISTANCE
+    skill_id: MATH.DECIMAL.ROUND
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Trên đường đi chơi cuối tuần, bản đồ trên điện thoại của mẹ báo còn {a} nữa là tới nơi.
+      real_question: Làm tròn đến số tự nhiên gần nhất cho dễ nhớ, còn khoảng mấy ki-lô-mét?
+      variables:
+        a:
+          min: 12.15
+          max: 58.95
+          step: 0.01
+          unit: km
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: Con ngồi trong xe cùng gia đình.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 5edaef64f4b02411 }
+  - id: MATH5.DECIMAL.ROUND.HEALTH_BOOK_HEIGHT
+    skill_id: MATH.DECIMAL.ROUND
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Máy đo chiều cao ở phòng y tế trường ghi Hà cao {a}.
+      real_question: Sổ sức khoẻ ghi chiều cao làm tròn đến hàng phần trăm của mét, cô ghi số nào?
+      variables:
+        a:
+          min: 1.251
+          max: 1.599
+          step: 0.001
+          unit: m
+      answer_expression: a
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d36e7593f2822186 }
+  - id: MATH5.DECIMAL.ROUND.PUPPY_WEIGHT
+    skill_id: MATH.DECIMAL.ROUND
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở phòng khám thú y, cân ghi chú chó Lu nặng {a}.
+      real_question: Nếu làm tròn đến hàng phần mười thì bác sĩ ghi chó Lu nặng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 5.12
+          max: 12.98
+          step: 0.01
+          unit: kg
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: Con đi cùng gia đình đưa chó đi khám.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 0f103d032611e5ea }
+  - id: MATH5.DECIMAL.ROUND.FLOUR_BAG
+    skill_id: MATH.DECIMAL.ROUND
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mẹ định làm bánh, đặt túi bột mì lên cân thì thấy còn {a}.
+      real_question: Làm tròn đến hàng phần mười thì túi bột còn khoảng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 0.52
+          max: 2.48
+          step: 0.01
+          unit: kg
+      answer_expression: a
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: true
+      notes: Mẹ làm bánh (có thể dùng lò nướng); con chỉ đọc số trên cân, không dùng lò.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 4c0a101ad7ebd1a3 }
+  - id: MATH5.DECIMAL.ROUND.MARBLE_ROLL
+    skill_id: MATH.DECIMAL.ROUND
+    theme: game
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả nhóm chơi lăn bi trong sân, đo bằng thước dây thấy viên bi của Khoa lăn được {a}.
+      real_question: Bảng điểm ghi khoảng cách làm tròn đến hàng phần trăm, ghi cho Khoa bao nhiêu mét?
+      variables:
+        a:
+          min: 1.105
+          max: 3.995
+          step: 0.001
+          unit: m
+      answer_expression: a
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: number_line
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 133bbf55ae6715c8 }
+  - id: MATH5.DECIMAL.ADD.WATER_AFTER_FOOTBALL
+    skill_id: MATH.DECIMAL.ADD
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Sau trận đá bóng ở sân trường, Minh uống {a} nước, còn Lan uống {b} nước.
+      real_question: Minh và Lan uống hết tất cả bao nhiêu lít nước?
+      variables:
+        a:
+          min: 0.25
+          max: 0.75
+          step: 0.05
+          unit: l
+          label: Minh
+        b:
+          min: 0.25
+          max: 0.75
+          step: 0.05
+          unit: l
+          label: Lan
+      answer_expression: a + b
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bfdc4abab842a358 }
+  - id: MATH5.DECIMAL.ADD.GIFT_RIBBON
+    skill_id: MATH.DECIMAL.ADD
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: "Con gói quà sinh nhật tặng em: hộp to cần {a} ruy băng, hộp nhỏ cần {b} ruy băng."
+      real_question: Con cần chuẩn bị tất cả bao nhiêu mét ruy băng để gói đủ cả hộp to và hộp nhỏ?
+      variables:
+        a:
+          min: 1.1
+          max: 1.8
+          step: 0.05
+          unit: m
+          label: Hộp to
+        b:
+          min: 0.6
+          max: 1.05
+          step: 0.05
+          unit: m
+          label: Hộp nhỏ
+      answer_expression: a + b
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ac36b75ede022485 }
+  - id: MATH5.DECIMAL.ADD.TRIP_TO_BEACH
+    skill_id: MATH.DECIMAL.ADD
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cuối tuần cả nhà đi biển. Xe chạy {a} từ nhà đến trạm dừng nghỉ, rồi chạy thêm {b} nữa thì tới bãi biển.
+      real_question: Từ nhà đến bãi biển dài tất cả bao nhiêu ki-lô-mét?
+      variables:
+        a:
+          min: 25.5
+          max: 48.5
+          step: 0.1
+          unit: km
+          label: Đến trạm nghỉ
+        b:
+          min: 12
+          max: 30
+          step: 1
+          unit: km
+          label: Đến bãi biển
+      answer_expression: a + b
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 205d50cfe35e2225 }
+  - id: MATH5.DECIMAL.ADD.CAKE_INGREDIENTS
+    skill_id: MATH.DECIMAL.ADD
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mẹ định làm bánh bông lan, cần {a} bột mì, {b} đường và {c} bơ.
+      real_question: Mẹ cần chuẩn bị tất cả bao nhiêu ki-lô-gam bột mì, đường và bơ?
+      variables:
+        a:
+          min: 0.3
+          max: 0.8
+          step: 0.05
+          unit: kg
+          label: Bột mì
+        b:
+          min: 0.15
+          max: 0.4
+          step: 0.05
+          unit: kg
+          label: Đường
+        c:
+          min: 0.1
+          max: 0.25
+          step: 0.05
+          unit: kg
+          label: Bơ
+      answer_expression: a + b + c
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Làm bánh cần lò nướng; mẹ làm, con chỉ cùng tính lượng nguyên liệu.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b1a9bc12d7208f0e }
+  - id: MATH5.DECIMAL.ADD.SCHOOL_BAG_WEIGHT
+    skill_id: MATH.DECIMAL.ADD
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cặp sách rỗng của Hà nặng {a}. Hà xếp vào sách vở nặng {b} và bình nước nặng {c}.
+      real_question: Hà đeo chiếc cặp nặng tất cả bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 0.6
+          max: 1.2
+          step: 0.1
+          unit: kg
+          label: Cặp
+        b:
+          min: 1.5
+          max: 2.8
+          step: 0.05
+          unit: kg
+          label: Sách vở
+        c:
+          min: 0.3
+          max: 0.6
+          step: 0.05
+          unit: kg
+          label: Bình nước
+      answer_expression: a + b + c
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c7252c3d996c140f }
+  - id: MATH5.DECIMAL.ADD.FRUIT_BAG
+    skill_id: MATH.DECIMAL.ADD
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bà đi chợ về, mua {a} cam và {b} chuối, bỏ chung vào túi.
+      real_question: Túi hoa quả bà xách nặng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 1.2
+          max: 2.5
+          step: 0.1
+          unit: kg
+          label: Cam
+        b:
+          min: 0.8
+          max: 1.75
+          step: 0.05
+          unit: kg
+          label: Chuối
+      answer_expression: a + b
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 2a8da014841e42ee }
+  - id: MATH5.DECIMAL.ADD.PUPPY_GROWTH
+    skill_id: MATH.DECIMAL.ADD
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Lúc mới đón về nhà, cún con nặng {a}. Từ đó đến nay cún nặng thêm {b}.
+      real_question: Bây giờ cún nặng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 1.2
+          max: 3.5
+          step: 0.1
+          unit: kg
+          label: Lúc đón về
+        b:
+          min: 0.5
+          max: 2.5
+          step: 0.05
+          unit: kg
+          label: Nặng thêm
+      answer_expression: a + b
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: fd9ef97a941b822b }
+  - id: MATH5.DECIMAL.ADD.RAINFALL_GAUGE
+    skill_id: MATH.DECIMAL.ADD
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ống đo mưa ở vườn trường ghi được hôm qua mưa {a}, hôm nay mưa {b}.
+      real_question: Cả hôm qua và hôm nay mưa được tất cả bao nhiêu mi-li-mét?
+      variables:
+        a:
+          min: 12.5
+          max: 35
+          step: 0.1
+          unit: mm
+          label: Hôm qua
+        b:
+          min: 8
+          max: 20
+          step: 1
+          unit: mm
+          label: Hôm nay
+      answer_expression: a + b
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b53b45ea6dc80c58 }
+  - id: MATH5.DECIMAL.SUBTRACT.FABRIC_LEFT
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bà có tấm vải dài {a}. Bà cắt ra {b} để may vỏ gối.
+      real_question: Tấm vải còn lại dài bao nhiêu mét, có đủ may thêm chiếc vỏ gối nữa không?
+      variables:
+        a:
+          min: 2
+          max: 5
+          step: 1
+          unit: m
+          label: Cả tấm
+        b:
+          min: 0.5
+          max: 1.85
+          step: 0.05
+          unit: m
+          label: Đã cắt
+      answer_expression: a - b
+      max_answer_decimals: 2
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: Bà cắt vải; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 87454ac3b2cc692d }
+  - id: MATH5.DECIMAL.SUBTRACT.RUNNING_LAP
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Đường chạy quanh sân trường dài {a}. Hùng đã chạy được {b} thì dừng lại uống nước.
+      real_question: Hùng còn phải chạy bao nhiêu mét nữa mới hết vòng?
+      variables:
+        a:
+          min: 200
+          max: 400
+          step: 50
+          unit: m
+          label: Cả vòng
+        b:
+          min: 85.5
+          max: 190.5
+          step: 0.5
+          unit: m
+          label: Đã chạy
+      answer_expression: a - b
+      max_answer_decimals: 1
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: c86cac717e75f253 }
+  - id: MATH5.DECIMAL.SUBTRACT.WATER_JUG
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bình nước lọc nhà Mai lúc đầu chứa {a} nước. Cả nhà đã uống hết {b}.
+      real_question: Trong bình còn bao nhiêu lít nước, có cần gọi thêm bình mới chưa?
+      variables:
+        a:
+          min: 18
+          max: 20
+          step: 1
+          unit: l
+          label: Lúc đầu
+        b:
+          min: 3.5
+          max: 12.75
+          step: 0.25
+          unit: l
+          label: Đã uống
+      answer_expression: a - b
+      max_answer_decimals: 2
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 204c52c4a9853706 }
+  - id: MATH5.DECIMAL.SUBTRACT.HEIGHT_CHECKUP
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Lần khám sức khoẻ ở trường học kì trước, Minh cao {b}. Lần khám này Minh cao {a}.
+      real_question: Từ lần trước đến nay Minh cao thêm bao nhiêu mét?
+      variables:
+        a:
+          min: 1.35
+          max: 1.5
+          step: 0.01
+          unit: m
+          label: Lần này
+        b:
+          min: 1.28
+          max: 1.42
+          step: 0.01
+          unit: m
+          label: Lần trước
+      answer_expression: a - b
+      max_answer_decimals: 2
+      conditions:
+        - a > b
+        - a - b <= 0.08
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: a440107f94656161 }
+  - id: MATH5.DECIMAL.SUBTRACT.TRIP_HOMETOWN
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Từ nhà về quê nội dài {a}. Xe nhà mình đã đi được {b}.
+      real_question: Còn bao nhiêu ki-lô-mét nữa thì về tới quê nội?
+      variables:
+        a:
+          min: 85
+          max: 150
+          step: 1
+          unit: km
+          label: Cả quãng
+        b:
+          min: 20.5
+          max: 80.5
+          step: 0.1
+          unit: km
+          label: Đã đi
+      answer_expression: a - b
+      max_answer_decimals: 1
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ebe590d7c2eec07b }
+  - id: MATH5.DECIMAL.SUBTRACT.MARKET_BAG
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mẹ đi chợ về, túi đồ nặng {a}, trong đó có {b} gạo.
+      real_question: Không kể gạo, các đồ còn lại trong túi nặng bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 4.5
+          max: 7.5
+          step: 0.1
+          unit: kg
+          label: Cả túi
+        b:
+          min: 2
+          max: 3
+          step: 0.5
+          unit: kg
+          label: Gạo
+      answer_expression: a - b
+      max_answer_decimals: 1
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 105f04c59f8c81e1 }
+  - id: MATH5.DECIMAL.SUBTRACT.CATS_WEIGHT
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Nhà Lan nuôi mèo Mướp và mèo Mun. Mèo Mướp nặng {a}, mèo Mun nặng {b}.
+      real_question: Mèo Mướp nặng hơn mèo Mun bao nhiêu ki-lô-gam?
+      variables:
+        a:
+          min: 3.5
+          max: 5.2
+          step: 0.05
+          unit: kg
+          label: Mướp
+        b:
+          min: 2.8
+          max: 4.5
+          step: 0.05
+          unit: kg
+          label: Mun
+      answer_expression: a - b
+      max_answer_decimals: 2
+      conditions:
+        - a > b
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 39db43911330de33 }
+  - id: MATH5.DECIMAL.SUBTRACT.SUNFLOWER_GROWTH
+    skill_id: MATH.DECIMAL.SUBTRACT
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: "Cây hướng dương con trồng trong chậu: tuần trước cao {b}, hôm nay đo lại cao {a}."
+      real_question: Trong tuần qua cây hướng dương cao thêm bao nhiêu xăng-ti-mét?
+      variables:
+        a:
+          min: 45.5
+          max: 80
+          step: 0.5
+          unit: cm
+          label: Hôm nay
+        b:
+          min: 30
+          max: 60
+          step: 0.5
+          unit: cm
+          label: Tuần trước
+      answer_expression: a - b
+      max_answer_decimals: 1
+      conditions:
+        - a > b
+        - a - b <= 20
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 9595b0fec67e2dfd }
+  - id: MATH5.DECIMAL.MULTIPLY.TEAM_WATER
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Đội bóng của Nam có {n}, mỗi bạn mang theo bình nước {a}.
+      real_question: Cả đội mang theo tất cả bao nhiêu lít nước?
+      variables:
+        n:
+          min: 5
+          max: 11
+          step: 1
+          unit: bạn
+          label: Số bạn
+        a:
+          min: 0.35
+          max: 0.75
+          step: 0.05
+          unit: l
+          label: Mỗi bình
+      answer_expression: a * n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 00dd8b7379f3335b }
+  - id: MATH5.DECIMAL.MULTIPLY.GIFT_BOXES_RIBBON
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Lan gói quà Tết cho họ hàng. Mỗi hộp quà cần {a} ruy băng, Lan định gói {n}.
+      real_question: Lan cần mua tất cả bao nhiêu mét ruy băng?
+      variables:
+        a:
+          min: 0.6
+          max: 1.5
+          step: 0.05
+          unit: m
+          label: Mỗi hộp
+        n:
+          min: 3
+          max: 8
+          step: 1
+          unit: hộp
+          label: Số hộp
+      answer_expression: a * n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: cf0059ac0c7270ac }
+  - id: MATH5.DECIMAL.MULTIPLY.GRAPES_PRICE
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Giả sử nho ở sạp hoa quả giá {p} mỗi ki-lô-gam. Mẹ nhờ cô bán hàng cân {w} nho.
+      real_question: Mẹ phải trả cô bán hàng bao nhiêu tiền?
+      variables:
+        p:
+          min: 40000
+          max: 80000
+          step: 5000
+          unit: đồng
+          label: Giá mỗi kg
+        w:
+          min: 1.2
+          max: 2.5
+          step: 0.1
+          unit: kg
+          label: Nho
+      answer_expression: p * w
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 023bfa1e2092e0bc }
+  - id: MATH5.DECIMAL.MULTIPLY.VEGETABLE_BED_NET
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Luống rau cải hình chữ nhật trong vườn dài {a}, rộng {b}. Bố muốn phủ lưới che nắng vừa kín mặt luống.
+      real_question: Bố cần tấm lưới rộng bao nhiêu mét vuông?
+      variables:
+        a:
+          min: 2.5
+          max: 6.5
+          step: 0.1
+          unit: m
+          label: Chiều dài
+        b:
+          min: 0.8
+          max: 1.5
+          step: 0.1
+          unit: m
+          label: Chiều rộng
+      answer_expression: a * b
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: Bố phủ lưới; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 11afdf5e0d753a8a }
+  - id: MATH5.DECIMAL.MULTIPLY.CAKE_BATCHES_FLOUR
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mẹ làm bánh quy để mang đi dã ngoại. Mỗi mẻ bánh cần {a} bột mì, mẹ định làm {n}.
+      real_question: Mẹ cần chuẩn bị tất cả bao nhiêu ki-lô-gam bột mì?
+      variables:
+        a:
+          min: 0.25
+          max: 0.6
+          step: 0.05
+          unit: kg
+          label: Mỗi mẻ
+        n:
+          min: 2
+          max: 6
+          step: 1
+          unit: mẻ
+          label: Số mẻ
+      answer_expression: a * n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: true
+      notes: Nướng bánh cần lò nướng; mẹ làm, con chỉ cùng tính lượng bột.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: b6f37867faa55062 }
+  - id: MATH5.DECIMAL.MULTIPLY.CAR_TRIP_HOURS
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả nhà đi xe khách lên Đà Lạt. Bác tài nói trung bình mỗi giờ xe đi được {a}. Xe đã đi được {t}.
+      real_question: Đến lúc này xe đã đi được bao nhiêu ki-lô-mét?
+      variables:
+        a:
+          min: 40
+          max: 60
+          step: 2
+          unit: km
+          label: Mỗi giờ
+        t:
+          min: 1.5
+          max: 3.5
+          step: 0.25
+          unit: giờ
+          label: Thời gian
+      answer_expression: a * t
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 00b71fe1efef7b55 }
+  - id: MATH5.DECIMAL.MULTIPLY.FISH_FOOD
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mỗi ngày Minh cho đàn cá cảnh ăn {a} thức ăn. Minh muốn biết hộp thức ăn dùng được bao lâu.
+      real_question: Sau {n} thì đàn cá ăn hết bao nhiêu gam thức ăn?
+      variables:
+        a:
+          min: 2.5
+          max: 4.5
+          step: 0.5
+          unit: g
+          label: Mỗi ngày
+        n:
+          min: 7
+          max: 30
+          step: 1
+          unit: ngày
+          label: Số ngày
+      answer_expression: a * n
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: ddaf74bce253ea0c }
+  - id: MATH5.DECIMAL.MULTIPLY.BOOK_STACK
+    skill_id: MATH.DECIMAL.MULTIPLY
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cô giáo xếp {n} giống nhau thành chồng trên bàn. Mỗi quyển dày {a}.
+      real_question: Chồng vở cao bao nhiêu xăng-ti-mét, có vừa ngăn tủ của lớp không?
+      variables:
+        n:
+          min: 12
+          max: 25
+          step: 1
+          unit: quyển vở
+          label: Số quyển
+        a:
+          min: 0.6
+          max: 1.2
+          step: 0.05
+          unit: cm
+          label: Mỗi quyển
+      answer_expression: a * n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bd5cf58d71515db9 }
+  - id: MATH5.DECIMAL.DIVIDE.CLASS_ROPE_GROUPS
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cô giáo có cuộn dây dài {a} để làm đồ dùng học tập, chia đều cho {n}.
+      real_question: Mỗi nhóm được bao nhiêu mét dây?
+      variables:
+        a:
+          min: 6
+          max: 15
+          step: 0.1
+          unit: m
+          label: Cả cuộn
+        n:
+          min: 4
+          max: 6
+          step: 1
+          unit: nhóm
+          label: Số nhóm
+      answer_expression: a / n
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 165cfa68d415527b }
+  - id: MATH5.DECIMAL.DIVIDE.JUICE_CUPS
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Nhà có khách, mẹ pha bình nước cam {a}. Mỗi cốc rót {b}.
+      real_question: Bình nước cam rót được bao nhiêu cốc, có đủ mời cả nhà không?
+      variables:
+        a:
+          min: 1
+          max: 3
+          step: 0.1
+          unit: l
+          label: Cả bình
+        b:
+          min: 0.2
+          max: 0.3
+          step: 0.05
+          unit: l
+          label: Mỗi cốc
+      answer_expression: a / b
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: Mẹ pha nước cam; con chỉ tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: bd2f1e4e7cb1f315 }
+  - id: MATH5.DECIMAL.DIVIDE.MEAT_PRICE_PER_KG
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Giả sử mẹ mua {w} thịt lợn và trả hết {p}.
+      real_question: Vậy mỗi ki-lô-gam thịt lợn giá bao nhiêu tiền?
+      variables:
+        w:
+          min: 1.5
+          max: 2.5
+          step: 0.5
+          unit: kg
+          label: Thịt
+        p:
+          min: 150000
+          max: 360000
+          step: 10000
+          unit: đồng
+          label: Số tiền
+      answer_expression: p / w
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 1bf8808813f41d5b }
+  - id: MATH5.DECIMAL.DIVIDE.RUNNING_LAPS
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mỗi vòng sân vận động dài {b}. Nam đặt mục tiêu chạy đủ {a} trong buổi tập.
+      real_question: Nam phải chạy bao nhiêu vòng sân?
+      variables:
+        a:
+          min: 1
+          max: 4
+          step: 1
+          unit: km
+          label: Mục tiêu
+        b:
+          min: 0.2
+          max: 0.5
+          step: 0.05
+          unit: km
+          label: Mỗi vòng
+      answer_expression: a / b
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d1afe82bbd09ca06 }
+  - id: MATH5.DECIMAL.DIVIDE.COCONUT_JAM_BOXES
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mẹ sên được {a} mứt dừa để biếu ông bà và họ hàng, chia đều vào {n}.
+      real_question: Mỗi hộp có bao nhiêu ki-lô-gam mứt dừa?
+      variables:
+        a:
+          min: 1
+          max: 5
+          step: 1
+          unit: kg
+          label: Cả mứt
+        n:
+          min: 4
+          max: 8
+          step: 4
+          unit: hộp
+          label: Số hộp
+      answer_expression: a / n
+      max_answer_decimals: 3
+      conditions:
+        - a < n
+      svg_kind: box
+    safety:
+      adult_required: true
+      notes: Sên mứt cần nấu trên bếp; mẹ làm, con chỉ cùng chia hộp và tính.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: beca5111120dcfd3 }
+  - id: MATH5.DECIMAL.DIVIDE.BUS_AVERAGE_HOUR
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Cả nhà đi xe khách về quê ngoại. Xe đi quãng đường {a} hết {t}.
+      real_question: Trung bình mỗi giờ xe đi được bao nhiêu ki-lô-mét?
+      variables:
+        a:
+          min: 60
+          max: 150
+          step: 0.5
+          unit: km
+          label: Quãng đường
+        t:
+          min: 1.5
+          max: 2.5
+          step: 0.5
+          unit: giờ
+          label: Thời gian
+      answer_expression: a / t
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: true
+      notes: Chuyến đi cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 207af6c36594d9fa }
+  - id: MATH5.DECIMAL.DIVIDE.CAT_FOOD_DAYS
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Túi hạt cho mèo nặng {a}. Mèo nhà Hoa ăn đều mỗi ngày và hết túi sau {n}.
+      real_question: Mỗi ngày mèo ăn bao nhiêu ki-lô-gam hạt?
+      variables:
+        a:
+          min: 2
+          max: 6
+          step: 1
+          unit: kg
+          label: Cả túi
+        n:
+          min: 8
+          max: 25
+          step: 1
+          unit: ngày
+          label: Số ngày
+      answer_expression: a / n
+      max_answer_decimals: 3
+      conditions:
+        - a < n
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 67da64392fe04740 }
+  - id: MATH5.DECIMAL.DIVIDE.SOIL_POTS
+    skill_id: MATH.DECIMAL.DIVIDE
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Nhóm trồng cây của lớp có bao đất nặng {a}, chia đều vào {n} để gieo hạt.
+      real_question: Mỗi chậu được bao nhiêu ki-lô-gam đất?
+      variables:
+        a:
+          min: 7.5
+          max: 15
+          step: 0.5
+          unit: kg
+          label: Cả bao
+        n:
+          min: 4
+          max: 8
+          step: 1
+          unit: chậu
+          label: Số chậu
+      answer_expression: a / n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 7ae729a1a3d56e87 }
+  - id: MATH5.DECIMAL.SCALE.FLOUR_GRAMS
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: cooking
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Công thức bánh ghi cần {a} bột mì, nhưng cân nhà mình chỉ hiện số gam. Biết mỗi ki-lô-gam bằng {n}.
+      real_question: Mẹ phải cân đến khi cân hiện bao nhiêu gam?
+      variables:
+        a:
+          min: 0.25
+          max: 1.5
+          step: 0.05
+          unit: kg
+          label: Bột mì
+        n:
+          min: 1000
+          max: 1000
+          step: 1
+          unit: g
+      answer_expression: a * n
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: true
+      notes: Làm bánh cần lò nướng; mẹ làm, con chỉ cùng cân và đổi đơn vị.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 470224a885667a5e }
+  - id: MATH5.DECIMAL.SCALE.DESK_ROW
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: school
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Để chuẩn bị hội chợ của trường, lớp em kê {n} sát nhau thành hàng dọc hành lang. Mỗi bàn dài {a}.
+      real_question: Hàng bàn dài bao nhiêu mét, có vừa hành lang không?
+      variables:
+        n:
+          min: 10
+          max: 10
+          step: 1
+          unit: bàn
+          label: Số bàn
+        a:
+          min: 1.1
+          max: 1.4
+          step: 0.05
+          unit: m
+          label: Mỗi bàn
+      answer_expression: a * n
+      max_answer_decimals: 1
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: Kê bàn do thầy cô và cả lớp cùng làm.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: be6855e78d6cf438 }
+  - id: MATH5.DECIMAL.SCALE.CURTAIN_FABRIC_CM
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: market
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ở chợ vải, cô bán hàng cắt cho mẹ {a} vải để may rèm. Mẹ cần đổi ra xăng-ti-mét để so với cửa sổ, biết mỗi mét bằng {n}.
+      real_question: Mảnh vải mẹ mua dài bao nhiêu xăng-ti-mét?
+      variables:
+        a:
+          min: 1.25
+          max: 3.5
+          step: 0.05
+          unit: m
+          label: Vải
+        n:
+          min: 100
+          max: 100
+          step: 1
+          unit: cm
+      answer_expression: a * n
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 970519a49205b732 }
+  - id: MATH5.DECIMAL.SCALE.LAKE_WALK_KM
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: travel
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Tối qua cả nhà đi dạo quanh hồ, đồng hồ của bố ghi cả nhà đã đi {a}. Biết mỗi ki-lô-mét bằng {n}.
+      real_question: Cả nhà đã đi bộ được bao nhiêu ki-lô-mét?
+      variables:
+        a:
+          min: 1250
+          max: 4800
+          step: 50
+          unit: m
+          label: Quãng đường
+        n:
+          min: 1000
+          max: 1000
+          step: 1
+          unit: m
+      answer_expression: a / n
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: true
+      notes: Đi dạo cùng bố mẹ; chỉ là tình huống trong đề, không có việc gì con làm ngoài nhà.
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 0536fc52adb4f7a8 }
+  - id: MATH5.DECIMAL.SCALE.TEN_LAPS
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: sport
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Mỗi vòng sân trường dài {a}. Trong tiết thể dục, thầy cho cả lớp chạy {n}.
+      real_question: Cả buổi, mỗi bạn chạy được bao nhiêu mét?
+      variables:
+        a:
+          min: 100
+          max: 200
+          step: 0.5
+          unit: m
+          label: Mỗi vòng
+        n:
+          min: 10
+          max: 10
+          step: 1
+          unit: vòng
+          label: Số vòng
+      answer_expression: a * n
+      max_answer_decimals: 0
+      conditions: []
+      svg_kind: segment_bar
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 5959e0523553b4f2 }
+  - id: MATH5.DECIMAL.SCALE.CHICKEN_FEED
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: animals
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Trang trại của bác Hải có đàn gà {n}. Mỗi ngày cả đàn ăn hết {a} thóc, con nào cũng ăn như nhau.
+      real_question: Mỗi con gà ăn bao nhiêu ki-lô-gam thóc mỗi ngày?
+      variables:
+        n:
+          min: 100
+          max: 100
+          step: 1
+          unit: con
+          label: Số gà
+        a:
+          min: 8.5
+          max: 15
+          step: 0.5
+          unit: kg
+          label: Cả đàn
+      answer_expression: a / n
+      max_answer_decimals: 3
+      conditions: []
+      svg_kind: box
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d94bc597e79e8a2c }
+  - id: MATH5.DECIMAL.SCALE.RAIN_MM_TO_CM
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: nature
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Ống đo mưa ở vườn trường ghi hôm nay mưa {a}. Biết mỗi mi-li-mét bằng {k}.
+      real_question: Nước mưa trong ống dâng cao bao nhiêu xăng-ti-mét?
+      variables:
+        a:
+          min: 12
+          max: 85
+          step: 0.5
+          unit: mm
+          label: Lượng mưa
+        k:
+          min: 0.1
+          max: 0.1
+          step: 0.1
+          unit: cm
+      answer_expression: a * k
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: d3fcbc6cfa810dc3 }
+  - id: MATH5.DECIMAL.SCALE.FLOOR_TILE_METERS
+    skill_id: MATH.DECIMAL.SCALE_POWERS_OF_TEN
+    theme: home
+    min_grade: 5
+    max_grade: 5
+    template:
+      setup: Bố đo cạnh viên gạch lát nền phòng khách được {a}. Bố cần ghi số đo bằng mét, biết mỗi xăng-ti-mét bằng {k}.
+      real_question: Cạnh viên gạch dài bao nhiêu mét?
+      variables:
+        a:
+          min: 25
+          max: 80
+          step: 5
+          unit: cm
+          label: Cạnh gạch
+        k:
+          min: 0.01
+          max: 0.01
+          step: 0.01
+          unit: m
+      answer_expression: a * k
+      max_answer_decimals: 2
+      conditions: []
+      svg_kind: none
+    safety:
+      adult_required: false
+      notes: ""
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-20, content_hash: 888fb2ad5838fcda }

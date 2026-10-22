@@ -1,0 +1,27 @@
+# Quét secret (luật mặc định của gitleaks) và dữ liệu cá nhân dễ lộ (repo public, quy tắc cứng 2, 10).
+[extend]
+useDefault = true
+
+[[rules]]
+id = "vn-phone-number"
+description = "Số điện thoại Việt Nam"
+regex = '''(?:^|[^\d])(?:\+84|0)(?:3|5|7|8|9)\d{8}(?:[^\d]|$)'''
+
+[[rules]]
+id = "cloudflare-tunnel-token"
+description = "Token Cloudflare Tunnel"
+regex = '''eyJhIjoi[A-Za-z0-9_\-]{40,}'''
+keywords = ["eyJhIjoi"]
+
+[allowlist]
+description = "File mẫu và DB tạm của CI"
+paths = [
+  '''\.env\.example$''',
+  '''\.env\.test\.example$''',
+  '''pnpm-lock\.yaml$''',
+]
+regexes = [
+  '''change-me-[a-z0-9-]+''',
+  '''ci-(owner|app|superuser)''',
+  '''[123]x0{20,}[A-Z]{2}''',
+]

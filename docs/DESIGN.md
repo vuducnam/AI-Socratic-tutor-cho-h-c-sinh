@@ -264,17 +264,17 @@ Giao diện là **một luồng chat duy nhất** như Messenger/Zalo: con nói 
 
 ### Thành phần màn hình
 
-- **Nút micro lớn, giữ để nói** (push-to-talk). Với trẻ em ở nhà, push-to-talk ổn định hơn chế độ nghe liên tục vì ồn nền, anh chị em nói chen, và con biết rõ lúc nào máy đang nghe.
+- **Nút micro lớn, chạm để bắt đầu, chạm lần nữa để dừng** (tự dừng sau 60 giây, có đồng hồ đếm ngược và thanh mức âm). Micro là cách nhập chính, cả khi nộp đề lẫn khi trả lời; con biết rõ lúc nào máy đang nghe, không nghe liên tục. Cạnh micro có nút chọn **Tiếng Việt / English** (chỉ đổi ngôn ngữ nhận giọng nói; lời Mít vẫn tiếng Việt).
 - **Ô gõ text** chấp nhận gõ không dấu; kèm bàn phím toán nhỏ: dấu phẩy thập phân, phân số, ×, :, %.
 - **Nút chụp ảnh đề**: ảnh hiện trong luồng chat, Cú đọc lại đề bằng chữ để con xác nhận trước khi bắt đầu.
 - **Nút "Gợi ý cho em"** luôn hiện, bấm là leo một bậc hỗ trợ.
-- Mỗi bong bóng của Cú có nút loa để nghe lại; bố bật/tắt tự đọc trong hồ sơ.
+- Mỗi bong bóng của Mít có nút "nghe"; bố mẹ bật/tắt "Mít tự đọc câu trả lời" ở `/parent/settings` (mặc định tắt).
 
 ### Một lượt nói của con
 
-1. Con giữ nút micro. Trình duyệt hiện chữ tạm thời ngay khi đang nói (Web Speech API, miễn phí) để con thấy máy đang nghe.
-2. Thả nút: audio gửi về máy chủ tại nhà, STT chạy PhoWhisper trên GPU, kèm prompt từ vựng của bài ("số thập phân, phân số, diện tích...").
-3. **Chuẩn hoá toán học**: "không phẩy bốn mươi lăm" → 0,45; "một phần ba" → 1/3. Bong bóng của con hiện bản đã chuẩn hoá; con sửa được hoặc để tự gửi sau 2 giây.
+1. Con chạm micro và nói; thanh mức âm cho con thấy máy đang nghe. Không dùng chữ tạm bằng Web Speech API: trên Chrome nó gửi audio lên máy chủ Google, trái quy tắc cứng 10.
+2. Chạm lần nữa (hoặc hết 60 giây): audio gửi về máy chủ tại nhà, STT chạy trên GPU theo ngôn ngữ con chọn (PhoWhisper cho tiếng Việt, Whisper large-v3-turbo cho tiếng Anh); audio xoá ngay sau STT.
+3. Chữ nghe được hiện trong ô nhập; con đọc, sửa nếu cần rồi tự bấm Gửi (không tự gửi). Bản STT gốc lưu kèm (`raw_stt`, hoặc `extracted_text` với đề bài) để bố mẹ xem. **Chuẩn hoá toán học** chạy ở server: "không phẩy bốn mươi lăm" → 0,45; "một phần ba" → 1/3.
 4. Orchestrator → Tutor → Guard như bình thường.
 5. Bong bóng chữ của Cú hiện ngay khi Guard pass; TTS sinh song song và phát khi có audio, không bắt con chờ tiếng mới thấy chữ.
 
@@ -282,7 +282,7 @@ Mục tiêu độ trễ: dưới 4 giây từ lúc thả nút đến lúc thấy
 
 ### Giọng của Cú
 
-- Dùng `google/gemini-3.8-flash-tts` qua endpoint `/audio/speech` của OpenRouter, xuất mp3 ([OpenRouter](https://openrouter.ai/google/gemini-3.8-flash-tts/llms.txt)); vi-VN được Gemini TTS hỗ trợ ([Google Cloud](https://cloud.google.com/text-to-speech/docs/gemini-tts)).
+- Dùng `google/gemini-3.8-flash-tts` qua endpoint `/audio/speech` của OpenRouter; model chỉ trả PCM 24 kHz nên server bọc WAV ([OpenRouter](https://openrouter.ai/google/gemini-3.8-flash-tts/llms.txt)); vi-VN được Gemini TTS hỗ trợ ([Google Cloud](https://cloud.google.com/text-to-speech/docs/gemini-tts)).
 - Thế hệ Gemini TTS gần đây có inline audio tag kiểu \[excited\], \[whispers\] để điều khiển cảm xúc ([OpenRouter](https://openrouter.ai/google/gemini-3.1-flash-tts-preview)). Dùng tiết chế: \[warm\] khi con nản, \[excited\] khi con tự sửa được lỗi. Mình chưa kiểm chứng tag nào hoạt động tốt với tiếng Việt, cần nghe thử.
 - **Tiền xử lý trước TTS là bắt buộc**: đổi số và biểu thức ra chữ (0,45 → "không phẩy bốn mươi lăm", 3/4 → "ba phần tư", cm² → "xăng-ti-mét vuông"). TTS đọc sai một con số trong bài toán là hỏng cả lượt.
 - Mỗi con chọn một giọng cho nhân vật của mình; cache audio các câu lặp lại (lời chào, khen).
@@ -307,7 +307,7 @@ Bám stack anh đang quen để không tốn công học mới; quy mô gia đì
 
 | Vai trò | Lựa chọn | Ghi chú |
 | --- | --- | --- |
-| App | Next.js PWA, ưu tiên tablet | Luồng chat, push-to-talk, camera, bàn phím toán |
+| App | Next.js PWA, ưu tiên tablet | Luồng chat, micro chạm để nói, camera, bàn phím toán |
 | Orchestrator | Next.js route handlers + tầng src/server (cùng app) | State machine thuần code, không để LLM tự quyết trạng thái |
 | Hàng đợi | BullMQ + Redis | Learner updater, sinh ảnh nền, báo cáo, lịch ôn — chạy trong process worker riêng, cùng codebase và Prisma client |
 | Lưu trữ | PostgreSQL | Hồ sơ, skill graph, phiên, mastery; mã hoá at rest |
@@ -317,8 +317,7 @@ Bám stack anh đang quen để không tốn công học mới; quy mô gia đì
 | Pre-solver | Claude Opus 5.5 + sympy | Chỉ chạy một lần mỗi đề; Toán kiểm chứng bằng code |
 | Đọc ảnh đề | Claude Sonnet 5.5 (vision) | Chung nhà cung cấp, chung credit; chưa kiểm chứng với chữ viết tay tiếng Việt |
 | Việc offline | Claude Message Batches API | Sinh nháp misconception, chạy eval, báo cáo tuần — rẻ hơn 50% |
-| STT | PhoWhisper-large chạy local trên GPU (chính); GPT Transcribe qua OpenRouter (A/B, dự phòng) | Giọng của con không rời khỏi nhà; WER trên giọng trẻ em phải tự đo |
-| Chữ tạm khi đang nói | Web Speech API trên trình duyệt | Miễn phí, chỉ để hiển thị |
+| STT | Local trên GPU: PhoWhisper-large (tiếng Việt), Whisper large-v3-turbo (tiếng Anh); `openai/gpt-transcribe` qua OpenRouter (A/B, dự phòng khi phụ huynh bật) | Giọng của con không rời khỏi nhà; WER trên giọng trẻ em phải tự đo (`eval/stt-bench`) |
 | TTS | `google/gemini-3.8-flash-tts` qua OpenRouter | Tiền xử lý số trước khi đọc |
 | Sinh ảnh | `openai/gpt-image-2` qua OpenRouter | Chỉ cho minh hoạ ngữ cảnh và avatar; hình toán vẽ bằng SVG |
 

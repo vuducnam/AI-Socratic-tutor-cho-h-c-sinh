@@ -2,6 +2,8 @@
 
 Gia sư AI theo phương pháp Socratic cho con trong gia đình, bắt đầu từ lớp 5 (sách **Kết nối tri thức với cuộc sống**) và dùng lâu dài lên THCS, THPT. Giao diện là **một luồng chat**, nhập bằng **giọng nói hoặc text**, kèm chụp ảnh đề.
 
+Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là cú mèo); "Cú" là tên dự án trong tài liệu và code. Mít tự xưng "Mít", gọi con là "bạn" hoặc tên (không gọi "con", "em").
+
 Đặc tả đầy đủ: `docs/SPEC.md`. Đọc SPEC trước khi làm bất kỳ module nào. Khi CLAUDE.md và SPEC mâu thuẫn, **quy tắc cứng bên dưới thắng**, sau đó đến SPEC.
 
 ---
@@ -37,7 +39,7 @@ Gia sư AI theo phương pháp Socratic cho con trong gia đình, bắt đầu t
 | DB | **PostgreSQL 16 + Prisma** (migration có SQL thuần cho trigger append-only và `purge_student()`) |
 | Job nền | BullMQ + Redis, chạy trong **process `worker` riêng** cùng codebase (không chạy job trong route handler) |
 | Math verifier | Python FastAPI sidecar + sympy (`services/math-verifier`) |
-| STT | **Local**: PhoWhisper-large trên GPU (`services/stt-local`) — giọng con không rời PC. Dự phòng/A-B: OpenRouter `/audio/transcriptions` |
+| STT | **Local**: PhoWhisper-large (tiếng Việt) + Whisper large-v3-turbo (tiếng Anh) trên GPU (`services/stt-local`) — giọng con không rời PC. Dự phòng/A-B: OpenRouter `/audio/transcriptions` |
 | LLM chính | Claude API trực tiếp (`@anthropic-ai/sdk`) — dùng credit Max 20x |
 | LLM dự phòng | Claude qua OpenRouter khi Claude API trả lỗi hết credit / 5xx |
 | TTS, sinh ảnh | OpenRouter (`/audio/speech`, `/images`) — đầu vào là lời của Cú, không phải dữ liệu của con |
@@ -56,8 +58,8 @@ Gia sư AI theo phương pháp Socratic cho con trong gia đình, bắt đầu t
 | Đọc ảnh đề (vision) | `claude-sonnet-5-5` |
 | Việc offline không tương tác (nháp misconception, báo cáo tuần) | Message Batches API |
 | Eval hội thoại nhiều lượt | API đồng bộ, API key và trần chi phí riêng, không fallback OpenRouter |
-| STT | Chính: `vinai/PhoWhisper-large` local (GPU). A/B và dự phòng: OpenRouter `openai/gpt-4o-transcribe` (hoặc GPT Transcribe), `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
-| TTS | `google/gemini-3.8-flash-tts` qua OpenRouter, `response_format: mp3` |
+| STT | Chính (local, GPU, theo ngôn ngữ con chọn): tiếng Việt `vinai/PhoWhisper-large`, tiếng Anh `openai/whisper-large-v3-turbo`. A/B và dự phòng: OpenRouter `openai/gpt-transcribe`, `mistralai/voxtral-mini-transcribe` — **kiểm lại slug trên OpenRouter trước khi dùng**. Model thắng do WER đo trên giọng thật của các con |
+| TTS | `google/gemini-3.8-flash-tts` qua OpenRouter, `response_format: pcm` (model chỉ trả PCM 24 kHz; server bọc WAV), giọng `Sulafat` + chỉ dẫn phong cách trong `config/models.yaml` |
 | Sinh ảnh | `openai/gpt-image-2` qua OpenRouter — chỉ cho avatar và minh hoạ ngữ cảnh. **Hình toán học vẽ bằng SVG từ code**, không dùng image gen |
 
 ## Cấu trúc repo
@@ -110,7 +112,7 @@ docker-compose.yml          # app, admin (127.0.0.1:3001), worker, postgres, red
 
 ```bash
 pnpm install
-docker compose up -d postgres redis math-verifier stt-local   # stt-local cần GPU
+docker compose up -d postgres redis math-verifier stt-local mailpit   # stt-local cần GPU; mailpit: hộp thư thử ở http://localhost:8025
 pnpm db:migrate          # prisma migrate deploy (kèm SQL triggers)
 pnpm db:seed             # skill graph + mục lục lớp 5 từ data/skills, data/curriculum
 pnpm dev                 # next dev
@@ -118,8 +120,10 @@ pnpm worker:dev          # BullMQ worker (tsx watch worker/index.ts)
 pnpm test                # vitest: domain, DAL, transparency registry, append-only
 pnpm lint                # gồm rule cấm import Prisma ngoài src/server/dal
 pnpm eval                # simulated students, in leak rate + metrics
-pnpm eval:ci             # fail nếu leak > 0 hoặc metric dưới ngưỡng
-pnpm build && docker compose --profile prod up -d   # chạy thật trên PC
+pnpm eval:ci             # cổng merge, ~270 hội thoại ~50 USD: mọi đề × 8 persona (vừa học) + mỗi đề 1 persona xoay vòng (vượt tiến độ); fail nếu leak > 0 hoặc metric dưới ngưỡng
+pnpm eval:smoke          # 5 đề × 8 persona, ~3 USD; lọc: --personas=a,b --problems=DEC5-01
+pnpm eval:replay         # gửi lại yêu cầu tutor đã ghi với prompt mới, ~0,3 USD (--from=tutor/vN --limit=30)
+pnpm prod:up             # chạy thật trên PC (.env.prod, chỉ docker-compose.yml, không gộp override dev) — xem docs/deployment-guide.md
 ```
 
 ## Quy ước Next.js
