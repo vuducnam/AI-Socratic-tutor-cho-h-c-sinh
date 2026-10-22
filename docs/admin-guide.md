@@ -66,8 +66,9 @@ Làm theo thứ tự trên trang admin:
 | Tên bạn học | Để trống = "Mít" |
 | Liên kết với phụ huynh | Chọn tài khoản vừa tạo ở 4.1 |
 
-Bấm **Tạo hồ sơ** → trang chuyển sang **Tiến độ trên lớp**: chọn bài con **đã học đến** trên lớp (theo SGK
-Kết nối tri thức). Chưa đặt tiến độ thì con chưa mở được phiên học. Mít không dạy vượt bài này.
+Bấm **Tạo hồ sơ** → trang chuyển sang **Tiến độ trên lớp**: mỗi môn (Toán, Lịch sử và Địa lí) một khối; chọn bài
+con **đã học đến** trên lớp (theo SGK Kết nối tri thức) cho từng môn muốn con học với Mít. Môn chưa đặt tiến độ
+thì con không mở được phiên môn đó và không thấy môn đó. Mít không dạy vượt bài đã đặt.
 
 ### 4.3 Liên kết phụ huynh — cột "Phụ huynh" trong bảng Học sinh
 
@@ -98,9 +99,14 @@ Mọi thao tác admin được ghi vào nhật ký truy cập; phụ huynh xem �
 - **Phiên**: từng phiên học, báo cáo phiên (số liệu do code tính, nhận định kèm bằng chứng), transcript đầy đủ,
   chữ máy nghe được khi con nói (Raw STT), lời gọi model gốc.
 - **Cờ**: việc cần bố mẹ xem (khoá PIN, an toàn…) › **Đánh dấu đã xem**.
-- **Tiến độ trên lớp**: dời bài con đã học đến; **Cho học trước** một bài; **Tắt nhắc**. Thay đổi áp dụng từ
-  phiên sau.
-- **Duyệt**: thư viện tình huống đời thật (Mít chỉ dùng tình huống đã duyệt).
+- **Tiến độ trên lớp**: mỗi môn một khối — dời bài con đã học đến; **Cho học trước** một bài; **Tắt nhắc**.
+  Thay đổi áp dụng từ phiên sau.
+- **Duyệt**:
+  - **Ý chính** (Lịch sử và Địa lí): mở SGK trên taphuan.nxbgd.vn đúng trang ghi ở từng ý, đối chiếu nội dung,
+    trang, chỗ trong sách và cụm từ chấp nhận rồi **Duyệt bài này**. Bài chưa duyệt thì Mít không dạy bài đó.
+  - **Tình huống đời thật** (cả hai môn): Mít chỉ dùng tình huống đã duyệt.
+  - Duyệt qua cổng admin (`http://localhost:3001/parent/review` trên PC) để trạng thái duyệt được ghi cả vào file
+    trong `data/`, không mất khi seed lại DB.
 - **Dữ liệu độc lập**: nhập điểm bài kiểm tra trên giấy để so với lúc học cùng Mít.
 - **Cấu hình**:
   - Hồ sơ: sở thích, số phút mỗi phiên (mặc định 15), số phút mỗi ngày (mặc định 30) › **Lưu hồ sơ**.
@@ -115,9 +121,11 @@ Mọi thao tác admin được ghi vào nhật ký truy cập; phụ huynh xem �
 1. Mở `https://<địa-chỉ-app>` bằng Safari/Chrome › tab **Học sinh** › tên đăng nhập + PIN.
 2. Thêm vào màn hình chính (Safari: Chia sẻ › Thêm vào MH chính; Chrome: ⋮ › Thêm vào màn hình chính).
 3. Lần đầu bấm micro, trình duyệt hỏi quyền micro → **Cho phép**.
-4. Mỗi phiên: gửi đề (nói, gõ hoặc chụp ảnh và khoanh vùng đề), trả lời Mít, bấm **Gợi ý** khi bí; xong bài
-   chấm vui/bình thường/chán rồi **Làm bài khác** hoặc **Xong hôm nay** (báo cáo phiên tới bố mẹ ngay).
-5. Phiên đăng nhập của con hết lúc nửa đêm. Hết số phút trong ngày thì Mít chào và hẹn hôm sau.
+4. Con có từ hai môn đã đặt tiến độ thì chọn môn ở đầu buổi; nút **Đổi môn** ở đầu khung chat khi chưa làm bài.
+5. Mỗi phiên: gửi đề (nói, gõ hoặc chụp ảnh và khoanh vùng đề) hoặc bấm **Mít ra đề cho bạn**, trả lời Mít, bấm
+   **Gợi ý** khi bí; xong bài chấm vui/bình thường/chán rồi **Làm bài khác** hoặc **Xong hôm nay** (báo cáo phiên
+   tới bố mẹ ngay). Với Lịch sử và Địa lí, con nên có SGK bên cạnh: khi con bí, Mít chỉ trang sách để con tự đọc.
+6. Phiên đăng nhập của con hết lúc nửa đêm. Hết số phút trong ngày thì Mít chào và hẹn hôm sau.
 
 Khoá PIN (tính cho cả tài khoản, mọi thiết bị): sai 5 lần → khoá 15 phút; sai 10 lần liên tiếp → khoá tới khi
 bố mẹ hoặc admin mở.

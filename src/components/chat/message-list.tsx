@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { FractionGrid } from '@/components/math-visuals/fraction-grid';
 import { NumberLine } from '@/components/math-visuals/number-line';
 import { SegmentBar } from '@/components/math-visuals/segment-bar';
+import { Timeline } from '@/components/math-visuals/timeline';
 import type { ChatLine, Visual } from './chat-types';
 import { OwlAvatar } from './owl-avatar';
 import { isSpeakableLine } from './tts-playback-logic';
@@ -14,6 +15,7 @@ function VisualFor({ visual }: { visual: Visual }) {
   if (visual.kind === 'segment_bar' || visual.kind === 'box') {
     return <SegmentBar items={visual.items} />;
   }
+  if (visual.kind === 'timeline') return <Timeline items={visual.items} />;
   if (visual.kind === 'number_line') {
     const values = visual.items.map((i) => i.value);
     const lo = Math.floor(Math.min(...values));

@@ -66,12 +66,13 @@ export async function getLearningSession(actor: Actor, input: { studentId: strin
 }
 
 /** Phiên đang mở gần nhất của học sinh cho môn (để tiếp tục thay vì mở phiên mới). */
-export async function findOpenSession(actor: Actor, input: { studentId: string; subject: string }) {
+/** Phiên đang mở gần nhất của học sinh; `subject` bỏ trống = mọi môn. */
+export async function findOpenSession(actor: Actor, input: { studentId: string; subject?: string }) {
   await assertStudentAccess(actor, input.studentId, { action: 'read', resource: 'sessions', log: actor.type !== 'student' });
   return prisma.session.findFirst({
-    where: { student_id: input.studentId, subject: input.subject, ended_at: null },
+    where: { student_id: input.studentId, ...(input.subject ? { subject: input.subject } : {}), ended_at: null },
     orderBy: { started_at: 'desc' },
-    select: { id: true, started_at: true },
+    select: { id: true, started_at: true, subject: true },
   });
 }
 

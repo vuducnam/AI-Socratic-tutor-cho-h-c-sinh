@@ -4,7 +4,8 @@ API:
 - `GET /health` → `{status, models_loaded, models}` (chỉ tên model, không có dữ liệu của con).
 - `POST /transcribe` multipart: `audio` (webm/ogg/wav/mp4/m4a), `language` (vi|en), `model` tuỳ chọn
   (phải nằm trong danh sách đã cấu hình cho ngôn ngữ đó) → `{text, model, language, latency_ms}`.
-  Bản ghi không có tiếng nói (xem `app.speech_activity`) → `text` rỗng, không gọi model.
+  Bản ghi không có tiếng nói (xem `app.speech_activity`) → `text` rỗng, không gọi model. Chữ trùng câu Whisper
+  hay bịa khi gặp im lặng (xem `app.hallucination_filter`) → `text` rỗng.
 
 Mã lỗi (`{"detail": "<code>"}`): 400 thiếu/sai trường hoặc audio không giải mã được; 413 quá dung lượng
 hoặc quá số giây; 415 định dạng không hỗ trợ; 503 model không nạp được; 500 lỗi khi suy luận.
@@ -35,6 +36,7 @@ from app.audio_decode import (
     detect_format,
 )
 from app.body_limit import BodyLimitMiddleware
+from app.hallucination_filter import is_hallucination
 from app.settings import LANGUAGES, Settings, load_settings
 from app.speech_activity import has_speech
 from app.speech_engine import ModelUnavailableError, SpeechEngine, TranscriberLoader
@@ -169,6 +171,10 @@ def create_app(
                 logger.error("transcribe lỗi: %s", type(error).__name__)
                 raise RequestRejected(500, "transcription_failed") from error
 
+            if is_hallucination(text):
+                # Lọt cổng im lặng nhưng là câu bịa quen của Whisper: coi như con chưa nói.
+                outcome = "hallucination"
+                text = ""
             latency_ms = round((time.perf_counter() - started) * 1000)
             return JSONResponse({"text": text, "model": model_name, "language": language, "latency_ms": latency_ms})
         except RequestRejected as rejection:

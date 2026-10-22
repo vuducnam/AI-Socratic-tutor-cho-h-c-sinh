@@ -3,9 +3,9 @@ import type { TurnWriter } from '@/server/dal/turns-dal';
 import type { ChatMessage } from '@/server/llm/llm-types';
 import { callLlm, LlmOutputInvalidError } from '@/server/llm/llm-gateway';
 import { GENERIC_FALLBACK, planFallbackQuestion } from './fallback-question';
-import { runGuard, type GuardInput } from './guard';
+import { guardVerdictRows, runGuard, type GuardInput } from './guard';
 import { runHardChecks, type HardCheckContext } from './hard-checks';
-import { buildTutorSystem, TUTOR_PROMPT, type TutorPromptInput } from './tutor-prompt';
+import { buildTutorSystem, tutorPromptVersion, type TutorPromptInput } from './tutor-prompt';
 import { tutorConversationMessages, type BlockedDraft } from './tutor-conversation-messages';
 import { draftCandidates } from './tutor-draft-candidates';
 import { tutorOutputSchema, type TutorOutput } from './tutor-output-schema';
@@ -68,7 +68,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
         studentId: input.studentId,
         sessionId: input.sessionId,
         turnId: input.tutorTurnId,
-        promptVersion: TUTOR_PROMPT,
+        promptVersion: tutorPromptVersion(input.prompt.plan),
         system,
         messages,
         responseSchema: tutorOutputSchema,
@@ -105,7 +105,7 @@ export async function generateTutorMessage(input: GenerateInput): Promise<Genera
         recorder: input.writer.recorder,
         evalMode: input.evalMode,
       });
-      await verdict({ checker: 'llm', llmCallId: guard.llmCallId, tutorLlmCallId, attempt, pass: guard.verdict === 'pass', reasons: guard.reasons });
+      for (const row of guardVerdictRows(guard)) await verdict({ ...row, tutorLlmCallId, attempt, pass: row.verdict === 'pass' });
       if (guard.reasons.includes('SAFETY')) guardSafety = true;
       if (guard.verdict === 'pass') {
         return { message: candidate, source: 'tutor', output: { ...output, message: candidate }, tutorLlmCallId, blockedReasons: blocked, guardSafety, attempts: attempt };

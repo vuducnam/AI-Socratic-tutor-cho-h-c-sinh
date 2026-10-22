@@ -1,0 +1,15 @@
+# Các môn Mít dạy (SPEC §1.2, §5d). Thứ tự ở đây là thứ tự hiện cho con và bố mẹ.
+# - verifier: cách code kiểm đáp án. sympy = Pre-solver + math-verifier (Toán); key_facts = so ý chính đã duyệt
+#   trong data/key-facts (môn kiến thức).
+# - math_keyboard: hiện "Bàn phím toán" ở ô nhập.
+# Môn chỉ hiện với con khi bố mẹ đã đặt tiến độ cho môn đó (quy tắc cứng 15).
+
+subjects:
+  - id: math
+    name: Toán
+    verifier: sympy
+    math_keyboard: true
+  - id: history_geography
+    name: Lịch sử và Địa lí
+    verifier: key_facts
+    math_keyboard: false

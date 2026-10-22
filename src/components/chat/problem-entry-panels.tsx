@@ -14,12 +14,14 @@ export function ProblemEntryPanel({
   onText,
   onPhoto,
   onPractice,
+  mathKeyboard = true,
 }: {
   voice?: ComposerVoice;
   onText: (text: string, meta: SubmitMeta) => void;
   onPhoto: (file: File, crop: Crop | null) => void;
   /** "Mít ra đề cho bạn": Mít tạo một đề tình huống cho bài con đã học. */
   onPractice: () => void;
+  mathKeyboard?: boolean;
 }) {
   return (
     <section className="problem-entry">
@@ -27,7 +29,7 @@ export function ProblemEntryPanel({
         <OwlAvatar size={56} />
         <h2>Bạn gửi đề bài cho Mít nhé</h2>
       </div>
-      <Composer disabled={false} multiline voice={voice} placeholder="Đọc hoặc gõ đề bài ở đây" submitLabel="Gửi đề" onSubmit={(t, meta) => onText(t, meta)} />
+      <Composer disabled={false} multiline mathKeyboard={mathKeyboard} voice={voice} placeholder="Đọc hoặc gõ đề bài ở đây" submitLabel="Gửi đề" onSubmit={(t, meta) => onText(t, meta)} />
       <p className="or">hoặc</p>
       <PhotoProblem disabled={false} onSend={onPhoto} />
       <button type="button" className="practice-button" onClick={onPractice}>

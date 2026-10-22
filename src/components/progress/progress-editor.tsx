@@ -20,6 +20,8 @@ export interface ProgressScopeSummary {
 export interface ProgressEditorProps {
   studentId: string;
   subject: string;
+  /** Tên môn hiển thị (config/subjects.yaml). */
+  subjectName: string;
   lessons: ProgressLesson[];
   frontierLessonId: string | null;
   previewLessonIds: string[];
@@ -32,7 +34,11 @@ export interface ProgressEditorProps {
   staleReminderAction: (form: FormData) => Promise<void>;
 }
 
-const label = (l: ProgressLesson) => `Bài ${l.lesson_no}. ${l.title} (${l.book})`;
+// Ghi tập sách khi môn có nhiều tập (Toán 5 có T1, T2); sách một tập thì chỉ ghi số bài.
+const labelFor = (lessons: ProgressLesson[]) => {
+  const multiBook = new Set(lessons.map((l) => l.book)).size > 1;
+  return (l: ProgressLesson) => `Bài ${l.lesson_no}. ${l.title}${multiBook ? ` (${l.book})` : ''}`;
+};
 
 function Hidden({ studentId, subject, askReason }: { studentId: string; subject: string; askReason?: boolean }) {
   return (
@@ -45,11 +51,12 @@ function Hidden({ studentId, subject, askReason }: { studentId: string; subject:
 }
 
 export function ProgressEditor(props: ProgressEditorProps) {
+  const label = labelFor(props.lessons);
   const frontier = props.lessons.find((l) => l.lesson_id === props.frontierLessonId) ?? null;
   const later = props.lessons.filter((l) => !frontier || l.seq > frontier.seq);
   return (
     <section className="card">
-      <h2>Tiến độ trên lớp — {props.subject === 'math' ? 'Toán' : props.subject}</h2>
+      <h2>Tiến độ trên lớp — {props.subjectName}</h2>
       <p>
         {frontier ? (
           <>

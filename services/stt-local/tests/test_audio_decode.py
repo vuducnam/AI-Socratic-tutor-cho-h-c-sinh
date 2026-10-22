@@ -28,8 +28,11 @@ needs_ffmpeg = pytest.mark.skipif(shutil.which("ffmpeg") is None, reason="cần 
 
 
 def _write_sine_wav(path: Path, seconds: float, rate: int = 44_100) -> None:
+    # Một phần tư đầu là lặng (như lúc bấm micro rồi mới nói): cổng tiếng nói cần nền ồn để so.
+    quiet = int(seconds * rate) // 4
     frames = b"".join(
-        struct.pack("<h", int(8000 * math.sin(2 * math.pi * 440 * index / rate))) for index in range(int(seconds * rate))
+        struct.pack("<h", 0 if index < quiet else int(8000 * math.sin(2 * math.pi * 440 * index / rate)))
+        for index in range(int(seconds * rate))
     )
     with wave.open(str(path), "wb") as handle:
         handle.setnchannels(1)

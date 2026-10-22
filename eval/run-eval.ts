@@ -3,7 +3,9 @@ import { execSync } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { parse } from 'yaml';
 import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
-import { assertEvalDatabase } from '@/server/dal/eval-fixtures-dal';
+import { approveSubjectDataForEval, assertEvalDatabase } from '@/server/dal/eval-fixtures-dal';
+import { findSubject } from '@/server/domain/curriculum/subject-config';
+import { systemActor } from '@worker/actor';
 import { EvalBudgetExceededError, evalSpent } from '@/server/llm/llm-gateway';
 import { audioDeletedPassed } from './audio-deleted-check';
 import { loadAcceptanceProblems } from './load-acceptance-problems';
@@ -56,6 +58,11 @@ async function termCoverage(maxSeq: number) {
 
 async function main() {
   assertEvalDatabase();
+  // Môn kiến thức: DB eval coi ý chính + tình huống là đã duyệt (hồ sơ giả); dữ liệu thật vẫn do phụ huynh duyệt.
+  if (findSubject(SUBJECT)?.verifier === 'key_facts') {
+    const approved = await approveSubjectDataForEval(systemActor('eval'), { subject: SUBJECT });
+    console.log(`DB eval: duyệt tạm ${approved.facts} ý chính, ${approved.contexts} tình huống của ${SUBJECT}`);
+  }
   const problems = loadAcceptanceProblems();
   const usable = problems.filter((p) => p.skill_ids.length);
   if (!usable.length) throw new Error('Đề nghiệm thu chưa có skill_ids (phase 00 D3b) — chưa chạy eval được');

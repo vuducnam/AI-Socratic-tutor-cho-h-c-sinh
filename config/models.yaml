@@ -34,6 +34,8 @@ models:
 roles:
   tutor:            { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 1024 }
   guard:            { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 512 }
+  # Guard môn kiến thức: Haiku bỏ sót kiểu gợi bằng chữ của ý chính (eval Lịch sử và Địa lí 2026-10-22); chủ dự án duyệt dùng Sonnet.
+  guard_knowledge:  { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 512 }
   learner_summary:  { model: claude-haiku-5-5,  effort: low,    thinking: off,      max_tokens: 1024 }
   presolve:         { model: claude-opus-5-5,   effort: high,   thinking: adaptive, max_tokens: 16000 }
   ocr:              { model: claude-sonnet-5-5, effort: low,    thinking: off,      max_tokens: 2048 }

@@ -1,7 +1,7 @@
 import { requireParentActor } from '@/server/auth/session';
 import { listLifeContextsForReview } from '@/server/dal/life-contexts-dal';
 import { fillVariables, renderTemplateText } from '@/server/domain/life-context/fill-variables';
-import { lifeContextTemplateSchema } from '@/server/domain/life-context/life-context-schema';
+import { knowledgeContextTemplateSchema, lifeContextTemplateSchema } from '@/server/domain/life-context/life-context-schema';
 import { approveLifeContextAction } from './actions';
 
 export const dynamic = 'force-dynamic';
@@ -36,8 +36,11 @@ export default async function LifeContextReviewPage({ searchParams }: { searchPa
       {contexts.length === 0 && <p>Thư viện chưa có tình huống nào (data/life-contexts, chạy pnpm db:seed).</p>}
       {contexts.map((c) => {
         const template = lifeContextTemplateSchema.safeParse(c.template);
+        const question = knowledgeContextTemplateSchema.safeParse(c.template);
         let preview = '(không điền được số — kiểm lại khoảng biến)';
-        if (template.success) {
+        // Môn kiến thức: không có số để điền; hiện khung và các ý chính câu hỏi kiểm (xem ở trang Duyệt ý chính).
+        if (question.success) preview = `${question.data.setup} ${question.data.real_question} (kiểm ý: ${question.data.fact_ids.join(', ')})`;
+        else if (template.success) {
           try {
             const f = fillVariables(template.data);
             preview = `${renderTemplateText(template.data.setup, f.display)} ${renderTemplateText(template.data.real_question, f.display)}`;

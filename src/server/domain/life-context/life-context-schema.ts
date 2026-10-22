@@ -7,6 +7,7 @@ import { z } from 'zod';
 // - Biến số do CODE điền trong khoảng khai báo (LLM không tự đặt số), sinh ngược từ đáp án sạch nhờ
 //   `answer_expression` + `max_answer_decimals`.
 // - Duyệt đi theo dữ liệu: approved: {by, at, content_hash}. Mẫu sửa sau khi duyệt (hash đổi) → mất duyệt.
+// - Môn kiến thức (SPEC §5d): mẫu không số `kind: question`, gắn với ý chính đã duyệt (fact_ids) mà câu hỏi kiểm.
 
 export const THEMES = ['market', 'cooking', 'sport', 'nature', 'animals', 'travel', 'home', 'game', 'school', 'other'] as const;
 export type Theme = (typeof THEMES)[number];
@@ -34,11 +35,26 @@ export const lifeContextTemplateSchema = z.object({
   svg_kind: z.enum(['segment_bar', 'fraction_grid', 'number_line', 'box', 'none']).default('none'),
 });
 
+/** Mẫu không số của môn kiến thức: câu hỏi đời thường kiểm các ý chính `fact_ids` (không có biến để điền). */
+export const knowledgeContextTemplateSchema = z.object({
+  kind: z.literal('question'),
+  setup: z.string().min(1).max(400),
+  real_question: z.string().min(1).max(200),
+  fact_ids: z.array(z.string().regex(/^[A-Z0-9]+(\.[A-Z0-9]+)+\.F\d+$/)).min(1).max(6),
+});
+
+export type KnowledgeContextTemplate = z.infer<typeof knowledgeContextTemplateSchema>;
+
+/** Mẫu đã lưu: có `kind: question` là môn kiến thức, còn lại là mẫu có số của Toán. */
+export function isKnowledgeTemplate(template: unknown): boolean {
+  return !!template && typeof template === 'object' && (template as { kind?: unknown }).kind === 'question';
+}
+
 export const lifeContextSchema = z.object({
   id: z.string().regex(/^[A-Z0-9_.]+$/),
   skill_id: z.string().min(1),
   theme: z.enum(THEMES),
-  template: lifeContextTemplateSchema,
+  template: z.union([knowledgeContextTemplateSchema, lifeContextTemplateSchema]),
   min_grade: z.number().int().min(1).max(12),
   max_grade: z.number().int().min(1).max(12),
   safety: z.object({ adult_required: z.boolean(), notes: z.string().max(300).default('') }),
@@ -109,7 +125,8 @@ export function parseLifeContextFile(file: string, text: string, knownSkillIds: 
     if (BRAND_HINTS.test(prose)) problems.push(`${file} › ${c.id}: có tên nhãn hàng`);
     if (UNSAFE_ALONE.test(prose) && !c.safety.adult_required) problems.push(`${file} › ${c.id}: hoạt động cần người lớn nhưng adult_required = false`);
     const used = [...prose.matchAll(/\{([a-z][a-z0-9_]*)\}/g)].map((m) => m[1]!);
-    for (const v of used) if (!(v in c.template.variables)) problems.push(`${file} › ${c.id}: biến {${v}} chưa khai báo`);
+    const declared = 'variables' in c.template ? c.template.variables : {};
+    for (const v of used) if (!(v in declared)) problems.push(`${file} › ${c.id}: biến {${v}} chưa khai báo`);
     out.push(c);
   });
   if (problems.length) throw new LifeContextSeedError(problems);

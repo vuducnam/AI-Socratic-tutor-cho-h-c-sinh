@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
-import { basename, join } from 'node:path';
+import { basename, dirname, join } from 'node:path';
 import {
   CurriculumSeedError,
   parseBeyondScopeFile,
@@ -10,7 +10,9 @@ import {
 } from '@/server/domain/curriculum/curriculum-yaml-schema';
 import { parseSkillFile, SkillSeedError, type SkillDefinition } from '@/server/domain/curriculum/skill-yaml-schema';
 import { seedCurriculum } from '@/server/dal/seed/seed-curriculum';
+import { seedKeyFacts } from '@/server/dal/seed/seed-key-facts';
 import { seedLifeContexts } from '@/server/dal/seed/seed-life-contexts';
+import { KeyFactsSeedError, parseKeyFactsFile, parsePages } from '@/server/domain/curriculum/key-facts-yaml-schema';
 import { LifeContextSeedError, parseLifeContextFile, themeBalanceWarnings } from '@/server/domain/life-context/life-context-schema';
 import { listSkillIds, seedSkills } from '@/server/dal/seed/seed-skills';
 import { systemActor } from '../worker/actor';
@@ -38,7 +40,7 @@ export async function seedSkillGraph(): Promise<SkillDefinition[]> {
 }
 
 // Mục lục data/curriculum/<subject>/grade<N>.yaml + thuật ngữ lớp trên beyond-grade<N>.yaml.
-export async function seedCurriculumData(skills: SkillDefinition[]): Promise<void> {
+export async function seedCurriculumData(skills: SkillDefinition[]): Promise<CurriculumLessonDef[]> {
   const actor = systemActor('pnpm db:seed');
   const known = new Set([...skills.map((s) => s.skill_id), ...(await listSkillIds(actor))]);
   const lessons: CurriculumLessonDef[] = [];
@@ -53,7 +55,8 @@ export async function seedCurriculumData(skills: SkillDefinition[]): Promise<voi
     const grade = Number(/grade(\d+)\.yaml$/.exec(name)?.[1]);
     const parsed = parseCurriculumFile(file, text, {
       knownSkillIds: known,
-      gradeSkillIds: skills.filter((s) => s.grade_introduced === grade && file.includes(`${s.subject}`)).map((s) => s.skill_id),
+      // Thư mục chứa file là mã môn (data/curriculum/<subject>/), so đúng tên thay vì so chuỗi con trong đường dẫn.
+      gradeSkillIds: skills.filter((s) => s.grade_introduced === grade && basename(dirname(file)) === s.subject).map((s) => s.skill_id),
     });
     const pendingReview = parsed.warnings.filter((w) => w.includes('imported_at'));
     if (pendingReview.length) console.warn(`[seed] ${file}: ${pendingReview.length} bài chưa có imported_at (chờ chủ dự án duyệt)`);
@@ -62,6 +65,7 @@ export async function seedCurriculumData(skills: SkillDefinition[]): Promise<voi
   }
   const result = await seedCurriculum(actor, { lessons, beyondTerms });
   console.log(`[seed] bài: ${result.lessons}, thuật ngữ lớp trên: ${result.beyondTerms}`);
+  return lessons;
 }
 
 // Thư viện tình huống data/life-contexts/**. Trạng thái duyệt đi theo YAML (kèm content_hash).
@@ -75,15 +79,29 @@ export async function seedLifeContextData(): Promise<void> {
   if (result.staleApprovals.length) console.warn(`[seed] mất duyệt vì mẫu đã sửa: ${result.staleApprovals.join(', ')}`);
 }
 
+// Ý chính data/key-facts/<subject>/grade<N>.yaml (SPEC §5d): ý chính phải nằm trong trang của bài theo mục lục
+// vừa seed. Trạng thái duyệt đi theo YAML (theo bài, kèm content_hash).
+export async function seedKeyFactData(lessonPages: Map<string, number[]>): Promise<void> {
+  const files = yamlFiles('data/key-facts');
+  if (!files.length) return;
+  const lessons = files.flatMap((f) => parseKeyFactsFile(f, readFileSync(f, 'utf8'), lessonPages));
+  const result = await seedKeyFacts(systemActor('pnpm db:seed'), lessons);
+  console.log(`[seed] ý chính: ${result.facts}, bài đã duyệt: ${result.approvedLessons}`);
+  if (result.staleApprovals.length) console.warn(`[seed] mất duyệt vì ý chính đã sửa: ${result.staleApprovals.join(', ')}`);
+}
+
 async function main() {
   const skills = await seedSkillGraph();
-  await seedCurriculumData(skills);
+  const lessons = await seedCurriculumData(skills);
   await seedLifeContextData();
+  await seedKeyFactData(new Map(lessons.map((l) => [l.lesson_id, parsePages(l.source.pages ?? '') ?? []])));
 }
 
 main()
   .then(() => process.exit(0))
   .catch((err) => {
-    console.error(err instanceof SkillSeedError || err instanceof CurriculumSeedError || err instanceof LifeContextSeedError ? err.message : err);
+    console.error(err instanceof SkillSeedError || err instanceof CurriculumSeedError || err instanceof LifeContextSeedError || err instanceof KeyFactsSeedError
+        ? err.message
+        : err);
     process.exit(1);
   });

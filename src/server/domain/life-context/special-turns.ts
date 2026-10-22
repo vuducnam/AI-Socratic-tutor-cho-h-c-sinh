@@ -2,8 +2,10 @@ import 'server-only';
 import { z } from 'zod';
 import type { TurnWriter } from '@/server/dal/turns-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
-import { runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
+import { guardVerdictRows, runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
 import { runHardChecks, type HardCheckContext } from '@/server/domain/dialogue/hard-checks';
+import { guardedFactIds } from '@/server/domain/dialogue/key-points-progress';
 import type { TurnContext } from '@/server/domain/dialogue/turn-context';
 import { callLlm, LlmOutputInvalidError } from '@/server/llm/llm-gateway';
 import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
@@ -12,9 +14,14 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 // Như mọi tin nhắn gửi con: kiểm tra cứng + Guard; bị chặn 2 lần → câu cố định đã duyệt sẵn.
 
 export const HOOK_PROMPT = 'hook/v5';
+// Môn kiến thức (SPEC §5d): chuyện đời thường quanh em, không nói ra ý chính của bài.
+export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v3';
 export const TRANSFER_PROMPT = 'transfer/v4';
+// Môn kiến thức: câu chuyển giao hỏi gặp lại điều vừa học ở đâu quanh mình (tên đường, ngày lễ, bản đồ), không hỏi "cách làm".
+export const TRANSFER_KNOWLEDGE_PROMPT = 'transfer_knowledge/v1';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';
+export const TRANSFER_KNOWLEDGE_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại điều vừa học ở đâu quanh mình, như tên đường, ngày lễ hay bản đồ?';
 
 interface SpecialTurnInput {
   ctx: TurnContext;
@@ -77,16 +84,9 @@ async function checkedMessage(
       recorder: input.writer.recorder,
       evalMode: input.evalMode,
     });
-    await input.writer.appendGuardVerdict({
-      sessionId: input.ctx.session.id,
-      turnId: input.turnId,
-      checker: 'llm',
-      llmCallId: guard.llmCallId,
-      tutorLlmCallId: llmCallId,
-      attempt,
-      verdict: guard.verdict,
-      reasons: guard.reasons,
-    });
+    for (const row of guardVerdictRows(guard)) {
+      await input.writer.appendGuardVerdict({ sessionId: input.ctx.session.id, turnId: input.turnId, tutorLlmCallId: llmCallId, attempt, ...row });
+    }
     if (guard.verdict === 'pass') return { message: text, source: 'llm' };
     feedback = `${guard.reasons.join(', ')} ${guard.explanation}`;
   }
@@ -96,8 +96,17 @@ async function checkedMessage(
 const skillNames = (ctx: TurnContext) => ctx.skillSource;
 
 export async function generateHook(input: SpecialTurnInput) {
-  const prompt = await loadPrompt(HOOK_PROMPT);
+  const knowledge = input.ctx.plan?.final_answer.kind === 'key_points';
+  const promptId = knowledge ? HOOK_KNOWLEDGE_PROMPT : HOOK_PROMPT;
+  const prompt = await loadPrompt(promptId);
   const system = renderPrompt(prompt.content, {
+    ...(knowledge
+      ? {
+          subject_name: subjectName(input.ctx.scope.subject),
+          // Ý chính cần giữ: câu mở phải tránh nhắc tới (câu mở kể sẵn "cấy lúa" khi đề hỏi nghề là lộ).
+          key_facts: input.ctx.keyFacts.filter((f) => guardedFactIds(input.ctx.plan!.knowledge!).includes(f.fact_id)).map((f) => `- ${f.statement}`).join('\n') || '(không có)',
+        }
+      : {}),
     display_name: input.ctx.student.display_name,
     student_name: input.ctx.student.display_name,
     grade: input.ctx.student.grade,
@@ -110,7 +119,7 @@ export async function generateHook(input: SpecialTurnInput) {
   const hardChecks = { ...input.hardChecks, maxSentences: 1, requiredQuestions: 0, maxQuestions: 0 };
   return checkedMessage(input, {
     purpose: 'hook',
-    promptId: HOOK_PROMPT,
+    promptId,
     system,
     schema: z.object({ hook: z.string().min(1).max(300) }),
     field: 'hook',
@@ -120,8 +129,11 @@ export async function generateHook(input: SpecialTurnInput) {
 }
 
 export async function generateTransferQuestion(input: SpecialTurnInput) {
-  const prompt = await loadPrompt(TRANSFER_PROMPT);
+  const knowledge = input.ctx.plan?.final_answer.kind === 'key_points';
+  const promptId = knowledge ? TRANSFER_KNOWLEDGE_PROMPT : TRANSFER_PROMPT;
+  const prompt = await loadPrompt(promptId);
   const system = renderPrompt(prompt.content, {
+    ...(knowledge ? { subject_name: subjectName(input.ctx.scope.subject) } : {}),
     display_name: input.ctx.student.display_name,
     grade: input.ctx.student.grade,
     skill_names: skillNames(input.ctx),
@@ -131,11 +143,11 @@ export async function generateTransferQuestion(input: SpecialTurnInput) {
   });
   return checkedMessage(input, {
     purpose: 'transfer',
-    promptId: TRANSFER_PROMPT,
+    promptId,
     system,
     schema: z.object({ question: z.string().min(1).max(300) }),
     field: 'question',
-    fallback: TRANSFER_FALLBACK,
+    fallback: knowledge ? TRANSFER_KNOWLEDGE_FALLBACK : TRANSFER_FALLBACK,
     hardChecks: input.hardChecks,
   });
 }

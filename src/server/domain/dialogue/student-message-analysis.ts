@@ -11,15 +11,43 @@ import { findFrustrationPhrase, soundsUnsure } from './signals';
 // Cụm từ cần người lớn (SPEC §13). Khớp nguyên từ trên văn bản chuẩn hoá. Danh sách thận trọng: báo nhầm
 // (PAUSE + báo bố mẹ) an toàn hơn bỏ sót.
 const ADULT_NEEDED_PHRASES: TermDefinition[] = [
-  { term: 'bị bắt nạt', patterns: ['bắt nạt', 'bị đánh', 'bị đe doạ', 'bị đe dọa', 'bị dọa', 'bị doạ'] },
+  {
+    term: 'bị bắt nạt',
+    patterns: [
+      'bắt nạt',
+      // "bị đánh" nhưng không phải chuyện trong bài lịch sử ("thuyền giặc bị đánh tan", "quân địch bị đánh bại").
+      're:(?<![\\p{L}\\p{M}\\p{N}])bị\\s+đánh(?![\\p{L}\\p{M}\\p{N}])(?!\\s+(?:tan|bại|bật|lui|chìm|đuổi|úp|tơi)(?![\\p{L}\\p{M}\\p{N}]))',
+      'bị đe doạ',
+      'bị đe dọa',
+      'bị dọa',
+      'bị doạ',
+    ],
+  },
   { term: 'tự làm hại', patterns: ['muốn chết', 'tự tử', 'tự làm đau', 'không muốn sống', 'chết đi cho rồi', 'tự cắt'] },
   { term: 'buồn kéo dài', patterns: ['buồn lắm', 'buồn quá', 'khóc mãi', 'không ai thương', 'cô đơn quá', 'sợ lắm'] },
   { term: 'người lạ', patterns: ['người lạ nhắn', 'người lạ rủ', 'bảo em giữ bí mật'] },
 ];
 const adultNeededMatcher = compileTermSet(ADULT_NEEDED_PHRASES);
 
+// "Buồn, sợ" trong câu giả định ("nếu là tớ chắc tớ sợ lắm") hay nói về nhân vật ("anh ấy chắc buồn lắm") là cảm
+// nghĩ về bài, không phải con đang cần người lớn (chủ dự án duyệt 2026-10-22). Xét theo từng vế câu (tách ở dấu câu
+// và dấu phẩy); vế nói về chính con ("tớ sợ lắm") vẫn dừng bài. Chỉ áp cho nhóm buồn kéo dài.
+const FEELING_TERM = 'buồn kéo dài';
+const feelingMatcher = compileTermSet(ADULT_NEEDED_PHRASES.filter((p) => p.term === FEELING_TERM));
+const HYPOTHETICAL = /(?<![\p{L}\p{M}])(nếu|giả sử|giả dụ|giá mà|giá như)(?![\p{L}\p{M}])/u;
+const THIRD_PERSON = /(?<![\p{L}\p{M}])(anh ấy|chị ấy|ông ấy|bà ấy|cô ấy|chú ấy|các anh|các chú|nhân vật)(?![\p{L}\p{M}])/u;
+const FIRST_PERSON = /(?<![\p{L}\p{M}])(tớ|mình|em|con|tôi|tao)(?![\p{L}\p{M}])/u;
+
+function feelingAboutLessonOnly(text: string): boolean {
+  const clauses = normalizeForMatching(text).split(/[.!?;,\n…]+/);
+  const feelingClauses = clauses.filter((c) => feelingMatcher.match(c).length > 0);
+  return feelingClauses.length > 0 && feelingClauses.every((c) => HYPOTHETICAL.test(c) || (THIRD_PERSON.test(c) && !FIRST_PERSON.test(c)));
+}
+
 export function detectAdultNeeded(text: string): string[] {
-  return [...new Set(adultNeededMatcher.match(text).map((m) => m.term))];
+  const terms = new Set(adultNeededMatcher.match(text).map((m) => m.term));
+  if (terms.has(FEELING_TERM) && feelingAboutLessonOnly(text)) terms.delete(FEELING_TERM);
+  return [...terms];
 }
 
 /** Con hỏi điều chưa học (khớp thuật ngữ bị cấm của phạm vi) → cờ beyond_scope_curiosity. */
@@ -73,7 +101,7 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
     case 'choice':
       return !!fa.choice_label && lower.includes(fa.choice_label.normalize('NFC').toLowerCase());
     case 'relation': {
-      const r = relationOf(plan.sympy_check.expression);
+      const r = relationOf(plan.sympy_check?.expression ?? '');
       if (!r) return false;
       if ('equal' in r) return /bằng nhau|bằng|=/.test(lower);
       // Đọc mệnh đề so sánh theo từng câu; có một khẳng định sai là chưa khớp.
@@ -82,6 +110,9 @@ export function answerMatchesFinal(text: string, plan: SolutionPlan): boolean {
       // Không có mệnh đề: chỉ nói đúng số lớn hơn (đề hỏi "số nào lớn hơn"), không nhắc số kia.
       return said.includes(r.big) && !said.includes(r.small) && !BIGGER.test(lower) && !SMALLER.test(lower);
     }
+    case 'key_points':
+      // Môn kiến thức chấm cộng dồn qua mọi lượt của bài (key-points-progress.ts), không theo một tin nhắn.
+      return false;
   }
 }
 

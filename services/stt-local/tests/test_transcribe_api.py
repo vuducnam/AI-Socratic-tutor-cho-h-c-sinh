@@ -282,3 +282,11 @@ def test_logs_never_contain_transcript(
         assert _post(client, {"language": "vi"}).status_code == 200
     assert any("outcome=ok" in record.getMessage() for record in caplog.records)
     assert all(FAKE_TRANSCRIPT not in record.getMessage() for record in caplog.records)
+
+
+def test_known_hallucination_returns_empty_text(make_settings: SettingsFactory) -> None:
+    loader = FakeLoader(transcript="Chúng tôi rất vui khi được tiếp xúc với nhau trong một đoạn trích truyện ngắn.")
+    with _client(make_settings(), loader, FakeDecoder(seconds=2)) as client:
+        response = _post(client, {"language": "vi"})
+    assert response.status_code == 200
+    assert response.json()["text"] == ""

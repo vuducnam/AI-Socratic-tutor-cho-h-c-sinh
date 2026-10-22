@@ -30,7 +30,9 @@
     "eval:replay": "tsx --conditions=react-server eval/replay-tutor.ts",
     "prod:up": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --build",
     "prod:down": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod down",
-    "prod:deploy": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod build app && docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm --no-deps migrate && docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --no-deps app admin worker cloudflared"
+    "prod:deploy": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod build app && docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm --no-deps migrate && docker compose --env-file .env.prod -f docker-compose.yml --profile prod up -d --no-deps app admin worker cloudflared",
+    "key-facts:hash": "tsx --conditions=react-server scripts/key-facts-hash.ts",
+    "prod:seed": "docker compose --env-file .env.prod -f docker-compose.yml --profile prod run --rm --no-deps admin node_modules/.bin/tsx --conditions=react-server prisma/seed.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",

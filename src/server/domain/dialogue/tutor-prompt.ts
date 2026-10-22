@@ -1,4 +1,5 @@
 import 'server-only';
+import type { KeyFactRow } from '@/server/dal/key-facts-dal';
 import type { StudentContext } from '@/server/dal/sessions-dal';
 import { renderCurriculumScope } from '@/server/domain/curriculum/render-curriculum-scope';
 import type { CurriculumScope } from '@/server/domain/curriculum/scope';
@@ -13,6 +14,9 @@ import type { DialogueState } from './state-machine';
 
 export const TUTOR_PROMPT = 'tutor/v10';
 export const TUTOR_FEWSHOT = 'tutor/fewshot/v3';
+// Môn kiến thức (SPEC §5d): ý chính thay cho lời giải, nấc gợi ý cao nhất là chỉ trang sách.
+export const TUTOR_KNOWLEDGE_PROMPT = 'tutor_knowledge/v3';
+export const TUTOR_KNOWLEDGE_FEWSHOT = 'tutor_knowledge/fewshot/v2';
 export const VOLATILE_MARKER = '<!-- PHẦN THAY ĐỔI MỖI LƯỢT -->';
 
 // Tín hiệu do code phát hiện ở lượt này: không chuyển trạng thái (SPEC §7), chỉ thêm chỉ dẫn cho Tutor.
@@ -63,6 +67,19 @@ export function stateGuidance(state: DialogueState, hints: TurnHints = {}): stri
     .join('; ');
 }
 
+// Môn kiến thức: đổi hướng dẫn của hai trạng thái có nội dung riêng (chỉ trang sách; đủ ý chính).
+const KNOWLEDGE_STATE_GUIDANCE: Partial<Record<DialogueState, string>> = {
+  SCAFFOLD:
+    'gợi ý nhỏ theo bậc: bậc 1 hỏi gợi nhớ, liên hệ điều em đã nói; bậc 2 thu hẹp bằng loại điều cần tìm (mốc nào, ai, ở đâu, làm gì); bậc 3 chỉ em mở sách tới "chỗ trong sách" của lượt này để tự đọc ra; câu gợi ý không chứa chữ, chi tiết nào của ý chính em chưa nói',
+  CONSOLIDATE:
+    'em đã tự nêu đủ ý chính (hệ thống đã kiểm): xác nhận bằng "Đúng rồi," ở đầu câu (không tách thành câu riêng), rồi hỏi nhẹ một câu: vì sao, ý nghĩa của điều đó, hoặc em tìm ra ở đâu; em đã giải thích hay tỏ ra chán thì không hỏi dồn, khen đúng việc em làm rồi hỏi một câu rất nhẹ khác',
+};
+
+/** Prompt Tutor theo loại plan: môn kiến thức (key_points) dùng tutor_knowledge. */
+export function tutorPromptVersion(plan: SolutionPlan | null): string {
+  return plan?.final_answer.kind === 'key_points' ? TUTOR_KNOWLEDGE_PROMPT : TUTOR_PROMPT;
+}
+
 export interface TutorPromptInput {
   student: StudentContext;
   preset: Preset;
@@ -78,6 +95,8 @@ export interface TutorPromptInput {
   skillSource: string;
   learnerSummary: string;
   hints?: TurnHints;
+  /** Chỉ môn kiến thức: tên môn, ý chính của plan (đã duyệt) và ý em đã tự nêu (code chấm). */
+  knowledge?: { subjectName: string; facts: KeyFactRow[]; statedFactIds: string[] };
 }
 
 const field = (obj: unknown, key: string, fallback: string) =>
@@ -86,8 +105,13 @@ const field = (obj: unknown, key: string, fallback: string) =>
     : fallback;
 
 export async function buildTutorSystem(input: TutorPromptInput): Promise<SystemBlock[]> {
-  const [prompt, fewshot] = await Promise.all([loadPrompt(TUTOR_PROMPT), loadPrompt(TUTOR_FEWSHOT)]);
+  const knowledge = tutorPromptVersion(input.plan) === TUTOR_KNOWLEDGE_PROMPT;
+  const [prompt, fewshot] = await Promise.all([
+    loadPrompt(knowledge ? TUTOR_KNOWLEDGE_PROMPT : TUTOR_PROMPT),
+    loadPrompt(knowledge ? TUTOR_KNOWLEDGE_FEWSHOT : TUTOR_FEWSHOT),
+  ]);
   const text = renderPrompt(prompt.content, {
+    ...(knowledge ? knowledgeVariables(input) : {}),
     'companion.name': field(input.student.companion, 'name', 'Mít'),
     'address.tutor_self': field(input.student.address, 'tutor_self', 'Mít'),
     'address.student': field(input.student.address, 'student', input.student.display_name),
@@ -111,12 +135,35 @@ export async function buildTutorSystem(input: TutorPromptInput): Promise<SystemB
     level: input.scaffoldLevel,
     mode: input.mode,
     intensity: input.preset.socratic_intensity,
-    state_guidance: stateGuidance(input.state, input.hints),
+    state_guidance: (knowledge && !confirmationWithheld(input.state, input.hints) && KNOWLEDGE_STATE_GUIDANCE[input.state]) || stateGuidance(input.state, input.hints),
     step_id: input.currentStepId ?? '(chưa xác định)',
     completed_steps: input.completedSteps.length ? input.completedSteps.join(', ') : '(chưa có)',
   });
   const [stable, volatile] = text.split(VOLATILE_MARKER);
   return [{ text: stable!.trim(), cache: true }, { text: (volatile ?? '').trim() }];
+}
+
+/** Biến riêng của tutor_knowledge: ý chính (bí mật), ý em đã nêu, chỗ trong sách cho bước hiện tại. */
+function knowledgeVariables(input: TutorPromptInput): Record<string, string> {
+  const k = input.knowledge;
+  const plan = input.plan?.knowledge;
+  const facts = k?.facts ?? [];
+  const required = new Set(plan?.required_fact_ids ?? []);
+  const where = (f: KeyFactRow) => `tr.${f.pages} — ${f.locator}`;
+  const step = input.plan?.steps.find((s) => s.step_id === input.currentStepId);
+  const stepFacts = facts.filter((f) => (step?.fact_ids ?? []).includes(f.fact_id));
+  return {
+    subject_name: k?.subjectName ?? '',
+    question_type: plan?.question_type ?? 'fact',
+    key_facts: facts.length
+      ? facts
+          // Chữ cần giữ: Mít không nói khi em chưa tự nói (code chặn), nên viết sẵn để Tutor tránh từ đầu.
+          .map((f) => `- ${f.fact_id} [${required.has(f.fact_id) ? 'bắt buộc' : 'ngữ cảnh'}] ${f.statement} (${where(f)})${f.withhold?.length ? ` — không nói trước: ${f.withhold.join(', ')}` : ''}`)
+          .join('\n')
+      : '(không có)',
+    stated_facts: k?.statedFactIds.length ? k.statedFactIds.join(', ') : '(chưa có)',
+    page_pointer: stepFacts.length ? stepFacts.map(where).join('; ') : '(không có — hỏi gợi mở, không chỉ trang)',
+  };
 }
 
 /** Nguồn SGK của skill đang học (Guard SOURCE và quy tắc 6 của Tutor). */

@@ -23,3 +23,8 @@ export const guardOutputSchema = z.object({
   explanation: z.string().max(400),
 });
 export type GuardOutput = z.infer<typeof guardOutputSchema>;
+
+/** Guard môn kiến thức: thêm chữ lộ trích nguyên văn, để code kiểm lại với câu ý chính (grounded-leak-words). */
+export const knowledgeGuardOutputSchema = guardOutputSchema.extend({
+  leak_quotes: z.array(z.string().max(80)).max(5),
+});

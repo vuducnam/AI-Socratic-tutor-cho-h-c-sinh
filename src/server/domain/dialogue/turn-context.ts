@@ -1,5 +1,6 @@
 import 'server-only';
 import type { Actor } from '@/server/dal/actor';
+import { listKeyFactsByIds } from '@/server/dal/key-facts-dal';
 import { listApprovedMisconceptions, listSessionProblemsWithPlans, listSkillNames } from '@/server/dal/problems-dal';
 import { getLearningSession, getStudentContext } from '@/server/dal/sessions-dal';
 import { listSessionTurns } from '@/server/dal/turns-dal';
@@ -27,6 +28,8 @@ export interface TutorTurnSignals {
   dot_decimal?: boolean;
   /** Con tự nói là đoán / chưa chắc; Cú hỏi lý do trước khi xác nhận đúng. */
   unsure?: boolean;
+  /** Môn kiến thức: ý chính con đã tự nêu tới lượt này (code chấm, SPEC §5d). */
+  stated_fact_ids?: string[];
   blocked_reasons?: string[];
   source?: string;
 }
@@ -66,9 +69,11 @@ export async function loadTurnContext(actor: Actor, input: { studentId: string; 
     .map((t) => (t.signals ?? {}) as Partial<TutorTurnSignals>);
   const lastSignals = tutorSignals.at(-1) ?? {};
 
-  const [misconceptions, skills] = await Promise.all([
+  const factIds = plan?.knowledge ? [...new Set([...plan.knowledge.required_fact_ids, ...plan.knowledge.context_fact_ids])] : [];
+  const [misconceptions, skills, keyFacts] = await Promise.all([
     plan ? listApprovedMisconceptions(plan.skill_ids) : Promise.resolve([]),
     plan ? listSkillNames(plan.skill_ids) : Promise.resolve([]),
+    listKeyFactsByIds(factIds),
   ]);
 
   const history: ChatMessage[] = problemTurns.map((t) => ({
@@ -79,11 +84,14 @@ export async function loadTurnContext(actor: Actor, input: { studentId: string; 
   return {
     parallelOf: active ? parallelOf(active.problem) : null,
     session,
+    // Môn kiến thức: câu hỏi ý kiến chạy argue dù phiên mở ở solve (SPEC §5d); còn lại theo phiên.
+    mode: (plan?.knowledge?.question_type === 'opinion' ? 'argue' : session.mode) as 'solve' | 'argue',
     student,
     preset,
     scope,
     active,
     plan,
+    keyFacts,
     position,
     history,
     problemTurns,

@@ -1,0 +1,4 @@
+# Danh sách môn GIẢ cho test mở phiên theo môn (không phải config thật).
+subjects:
+  - { id: fx-math, name: Toán (fixture), verifier: sympy, math_keyboard: true }
+  - { id: fx-hist, name: Lịch sử và Địa lí (fixture), verifier: key_facts, math_keyboard: false }

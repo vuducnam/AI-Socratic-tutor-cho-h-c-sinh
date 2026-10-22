@@ -12,7 +12,7 @@ import { loadScopeCatalog } from '@/server/dal/curriculum-dal';
 import { PAUSE_MESSAGE, currentStep } from './fallback-question';
 import { generateTutorMessage, type GeneratedMessage } from './generate-tutor-message';
 import { numbersIn, runHardChecks } from './hard-checks';
-import { runGuard } from './guard';
+import { guardVerdictRows, runGuard } from './guard';
 import { detectFrustration, detectGuessing, noProgressStreak, soundsUnsure } from './signals';
 import { nextState, type DialoguePosition, type DialogueState } from './state-machine';
 import {
@@ -26,6 +26,8 @@ import {
   stepsCompletedBy,
 } from './student-message-analysis';
 import { confirmationWithheld, type TurnHints } from './tutor-prompt';
+import { subjectName } from '@/server/domain/curriculum/subject-config';
+import { guardedFactIds, keyPointsProgress, statedTimeline, withheldPhrases } from './key-points-progress';
 import { loadTurnContext, type TurnContext, type TutorTurnSignals } from './turn-context';
 import { getIdempotentResult, saveIdempotentResult, withSessionLock } from './turn-lock';
 
@@ -80,6 +82,10 @@ const TERMINAL: DialogueState[] = ['DONE', 'PAUSE'];
 const STEP_LEAK_STATES: DialogueState[] = ['ELICIT', 'PROBE', 'SCAFFOLD', 'DIRECT_TEACH'];
 // Con đã tự ra đáp án cuối (code đã kiểm khi chuyển sang CONSOLIDATE).
 const ANSWER_GIVEN_STATES: DialogueState[] = ['CONSOLIDATE', 'TRANSFER', 'DONE'];
+// Môn kiến thức: con đã tự nêu đủ ý chính thì Mít hỏi "vì sao" tối đa hai lượt rồi sang câu chuyển giao, kể cả khi
+// con không giải thích (hỏi dồn về một sự kiện con đã nhớ đúng chỉ làm con chán). Toán vẫn chờ con giải thích.
+const MAX_KNOWLEDGE_CONSOLIDATE_REPLIES = 2;
+const consolidateReplies = (ctx: TurnContext) => ctx.problemTurns.filter((t) => t.role !== 'student' && t.state_after === 'CONSOLIDATE').length;
 
 function hardCheckContext(
   ctx: TurnContext,
@@ -90,21 +96,26 @@ function hardCheckContext(
   const pendingStepResults =
     plan && STEP_LEAK_STATES.includes(state) ? plan.steps.filter((s) => !progress.completedSteps.includes(s.step_id)).map((s) => s.expected_result) : [];
   const studentTexts = [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(progress.studentMessage ? [progress.studentMessage] : [])];
+  const problemText = ctx.active?.problem.confirmed_text ?? '';
+  const knowledge = plan?.final_answer.kind === 'key_points';
+  const statedFactIds = knowledge ? keyPointsProgress({ plan: plan!, facts: ctx.keyFacts, problemText, studentTexts }).statedFactIds : [];
   return {
     maxSentences: ctx.preset.max_sentences,
     maxWords: ctx.preset.max_words_per_turn,
     requiredQuestions: TERMINAL.includes(state) ? 0 : Math.min(1, ctx.preset.max_questions_per_turn),
     maxQuestions: ctx.preset.max_questions_per_turn,
     // Từ CONSOLIDATE con đã tự nói ra đáp án đúng (code đã kiểm): nhắc lại đáp án đó không còn là lộ.
-    finalAnswer: plan && !ANSWER_GIVEN_STATES.includes(state)
-      ? {
-          kind: plan.final_answer.kind,
-          canonical: plan.final_answer.canonical,
-          expression: plan.sympy_check.expression,
-          choiceLabel: plan.final_answer.choice_label,
-        }
-      : null,
-    problemText: ctx.active?.problem.confirmed_text ?? '',
+    finalAnswer:
+      plan && plan.sympy_check && plan.final_answer.kind !== 'key_points' && !ANSWER_GIVEN_STATES.includes(state)
+        ? {
+            kind: plan.final_answer.kind,
+            canonical: plan.final_answer.canonical,
+            expression: plan.sympy_check.expression,
+            choiceLabel: plan.final_answer.choice_label,
+          }
+        : null,
+    withheldFacts: knowledge && !ANSWER_GIVEN_STATES.includes(state) ? withheldPhrases({ plan: plan!, facts: ctx.keyFacts, problemText, statedFactIds, studentTexts }) : [],
+    problemText,
     givenNumbers: plan?.given_numbers ?? [],
     forbiddenTerms: ctx.scope.forbiddenTerms,
     pendingStepResults,
@@ -132,7 +143,7 @@ async function produceTutorMessage(
       student: ctx.student,
       preset: ctx.preset,
       scope: ctx.scope,
-      mode: ctx.session.mode as 'solve' | 'argue',
+      mode: ctx.mode,
       state,
       scaffoldLevel,
       problemText: ctx.active?.problem.confirmed_text ?? '',
@@ -144,6 +155,18 @@ async function produceTutorMessage(
       // Giai đoạn 0 chưa có learner model (Giai đoạn 1): không bịa nhận định.
       learnerSummary: 'Chưa đủ dữ liệu.',
       hints: args.hints,
+      knowledge: ctx.plan?.knowledge
+        ? {
+            subjectName: subjectName(ctx.scope.subject),
+            facts: ctx.keyFacts,
+            statedFactIds: keyPointsProgress({
+              plan: ctx.plan,
+              facts: ctx.keyFacts,
+              problemText: ctx.active?.problem.confirmed_text ?? '',
+              studentTexts: [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(args.studentMessage ? [args.studentMessage] : [])],
+            }).statedFactIds,
+          }
+        : undefined,
     },
     guard: guardInputFor(ctx, args.studentMessage, args.completedSteps, state),
   });
@@ -153,6 +176,11 @@ function guardInputFor(ctx: TurnContext, studentMessage: string, completedSteps:
   const address = ctx.student.address as { student?: unknown } | null;
   return {
     studentMessage,
+    studentTexts:
+      ctx.plan?.final_answer.kind === 'key_points'
+        ? [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), ...(studentMessage ? [studentMessage] : [])]
+        : undefined,
+    keyFactStatements: ctx.plan?.knowledge ? ctx.keyFacts.filter((f) => guardedFactIds(ctx.plan!.knowledge!).includes(f.fact_id)).map((f) => f.statement) : undefined,
     studentName: typeof address?.student === 'string' ? address.student : ctx.student.display_name,
     grade: ctx.student.grade,
     preset: ctx.preset,
@@ -162,7 +190,7 @@ function guardInputFor(ctx: TurnContext, studentMessage: string, completedSteps:
     origin: ctx.active?.problem.origin ?? 'homework',
     completedSteps,
     skillSource: ctx.skillSource,
-    mode: ctx.session.mode as 'solve' | 'argue',
+    mode: ctx.mode,
     state,
   };
 }
@@ -285,17 +313,8 @@ export async function openPracticeProblemTurn(
         verdict: hard.pass ? 'pass' : 'block',
         reasons: hard.reasons,
       });
-      if (guard) {
-        await writer.appendGuardVerdict({
-          sessionId: input.sessionId,
-          turnId: verdictTurnId,
-          checker: 'llm',
-          llmCallId: guard.llmCallId,
-          tutorLlmCallId: null,
-          attempt: 1,
-          verdict: guard.verdict,
-          reasons: guard.reasons,
-        });
+      for (const row of guard ? guardVerdictRows(guard) : []) {
+        await writer.appendGuardVerdict({ sessionId: input.sessionId, turnId: verdictTurnId, tutorLlmCallId: null, attempt: 1, ...row });
       }
       if (!passed) return null;
       await writer.appendTurn({
@@ -342,10 +361,22 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const state = ctx.position.state;
 
     // ── Phân tích bằng code ──
-    const newSteps = stepsCompletedBy(text, plan, ctx.completedSteps);
+    // Môn kiến thức (SPEC §5d): ý chính con đã tự nêu cộng dồn qua mọi lượt của bài; Toán chấm theo tin nhắn này.
+    const knowledge =
+      plan.final_answer.kind === 'key_points'
+        ? keyPointsProgress({
+            plan,
+            facts: ctx.keyFacts,
+            problemText: ctx.active.problem.confirmed_text ?? '',
+            studentTexts: [...ctx.problemTurns.filter((t) => t.role === 'student').map((t) => t.content), text],
+          })
+        : null;
+    const newSteps = knowledge
+      ? knowledge.completedSteps.filter((id) => !ctx.completedSteps.includes(id))
+      : stepsCompletedBy(text, plan, ctx.completedSteps);
     const completedSteps = [...ctx.completedSteps, ...newSteps];
-    const matchesFinal = ctx.session.mode === 'solve' && answerMatchesFinal(text, plan);
-    const explained = (state === 'CONSOLIDATE' || ctx.session.mode === 'argue') && looksLikeExplanation(text);
+    const matchesFinal = ctx.mode === 'solve' && (knowledge ? knowledge.answered : answerMatchesFinal(text, plan));
+    const explained = (state === 'CONSOLIDATE' || ctx.mode === 'argue') && looksLikeExplanation(text);
     const madeProgress = newSteps.length > 0 || matchesFinal || explained;
     const answer = numbersIn(text).join(';') || null;
     const adultNeeded = detectAdultNeeded(text);
@@ -357,7 +388,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
     const hints: TurnHints = { guessing, dotDecimal, unsure: soundsUnsure(text), reasoned: givesReason(text), asksConfirmation: asksForConfirmation(text) };
     const next = nextState({
       current: ctx.position,
-      mode: ctx.session.mode as 'solve' | 'argue',
+      mode: ctx.mode,
       signals: {
         noProgressStreak: noProgressStreak([...ctx.progressMarks, { madeProgress }]),
         frustrated,
@@ -368,8 +399,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         stepCompleted: newSteps.length > 0,
         // Ở PARALLEL, đáp án đúng là của bài tương tự → quay về bài gốc, không phải CONSOLIDATE.
         answerMatchesFinal: state === 'PARALLEL' ? false : matchesFinal,
-        argueReasonGiven: ctx.session.mode === 'argue' && explained,
-        explainedMethodOrMistake: state === 'CONSOLIDATE' && explained,
+        argueReasonGiven: ctx.mode === 'argue' && explained,
+        explainedMethodOrMistake: state === 'CONSOLIDATE' && (explained || (!!knowledge && consolidateReplies(ctx) >= MAX_KNOWLEDGE_CONSOLIDATE_REPLIES)),
         parallelSolved: state === 'PARALLEL' && matchesFinal,
         transferAnswered: state === 'TRANSFER' && !isSkip(text) && text.length > 0,
         transferSkipped: state === 'TRANSFER' && isSkip(text),
@@ -387,7 +418,10 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
 
     // ── PARALLEL: bài tương tự luôn là bài tình huống từ life_contexts đã duyệt (quy tắc cứng 13) ──
     let parallel: { problemId: string; problemText: string; visual: SituationalVisual | null } | null = null;
-    if (position.state === 'PARALLEL' && state !== 'PARALLEL') {
+    if (position.state === 'PARALLEL' && plan.final_answer.kind === 'key_points') {
+      // Môn kiến thức chưa có thư viện tình huống không số: nấc cao nhất là chỉ trang SGK để con tự đọc.
+      position = { state: 'SCAFFOLD', scaffoldLevel: 3 };
+    } else if (position.state === 'PARALLEL' && state !== 'PARALLEL') {
       const generated = await generateSituationalProblem(actor, {
         studentId: input.studentId,
         sessionId: input.sessionId,
@@ -464,17 +498,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
           verdict: hard.pass ? 'pass' : 'block',
           reasons: hard.reasons,
         });
-        if (guard) {
-          await writer.appendGuardVerdict({
-            sessionId: input.sessionId,
-            turnId: tutorTurnId,
-            checker: 'llm',
-            llmCallId: guard.llmCallId,
-            tutorLlmCallId: null,
-            attempt: 1,
-            verdict: guard.verdict,
-            reasons: guard.reasons,
-          });
+        for (const row of guard ? guardVerdictRows(guard) : []) {
+          await writer.appendGuardVerdict({ sessionId: input.sessionId, turnId: tutorTurnId, tutorLlmCallId: null, attempt: 1, ...row });
         }
         if (guard?.verdict === 'pass') message = parallel.problemText;
         else {
@@ -524,6 +549,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         unsure: hints.unsure,
         blocked_reasons: generated?.blockedReasons ?? [],
         source: generated?.source ?? 'fixed',
+        ...(knowledge ? { stated_fact_ids: knowledge.statedFactIds } : {}),
       };
       await writer.appendTurn({
         id: tutorTurnId,
@@ -573,7 +599,8 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
       done: position.state === 'DONE',
       paused: position.state === 'PAUSE',
       source: outcome.generated?.source ?? 'fixed',
-      visual: outcome.parallel?.visual ?? null,
+      // Môn kiến thức: con nêu đủ ý thì xem lại các mốc năm con vừa tự nêu trên trục thời gian.
+      visual: outcome.parallel?.visual ?? (knowledge && position.state === 'CONSOLIDATE' ? statedTimeline(ctx.keyFacts, knowledge.statedFactIds) : null),
     };
     const { message: _omit, ...stored } = result;
     await saveIdempotentResult(input.sessionId, input.idempotencyKey, stored);

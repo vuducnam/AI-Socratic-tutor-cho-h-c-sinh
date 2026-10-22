@@ -1,0 +1,3558 @@
+# Ý chính từng bài — Lịch sử và Địa lí 5 (Kết nối tri thức với cuộc sống). SPEC §5d, quy tắc cứng 1, 6, 7.
+# NHÁP do Claude Code soạn ngày 2026-10-21 CHỈ từ ảnh trang của bản đọc chính thống trên taphuan.nxbgd.vn
+# (không dùng trí nhớ của model hay trang bên thứ ba). statement là lời diễn đạt ngắn, không chép nguyên văn sách.
+# - pages: trang in trong sách; locator: chỗ trên trang để Mít chỉ con tự đọc (Mít không bao giờ nói ra ý chính).
+# - accept: cụm từ chấp nhận; code so câu trả lời của con với các cụm này (src/lib/key-point-matcher.ts).
+# - approved: chủ dự án đối chiếu từng bài với sách rồi điền {by, at, content_hash}; bài chưa duyệt không được dạy.
+#   content_hash: chạy `pnpm key-facts:hash` để lấy hash hiện tại của từng bài.
+subject: history_geography
+grade: 5
+lessons:
+  - lesson_id: HG5.SGK.B1
+    objectives:
+      - Chỉ ra vị trí địa lí của Việt Nam trên bản đồ hoặc lược đồ
+      - Nói được vị trí địa lí ảnh hưởng thế nào tới tự nhiên và sản xuất
+      - Tả hình dạng phần đất liền của Việt Nam
+      - Nêu số đơn vị hành chính, kể tên một số tỉnh, thành phố
+      - Nêu ý nghĩa của Quốc kì, Quốc huy, Quốc ca
+    question_styles:
+      - Xác định trên bản đồ hành chính một số thành phố và quần đảo
+      - Tìm hiểu rồi chia sẻ việc dùng biểu tượng quốc gia ở trường hoặc nơi em sống
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 80e18a921e324f4e }
+    facts:
+      - fact_id: HG5.SGK.B1.F1
+        statement: Việt Nam nằm ở khu vực Đông Nam Á, thuộc châu Á.
+        kind: place
+        accept:
+          - đông nam á
+          - châu á
+        withhold:
+          - đông nam
+          - nam á
+        pages: "5"
+        locator: mục 1 Vị trí địa lí, đoạn văn cuối trang; khung nhỏ Việt Nam trong Đông Nam Á ở Hình 3 trang 6
+      - fact_id: HG5.SGK.B1.F2
+        statement: Trên đất liền, Việt Nam có chung biên giới với Trung Quốc, Lào, Cam-pu-chia; vùng biển nước ta thuộc Biển Đông.
+        kind: place
+        accept:
+          - trung quốc
+          - lào
+          - cam-pu-chia
+          - campuchia
+          - cam pu chia
+          - biển đông
+        pages: "5"
+        locator: mục 1 Vị trí địa lí, đoạn văn cuối trang
+      - fact_id: HG5.SGK.B1.F3
+        statement: Do vị trí địa lí, thiên nhiên nhiệt đới ẩm gió mùa, thuận lợi giao thông biển nhưng nhiều thiên tai, nhất là bão.
+        kind: result
+        accept:
+          - nhiệt đới ẩm gió mùa
+          - giao thông vận tải biển
+          - vận tải biển
+          - nhiều thiên tai
+          - bão
+          - xuất khẩu
+        withhold:
+          - gió mùa
+          - nhiệt đới
+          - thiên tai
+        pages: "7"
+        locator: Hình 4 – sơ đồ Một số ảnh hưởng của vị trí địa lí, đầu trang
+      - fact_id: HG5.SGK.B1.F4
+        statement: "Lãnh thổ Việt Nam gồm ba phần: vùng đất, vùng biển và vùng trời."
+        kind: feature
+        accept:
+          - vùng trời
+          - vùng đất vùng biển vùng trời
+        withhold:
+          - vùng biển
+          - vùng đất
+        pages: "7"
+        locator: mục 2 Lãnh thổ và đơn vị hành chính, đoạn đầu
+      - fact_id: HG5.SGK.B1.F5
+        statement: Phần đất liền nước ta giống hình chữ S, hẹp bề ngang và kéo dài theo hướng bắc – nam.
+        kind: feature
+        accept:
+          - chữ s
+          - hình chữ s
+          - hẹp ngang
+          - chiều bắc nam
+        withhold:
+          - hẹp bề ngang
+          - bắc nam
+        pages: "7"
+        locator: mục 2, đoạn đầu (câu cuối); đối chiếu Hình 3 – Bản đồ hành chính trang 6
+      - fact_id: HG5.SGK.B1.F6
+        statement: Tính đến năm 2025, Việt Nam có 34 đơn vị hành chính cấp tỉnh, gồm 6 thành phố và 28 tỉnh.
+        kind: figure
+        accept:
+          - "34"
+          - ba mươi tư
+          - ba mươi bốn
+          - 6 thành phố
+          - 28 tỉnh
+          - hai mươi tám tỉnh
+        pages: "7"
+        locator: mục 2, đoạn thứ hai
+      - fact_id: HG5.SGK.B1.F7
+        statement: Sáu thành phố trực thuộc là Hà Nội, Hải Phòng, Huế, Đà Nẵng, Thành phố Hồ Chí Minh và Cần Thơ.
+        kind: place
+        accept:
+          - hải phòng
+          - huế
+          - đà nẵng
+          - hồ chí minh
+          - cần thơ
+        pages: 6-7
+        locator: mục 2, đoạn thứ hai trang 7; tên in hoa trên Hình 3 – Bản đồ hành chính Việt Nam năm 2025 trang 6
+      - fact_id: HG5.SGK.B1.F8
+        statement: Thủ đô của Việt Nam là Hà Nội.
+        kind: place
+        accept:
+          - hà nội
+          - thủ đô hà nội
+        withhold:
+          - sao đỏ
+        pages: "7"
+        locator: mục 2, cuối đoạn thứ hai; dấu sao đỏ trên Hình 3 trang 6
+      - fact_id: HG5.SGK.B1.F9
+        statement: Quốc kì nền đỏ có ngôi sao vàng năm cánh; màu đỏ tượng trưng cho cách mạng, màu vàng tượng trưng cho dân tộc.
+        kind: symbol
+        accept:
+          - nền đỏ
+          - sao vàng
+          - sao vàng năm cánh
+          - tượng trưng cho cách mạng
+        withhold:
+          - màu đỏ
+          - màu vàng
+          - ngôi sao
+        pages: "7"
+        locator: mục 3a Quốc kì, đoạn văn cạnh Hình 5
+      - fact_id: HG5.SGK.B1.F10
+        statement: "Năm cánh sao tượng trưng cho năm tầng lớp đoàn kết: trí thức, nông dân, công nhân, thương nhân, binh sĩ."
+        kind: symbol
+        accept:
+          - trí thức
+          - nông dân
+          - công nhân
+          - thương nhân
+          - binh sĩ
+          - năm tầng lớp
+        withhold:
+          - tầng lớp
+        pages: "7"
+        locator: mục 3a Quốc kì, cuối đoạn văn cạnh Hình 5
+      - fact_id: HG5.SGK.B1.F11
+        statement: Trên Quốc huy, bông lúa vàng tượng trưng cho nông nghiệp, còn bánh xe răng tượng trưng cho công nghiệp.
+        kind: symbol
+        accept:
+          - bông lúa
+          - bánh xe
+          - bánh xe răng
+          - nông nghiệp
+          - công nghiệp
+        withhold:
+          - lúa vàng
+          - bánh răng
+        pages: "8"
+        locator: mục 3b Quốc huy, đoạn đầu cạnh Hình 6
+      - fact_id: HG5.SGK.B1.F12
+        statement: Quốc ca là bài Tiến quân ca, do nhạc sĩ Văn Cao sáng tác năm 1944.
+        kind: symbol
+        accept:
+          - tiến quân ca
+          - văn cao
+          - "1944"
+          - năm 1944
+        withhold:
+          - nhạc sĩ
+        pages: "8"
+        locator: mục 3c Quốc ca, đoạn đầu và khung Em có biết
+  - lesson_id: HG5.SGK.B2
+    objectives:
+      - Trình bày đặc điểm của một thành phần thiên nhiên (địa hình, khí hậu, sông ngòi, đất, rừng)
+      - Kể tên và chỉ trên bản đồ một số khoáng sản chính
+      - Nêu vai trò của tài nguyên thiên nhiên với kinh tế
+      - Nêu khó khăn do môi trường tự nhiên gây ra cho sản xuất, đời sống
+      - Đưa ra biện pháp bảo vệ tài nguyên và phòng, chống thiên tai
+    question_styles:
+      - Hoàn thành bảng nêu vai trò của từng thành phần thiên nhiên với đời sống và sản xuất
+      - Tìm hiểu rồi chia sẻ đặc điểm một thành phần thiên nhiên ở địa phương mình
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 5389c2ca50938a64 }
+    facts:
+      - fact_id: HG5.SGK.B2.F1
+        statement: Trên phần đất liền, đồi núi chiếm khoảng ba phần tư diện tích, chủ yếu là đồi núi thấp; đồng bằng chiếm một phần tư.
+        kind: figure
+        accept:
+          - 3/4
+          - ba phần tư
+          - 1/4
+          - một phần tư
+          - đồi núi thấp
+        withhold:
+          - phần tư
+        pages: "9"
+        locator: mục 1a Địa hình, đoạn văn cuối trang; đối chiếu Hình 1 – Bản đồ tự nhiên trang 10
+      - fact_id: HG5.SGK.B2.F2
+        statement: "Các dãy núi nước ta chạy theo hai hướng chính: tây bắc – đông nam và hình vòng cung."
+        kind: feature
+        accept:
+          - tây bắc đông nam
+          - vòng cung
+          - hình vòng cung
+        withhold:
+          - tây bắc
+          - đông nam
+        pages: "9"
+        locator: mục 1a Địa hình, đoạn văn cuối trang
+      - fact_id: HG5.SGK.B2.F3
+        statement: Đồng bằng dân cư đông, thuận lợi cho nhiều ngành kinh tế nhưng chịu bão, ngập lụt, xâm nhập mặn.
+        kind: feature
+        accept:
+          - xâm nhập mặn
+          - ngập lụt
+          - dân cư đông đúc
+        withhold:
+          - nước mặn
+          - lũ lụt
+        pages: "11"
+        locator: mục 1a (tiếp), đoạn đầu trang
+      - fact_id: HG5.SGK.B2.F4
+        statement: "Một số khoáng sản trữ lượng lớn: dầu mỏ, khí tự nhiên, bô-xít, đá vôi, than đá, a-pa-tít, sắt, ti-tan."
+        kind: feature
+        accept:
+          - dầu mỏ
+          - khí tự nhiên
+          - than đá
+          - bô-xít
+          - bô xít
+          - a-pa-tít
+        withhold:
+          - dầu
+          - than
+          - đá vôi
+        pages: 10-11
+        locator: khung Em có biết mục 1b Khoáng sản trang 11; kí hiệu khoáng sản trên Hình 1 trang 10
+      - fact_id: HG5.SGK.B2.F5
+        statement: Khoáng sản được khai thác làm nguyên liệu, nhiên liệu cho công nghiệp và một phần để xuất khẩu.
+        kind: result
+        accept:
+          - nguyên liệu
+          - nhiên liệu
+          - xuất khẩu
+          - cho công nghiệp
+        pages: "11"
+        locator: mục 1b Khoáng sản, đoạn văn dưới khung câu hỏi
+      - fact_id: HG5.SGK.B2.F6
+        statement: Khí hậu nước ta nhiệt đới ẩm gió mùa, nhiệt độ trung bình năm trên 20°C, lượng mưa 1 500–2 000 mm.
+        kind: feature
+        accept:
+          - nhiệt đới ẩm gió mùa
+          - trên 20 độ
+          - hai mươi độ
+          - "1500"
+          - 2000 mm
+        withhold:
+          - nhiệt đới
+          - gió mùa
+        pages: "11"
+        locator: mục 2a Khí hậu, đoạn đầu
+      - fact_id: HG5.SGK.B2.F7
+        statement: "Dãy Bạch Mã ngăn hai miền khí hậu: miền Bắc có hạ nóng, đông lạnh; miền Nam nóng quanh năm, mùa mưa và mùa khô."
+        kind: feature
+        accept:
+          - bạch mã
+          - mùa đông lạnh
+          - nóng quanh năm
+          - mùa mưa và mùa khô
+          - mùa khô
+        withhold:
+          - hai miền khí hậu
+          - đông lạnh
+          - mùa mưa
+        pages: "11"
+        locator: mục 2a Khí hậu, đoạn thứ hai; bảng nhiệt độ Hà Nội – TP Hồ Chí Minh đầu trang 12
+      - fact_id: HG5.SGK.B2.F8
+        statement: Nước ta có rất nhiều sông, phần lớn là sông nhỏ; sông lớn có sông Hồng, sông Cửu Long; nước sông thay đổi theo mùa.
+        kind: feature
+        accept:
+          - sông hồng
+          - cửu long
+          - sông nhỏ
+          - mùa lũ
+          - mùa cạn
+        withhold:
+          - sông lớn
+          - theo mùa
+        pages: "12"
+        locator: mục 2b Sông, hồ, đoạn đầu
+      - fact_id: HG5.SGK.B2.F9
+        statement: Hồ tự nhiên có Ba Bể, Tơ Nưng; hồ nhân tạo có Hoà Bình, Dầu Tiếng.
+        kind: place
+        accept:
+          - ba bể
+          - tơ nưng
+          - hồ hoà bình
+          - hồ hòa bình
+          - dầu tiếng
+        pages: "12"
+        locator: mục 2b Sông, hồ, đoạn cuối trang; Hình 6 Hồ Ba Bể trang 13
+      - fact_id: HG5.SGK.B2.F10
+        statement: "Hai nhóm đất chính: đất phe-ra-lít ở đồi núi, chua, nghèo mùn; đất phù sa ở đồng bằng, tơi xốp, màu mỡ."
+        kind: feature
+        accept:
+          - phe-ra-lít
+          - phe ra lít
+          - feralit
+          - phù sa
+          - đất phù sa
+        withhold:
+          - màu mỡ
+          - nghèo mùn
+        pages: "13"
+        locator: mục 3a Đất, hai đoạn văn dưới khung câu hỏi
+      - fact_id: HG5.SGK.B2.F11
+        statement: Rừng nhiệt đới và rừng ngập mặn chiếm diện tích lớn; rừng cho gỗ, dược liệu và giúp hạn chế xói mòn, lũ lụt.
+        kind: feature
+        accept:
+          - rừng ngập mặn
+          - rừng nhiệt đới
+          - xói mòn
+          - cung cấp gỗ
+        withhold:
+          - dược liệu
+        pages: "14"
+        locator: mục 3b Rừng, hai đoạn đầu; Hình 9, 10
+      - fact_id: HG5.SGK.B2.F12
+        statement: Bảo vệ tài nguyên, phòng chống thiên tai bằng khai thác hợp lí, trồng rừng, năng lượng tái tạo, thuỷ lợi, cảnh báo sớm.
+        kind: feature
+        accept:
+          - trồng rừng
+          - năng lượng tái tạo
+          - thuỷ lợi
+          - thủy lợi
+          - cảnh báo sớm
+          - khai thác hợp lí
+        withhold:
+          - tái tạo
+        pages: 14-15
+        locator: mục 4, đoạn cuối trang 14; Hình 11 – sơ đồ Biện pháp trang 15
+  - lesson_id: HG5.SGK.B3
+    objectives:
+      - Chỉ trên bản đồ vị trí vùng biển, một số đảo và quần đảo lớn
+      - Trình bày việc bảo vệ chủ quyền, quyền và lợi ích của Việt Nam ở Biển Đông qua các thời kì, dùng tư liệu, tranh ảnh, câu chuyện
+      - Sưu tầm và kể lại câu chuyện, bài thơ về biển, đảo
+    question_styles:
+      - "Hoàn thành bảng theo thời kì: mỗi thời kì đã làm gì để bảo vệ chủ quyền biển đảo"
+      - Giới thiệu bài hát, bài thơ hoặc câu chuyện về biển, đảo đã sưu tầm
+      - Tìm hiểu rồi chia sẻ hoạt động bảo vệ chủ quyền biển đảo ở địa phương
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: cd6a8bf33b5a2b26 }
+    facts:
+      - fact_id: HG5.SGK.B3.F1
+        statement: Vùng biển Việt Nam là một phần của Biển Đông, trong đó có hàng nghìn hòn đảo.
+        kind: place
+        accept:
+          - biển đông
+          - hàng nghìn đảo
+          - hàng nghìn hòn đảo
+        withhold:
+          - hàng nghìn
+        pages: "16"
+        locator: mục 1 Vị trí địa lí, đoạn văn cuối trang
+      - fact_id: HG5.SGK.B3.F2
+        statement: "Một số đảo tiêu biểu: Bạch Long Vĩ, Cát Bà, Cồn Cỏ, Lý Sơn, Côn Sơn, Phú Quốc."
+        kind: place
+        accept:
+          - bạch long vĩ
+          - cát bà
+          - cồn cỏ
+          - lý sơn
+          - côn sơn
+          - phú quốc
+        pages: "16"
+        locator: mục 1, đoạn văn cuối trang; Hình 3, 4 trang 17; Hình 3 bản đồ trang 6
+      - fact_id: HG5.SGK.B3.F3
+        statement: Hai quần đảo lớn nhất là Hoàng Sa (thành phố Đà Nẵng) và Trường Sa (tỉnh Khánh Hoà).
+        kind: place
+        accept:
+          - hoàng sa
+          - trường sa
+          - quần đảo hoàng sa
+          - quần đảo trường sa
+        withhold:
+          - quần đảo
+        pages: "16"
+        locator: mục 1, câu cuối trang; Hình 1 đảo Trường Sa Lớn
+      - fact_id: HG5.SGK.B3.F4
+        statement: Vịnh Hạ Long có gần 2 000 đảo lớn nhỏ và được UNESCO ghi danh là Di sản thiên nhiên thế giới.
+        kind: feature
+        accept:
+          - hạ long
+          - vịnh hạ long
+          - unesco
+          - di sản thiên nhiên thế giới
+        withhold:
+          - di sản
+        pages: "17"
+        locator: khung Em có biết cạnh Hình 2, đầu trang
+      - fact_id: HG5.SGK.B3.F5
+        statement: Thế kỉ XVII, các chúa Nguyễn lập đội Hoàng Sa, sau đó đội Bắc Hải, vừa khai thác sản vật vừa thực thi chủ quyền.
+        kind: event
+        accept:
+          - chúa nguyễn
+          - đội hoàng sa
+          - đội bắc hải
+          - thế kỉ xvii
+          - thế kỉ 17
+          - thế kỷ 17
+        withhold:
+          - sản vật
+          - chủ quyền
+        pages: "17"
+        locator: mục 2, đoạn cuối trang
+      - fact_id: HG5.SGK.B3.F6
+        statement: Chúa Nguyễn Phúc Nguyên lập đội Hoàng Sa gồm 70 người lấy từ xã An Vĩnh, nay thuộc đặc khu Lý Sơn.
+        kind: person
+        accept:
+          - nguyễn phúc nguyên
+          - 70 người
+          - bảy mươi người
+          - an vĩnh
+        pages: "18"
+        locator: khung Câu chuyện lịch sử Đội Hoàng Sa, đoạn đầu
+      - fact_id: HG5.SGK.B3.F7
+        statement: Mỗi năm, từ tháng 3 đến tháng 8, đội Hoàng Sa đi thuyền buồm ba ngày ba đêm mới tới quần đảo.
+        kind: event
+        accept:
+          - tháng 3 đến tháng 8
+          - tháng ba đến tháng tám
+          - ba ngày ba đêm
+        withhold:
+          - thuyền buồm
+        pages: "18"
+        locator: khung Câu chuyện lịch sử Đội Hoàng Sa, đoạn thứ hai
+      - fact_id: HG5.SGK.B3.F8
+        statement: Người dân đảo Lý Sơn tổ chức lễ Khao lề thế lính Hoàng Sa để cầu bình an và tri ân người giữ biển đảo.
+        kind: event
+        accept:
+          - khao lề thế lính
+          - khao lề
+          - lễ khao lề
+        pages: "18"
+        locator: khung Câu chuyện lịch sử Đội Hoàng Sa, đoạn cuối
+      - fact_id: HG5.SGK.B3.F9
+        statement: Vua Minh Mạng cho vẽ bản đồ Đại Nam nhất thống toàn đồ, ghi rõ Hoàng Sa và Trường Sa thuộc Việt Nam.
+        kind: event
+        accept:
+          - minh mạng
+          - đại nam nhất thống toàn đồ
+          - triều nguyễn
+        pages: "18"
+        locator: đoạn văn ngay dưới khung Câu chuyện lịch sử
+      - fact_id: HG5.SGK.B3.F10
+        statement: Năm 1836, vua Minh Mạng cử Phạm Hữu Nhật đưa binh thuyền ra Hoàng Sa, mang theo 10 cột mốc bằng gỗ.
+        kind: date
+        accept:
+          - "1836"
+          - năm 1836
+          - phạm hữu nhật
+          - cột mốc
+        withhold:
+          - binh thuyền
+        pages: "18"
+        locator: khung TƯ LIỆU (viền chấm xanh) giữa trang
+      - fact_id: HG5.SGK.B3.F11
+        statement: Thời Pháp thuộc, Pháp dựng bia chủ quyền, lập đơn vị hành chính ở hai quần đảo; bia trên đảo Hoàng Sa dựng năm 1938.
+        kind: event
+        accept:
+          - pháp thuộc
+          - bia chủ quyền
+          - "1938"
+          - năm 1938
+        withhold:
+          - dựng bia
+        pages: "18"
+        locator: đoạn văn cạnh Hình 6 – Bia chủ quyền, cuối trang
+      - fact_id: HG5.SGK.B3.F12
+        statement: Nhà nước ta ban hành luật khẳng định chủ quyền biển đảo và tham gia Công ước Luật Biển của Liên hợp quốc (1982).
+        kind: event
+        accept:
+          - unclos
+          - luật biển
+          - công ước luật biển
+          - "1982"
+          - năm 1982
+        withhold:
+          - liên hợp quốc
+        pages: 18-19
+        locator: đoạn cuối trang 18 nối sang đoạn đầu trang 19
+  - lesson_id: HG5.SGK.B4
+    objectives:
+      - Nêu số dân và so sánh quy mô dân số Việt Nam với một số nước Đông Nam Á
+      - Nhận xét sự gia tăng dân số và tác động của nó tới kinh tế – xã hội
+      - Kể tên một số dân tộc và kể chuyện về tình đoàn kết các dân tộc
+      - Tôn trọng sự đa dạng văn hoá của các dân tộc
+    question_styles:
+      - Đọc bản đồ mật độ dân số để kể tên nơi có mật độ cao nhất và thấp nhất
+      - Viết đoạn văn ngắn giới thiệu một dân tộc (tên, nơi sống, trang phục, lễ hội) rồi chia sẻ
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c2de35686cce5782 }
+    facts:
+      - fact_id: HG5.SGK.B4.F1
+        statement: Năm 2024, Việt Nam có hơn 101,3 triệu dân, đứng thứ ba khu vực Đông Nam Á.
+        kind: figure
+        accept:
+          - 101,3 triệu
+          - 101 triệu
+          - một trăm lẻ một triệu
+          - thứ ba đông nam á
+          - thứ 3 đông nam á
+          - đứng thứ ba
+        withhold:
+          - triệu dân
+        pages: 20-21
+        locator: Bảng số dân các nước Đông Nam Á năm 2024 trang 20; dòng đầu trang 21
+      - fact_id: HG5.SGK.B4.F2
+        statement: Ở Đông Nam Á năm 2024, chỉ In-đô-nê-xi-a và Phi-líp-pin có số dân đông hơn Việt Nam.
+        kind: figure
+        accept:
+          - in-đô-nê-xi-a
+          - indonesia
+          - in đô nê xi a
+          - phi-líp-pin
+          - philippines
+          - phi líp pin
+        pages: "20"
+        locator: Bảng số dân các nước Đông Nam Á năm 2024, cột trái
+      - fact_id: HG5.SGK.B4.F3
+        statement: Giữa tháng 4 năm 2023, dân số Việt Nam chạm mốc 100 triệu, thứ 8 châu Á, thứ 15 thế giới.
+        kind: figure
+        accept:
+          - 100 triệu
+          - một trăm triệu
+          - thứ 15 thế giới
+          - thứ 8 châu á
+        pages: "20"
+        locator: khung Khởi động
+      - fact_id: HG5.SGK.B4.F4
+        statement: Số dân tăng từ 76,5 triệu năm 1999 lên 101,3 triệu năm 2024, trung bình mỗi năm thêm khoảng một triệu người.
+        kind: figure
+        accept:
+          - 76,5
+          - 76,5 triệu
+          - một triệu người mỗi năm
+          - mỗi năm tăng khoảng một triệu
+        pages: "21"
+        locator: Hình 1 – Biểu đồ số dân 1999–2024 và đoạn văn ngay dưới biểu đồ
+      - fact_id: HG5.SGK.B4.F5
+        statement: Thời gian gần đây, tốc độ gia tăng dân số nước ta có xu hướng giảm.
+        kind: feature
+        accept:
+          - xu hướng giảm
+          - tốc độ tăng giảm
+          - tăng chậm lại
+        withhold:
+          - đang giảm
+          - giảm dần
+        pages: "21"
+        locator: mục 2 Gia tăng dân số, đoạn đầu dưới biểu đồ (câu thứ hai)
+      - fact_id: HG5.SGK.B4.F6
+        statement: Dân số đông và tăng hằng năm cho nước ta nguồn lao động dồi dào và thị trường tiêu thụ rộng lớn.
+        kind: result
+        accept:
+          - lao động dồi dào
+          - nguồn lao động
+          - thị trường tiêu thụ
+        withhold:
+          - dồi dào
+          - tiêu thụ
+        pages: "21"
+        locator: mục 2, đoạn thứ hai dưới biểu đồ (vế đầu)
+      - fact_id: HG5.SGK.B4.F7
+        statement: Dân đông cũng gây khó khăn về việc làm, nhà ở, y tế, giáo dục và đe doạ tài nguyên, môi trường.
+        kind: result
+        accept:
+          - việc làm
+          - nhà ở
+          - y tế
+          - ô nhiễm môi trường
+          - suy thoái tài nguyên
+        pages: "21"
+        locator: mục 2, đoạn thứ hai dưới biểu đồ (vế sau)
+      - fact_id: HG5.SGK.B4.F8
+        statement: Dân cư tập trung đông ở đồng bằng, ven biển và thành thị; vùng đồi núi dân cư thưa thớt.
+        kind: feature
+        accept:
+          - thưa thớt
+          - đồng bằng đông dân
+          - ven biển đông dân
+          - mật độ dân số cao
+          - miền núi thưa dân
+        withhold:
+          - tập trung đông
+          - thưa
+        pages: 21-22
+        locator: mục 3 Phân bố dân cư, đoạn cuối trang 21; Hình 2 – Bản đồ phân bố dân cư năm 2024 trang 22
+      - fact_id: HG5.SGK.B4.F9
+        statement: Việt Nam có 54 dân tộc cùng sinh sống, trong đó dân tộc Kinh đông dân nhất.
+        kind: figure
+        accept:
+          - 54 dân tộc
+          - năm mươi tư dân tộc
+          - năm mươi bốn dân tộc
+          - dân tộc kinh
+          - người kinh
+        pages: "23"
+        locator: mục 4 Dân tộc, đoạn đầu
+      - fact_id: HG5.SGK.B4.F10
+        statement: Mỗi dân tộc có bản sắc văn hoá riêng, thể hiện qua ngôn ngữ, trang phục, ẩm thực, lễ hội.
+        kind: feature
+        accept:
+          - bản sắc văn hoá
+          - bản sắc văn hóa
+          - ngôn ngữ
+          - trang phục
+          - ẩm thực
+          - lễ hội
+        pages: "23"
+        locator: mục 4 Dân tộc, đoạn thứ hai
+      - fact_id: HG5.SGK.B4.F11
+        statement: Năm 1885, vua Hàm Nghi ra Dụ Cần vương; đồng bào Bru – Vân Kiều, Tà Ôi, Cơ Tu giúp nghĩa quân ở Tân Sở.
+        kind: event
+        accept:
+          - hàm nghi
+          - cần vương
+          - "1885"
+          - tân sở
+          - bru vân kiều
+          - cơ tu
+        pages: "23"
+        locator: khung Câu chuyện lịch sử Đoàn kết dân tộc trong phong trào Cần vương
+      - fact_id: HG5.SGK.B4.F12
+        statement: Ở Tân Trào, đồng bào các dân tộc giúp đỡ, giữ bí mật cho Bác Hồ và thân thương gọi Bác là Ông Ké.
+        kind: event
+        accept:
+          - tân trào
+          - ông ké
+        pages: "24"
+        locator: khung Câu chuyện lịch sử Tình cảm yêu thương của đồng bào dân tộc ở Tân Trào đối với Bác Hồ
+  - lesson_id: HG5.SGK.B5
+    objectives:
+      - Trình bày sự ra đời của Văn Lang, Âu Lạc qua truyền thuyết và bằng chứng khảo cổ
+      - Dùng kiến thức lịch sử và truyền thuyết (Sơn Tinh, Thuỷ Tinh; Thánh Gióng; Sự tích nỏ thần) để tả đời sống kinh tế và cuộc đấu tranh bảo vệ đất nước
+    question_styles:
+      - Hoàn thành bảng so sánh hai nhà nước (thời gian ra đời, kinh đô, người đứng đầu)
+      - Kể lại một truyền thuyết khác gắn với Văn Lang hoặc Âu Lạc
+      - Tìm hiểu và kể tên di tích hoặc hoạt động kinh tế từ thời Văn Lang – Âu Lạc còn đến nay
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 439d4da0585feaba }
+    facts:
+      - fact_id: HG5.SGK.B5.F1
+        statement: Nhà nước Văn Lang ra đời khoảng thế kỉ VII trước Công nguyên, ở lưu vực các sông vùng Bắc Bộ và Bắc Trung Bộ.
+        kind: date
+        accept:
+          - thế kỉ vii
+          - thế kỉ 7
+          - thế kỷ 7
+          - thế kỉ thứ bảy
+          - trước công nguyên
+        pages: "25"
+        locator: mục 1a Nhà nước Văn Lang, đoạn cuối trang
+      - fact_id: HG5.SGK.B5.F2
+        statement: Truyền thuyết Con Rồng cháu Tiên và hiện vật văn hoá Đông Sơn như rìu, trống đồng cho biết Văn Lang ra đời.
+        kind: feature
+        accept:
+          - con rồng cháu tiên
+          - đông sơn
+          - văn hoá đông sơn
+          - trống đồng
+          - rìu đồng
+          - lưỡi cày
+        pages: 25-26
+        locator: mục 1a, đoạn cuối trang 25; Hình 1 – hiện vật văn hoá Đông Sơn đầu trang 26
+      - fact_id: HG5.SGK.B5.F3
+        statement: Văn Lang chia thành 15 bộ, do Hùng Vương đứng đầu, tương truyền qua 18 đời vua cha truyền con nối.
+        kind: person
+        accept:
+          - hùng vương
+          - vua hùng
+          - 15 bộ
+          - mười lăm bộ
+          - 18 đời
+          - cha truyền con nối
+        pages: "26"
+        locator: đoạn văn ngay dưới Hình 1
+      - fact_id: HG5.SGK.B5.F4
+        statement: Kinh đô của nước Văn Lang đặt ở Phong Châu, nay thuộc tỉnh Phú Thọ.
+        kind: place
+        accept:
+          - phong châu
+        pages: "26"
+        locator: đoạn văn ngay dưới Hình 1 (câu cuối)
+      - fact_id: HG5.SGK.B5.F5
+        statement: Năm 208 TCN, sau khi đánh thắng quân Tần, Thục Phán lên ngôi, xưng An Dương Vương và lập nước Âu Lạc.
+        kind: event
+        accept:
+          - "208"
+          - năm 208
+          - thục phán
+          - an dương vương
+        pages: "26"
+        locator: mục 1b Nhà nước Âu Lạc
+      - fact_id: HG5.SGK.B5.F6
+        statement: Kinh đô Âu Lạc được dời về Cổ Loa, nay thuộc xã Đông Anh, Hà Nội.
+        kind: place
+        accept:
+          - cổ loa
+          - đông anh
+          - thành cổ loa
+        pages: "26"
+        locator: mục 1b, câu cuối; Hình 2 lẫy nỏ, Hình 3 đền thờ ở Cổ Loa
+      - fact_id: HG5.SGK.B5.F7
+        statement: Nghề chính của cư dân Văn Lang, Âu Lạc là làm ruộng trồng lúa; họ còn trồng dâu, nuôi tằm, dệt vải.
+        kind: feature
+        accept:
+          - làm ruộng
+          - trồng lúa
+          - nuôi tằm
+          - trồng dâu
+          - dệt vải
+        withhold:
+          - ruộng
+          - lúa
+          - dâu
+          - tằm
+          - vải
+          - cấy
+          - cánh đồng
+          - ra đồng
+          - ngoài đồng
+          - đồng áng
+        pages: "26"
+        locator: mục 2 Đời sống kinh tế, đoạn đầu
+      - fact_id: HG5.SGK.B5.F8
+        statement: Cư dân biết đúc đồng làm công cụ, vũ khí, đồ trang sức, và biết làm gốm, đan lát, đóng thuyền.
+        kind: feature
+        accept:
+          - đúc đồng
+          - làm gốm
+          - đồ gốm
+          - đan lát
+          - đóng thuyền
+        withhold:
+          - bằng đồng
+          - đồ đồng
+          - rìu
+          - trống đồng
+          - lưỡi cày
+          - công cụ
+          - vũ khí
+          - trang sức
+          - vòng tay
+          - nồi
+          - gốm
+          - thuyền
+        pages: 26-27
+        locator: mục 2, đoạn thứ hai cuối trang 26; Hình 4–6 (nồi gốm, lưỡi cày đồng, vòng tay đồng) đầu trang 27
+      - fact_id: HG5.SGK.B5.F9
+        statement: Trong truyện Sơn Tinh, Thuỷ Tinh, Thuỷ Tinh dâng nước đánh, còn Sơn Tinh bốc đồi, dời núi chặn lũ.
+        kind: event
+        accept:
+          - sơn tinh
+          - thuỷ tinh
+          - thủy tinh
+          - dời núi
+          - chặn lũ
+        pages: "27"
+        locator: khung Câu chuyện lịch sử Truyền thuyết Sơn Tinh, Thuỷ Tinh
+      - fact_id: HG5.SGK.B5.F10
+        statement: Cuối thế kỉ III TCN, quân Tần xâm lược; người Việt tôn Thục Phán làm tướng và kháng chiến thắng lợi.
+        kind: event
+        accept:
+          - quân tần
+          - nhà tần
+          - thế kỉ iii
+          - thế kỉ 3
+          - thế kỷ 3
+        pages: "27"
+        locator: mục 3 Công cuộc đấu tranh chống ngoại xâm, đoạn cuối trang
+      - fact_id: HG5.SGK.B5.F11
+        statement: Theo Sự tích nỏ thần, thần Kim Quy giúp xây xong thành Cổ Loa và cho vua móng vuốt để làm nỏ thần.
+        kind: event
+        accept:
+          - kim quy
+          - nỏ thần
+          - móng vuốt
+        withhold:
+          - móng
+        pages: "28"
+        locator: khung Câu chuyện lịch sử Sự tích nỏ thần, đoạn đầu
+      - fact_id: HG5.SGK.B5.F12
+        statement: Trọng Thuỷ lấy cắp nỏ thần; An Dương Vương chủ quan nên thua Triệu Đà, đất nước bị phong kiến phương Bắc đô hộ.
+        kind: result
+        accept:
+          - triệu đà
+          - trọng thuỷ
+          - trọng thủy
+          - mỵ châu
+          - mị châu
+          - chủ quan
+        withhold:
+          - lấy cắp
+        pages: "28"
+        locator: khung Câu chuyện lịch sử Sự tích nỏ thần, cuối đoạn đầu và đoạn hai
+  - lesson_id: HG5.SGK.B6
+    objectives:
+      - Trình bày sự thành lập Phù Nam qua truyền thuyết lập nước và bằng chứng khảo cổ
+      - Tả một số hiện vật khảo cổ của Phù Nam
+    question_styles:
+      - Trình bày lại sự thành lập vương quốc
+      - Hoàn thành bảng xếp hiện vật vào nhóm đời sống vật chất hoặc đời sống tinh thần
+      - Vẽ và trang trí một hiện vật khảo cổ em ấn tượng
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7edb7ca8638fa2e2 }
+    facts:
+      - fact_id: HG5.SGK.B6.F1
+        statement: Vương quốc Phù Nam ra đời vào khoảng thế kỉ I.
+        kind: date
+        accept:
+          - thế kỉ i
+          - thế kỉ 1
+          - thế kỷ 1
+          - thế kỉ thứ nhất
+          - thế kỉ một
+        pages: "29"
+        locator: mục 1 Sự thành lập Vương quốc Phù Nam, đoạn văn dưới khung câu hỏi
+      - fact_id: HG5.SGK.B6.F2
+        statement: Cư dân Phù Nam sống chủ yếu ở vùng Nam Bộ của Việt Nam ngày nay.
+        kind: place
+        accept:
+          - nam bộ
+          - miền nam
+        pages: "29"
+        locator: mục 1, đoạn văn dưới khung câu hỏi (câu cuối)
+      - fact_id: HG5.SGK.B6.F3
+        statement: Truyền thuyết kể Liễu Diệp là Nữ vương Phù Nam; Hỗn Điền được thần báo mộng, ban cung, rồi đi thuyền tới Phù Nam.
+        kind: person
+        accept:
+          - liễu diệp
+          - hỗn điền
+          - nữ vương
+          - báo mộng
+          - cây cung
+        pages: "29"
+        locator: khung Câu chuyện lịch sử Truyền thuyết về Hỗn Điền – Liễu Diệp, cuối trang
+      - fact_id: HG5.SGK.B6.F4
+        statement: Mũi tên của Hỗn Điền xuyên mạn thuyền, Liễu Diệp xin hàng; hai người thành vợ chồng, cùng cai quản Phù Nam.
+        kind: result
+        accept:
+          - xin hàng
+          - vợ chồng
+          - cùng cai quản
+        pages: "30"
+        locator: phần tiếp của Câu chuyện lịch sử, khung đầu trang
+      - fact_id: HG5.SGK.B6.F5
+        statement: Di tích Gò Cây Thị, Nền Chùa (An Giang) là bằng chứng khảo cổ về Phù Nam, có dấu tích cọc gỗ nhà sàn.
+        kind: place
+        accept:
+          - gò cây thị
+          - nền chùa
+          - cọc gỗ
+          - nhà sàn
+        withhold:
+          - cọc
+        pages: "30"
+        locator: đoạn văn dưới câu chuyện; Hình 2 và Hình 3
+      - fact_id: HG5.SGK.B6.F6
+        statement: Nền móng kiến trúc, đồ gốm, tiền kim loại tìm được cho thấy đời sống kinh tế, vật chất của Phù Nam khá phát triển.
+        kind: feature
+        accept:
+          - tiền kim loại
+          - đồng tiền
+          - nền móng kiến trúc
+          - đời sống vật chất
+        pages: "30"
+        locator: mục 2 Một số hiện vật khảo cổ, đoạn đầu; Hình 4 đồng tiền kim loại
+      - fact_id: HG5.SGK.B6.F7
+        statement: Cà ràng là bếp đun bằng đất nung, có thành che gió, đáy giữ tro, dùng được trên nhà sàn hay thuyền.
+        kind: feature
+        accept:
+          - cà ràng
+          - bếp đun
+          - đất nung
+          - che gió
+          - giữ tro
+        withhold:
+          - bếp
+          - tro
+        pages: "30"
+        locator: mục 2, đoạn văn cạnh Hình 5 – Nồi và cà ràng
+      - fact_id: HG5.SGK.B6.F8
+        statement: Ngày nay người dân vùng Tây Nam Bộ vẫn còn dùng cà ràng khá phổ biến.
+        kind: feature
+        accept:
+          - tây nam bộ
+          - vẫn dùng cà ràng
+          - vẫn còn dùng
+        pages: "30"
+        locator: mục 2, cuối đoạn văn cạnh Hình 5
+      - fact_id: HG5.SGK.B6.F9
+        statement: Đồ trang sức, tượng thần, tượng Phật tìm được cho thấy đời sống tinh thần của cư dân Phù Nam khá phong phú.
+        kind: feature
+        accept:
+          - đời sống tinh thần
+          - tượng phật
+          - tượng thần
+          - đồ trang sức
+        pages: "31"
+        locator: đoạn văn đầu trang
+      - fact_id: HG5.SGK.B6.F10
+        statement: Khuyên tai bằng vàng của cư dân Phù Nam được phát hiện ở tỉnh An Giang.
+        kind: feature
+        accept:
+          - khuyên tai
+          - khuyên tai bằng vàng
+          - bông tai vàng
+        withhold:
+          - bằng vàng
+        pages: "31"
+        locator: Hình 6 – Khuyên tai bằng vàng
+      - fact_id: HG5.SGK.B6.F11
+        statement: Tượng Phật Bình Hoà (Tây Ninh) làm bằng gỗ bằng lăng, tạc Phật đứng trên toà sen, tiêu biểu cho nghệ thuật tạc tượng.
+        kind: feature
+        accept:
+          - bình hoà
+          - bình hòa
+          - gỗ bằng lăng
+          - toà sen
+          - tòa sen
+        withhold:
+          - bằng lăng
+        pages: "31"
+        locator: Hình 7 và khung Em có biết
+      - fact_id: HG5.SGK.B6.F12
+        statement: Bình gốm Nhơn Thành (Cần Thơ) là một hiện vật tiêu biểu của Vương quốc Phù Nam.
+        kind: feature
+        accept:
+          - nhơn thành
+          - bình gốm nhơn thành
+        pages: "29"
+        locator: khung Khởi động, Hình 1
+  - lesson_id: HG5.SGK.B7
+    objectives:
+      - Kể tên và chỉ trên bản đồ một số đền tháp Chăm-pa còn đến nay
+      - Sưu tầm tư liệu (tranh ảnh, câu chuyện) để tả một đền tháp Chăm-pa
+      - Tìm hiểu và kể lại câu chuyện về đền tháp Chăm-pa
+    question_styles:
+      - Hoàn thành bảng tên đền tháp Chăm và tỉnh, thành phố nơi có tháp
+      - Làm thẻ ghi nhớ giới thiệu một đền tháp (tên, địa điểm, nét kiến trúc)
+      - Sưu tầm tranh ảnh một đền tháp Chăm và giới thiệu với bạn, người thân
+      - Kể lại một câu chuyện về đền tháp Chăm
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: a2b993f83bbed884 }
+    facts:
+      - fact_id: HG5.SGK.B7.F1
+        statement: Vương quốc Chăm-pa được thành lập vào cuối thế kỉ II.
+        kind: date
+        accept:
+          - thế kỉ ii
+          - thế kỉ 2
+          - thế kỷ 2
+          - thế kỉ thứ hai
+          - cuối thế kỉ hai
+        pages: "32"
+        locator: mục 1 Giới thiệu về đền tháp Chăm-pa, đoạn đầu dưới khung câu hỏi
+      - fact_id: HG5.SGK.B7.F2
+        statement: Địa bàn chính của Chăm-pa là một số tỉnh Bắc Trung Bộ và Nam Trung Bộ ngày nay.
+        kind: place
+        accept:
+          - bắc trung bộ
+          - nam trung bộ
+          - miền trung
+          - trung bộ
+        pages: "32"
+        locator: mục 1, đoạn đầu (câu thứ hai); Hình 2 – Bản đồ phân bố đền tháp Chăm trang 33
+      - fact_id: HG5.SGK.B7.F3
+        statement: Đền tháp là di sản văn hoá tiêu biểu của Chăm-pa; nổi bật nhất là Thánh địa Mỹ Sơn ở Đà Nẵng.
+        kind: place
+        accept:
+          - mỹ sơn
+          - mĩ sơn
+          - thánh địa mỹ sơn
+          - thánh địa mĩ sơn
+        withhold:
+          - thánh địa
+        pages: "32"
+        locator: mục 1, đoạn thứ hai cuối trang; Hình 3 trang 33
+      - fact_id: HG5.SGK.B7.F4
+        statement: Tháp Nhạn ở tỉnh Đắk Lắk là một tháp Chăm tiêu biểu.
+        kind: place
+        accept:
+          - tháp nhạn
+        pages: "32"
+        locator: khung Khởi động, Hình 1; kí hiệu tháp trên Hình 2 trang 33
+      - fact_id: HG5.SGK.B7.F5
+        statement: Mỹ Sơn là quần thể hơn 70 đền tháp nằm trong thung lũng có đồi núi bao quanh, nơi Chăm-pa thờ phụng, lễ tế.
+        kind: figure
+        accept:
+          - hơn 70
+          - 70 đền tháp
+          - bảy mươi đền tháp
+          - thung lũng
+          - thờ phụng
+        pages: "33"
+        locator: đoạn văn đầu dưới Hình 2, cạnh Hình 3
+      - fact_id: HG5.SGK.B7.F6
+        statement: Đền tháp Mỹ Sơn phần lớn xây bằng gạch kết hợp đá sa thạch, cửa quay về phía đông.
+        kind: feature
+        accept:
+          - sa thạch
+          - đá sa thạch
+          - gạch
+          - phía đông
+          - hướng đông
+        pages: "33"
+        locator: đoạn văn thứ hai dưới Hình 2, cạnh Hình 3
+      - fact_id: HG5.SGK.B7.F7
+        statement: Tháp chính thân vuông, bên trong là điện thờ, quanh có tháp nhỏ; tường trang trí hoa lá và hình động vật.
+        kind: feature
+        accept:
+          - thân vuông
+          - điện thờ
+          - hoa sen
+          - hoa cúc
+          - sư tử
+          - voi
+        withhold:
+          - hoa lá
+          - động vật
+        pages: 33-34
+        locator: cuối đoạn văn thứ hai trang 33, nối sang dòng đầu trang 34
+      - fact_id: HG5.SGK.B7.F8
+        statement: "Tháp Bánh Ít (Gia Lai), còn gọi Tháp Bạc, có bốn ngọn: một tháp chính trên đỉnh đồi và ba tháp nhỏ."
+        kind: feature
+        accept:
+          - bánh ít
+          - tháp bánh ít
+          - tháp bạc
+          - bốn ngọn tháp
+        pages: "34"
+        locator: Hình 4 và khung Em có biết, đầu trang
+      - fact_id: HG5.SGK.B7.F9
+        statement: Trong tháp chính Bánh Ít có tượng thần Si-va ngồi trên đài sen; đỉnh mỗi tháp gắn tượng Si-va bằng đá.
+        kind: feature
+        accept:
+          - si-va
+          - si va
+          - shiva
+          - thần si-va
+          - đài sen
+        pages: "34"
+        locator: khung Em có biết cạnh Hình 4
+      - fact_id: HG5.SGK.B7.F10
+        statement: Truyền thuyết kể cậu bé Po Ong được rồng trắng quấn quanh, khỏi ghẻ, rồi được voi trắng rước về làm vua.
+        kind: person
+        accept:
+          - po ong
+          - rồng trắng
+          - voi trắng
+          - ghẻ chốc
+        withhold:
+          - rồng
+          - voi
+        pages: "34"
+        locator: khung Câu chuyện lịch sử Tháp Pô Klong Ga-rai, đoạn đầu và đoạn hai
+      - fact_id: HG5.SGK.B7.F11
+        statement: Vua Pô Klong Ga-rai làm thuỷ lợi, dạy dân cày cấy; tháp mang tên ông ở Khánh Hoà được xây để tôn kính ông.
+        kind: cause
+        accept:
+          - pô klong ga-rai
+          - pô klong ga rai
+          - po klong garai
+          - dạy dân cày cấy
+          - tôn kính
+        pages: "34"
+        locator: khung Câu chuyện lịch sử Tháp Pô Klong Ga-rai, đoạn hai và đoạn cuối; Hình 5
+      - fact_id: HG5.SGK.B7.F12
+        statement: Tháp Bà Pô Na-ga (Khánh Hoà) thờ Thiên Y A Na, người dạy dân cày cấy, ươm tơ, dệt vải.
+        kind: cause
+        accept:
+          - pô na-ga
+          - pô na ga
+          - po nagar
+          - thiên y a na
+          - kì nam
+          - ươm tơ
+        pages: "35"
+        locator: khung Câu chuyện lịch sử Sự tích tháp Bà Pô Na-ga; Hình 6
+  - lesson_id: HG5.SGK.B8
+    objectives:
+      - Kể tên và vẽ trục thời gian một số cuộc đấu tranh tiêu biểu thời Bắc thuộc (179 TCN, 40, 248, 542, 938…).
+      - Sưu tầm và kể lại chuyện về Hai Bà Trưng, Bà Triệu, Lý Bí, Phùng Hưng, Ngô Quyền…
+    question_styles:
+      - Vẽ và điền trục thời gian các cuộc đấu tranh tiêu biểu (tên sự kiện ↔ năm).
+      - Kể lại câu chuyện về một nhân vật chống Bắc thuộc mà em sưu tầm.
+      - Tìm hiểu di tích, đường phố, trường học mang tên các nhân vật lịch sử.
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 0ac3a0f41c72c250 }
+    facts:
+      - fact_id: HG5.SGK.B8.F1
+        statement: Năm 179 TCN, Triệu Đà thôn tính Âu Lạc; sau đó phong kiến phương Bắc lần lượt đô hộ nước ta hơn 1 000 năm.
+        kind: event
+        accept:
+          - 179 tcn
+          - 179 trước công nguyên
+          - triệu đà
+          - hơn 1000 năm
+          - hơn một nghìn năm
+        pages: "36"
+        locator: mục 1, đoạn đầu (cột trái)
+      - fact_id: HG5.SGK.B8.F2
+        statement: Chính quyền đô hộ bắt dân ta cống nạp sản vật quý, theo phong tục người Hán và học chữ Hán.
+        kind: feature
+        accept:
+          - cống nạp
+          - ngà voi
+          - chữ hán
+          - phong tục người hán
+          - sáp nhập
+        withhold:
+          - sản vật
+        pages: "36"
+        locator: khung Em có biết? bên phải mục 1
+      - fact_id: HG5.SGK.B8.F3
+        statement: Trưng Trắc, Trưng Nhị khởi nghĩa ở Mê Linh thắng lợi; Trưng Trắc lên làm vua, nước độc lập hơn ba năm (40 – 43).
+        kind: event
+        accept:
+          - hai bà trưng
+          - trưng trắc
+          - trưng nhị
+          - trưng vương
+          - mê linh
+          - năm 40
+        pages: "37"
+        locator: Câu chuyện lịch sử 'Trưng Vương trừ giặc Hán' và Hình 1
+      - fact_id: HG5.SGK.B8.F4
+        statement: Bà Triệu khởi nghĩa năm 248, là một trong những cuộc đấu tranh tiêu biểu thời Bắc thuộc.
+        kind: date
+        accept:
+          - bà triệu
+          - năm 248
+          - "248"
+        pages: "37"
+        locator: dòng đầu trang (tiếp đoạn mục 1 từ trang 36)
+      - fact_id: HG5.SGK.B8.F5
+        statement: "Khởi nghĩa tiêu biểu khác: Lý Bí – Triệu Quang Phục (542 – 602), Mai Thúc Loan (713 – 722), Phùng Hưng (766 – 779), Khúc Thừa Dụ (905)."
+        kind: event
+        accept:
+          - triệu quang phục
+          - mai thúc loan
+          - phùng hưng
+          - khúc thừa dụ
+          - năm 905
+        pages: "37"
+        locator: dòng 1–2 đầu trang
+      - fact_id: HG5.SGK.B8.F6
+        statement: Mùa xuân năm 544, Lý Bí lên ngôi, xưng Lý Nam Đế, đặt tên nước là Vạn Xuân.
+        kind: event
+        accept:
+          - vạn xuân
+          - lý nam đế
+          - năm 544
+          - "544"
+          - lý bí
+        pages: "38"
+        locator: Câu chuyện lịch sử 'Lý Bí và nhà nước Vạn Xuân', đoạn 1
+      - fact_id: HG5.SGK.B8.F7
+        statement: Năm 938, vua Nam Hán sai Hoằng Tháo đem quân theo đường biển, tiến vào cửa sông Bạch Đằng xâm lược nước ta.
+        kind: event
+        accept:
+          - hoằng tháo
+          - nam hán
+          - đường biển
+        withhold:
+          - cửa sông
+        pages: "38"
+        locator: Câu chuyện lịch sử 'Ngô Quyền đại phá quân Nam Hán', cuối trang
+      - fact_id: HG5.SGK.B8.F8
+        statement: Ngô Quyền cho đóng cọc nhọn bịt sắt dưới sông, nhử giặc vào lúc triều lên; triều xuống, thuyền giặc va cọc vỡ đắm.
+        kind: event
+        accept:
+          - cọc nhọn
+          - bãi cọc
+          - đóng cọc
+          - thuỷ triều
+          - thủy triều
+          - bịt sắt
+        withhold:
+          - dưới sông
+          - lòng sông
+          - cọc
+          - nhọn
+          - sắt
+          - triều
+          - nước lên
+          - nước rút
+          - nước xuống
+        pages: "39"
+        locator: tiếp câu chuyện Ngô Quyền, đoạn đầu trang (cạnh Hình 3)
+      - fact_id: HG5.SGK.B8.F9
+        statement: Chiến thắng Bạch Đằng năm 938 của Ngô Quyền chấm dứt thời Bắc thuộc, mở ra thời kì độc lập, tự chủ lâu dài.
+        kind: result
+        accept:
+          - bạch đằng
+          - năm 938
+          - "938"
+          - ngô quyền
+          - kết thúc bắc thuộc
+        withhold:
+          - độc lập
+        pages: "37"
+        locator: đoạn đầu trang 37; nhắc lại ở cuối câu chuyện Ngô Quyền trang 39
+  - lesson_id: HG5.SGK.B9
+    objectives:
+      - Sưu tầm, giới thiệu tư liệu (câu chuyện, văn bản, tranh ảnh) về Triều Lý.
+      - Trình bày nét chính thời Lý qua chuyện Lý Công Uẩn, Lý Thường Kiệt, Nguyên phi Ỷ Lan, Từ Đạo Hạnh…
+      - Đọc và nhận xét nội dung, ý nghĩa của Chiếu dời đô.
+    question_styles:
+      - Vẽ sơ đồ tư duy những nét chính của lịch sử thời Lý.
+      - Kể chuyện về một nhân vật lịch sử thời Lý.
+      - Sưu tầm tư liệu về một di tích hoặc nhân vật thời Lý và chia sẻ với bạn.
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: dfdb004909add98c }
+    facts:
+      - fact_id: HG5.SGK.B9.F1
+        statement: Năm 1009, vua Lê Long Đĩnh mất, các quan tôn Lý Công Uẩn lên ngôi (Lý Thái Tổ), lập ra Triều Lý.
+        kind: event
+        accept:
+          - lý công uẩn
+          - lý thái tổ
+          - năm 1009
+          - "1009"
+        pages: "40"
+        locator: mục 1, đoạn cuối trang
+      - fact_id: HG5.SGK.B9.F2
+        statement: Năm 1010, Lý Thái Tổ dời đô từ Hoa Lư (Ninh Bình) ra thành Đại La và đổi tên là Thăng Long.
+        kind: event
+        accept:
+          - năm 1010
+          - "1010"
+          - thăng long
+          - hoa lư
+          - đại la
+          - dời đô
+        pages: "40"
+        locator: mục 1, đoạn cuối trang
+      - fact_id: HG5.SGK.B9.F3
+        statement: Chiếu dời đô khen Đại La ở giữa đất nước, đất rộng bằng phẳng, cao ráo, xứng làm kinh đô muôn đời.
+        kind: feature
+        accept:
+          - chiếu dời đô
+          - rồng cuộn hổ ngồi
+          - bằng phẳng
+          - đất rộng
+          - kinh đô muôn đời
+        pages: "41"
+        locator: khung Tư liệu đầu trang, cạnh Hình 2 (bản Chiếu dời đô)
+      - fact_id: HG5.SGK.B9.F4
+        statement: Chiếu dời đô cho thấy tầm nhìn sáng suốt của vua Lý Thái Tổ và mở ra thời kì phát triển mới cho đất nước.
+        kind: result
+        accept:
+          - tầm nhìn
+          - sáng suốt
+          - phát triển mới
+        pages: "41"
+        locator: đoạn ngay dưới khung Tư liệu
+      - fact_id: HG5.SGK.B9.F5
+        statement: Tương truyền khi thuyền vua dời đô đỗ dưới thành Đại La, có rồng vàng hiện lên, nên kinh đô được đặt tên Thăng Long.
+        kind: cause
+        accept:
+          - rồng vàng
+          - rồng hiện lên
+          - rồng bay lên
+        pages: "41"
+        locator: Câu chuyện lịch sử 'Vị vua sáng lập Triều Lý', đoạn 2
+      - fact_id: HG5.SGK.B9.F6
+        statement: Hơn 200 năm, Triều Lý hoàn thiện bộ máy nhà nước và khuyến khích nông nghiệp nên nhiều năm được mùa.
+        kind: feature
+        accept:
+          - hơn 200 năm
+          - hơn hai trăm năm
+          - nông nghiệp
+          - bội thu
+          - được mùa
+        pages: "42"
+        locator: mục 2, đoạn 1
+      - fact_id: HG5.SGK.B9.F7
+        statement: Nguyên phi Ỷ Lan từng trông coi việc nước khi vua đi đánh giặc, và cùng các quan bàn kế chống quân Tống năm 1076.
+        kind: person
+        accept:
+          - ỷ lan
+          - nguyên phi
+          - nguyên phi ỷ lan
+        pages: "42"
+        locator: Câu chuyện lịch sử 'Nguyên phi Ỷ Lan giúp vua trị nước'
+      - fact_id: HG5.SGK.B9.F8
+        statement: Thời Lý, Phật giáo phát triển thịnh đạt; nhiều nhà sư như Từ Đạo Hạnh giữ chức vụ quan trọng trong triều.
+        kind: feature
+        accept:
+          - phật giáo
+          - đạo phật
+          - từ đạo hạnh
+          - nhà sư
+        pages: "42"
+        locator: đoạn cuối trang (cột trái) và khung Em có biết? về Từ Đạo Hạnh
+      - fact_id: HG5.SGK.B9.F9
+        statement: Trong những năm 1075 – 1077, Triều Lý lãnh đạo nhân dân kháng chiến chống quân Tống thắng lợi, với công lớn của Lý Thường Kiệt.
+        kind: event
+        accept:
+          - lý thường kiệt
+          - quân tống
+          - chống tống
+          - "1077"
+          - "1075"
+        pages: "42"
+        locator: đoạn cuối trang, cột trái
+      - fact_id: HG5.SGK.B9.F10
+        statement: Lý Thường Kiệt cho xây phòng tuyến ở bờ bắc sông Như Nguyệt (Bắc Ninh); quân Tống tấn công nhiều lần vẫn không phá được.
+        kind: place
+        accept:
+          - như nguyệt
+          - sông như nguyệt
+          - phòng tuyến
+        pages: "43"
+        locator: Câu chuyện lịch sử 'Lý Thường Kiệt và cuộc kháng chiến chống quân Tống', đoạn 2
+      - fact_id: HG5.SGK.B9.F11
+        statement: Tương truyền, để khích lệ quân sĩ đánh doanh trại Tống mùa xuân 1077, bài thơ Nam quốc sơn hà được ngâm vang.
+        kind: event
+        accept:
+          - nam quốc sơn hà
+          - doanh trại
+          - mùa xuân năm 1077
+        pages: "43"
+        locator: cùng câu chuyện, đoạn 3 (cạnh Hình 4)
+      - fact_id: HG5.SGK.B9.F12
+        statement: Chùa Một Cột ở Hà Nội là công trình kiến trúc tiêu biểu của Triều Lý.
+        kind: symbol
+        accept:
+          - chùa một cột
+          - một cột
+        pages: "40"
+        locator: Khởi động, Hình 1
+  - lesson_id: HG5.SGK.B10
+    objectives:
+      - Sưu tầm, giới thiệu tư liệu về Triều Trần và cuộc kháng chiến chống Mông – Nguyên.
+      - Trình bày nét chính thời Trần qua chuyện Trần Nhân Tông, Trần Quốc Tuấn, Phạm Ngũ Lão, Trần Quốc Toản, Yết Kiêu, Dã Tượng, Nguyễn Hiền, Mạc Đĩnh Chi, Chu Văn An…
+      - Kể lại chiến thắng Bạch Đằng có dùng tư liệu (lược đồ, tranh ảnh, câu chuyện).
+    question_styles:
+      - Hoàn thành bảng nét chính thời Trần theo lĩnh vực (chính trị, quân đội, giáo dục, kháng chiến) kèm nhân vật tiêu biểu.
+      - Giới thiệu một nhân vật thời Trần và đóng góp của nhân vật đó qua tư liệu sưu tầm.
+      - Sưu tầm tư liệu về một di tích liên quan Triều Trần còn đến nay.
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 09b40474cf2453d1 }
+    facts:
+      - fact_id: HG5.SGK.B10.F1
+        statement: Năm 1226, Lý Chiêu Hoàng nhường ngôi cho chồng là Trần Cảnh, Triều Trần được thành lập.
+        kind: event
+        accept:
+          - năm 1226
+          - "1226"
+          - trần cảnh
+          - lý chiêu hoàng
+        pages: "44"
+        locator: mục 1, đoạn 1 (cuối trang)
+      - fact_id: HG5.SGK.B10.F2
+        statement: Các vua Trần thường sớm nhường ngôi cho con, lên làm Thượng hoàng và cùng vua trông coi đất nước.
+        kind: feature
+        accept:
+          - thượng hoàng
+          - nhường ngôi cho con
+          - chế độ thượng hoàng
+        pages: "44"
+        locator: mục 1, đoạn 2 (dòng cuối trang)
+      - fact_id: HG5.SGK.B10.F3
+        statement: Thượng hoàng Trần Nhân Tông nghiêm khắc răn dạy vua Trần Anh Tông vì say rượu; từ đó vua chăm lo việc nước hơn.
+        kind: person
+        accept:
+          - trần nhân tông
+          - trần anh tông
+          - uống say
+          - say rượu
+        pages: "45"
+        locator: Câu chuyện lịch sử 'Thượng hoàng Trần Nhân Tông dạy vua'
+      - fact_id: HG5.SGK.B10.F4
+        statement: Quân đội thời Trần được tổ chức quy củ, chặt chẽ và tiếp tục thực hiện chính sách “ngụ binh ư nông”.
+        kind: feature
+        accept:
+          - ngụ binh ư nông
+          - ngụ binh
+        pages: "45"
+        locator: đoạn giữa trang, dưới câu chuyện
+      - fact_id: HG5.SGK.B10.F5
+        statement: Yết Kiêu giỏi thuỷ chiến; Dã Tượng giỏi thuần phục voi, chỉ huy đội tượng binh; cả hai là gia nô tài giỏi.
+        kind: person
+        accept:
+          - yết kiêu
+          - dã tượng
+          - tượng binh
+          - thuỷ chiến
+          - thủy chiến
+        pages: "45"
+        locator: khung Em có biết? bên phải Hình 1
+      - fact_id: HG5.SGK.B10.F6
+        statement: "Thời Trần chú trọng giáo dục: có Quốc Tử Giám, trường ở địa phương, kì thi Thái học sinh và danh hiệu Tam khôi."
+        kind: feature
+        accept:
+          - tam khôi
+          - quốc tử giám
+          - thái học sinh
+          - bảng nhãn
+          - thám hoa
+        pages: "45"
+        locator: đoạn cuối trang
+      - fact_id: HG5.SGK.B10.F7
+        statement: Nguyễn Hiền, cậu bé thông minh ở phủ Thiên Trường, đỗ Trạng nguyên khi mới 13 tuổi.
+        kind: person
+        accept:
+          - nguyễn hiền
+          - 13 tuổi
+          - mười ba tuổi
+          - trạng nguyên trẻ
+        pages: "46"
+        locator: Câu chuyện lịch sử 'Trạng nguyên trẻ tuổi nhất Việt Nam', đoạn 1
+      - fact_id: HG5.SGK.B10.F8
+        statement: Thầy giáo Chu Văn An làm Tư nghiệp Quốc Tử Giám; ông dâng Thất trảm sớ, vua không nghe nên ông từ quan.
+        kind: person
+        accept:
+          - chu văn an
+          - thất trảm sớ
+          - tư nghiệp
+        pages: "46"
+        locator: Câu chuyện lịch sử 'Người thầy lưu danh muôn đời' và Hình 2
+      - fact_id: HG5.SGK.B10.F9
+        statement: Thời Trần, quân Mông – Nguyên ba lần xâm lược Đại Việt vào các năm 1258, 1285 và 1287 – 1288.
+        kind: date
+        accept:
+          - ba lần
+          - 3 lần
+          - "1258"
+          - "1285"
+          - mông nguyên
+          - mông cổ
+        pages: "47"
+        locator: mục 2, đoạn đầu (cột trái)
+      - fact_id: HG5.SGK.B10.F10
+        statement: Đầu năm 1285, Thượng hoàng họp các bô lão ở điện Diên Hồng; được hỏi hoà hay đánh, mọi người đồng thanh hô “Đánh!”.
+        kind: event
+        accept:
+          - diên hồng
+          - hội nghị diên hồng
+          - bô lão
+        pages: "47"
+        locator: khung Em có biết? thứ hai và Hình 3 cuối trang
+      - fact_id: HG5.SGK.B10.F11
+        statement: Trần Quốc Toản không được dự họp nên bóp nát quả cam, rồi lập đội quân, thêu cờ “Phá cường địch, báo hoàng ân”.
+        kind: person
+        accept:
+          - trần quốc toản
+          - quả cam
+          - phá cường địch
+          - sáu chữ vàng
+          - bóp nát
+        pages: "47"
+        locator: Câu chuyện lịch sử 'Lá cờ thêu sáu chữ vàng'
+      - fact_id: HG5.SGK.B10.F12
+        statement: Năm 1288, Trần Quốc Tuấn đặt bãi cọc ở cửa sông Bạch Đằng, nhử thuyền giặc vào; triều rút, thuyền giặc vướng cọc vỡ đắm.
+        kind: event
+        accept:
+          - trần quốc tuấn
+          - bạch đằng
+          - năm 1288
+          - "1288"
+          - ô mã nhi
+          - bãi cọc
+        pages: 48-49
+        locator: Câu chuyện lịch sử 'Trận thuỷ chiến trên sông Bạch Đằng năm 1288' (tr. 48), Hình 4 cọc gỗ, Hình 5 lược đồ (tr. 49)
+  - lesson_id: HG5.SGK.B11
+    objectives: []
+    question_styles:
+      - Vẽ sơ đồ tư duy tổng hợp kiến thức địa lí Việt Nam (vị trí, lãnh thổ, địa hình, khí hậu).
+      - "Hoàn thành bảng tổng hợp: quốc gia đầu tiên (tên, địa bàn, hiện vật) và các cuộc đấu tranh thời Bắc thuộc (thời gian, tên, ý nghĩa)."
+      - Xếp các thông tin (sự kiện, nhân vật, công trình) vào đúng Triều Lý hoặc Triều Trần.
+    opinion_prompts_present: false
+    approved: null
+    facts: []
+  - lesson_id: HG5.SGK.B12
+    objectives:
+      - Sưu tầm, giới thiệu tư liệu về khởi nghĩa Lam Sơn và Triều Hậu Lê.
+      - Kể nét chính khởi nghĩa Lam Sơn qua chuyện Lê Lợi, Nguyễn Trãi, Lê Lai, Nguyễn Chích…
+      - Kể lại chiến thắng Chi Lăng có dùng tư liệu (lược đồ, tranh ảnh, chuyện ải Chi Lăng, Liễu Thăng).
+      - Trình bày nét chính thời Hậu Lê qua chuyện Lê Thánh Tông, Lương Thế Vinh, Ngô Sỹ Liên…
+    question_styles:
+      - "Hoàn thành bảng: nhân vật lịch sử ↔ đóng góp trong khởi nghĩa Lam Sơn và thời Hậu Lê."
+      - Kể lại câu chuyện về một nhân vật thời Lam Sơn hoặc Hậu Lê mà em sưu tầm.
+      - Kể tên địa danh (di tích, đường phố, trường học) liên quan đến khởi nghĩa Lam Sơn và Hậu Lê.
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e745e50761fa8a50 }
+    facts:
+      - fact_id: HG5.SGK.B12.F1
+        statement: Năm 1418, Lê Lợi lãnh đạo khởi nghĩa Lam Sơn (Thanh Hoá); sau 10 năm chiến đấu (1418 – 1427), khởi nghĩa thắng lợi hoàn toàn.
+        kind: event
+        accept:
+          - lam sơn
+          - lê lợi
+          - năm 1418
+          - "1418"
+          - "1427"
+          - mười năm
+        pages: "52"
+        locator: đoạn đầu trang (mục 1a)
+      - fact_id: HG5.SGK.B12.F2
+        statement: Năm 1416, Lê Lợi cùng 18 hào kiệt tổ chức Hội thề Lũng Nhai, nguyện cùng nhau đánh đuổi giặc Minh.
+        kind: event
+        accept:
+          - lũng nhai
+          - hội thề lũng nhai
+          - hội thề
+          - "1416"
+        pages: "52"
+        locator: Câu chuyện lịch sử 'Lê Lợi dựng cờ khởi nghĩa', đoạn 2
+      - fact_id: HG5.SGK.B12.F3
+        statement: Năm 1418, Lê Lợi xưng là Bình Định Vương và dựng cờ khởi nghĩa ở vùng rừng núi Lam Sơn.
+        kind: person
+        accept:
+          - bình định vương
+          - dựng cờ
+        pages: "52"
+        locator: Câu chuyện lịch sử 'Lê Lợi dựng cờ khởi nghĩa', đoạn 2
+      - fact_id: HG5.SGK.B12.F4
+        statement: Nguyễn Trãi dâng Lê Lợi “Bình Ngô sách”, chủ trương thu phục lòng người, và viết nhiều thư dụ quân Minh đầu hàng.
+        kind: person
+        accept:
+          - nguyễn trãi
+          - bình ngô sách
+          - thu phục lòng người
+          - dụ hàng
+        pages: "52"
+        locator: khung Em có biết? giữa trang
+      - fact_id: HG5.SGK.B12.F5
+        statement: Khi giặc Minh vây núi Chí Linh, Lê Lai mặc áo bào giả làm Lê Lợi xông ra, giúp nghĩa quân thoát vây.
+        kind: person
+        accept:
+          - lê lai
+          - áo bào
+          - cứu chúa
+          - chí linh
+        pages: 52-53
+        locator: Câu chuyện lịch sử 'Lê Lai quên mình cứu chúa' (cuối tr. 52, đầu tr. 53)
+      - fact_id: HG5.SGK.B12.F6
+        statement: Ải Chi Lăng (Lạng Sơn) là thung lũng hẹp dài hơn 4 km, hai bên là núi đá hiểm trở.
+        kind: place
+        accept:
+          - chi lăng
+          - ải chi lăng
+          - lạng sơn
+          - thung lũng hẹp
+        pages: "53"
+        locator: Câu chuyện lịch sử 'Trận Chi Lăng', đoạn 1; Hình 3 lược đồ
+      - fact_id: HG5.SGK.B12.F7
+        statement: Ở Chi Lăng, nghĩa quân giả thua nhử quân Minh vào trận địa mai phục; tướng Liễu Thăng bị giết, quân Minh hoảng loạn.
+        kind: event
+        accept:
+          - liễu thăng
+          - giả thua
+          - mai phục
+        pages: "53"
+        locator: Câu chuyện lịch sử 'Trận Chi Lăng', đoạn 2–3
+      - fact_id: HG5.SGK.B12.F8
+        statement: Năm 1428, Lê Lợi lên ngôi, lập Triều Hậu Lê, khôi phục quốc hiệu Đại Việt, đóng đô ở Đông Kinh (Thăng Long).
+        kind: event
+        accept:
+          - năm 1428
+          - "1428"
+          - hậu lê
+          - đông kinh
+          - quốc hiệu đại việt
+        pages: "54"
+        locator: mục 2, đoạn 1
+      - fact_id: HG5.SGK.B12.F9
+        statement: Triều Hậu Lê coi trọng nông nghiệp, đời sống nhân dân ổn định; đất nước thịnh đạt nhất thời vua Lê Thánh Tông (1460 – 1497).
+        kind: feature
+        accept:
+          - lê thánh tông
+          - "1460"
+          - thịnh đạt
+        pages: "54"
+        locator: mục 2, đoạn 2
+      - fact_id: HG5.SGK.B12.F10
+        statement: Lê Thánh Tông cho vẽ Hồng Đức bản đồ, ban hành Quốc triều hình luật, lập bia vinh danh người đỗ đạt ở Văn Miếu.
+        kind: person
+        accept:
+          - hồng đức bản đồ
+          - quốc triều hình luật
+          - văn miếu
+          - bia đá
+          - thi tiến sĩ
+        pages: "54"
+        locator: Câu chuyện lịch sử 'Lê Thánh Tông – nhà chính trị tài ba', đoạn 1
+      - fact_id: HG5.SGK.B12.F11
+        statement: Nhà sử học Ngô Sỹ Liên viết “Đại Việt sử ký toàn thư”, ghi lịch sử từ thời Hùng Vương đến Hậu Lê.
+        kind: person
+        accept:
+          - ngô sỹ liên
+          - ngô sĩ liên
+          - đại việt sử ký toàn thư
+          - đại việt sử kí toàn thư
+        pages: "54"
+        locator: khung Em có biết? cuối trang
+      - fact_id: HG5.SGK.B12.F12
+        statement: Lương Thế Vinh giỏi toán, từng cân voi bằng thuyền và đá, soạn sách Đại thành toán pháp, được gọi là Trạng Lường.
+        kind: person
+        accept:
+          - lương thế vinh
+          - trạng lường
+          - cân voi
+          - đại thành toán pháp
+        pages: "55"
+        locator: Câu chuyện lịch sử 'Trạng Lường Lương Thế Vinh'
+  - lesson_id: HG5.SGK.B13
+    objectives:
+      - Sưu tầm, giới thiệu tư liệu về Triều Nguyễn.
+      - Trình bày nét chính thời Nguyễn qua chuyện vua Gia Long, Minh Mạng, Nguyễn Công Trứ, Nguyễn Trường Tộ, Hàm Nghi, Phan Đình Phùng…
+    question_styles:
+      - Vẽ sơ đồ tư duy những nét chính của lịch sử thời Nguyễn.
+      - Kể chuyện về một nhân vật thời Nguyễn và cho biết câu chuyện giúp em hiểu gì về thời kì đó.
+      - Sưu tầm, giới thiệu một di sản văn hoá của Triều Nguyễn.
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 550373a6379c759f }
+    facts:
+      - fact_id: HG5.SGK.B13.F1
+        statement: Năm 1802, Nguyễn Ánh lên ngôi Hoàng đế, lập Triều Nguyễn, đóng đô ở Phú Xuân (Huế), lấy niên hiệu Gia Long.
+        kind: event
+        accept:
+          - năm 1802
+          - "1802"
+          - nguyễn ánh
+          - gia long
+          - phú xuân
+        pages: "56"
+        locator: mục 1a, đoạn cuối trang
+      - fact_id: HG5.SGK.B13.F2
+        statement: Vua Gia Long ban hành bộ luật Hoàng Việt luật lệ để giữ trật tự xã hội.
+        kind: feature
+        accept:
+          - hoàng việt luật lệ
+          - gia long
+        pages: "57"
+        locator: đoạn đầu trang
+      - fact_id: HG5.SGK.B13.F3
+        statement: Trong những năm 1831 – 1832, vua Minh Mạng cải cách hành chính, chia cả nước thành 30 tỉnh và 1 phủ.
+        kind: figure
+        accept:
+          - 30 tỉnh
+          - ba mươi tỉnh
+          - 1 phủ
+          - "1831"
+          - cải cách hành chính
+        pages: "57"
+        locator: đoạn đầu trang, dòng 2–3
+      - fact_id: HG5.SGK.B13.F4
+        statement: Các vua Triều Nguyễn tiếp tục thực thi chủ quyền biển, đảo, nhất là ở quần đảo Hoàng Sa và Trường Sa.
+        kind: feature
+        accept:
+          - hoàng sa
+          - trường sa
+          - chủ quyền biển đảo
+        pages: "57"
+        locator: đoạn 2 đầu trang
+      - fact_id: HG5.SGK.B13.F5
+        statement: Minh Mạng, vua thứ hai Triều Nguyễn, đề cao sự nghiêm minh của pháp luật và được xem là nhà cải cách lớn.
+        kind: person
+        accept:
+          - minh mạng
+          - vua thứ hai
+          - lý hữu diệm
+          - nhà cải cách
+        pages: "57"
+        locator: Câu chuyện lịch sử 'Minh Mạng với sự nghiệp trị nước an dân' và Hình 2
+      - fact_id: HG5.SGK.B13.F6
+        statement: Nhiều vua Nguyễn tổ chức khai hoang ở ven biển Bắc Bộ và đồng bằng Nam Bộ để ổn định đời sống nhân dân.
+        kind: feature
+        accept:
+          - khai hoang
+          - ven biển bắc bộ
+          - đồng bằng nam bộ
+        pages: "57"
+        locator: mục 1b, đoạn cuối trang
+      - fact_id: HG5.SGK.B13.F7
+        statement: Nguyễn Công Trứ làm Doanh điền sứ, chiêu dân khai hoang lấn biển, lập nên huyện Tiền Hải và huyện Kim Sơn.
+        kind: person
+        accept:
+          - nguyễn công trứ
+          - doanh điền sứ
+          - tiền hải
+          - kim sơn
+          - lấn biển
+        pages: "58"
+        locator: Câu chuyện lịch sử 'Nguyễn Công Trứ và công cuộc khai hoang lấn biển', đoạn 1
+      - fact_id: HG5.SGK.B13.F8
+        statement: Biết ơn Nguyễn Công Trứ, dân vùng khai hoang lập đền thờ ông khi ông còn sống và gọi ông là “Ông Tổ mở đất”.
+        kind: result
+        accept:
+          - ông tổ mở đất
+          - lập đền thờ
+        pages: "58"
+        locator: cùng câu chuyện, đoạn 3; Hình 3 đền thờ Nguyễn Công Trứ
+      - fact_id: HG5.SGK.B13.F9
+        statement: Nguyễn Trường Tộ dâng vua Tự Đức nhiều bản điều trần xin canh tân đất nước, nhưng các đề nghị không được thực hiện.
+        kind: person
+        accept:
+          - nguyễn trường tộ
+          - điều trần
+          - tự đức
+          - canh tân
+        pages: "59"
+        locator: Câu chuyện lịch sử 'Khát vọng canh tân đất nước' và Hình 4
+      - fact_id: HG5.SGK.B13.F10
+        statement: Năm 1884, triều đình nhà Nguyễn kí hiệp ước công nhận quyền đô hộ của thực dân Pháp trên toàn bộ Việt Nam.
+        kind: event
+        accept:
+          - năm 1884
+          - "1884"
+          - hiệp ước
+          - thực dân pháp
+        pages: "59"
+        locator: mục 2, đoạn đầu (cột trái)
+      - fact_id: HG5.SGK.B13.F11
+        statement: Năm 1885, Tôn Thất Thuyết nhân danh vua Hàm Nghi ban Dụ Cần vương, kêu gọi nhân dân giúp vua cứu nước.
+        kind: event
+        accept:
+          - cần vương
+          - dụ cần vương
+          - hàm nghi
+          - tôn thất thuyết
+          - "1885"
+        pages: 59-60
+        locator: mục 2, cuối tr. 59 sang dòng đầu tr. 60; Hình 5, Hình 6
+      - fact_id: HG5.SGK.B13.F12
+        statement: Phan Đình Phùng lãnh đạo khởi nghĩa Hương Khê hơn mười năm, tiêu biểu nhất phong trào Cần vương; ông hi sinh cuối năm 1895.
+        kind: person
+        accept:
+          - phan đình phùng
+          - hương khê
+          - khởi nghĩa hương khê
+          - "1895"
+        pages: "60"
+        locator: Câu chuyện lịch sử 'Phan Đình Phùng và cuộc khởi nghĩa Hương Khê' và Hình 7
+  - lesson_id: HG5.SGK.B14
+    objectives:
+      - Sưu tầm tư liệu, kể lại thắng lợi ở Hà Nội, Huế, Sài Gòn… trong Cách mạng tháng Tám năm 1945.
+      - Kể chuyện về Hồ Chí Minh ở Pác Bó, Tân Trào, khi viết và đọc Tuyên ngôn Độc lập; chuyện về Kim Đồng, Võ Nguyên Giáp.
+    question_styles:
+      - Lập bảng hoặc trục thời gian về thắng lợi ở các địa phương (Hà Nội, Huế, Sài Gòn) năm 1945.
+      - Kể lại một câu chuyện về Bác Hồ, Võ Nguyên Giáp hoặc Kim Đồng.
+      - Tìm hiểu ngày thành lập Đội Thiếu niên Tiền phong và ý nghĩa ngày 22 – 12 hằng năm.
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 209668a0820dec95 }
+    facts:
+      - fact_id: HG5.SGK.B14.F1
+        statement: Bàn đá bên suối Lê-nin ở Pác Bó (Cao Bằng) là nơi Bác Hồ ngồi làm việc trong những năm 1941 – 1945.
+        kind: place
+        accept:
+          - pác bó
+          - suối lê-nin
+          - suối lê nin
+          - bàn đá
+        pages: "61"
+        locator: Khởi động, Hình 1
+      - fact_id: HG5.SGK.B14.F2
+        statement: Sau khi Nhật Bản đầu hàng quân Đồng minh, Đảng và Bác Hồ kêu gọi toàn dân Tổng khởi nghĩa giành chính quyền.
+        kind: cause
+        accept:
+          - tổng khởi nghĩa
+          - nhật đầu hàng
+          - nhật bản đầu hàng
+          - đồng minh
+        pages: "61"
+        locator: mục 1, đoạn 1
+      - fact_id: HG5.SGK.B14.F3
+        statement: Ngày 19 – 8 – 1945, nhân dân Hà Nội mít tinh ở Nhà hát Lớn, chiếm Phủ Khâm sai, giành chính quyền ngay trong ngày.
+        kind: event
+        accept:
+          - 19 tháng 8
+          - ngày 19
+          - nhà hát lớn
+          - phủ khâm sai
+        pages: 61-62
+        locator: mục 1, đoạn 2 (cuối tr. 61 – đầu tr. 62); Hình 2
+      - fact_id: HG5.SGK.B14.F4
+        statement: Ngày 23 – 8, hàng vạn người ở Huế mít tinh, biểu tình vũ trang, chiếm công sở, giành lại chính quyền.
+        kind: event
+        accept:
+          - 23 tháng 8
+          - ngày 23
+          - kinh thành huế
+        pages: "62"
+        locator: đoạn 2, cột trái đầu trang
+      - fact_id: HG5.SGK.B14.F5
+        statement: Sáng 25 – 8, hàng chục vạn người ở Sài Gòn mít tinh mừng khởi nghĩa thắng lợi; chính quyền cách mạng ra mắt nhân dân.
+        kind: event
+        accept:
+          - 25 tháng 8
+          - ngày 25
+          - sài gòn
+        pages: "62"
+        locator: đoạn 3, cột trái
+      - fact_id: HG5.SGK.B14.F6
+        statement: Đến cuối tháng 8 – 1945, Tổng khởi nghĩa giành thắng lợi hoàn toàn trên cả nước.
+        kind: result
+        accept:
+          - cuối tháng 8
+          - cả nước
+          - thắng lợi hoàn toàn
+        pages: "62"
+        locator: đoạn cuối mục 1
+      - fact_id: HG5.SGK.B14.F7
+        statement: Ngày 22 – 12 – 1944, ở Cao Bằng, Võ Nguyên Giáp thành lập Đội Việt Nam Tuyên truyền Giải phóng quân gồm 34 chiến sĩ.
+        kind: event
+        accept:
+          - 22 tháng 12
+          - 34 chiến sĩ
+          - ba mươi tư chiến sĩ
+          - tuyên truyền giải phóng quân
+        pages: "62"
+        locator: Câu chuyện lịch sử 'Thành lập Đội Việt Nam Tuyên truyền Giải phóng quân', đoạn 1; Hình 3 tr. 63
+      - fact_id: HG5.SGK.B14.F8
+        statement: Đội này là tiền thân của Quân đội nhân dân Việt Nam; Võ Nguyên Giáp được tôn vinh là “anh cả” của quân đội.
+        kind: result
+        accept:
+          - tiền thân
+          - quân đội nhân dân
+          - anh cả
+          - võ nguyên giáp
+        pages: "62"
+        locator: cùng câu chuyện, đoạn 2
+      - fact_id: HG5.SGK.B14.F9
+        statement: Kim Đồng (Nông Văn Dền), người Nùng ở Cao Bằng, là Đội trưởng đầu tiên Đội Nhi đồng cứu quốc (lập năm 1941).
+        kind: person
+        accept:
+          - kim đồng
+          - nông văn dền
+          - nhi đồng cứu quốc
+          - đội trưởng đầu tiên
+        pages: "63"
+        locator: Câu chuyện lịch sử 'Người đội viên mưu trí, dũng cảm', đoạn 1; Hình 4
+      - fact_id: HG5.SGK.B14.F10
+        statement: Kim Đồng chạy ra đánh lạc hướng quân địch để cán bộ kịp rút an toàn và hi sinh khi mới tròn 14 tuổi.
+        kind: event
+        accept:
+          - 14 tuổi
+          - mười bốn tuổi
+          - đánh lạc hướng
+        pages: "63"
+        locator: cùng câu chuyện, đoạn 2
+      - fact_id: HG5.SGK.B14.F11
+        statement: Bác Hồ tự tay viết và đánh máy bản Tuyên ngôn Độc lập tại ngôi nhà số 48 phố Hàng Ngang, Hà Nội.
+        kind: place
+        accept:
+          - 48 hàng ngang
+          - hàng ngang
+          - số 48
+        pages: "64"
+        locator: Câu chuyện lịch sử 'Bác Hồ với bản Tuyên ngôn Độc lập', đoạn 1–2
+      - fact_id: HG5.SGK.B14.F12
+        statement: Ngày 2 – 9 – 1945, ở Quảng trường Ba Đình, Bác Hồ đọc Tuyên ngôn Độc lập, khai sinh nước Việt Nam Dân chủ Cộng hoà.
+        kind: event
+        accept:
+          - 2 tháng 9
+          - ba đình
+          - tuyên ngôn độc lập
+          - việt nam dân chủ cộng hoà
+          - việt nam dân chủ cộng hòa
+        pages: "64"
+        locator: cùng câu chuyện, đoạn 3; Hình 5
+  - lesson_id: HG5.SGK.B15
+    objectives:
+      - Kể lại diễn biến chính chiến dịch Điện Biên Phủ 1954 có dùng tư liệu (lược đồ, tranh ảnh, chuyện kéo pháo, chuyện bắt sống tướng Đờ Ca-xtơ-ri).
+      - Sưu tầm, kể chuyện một số anh hùng như Phan Đình Giót, Tô Vĩnh Diện, Trần Can…
+    question_styles:
+      - Kể lại một câu chuyện về chiến dịch Điện Biên Phủ.
+      - Nêu cảm nghĩ về các tấm gương anh hùng và điều em học được từ họ.
+      - Sưu tầm tranh ảnh, bài thơ, bài hát về Điện Biên Phủ và chia sẻ với bạn.
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c261b8d0100bf803 }
+    facts:
+      - fact_id: HG5.SGK.B15.F1
+        statement: Chiến dịch Điện Biên Phủ diễn ra từ ngày 13 – 3 – 1954 đến ngày 7 – 5 – 1954, chia làm 3 đợt.
+        kind: date
+        accept:
+          - 13 tháng 3
+          - 7 tháng 5
+          - ba đợt
+          - 3 đợt
+          - năm 1954
+        pages: "65"
+        locator: mục 1, đoạn đầu (cột trái)
+      - fact_id: HG5.SGK.B15.F2
+        statement: Điện Biên Phủ là thung lũng lòng chảo ở vùng núi Tây Bắc, gần biên giới Lào, có vị trí chiến lược quan trọng.
+        kind: place
+        accept:
+          - lòng chảo
+          - tây bắc
+          - biên giới lào
+          - thung lũng
+        pages: "65"
+        locator: khung Em có biết? cuối trang; Hình 1 lược đồ
+      - fact_id: HG5.SGK.B15.F3
+        statement: "Đợt 1 (13 – 3 đến 17 – 3 – 1954): quân ta tiến công tiêu diệt cứ điểm Him Lam và phân khu Bắc."
+        kind: event
+        accept:
+          - him lam
+          - phân khu bắc
+          - đợt 1
+          - đợt một
+        withhold:
+          - tiêu diệt
+          - cứ điểm
+        pages: "66"
+        locator: Hình 2 – sơ đồ diễn biến chính, ô Đợt 1
+      - fact_id: HG5.SGK.B15.F4
+        statement: "Đợt 2 (30 – 3 đến 26 – 4 – 1954): quân ta tiến công, chiếm các cứ điểm phía đông phân khu Trung tâm."
+        kind: event
+        accept:
+          - đợt 2
+          - đợt hai
+          - phía đông
+          - phân khu trung tâm
+        pages: "66"
+        locator: Hình 2 – sơ đồ diễn biến chính, ô Đợt 2
+      - fact_id: HG5.SGK.B15.F5
+        statement: "Đợt 3 (1 – 5 đến 7 – 5 – 1954): quân ta tiến công vào trung tâm Mường Thanh và phân khu Nam."
+        kind: event
+        accept:
+          - đợt 3
+          - đợt ba
+          - mường thanh
+          - phân khu nam
+        pages: "66"
+        locator: Hình 2 – sơ đồ diễn biến chính, ô Đợt 3
+      - fact_id: HG5.SGK.B15.F6
+        statement: Chiều 7 – 5 – 1954, tướng Đờ Ca-xtơ-ri cùng toàn bộ quân địch đầu hàng; chiến dịch Điện Biên Phủ kết thúc thắng lợi.
+        kind: result
+        accept:
+          - đờ ca-xtơ-ri
+          - đờ ca xtơ ri
+          - de castries
+          - đầu hàng
+          - bắt sống
+        withhold:
+          - thắng lợi
+        pages: "66"
+        locator: Hình 2 – ô Đợt 3, gạch đầu dòng thứ hai; Hình 4 tr. 67
+      - fact_id: HG5.SGK.B15.F7
+        statement: Bộ đội ta dùng sức người mở đường, kéo pháo qua suối sâu, đèo cao vào trận địa dù bị máy bay địch bắn phá.
+        kind: event
+        accept:
+          - kéo pháo
+          - sức người
+          - kéo pháo vào
+        withhold:
+          - mở đường
+          - pháo
+        pages: "66"
+        locator: Câu chuyện lịch sử 'Kéo pháo ở Điện Biên Phủ', đoạn 1; Hình 3
+      - fact_id: HG5.SGK.B15.F8
+        statement: Khi kéo pháo ra, nhiều chiến sĩ hi sinh với quyết tâm bảo vệ pháo, tiêu biểu là Tô Vĩnh Diện.
+        kind: person
+        accept:
+          - tô vĩnh diện
+          - bảo vệ pháo
+          - kéo pháo ra
+        pages: "66"
+        locator: Câu chuyện lịch sử 'Kéo pháo ở Điện Biên Phủ', đoạn 2
+      - fact_id: HG5.SGK.B15.F9
+        statement: Chiều 7 – 5 – 1954, tổ xung kích của Tạ Quốc Luật xông vào hầm chỉ huy, bắt sống tướng Đờ Ca-xtơ-ri và bộ chỉ huy.
+        kind: event
+        accept:
+          - tạ quốc luật
+          - tổ xung kích
+          - hầm chỉ huy
+          - giơ tay lên
+        pages: "67"
+        locator: Câu chuyện lịch sử 'Chuyện bắt sống tướng Đờ Ca-xtơ-ri', đoạn 1; Hình 4
+      - fact_id: HG5.SGK.B15.F10
+        statement: 17 giờ 30 phút ngày 7 – 5 – 1954, lá cờ “Quyết chiến, quyết thắng” tung bay trên nóc hầm Đờ Ca-xtơ-ri.
+        kind: symbol
+        accept:
+          - quyết chiến quyết thắng
+          - nóc hầm
+          - 17 giờ 30
+        pages: "67"
+        locator: cùng câu chuyện, đoạn 2
+      - fact_id: HG5.SGK.B15.F11
+        statement: Ở trận Mường Pồn cuối năm 1953, Bế Văn Đàn lấy thân mình làm giá súng cho đồng đội bắn, rồi hi sinh.
+        kind: person
+        accept:
+          - bế văn đàn
+          - giá súng
+          - mường pồn
+        pages: 67-68
+        locator: Câu chuyện lịch sử 'Bế Văn Đàn lấy thân mình làm giá súng' (cuối tr. 67 – đầu tr. 68)
+      - fact_id: HG5.SGK.B15.F12
+        statement: Chiều 13 – 3 – 1954 ở Him Lam, Phan Đình Giót bị thương vẫn lao vào bịt lỗ châu mai, giúp đơn vị diệt cứ điểm.
+        kind: person
+        accept:
+          - phan đình giót
+          - lỗ châu mai
+          - lấp lỗ châu mai
+        withhold:
+          - bị thương
+          - bịt
+          - lao vào
+          - thân mình
+          - cứ điểm
+          - diệt
+        pages: "68"
+        locator: Câu chuyện lịch sử 'Phan Đình Giót lấy thân mình lấp lỗ châu mai'
+  - lesson_id: HG5.SGK.B16
+    objectives:
+      - Kể lại diễn biến chính Chiến dịch Hồ Chí Minh năm 1975, có dùng lược đồ và tư liệu (tranh ảnh, câu chuyện).
+      - Kể lại một số câu chuyện về Chiến dịch Hồ Chí Minh năm 1975.
+    question_styles:
+      - Hoàn thiện trục thời gian các sự kiện chính của Chiến dịch Hồ Chí Minh (ngày ↔ sự kiện).
+      - Viết đoạn văn ngắn (khoảng 5 câu) nêu cảm nghĩ về một câu chuyện lịch sử trong bài.
+      - Sưu tầm tranh ảnh, câu chuyện về Chiến dịch Hồ Chí Minh và chia sẻ với bạn.
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d3c7539a42d9f894 }
+    facts:
+      - fact_id: HG5.SGK.B16.F1
+        statement: Năm 1975, sau thắng lợi Tây Nguyên, Huế – Đà Nẵng, ta mở chiến dịch giải phóng Sài Gòn – Gia Định, mang tên Hồ Chí Minh.
+        kind: cause
+        accept:
+          - tây nguyên
+          - huế đà nẵng
+          - sài gòn gia định
+          - giải phóng sài gòn
+        pages: "69"
+        locator: mục 1, đoạn 1 (cột trái)
+      - fact_id: HG5.SGK.B16.F2
+        statement: 17 giờ ngày 26 – 4 – 1975, chiến dịch bắt đầu; năm cánh quân vượt tuyến phòng thủ, tiến vào trung tâm Sài Gòn.
+        kind: date
+        accept:
+          - 26 tháng 4
+          - năm cánh quân
+          - 5 cánh quân
+          - 17 giờ
+        withhold:
+          - cánh quân
+          - phòng thủ
+        pages: "69"
+        locator: mục 1, đoạn 2
+      - fact_id: HG5.SGK.B16.F3
+        statement: Lược đồ cho thấy quân ta tiến công từ nhiều hướng vào Sài Gòn, vào các ngày 26 – 4 và 30 – 4 – 1975.
+        kind: feature
+        accept:
+          - nhiều hướng
+          - mũi tiến công
+          - các mũi
+        pages: "70"
+        locator: Hình 2 – lược đồ Chiến dịch Hồ Chí Minh và chú giải
+      - fact_id: HG5.SGK.B16.F4
+        statement: Ngày 28 – 4 – 1975, quân ta tấn công sân bay Tân Sơn Nhất.
+        kind: event
+        accept:
+          - 28 tháng 4
+          - tân sơn nhất
+          - sân bay tân sơn nhất
+        pages: "69"
+        locator: mục 1, đoạn 2, câu thứ ba
+      - fact_id: HG5.SGK.B16.F5
+        statement: 10 giờ 45 phút ngày 30 – 4 – 1975, Quân Giải phóng tiến vào Dinh Độc Lập, bắt toàn bộ chính quyền trung ương Sài Gòn.
+        kind: event
+        accept:
+          - dinh độc lập
+          - 30 tháng 4
+          - 10 giờ 45
+        withhold:
+          - dinh
+        pages: "69"
+        locator: mục 1, cuối đoạn 2; Hình 1
+      - fact_id: HG5.SGK.B16.F6
+        statement: 11 giờ 30 phút cùng ngày, lá cờ cách mạng tung bay trên nóc Dinh Độc Lập, báo hiệu chiến dịch toàn thắng.
+        kind: symbol
+        accept:
+          - 11 giờ 30
+          - nóc dinh độc lập
+          - lá cờ cách mạng
+        withhold:
+          - lá cờ
+        pages: "69"
+        locator: câu cuối trang
+      - fact_id: HG5.SGK.B16.F7
+        statement: Để tạo bất ngờ, Quân uỷ Trung ương quyết định dùng chính máy bay A-37 thu được của địch để đánh địch.
+        kind: event
+        accept:
+          - a-37
+          - a 37
+          - máy bay thu được
+          - bất ngờ
+        withhold:
+          - máy bay
+        pages: "70"
+        locator: Câu chuyện lịch sử 'Phi đội Quyết thắng tấn công sân bay Tân Sơn Nhất', đoạn 1
+      - fact_id: HG5.SGK.B16.F8
+        statement: Phi đội Quyết thắng gồm sáu phi công, có Nguyễn Thành Trung; chỉ hơn ba ngày, cả phi đội đã lái được A-37.
+        kind: person
+        accept:
+          - quyết thắng
+          - phi đội quyết thắng
+          - sáu phi công
+          - 6 phi công
+          - nguyễn thành trung
+        pages: 70-71
+        locator: cùng câu chuyện, đoạn 2 (cuối tr. 70 – đầu tr. 71); Hình 3
+      - fact_id: HG5.SGK.B16.F9
+        statement: Ngày 28 – 4 – 1975, phi đội phá huỷ nhiều máy bay địch, đốt kho xăng, làm sân bay Tân Sơn Nhất tê liệt.
+        kind: result
+        accept:
+          - tê liệt
+          - kho xăng
+          - phá huỷ máy bay
+          - phá hủy máy bay
+        pages: "71"
+        locator: tiếp câu chuyện phi đội Quyết thắng, đoạn 2 đầu trang
+      - fact_id: HG5.SGK.B16.F10
+        statement: Ngày 30 – 4 – 1975, Tổng thống chính quyền Sài Gòn Dương Văn Minh lên Đài phát thanh tuyên bố đầu hàng không điều kiện.
+        kind: event
+        accept:
+          - dương văn minh
+          - đầu hàng không điều kiện
+          - đài phát thanh
+        withhold:
+          - đầu hàng
+        pages: "71"
+        locator: Câu chuyện lịch sử 'Thời khắc cuối cùng của chính quyền Sài Gòn', đoạn 1; Hình 4
+      - fact_id: HG5.SGK.B16.F11
+        statement: Chính quyền Sài Gòn sụp đổ hoàn toàn; giây phút ấy, hàng triệu người đã bật khóc khi biết tin toàn thắng.
+        kind: result
+        accept:
+          - sụp đổ
+          - toàn thắng rồi
+          - bật khóc
+        withhold:
+          - khóc
+        pages: "71"
+        locator: cùng câu chuyện, đoạn 2
+  - lesson_id: HG5.SGK.B17
+    objectives:
+      - Sưu tầm tư liệu (tranh ảnh, hiện vật) và mô tả một số hiện vật thời bao cấp và thời kì Đổi mới.
+      - Sưu tầm và kể lại một số câu chuyện về thời bao cấp.
+      - Nêu một số thành tựu kinh tế – xã hội của Việt Nam thời kì Đổi mới, có dùng tư liệu.
+    question_styles:
+      - Hoàn thành bảng thống kê thành tựu thời Đổi mới theo lĩnh vực (kinh tế; văn hoá, xã hội).
+      - Giới thiệu tranh ảnh về hiện vật thời bao cấp hoặc thời Đổi mới em sưu tầm.
+      - Viết đoạn văn (khoảng 5 câu) nêu suy nghĩ về một thành tựu thời Đổi mới.
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ed60aae173d6961b }
+    facts:
+      - fact_id: HG5.SGK.B17.F1
+        statement: Thời bao cấp là giai đoạn trước Đổi mới, từ khi đất nước thống nhất đến năm 1986 (1976 – 1986).
+        kind: date
+        accept:
+          - thời bao cấp
+          - thời kì bao cấp
+          - "1976"
+          - trước đổi mới
+        pages: "72"
+        locator: mục 1, đoạn cuối trang
+      - fact_id: HG5.SGK.B17.F2
+        statement: Nhà nước phân phối hầu hết hàng hoá, hạn chế tiền mặt; lương thực, thực phẩm chia theo đầu người qua tem phiếu.
+        kind: feature
+        accept:
+          - tem phiếu
+          - phân phối
+          - tiền mặt
+          - theo đầu người
+        pages: 72-73
+        locator: mục 1, đoạn cuối tr. 72 sang đầu tr. 73
+      - fact_id: HG5.SGK.B17.F3
+        statement: "Sổ lương thực (sổ gạo) quan trọng nhất: giấy nâu, cỡ nửa tờ A4, ghi các thành viên và tiêu chuẩn mua hằng tháng."
+        kind: symbol
+        accept:
+          - sổ gạo
+          - sổ lương thực
+          - giấy nâu
+          - nửa tờ a4
+        pages: "73"
+        locator: đoạn 2 cột trái; Hình 3 sổ lương thực
+      - fact_id: HG5.SGK.B17.F4
+        statement: Tem, phiếu được dùng để mua nhu yếu phẩm như thịt, mắm, muối, chất đốt, phụ tùng xe đạp.
+        kind: feature
+        accept:
+          - tem thịt
+          - chất đốt
+          - phụ tùng xe đạp
+          - 500 gam
+          - mắm muối
+        pages: "73"
+        locator: khung Em có biết?; Hình 4 tem mua thực phẩm
+      - fact_id: HG5.SGK.B17.F5
+        statement: Một số vật dụng thời bao cấp là đèn dầu, ti vi đen trắng và quạt điện.
+        kind: symbol
+        accept:
+          - đèn dầu
+          - ti vi đen trắng
+          - tivi đen trắng
+          - quạt điện
+        pages: "73"
+        locator: Hình 5 a, b, c
+      - fact_id: HG5.SGK.B17.F6
+        statement: Ở nông thôn, nông dân làm việc trong hợp tác xã và được chia sản phẩm theo công điểm.
+        kind: feature
+        accept:
+          - hợp tác xã
+          - công điểm
+        pages: "73"
+        locator: đoạn cuối trang
+      - fact_id: HG5.SGK.B17.F7
+        statement: Khoảng 1978 – 1979, có khi cả xóm chỉ một nhà có ti vi đen trắng, buổi tối mọi người kéo đến xem chung.
+        kind: event
+        accept:
+          - xem chung
+          - cả xóm
+          - những bông hoa nhỏ
+          - ắc quy
+        pages: "74"
+        locator: Câu chuyện lịch sử 'Xem truyền hình thời bao cấp'
+      - fact_id: HG5.SGK.B17.F8
+        statement: Từ năm 1986, cả nước bước vào thời kì Đổi mới; kinh tế ngày càng phát triển, hàng hoá dồi dào.
+        kind: date
+        accept:
+          - năm 1986
+          - "1986"
+          - hàng hoá dồi dào
+          - hàng hóa dồi dào
+          - thời kì đổi mới
+        pages: "74"
+        locator: mục 2, đoạn đầu
+      - fact_id: HG5.SGK.B17.F9
+        statement: Từ chỗ thiếu lương thực, Việt Nam trở thành một trong những nước xuất khẩu gạo hàng đầu thế giới.
+        kind: result
+        accept:
+          - xuất khẩu gạo
+          - hàng đầu thế giới
+          - thiếu lương thực
+        pages: "74"
+        locator: mục 2, đoạn đầu; Hình 6 gạo xuất khẩu tại cảng Sài Gòn
+      - fact_id: HG5.SGK.B17.F10
+        statement: Thời Đổi mới, đời sống vật chất, tinh thần của nhân dân được cải thiện; vị thế, uy tín Việt Nam được nâng cao.
+        kind: result
+        accept:
+          - vị thế
+          - uy tín
+          - trường quốc tế
+          - đời sống được cải thiện
+        pages: "74"
+        locator: mục 2, cuối đoạn đầu
+      - fact_id: HG5.SGK.B17.F11
+        statement: Một số thành tựu được minh hoạ là dây chuyền sản xuất ô tô và máy vi tính do Việt Nam sản xuất.
+        kind: feature
+        accept:
+          - ô tô
+          - máy vi tính
+          - dây chuyền sản xuất
+        pages: 74-75
+        locator: Hình 7 (tr. 74), Hình 9 và khung Em có biết? (tr. 75)
+  - lesson_id: HG5.SGK.B18
+    objectives:
+      - Chỉ được vị trí của Trung Quốc trên bản đồ hoặc lược đồ.
+      - Nêu được vài nét chính về tự nhiên và dân cư Trung Quốc.
+      - Tìm tư liệu và mô tả một số công trình tiêu biểu như Vạn Lý Trường Thành, Cố cung Bắc Kinh.
+      - Kể lại được câu chuyện về Vạn Lý Trường Thành, kiến trúc sư Nguyễn An, Cố cung Bắc Kinh.
+    question_styles:
+      - Lập bảng so sánh địa hình và khí hậu hai miền của một nước
+      - "Giới thiệu một công trình theo gợi ý: tên, địa điểm, thời gian xây, điểm nổi bật"
+      - Tìm hiểu qua sách báo, internet để kể thêm công trình nổi tiếng khác
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 6bfe134c6e7b682a }
+    facts:
+      - fact_id: HG5.SGK.B18.F1
+        statement: Trung Quốc rộng khoảng 9,6 triệu km², đứng thứ tư thế giới về diện tích.
+        kind: figure
+        accept:
+          - 9,6 triệu
+          - chín phẩy sáu triệu
+          - thứ tư thế giới
+          - rộng thứ tư
+        pages: "76"
+        locator: mục 1 Vị trí địa lí, đoạn đầu
+      - fact_id: HG5.SGK.B18.F2
+        statement: Phía đông đất liền Trung Quốc giáp biển thuộc Thái Bình Dương; phía bắc, tây, nam giáp nhiều nước.
+        kind: place
+        accept:
+          - thái bình dương
+          - phía đông giáp biển
+          - giáp nhiều nước
+        pages: "76"
+        locator: mục 1 Vị trí địa lí, đoạn đầu; Hình 2 – bản đồ Trung Quốc trong châu Á (trang 77)
+      - fact_id: HG5.SGK.B18.F3
+        statement: Miền Đông Trung Quốc chủ yếu là núi thấp và đồng bằng châu thổ rộng, khí hậu từ ôn đới sang cận nhiệt.
+        kind: feature
+        accept:
+          - núi thấp
+          - đồng bằng châu thổ
+          - ôn đới sang cận nhiệt
+          - miền đông có đồng bằng
+        pages: "77"
+        locator: mục 2 Đặc điểm tự nhiên, đoạn Miền Đông
+      - fact_id: HG5.SGK.B18.F4
+        statement: Miền Tây Trung Quốc có núi cao, sơn nguyên đồ sộ, bồn địa; khí hậu khắc nghiệt, ít mưa nên có hoang mạc.
+        kind: feature
+        accept:
+          - núi cao
+          - sơn nguyên
+          - bồn địa
+          - hoang mạc
+          - khắc nghiệt
+          - mưa ít
+        pages: "78"
+        locator: mục 2 Đặc điểm tự nhiên, đoạn Miền Tây (đầu trang 78); Hình 3 – bản đồ tự nhiên Trung Quốc
+      - fact_id: HG5.SGK.B18.F5
+        statement: Năm 2024 Trung Quốc có hơn 1,4 tỉ dân, là một trong những nước đông dân nhất thế giới.
+        kind: figure
+        accept:
+          - 1,4 tỉ
+          - một phẩy bốn tỉ
+          - một tỉ tư
+          - đông dân nhất
+        pages: "78"
+        locator: mục 3 Dân cư, đoạn đầu
+      - fact_id: HG5.SGK.B18.F6
+        statement: Trung Quốc có 56 dân tộc, trong đó người Hán chiếm hơn 90%.
+        kind: figure
+        accept:
+          - 56 dân tộc
+          - năm mươi sáu dân tộc
+          - dân tộc hán
+          - người hán
+        pages: "78"
+        locator: mục 3 Dân cư, đoạn đầu
+      - fact_id: HG5.SGK.B18.F7
+        statement: "Dân cư Trung Quốc phân bố không đều: đông đúc ở miền Đông, thưa thớt ở miền Tây."
+        kind: feature
+        accept:
+          - phân bố không đều
+          - tập trung ở miền đông
+          - miền tây thưa
+          - thưa thớt
+        pages: "79"
+        locator: mục 3 Dân cư, đoạn cuối (đầu trang 79)
+      - fact_id: HG5.SGK.B18.F8
+        statement: Vạn Lý Trường Thành là tường thành đất, đá chạy từ đông sang tây, xây để chặn các cuộc tấn công từ bên ngoài.
+        kind: feature
+        accept:
+          - tường thành
+          - ngăn chặn tấn công
+          - chống giặc
+          - bằng đất đá
+        pages: "79"
+        locator: mục 4, tiểu mục Vạn Lý Trường Thành, đoạn đầu
+      - fact_id: HG5.SGK.B18.F9
+        statement: Vạn Lý Trường Thành được xây dựng từ thế kỉ V TCN đến thế kỉ XVI.
+        kind: date
+        accept:
+          - thế kỉ v trước công nguyên
+          - thế kỉ năm trước công nguyên
+          - thế kỉ xvi
+          - thế kỉ mười sáu
+        pages: "79"
+        locator: mục 4, tiểu mục Vạn Lý Trường Thành, đoạn đầu
+      - fact_id: HG5.SGK.B18.F10
+        statement: Tường thành cao 7 – 8 m, mặt trên rộng 5 – 6 m, có tháp canh và ụ lửa báo hiệu khi giặc đến.
+        kind: figure
+        accept:
+          - tháp canh
+          - ụ lửa
+          - cao 7 đến 8 mét
+          - cao bảy tám mét
+        pages: "79"
+        locator: mục 4, tiểu mục Vạn Lý Trường Thành; Hình 5 – một đoạn Vạn Lý Trường Thành (trang 80)
+      - fact_id: HG5.SGK.B18.F11
+        statement: Cố cung Bắc Kinh là hoàng cung của hai triều Minh và Thanh, có hơn 9 000 căn phòng.
+        kind: feature
+        accept:
+          - hoàng cung
+          - nhà minh và nhà thanh
+          - triều minh và thanh
+          - 9 000 căn phòng
+          - chín nghìn căn phòng
+        pages: "80"
+        locator: mục 4, tiểu mục Cố cung Bắc Kinh, đoạn 1–2; Hình 6 (trang 81)
+      - fact_id: HG5.SGK.B18.F12
+        statement: Nguyễn An, người Việt quê Hà Đông, góp phần quan trọng xây dựng, tu sửa Cố cung Bắc Kinh thời nhà Minh.
+        kind: person
+        accept:
+          - nguyễn an
+          - hà đông
+          - người việt xây cố cung
+        pages: 80, 81
+        locator: mục 4, cuối tiểu mục Cố cung Bắc Kinh (trang 80); khung Em có biết (trang 81)
+  - lesson_id: HG5.SGK.B19
+    objectives:
+      - Chỉ được vị trí của Lào trên bản đồ hoặc lược đồ.
+      - Nêu được vài nét chính về tự nhiên và dân cư Lào.
+      - Tìm tư liệu và mô tả một số công trình tiêu biểu như Thạt Luổng, Cánh đồng Chum, Cố đô Luông Pha-băng.
+    question_styles:
+      - Quan sát bản đồ, kể tên và chỉ một số cao nguyên, con sông
+      - Hoàn thành bảng tên công trình – nét đặc sắc
+      - Giới thiệu với người thân một công trình em ấn tượng
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 4e2e4ea6a542a28e }
+    facts:
+      - fact_id: HG5.SGK.B19.F1
+        statement: "Lào giáp năm nước: Trung Quốc, Mi-an-ma, Thái Lan, Cam-pu-chia và Việt Nam."
+        kind: place
+        accept:
+          - giáp trung quốc
+          - mi-an-ma
+          - mi an ma
+          - thái lan
+          - giáp việt nam
+        pages: "82"
+        locator: mục 1 Vị trí địa lí, đoạn đầu; Hình 1 – bản đồ tự nhiên Lào (trang 83)
+      - fact_id: HG5.SGK.B19.F2
+        statement: Lào là quốc gia không giáp biển.
+        kind: feature
+        accept:
+          - không giáp biển
+          - không có biển
+        pages: "82"
+        locator: mục 1 Vị trí địa lí, câu cuối
+      - fact_id: HG5.SGK.B19.F3
+        statement: Địa hình Lào chủ yếu là núi và cao nguyên; khí hậu nhiệt đới gió mùa.
+        kind: feature
+        accept:
+          - núi và cao nguyên
+          - nhiều cao nguyên
+          - nhiệt đới gió mùa
+        pages: "82"
+        locator: mục 2 Đặc điểm tự nhiên và dân cư, đoạn đầu
+      - fact_id: HG5.SGK.B19.F4
+        statement: Mê Công là con sông lớn nhất chảy qua Lào.
+        kind: place
+        accept:
+          - sông mê công
+          - mê kông
+          - mê công
+        pages: "82"
+        locator: mục 2, đoạn đầu; Hình 1 – bản đồ tự nhiên Lào (trang 83)
+      - fact_id: HG5.SGK.B19.F5
+        statement: Lào có nhiều khoáng sản, nổi bật là vàng, đồng, bạc, đá vôi.
+        kind: feature
+        accept:
+          - khoáng sản
+          - vàng đồng bạc
+          - đá vôi
+        pages: "82"
+        locator: mục 2, cuối đoạn đầu
+      - fact_id: HG5.SGK.B19.F6
+        statement: Năm 2024 Lào có khoảng 7,7 triệu dân; người Lào là đông nhất, sống chủ yếu ở đồng bằng.
+        kind: figure
+        accept:
+          - 7,7 triệu
+          - bảy phẩy bảy triệu
+          - dân tộc lào
+          - sống ở đồng bằng
+        pages: "83"
+        locator: mục 2, đoạn dưới Hình 1
+      - fact_id: HG5.SGK.B19.F7
+        statement: Thủ đô của Lào là Viêng Chăn.
+        kind: place
+        accept:
+          - viêng chăn
+          - viên chăn
+        pages: 83, 84
+        locator: Hình 1 – bản đồ tự nhiên Lào (kí hiệu thủ đô); tiểu mục Cố đô Luông Pha-băng (trang 84)
+      - fact_id: HG5.SGK.B19.F8
+        statement: Cánh đồng Chum là di tích khảo cổ trên cao nguyên Xiêng Khoảng, có từ 500 năm TCN, với khoảng 2 000 chum đá.
+        kind: feature
+        accept:
+          - cánh đồng chum
+          - xiêng khoảng
+          - 2 000 chiếc chum
+          - hai nghìn chum
+          - chum đá
+          - di tích khảo cổ
+        pages: "84"
+        locator: mục 3, tiểu mục Cánh đồng Chum; Hình 2
+      - fact_id: HG5.SGK.B19.F9
+        statement: Luông Pha-băng là kinh đô Vương quốc Lan Xang từ thế kỉ XIV đến XVI, xây dưới thời vua Pha Ngừm.
+        kind: feature
+        accept:
+          - luông pha-băng
+          - luông pha băng
+          - lan xang
+          - pha ngừm
+          - kinh đô cũ
+        pages: "84"
+        locator: mục 3, tiểu mục Cố đô Luông Pha-băng; Hình 3 – chùa Xiêng Thông
+      - fact_id: HG5.SGK.B19.F10
+        statement: Thạt Luổng nghĩa là tháp lớn, ở Viêng Chăn, xây khoảng thế kỉ XVI; tháp giữa cao 45 m dát vàng.
+        kind: feature
+        accept:
+          - thạt luổng
+          - tháp lớn
+          - dát vàng
+          - 45 mét
+          - bốn mươi lăm mét
+        pages: "85"
+        locator: mục 3, tiểu mục Thạt Luổng (đầu trang 85); Hình 4
+      - fact_id: HG5.SGK.B19.F11
+        statement: Hình Thạt Luổng nằm giữa Quốc huy Lào và được in trên một tờ tiền Lào.
+        kind: symbol
+        accept:
+          - quốc huy
+          - in trên tờ tiền
+          - trên tiền lào
+        pages: "85"
+        locator: khung Em có biết, ý 1
+      - fact_id: HG5.SGK.B19.F12
+        statement: UNESCO ghi danh Luông Pha-băng là Di sản thế giới năm 1995, Cánh đồng Chum năm 2019.
+        kind: date
+        accept:
+          - "1995"
+          - "2019"
+          - di sản thế giới
+        pages: "85"
+        locator: khung Em có biết, ý 2
+  - lesson_id: HG5.SGK.B20
+    objectives:
+      - Chỉ được vị trí của Cam-pu-chia trên bản đồ hoặc lược đồ.
+      - Nêu được vài nét chính về tự nhiên và dân cư Cam-pu-chia.
+      - Tìm tư liệu và mô tả một số công trình tiêu biểu như Ăng-co Vát, Ăng-co Thom, tượng đài các chiến sĩ tình nguyện Việt Nam.
+    question_styles:
+      - Dựa vào bản đồ kể tên nước láng giềng, dãy núi, sông, hồ lớn
+      - "Giới thiệu một công trình theo gợi ý: tên, địa điểm, điểm nổi bật"
+      - Chọn công trình muốn đến thăm và giải thích lí do
+      - Sưu tầm tranh ảnh, tư liệu về công trình khác để chia sẻ
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c96f44b822e8985f }
+    facts:
+      - fact_id: HG5.SGK.B20.F1
+        statement: Cam-pu-chia giáp Lào và Thái Lan ở phía bắc, Việt Nam ở phía đông, vịnh Thái Lan ở tây nam.
+        kind: place
+        accept:
+          - giáp lào
+          - giáp thái lan
+          - việt nam ở phía đông
+          - vịnh thái lan
+        pages: "86"
+        locator: mục 1 Vị trí địa lí; Hình 2 – bản đồ tự nhiên Cam-pu-chia (trang 87)
+      - fact_id: HG5.SGK.B20.F2
+        statement: Địa hình Cam-pu-chia chủ yếu là đồng bằng; khí hậu cận xích đạo, có mùa mưa và mùa khô rõ rệt.
+        kind: feature
+        accept:
+          - chủ yếu là đồng bằng
+          - cận xích đạo
+          - mùa mưa và mùa khô
+        pages: "86"
+        locator: mục 2 Đặc điểm tự nhiên và dân cư, đoạn đầu
+      - fact_id: HG5.SGK.B20.F3
+        statement: Sông Mê Công là sông lớn nhất, đem lại nguồn nước dồi dào cho Cam-pu-chia.
+        kind: place
+        accept:
+          - sông mê công
+          - mê kông
+          - nguồn nước dồi dào
+        pages: "86"
+        locator: mục 2, đoạn đầu
+      - fact_id: HG5.SGK.B20.F4
+        statement: Hồ Tôn-lê Sáp là hồ nước ngọt lớn nhất Đông Nam Á.
+        kind: place
+        accept:
+          - tôn-lê sáp
+          - tôn lê sáp
+          - hồ nước ngọt lớn nhất
+        pages: "86"
+        locator: mục 2, cuối đoạn đầu; Hình 2 (trang 87)
+      - fact_id: HG5.SGK.B20.F5
+        statement: Mùa mưa, diện tích hồ Tôn-lê Sáp thường lớn gấp ba lần so với mùa khô.
+        kind: figure
+        accept:
+          - gấp ba
+          - gấp ba lần
+          - thay đổi theo mùa
+        pages: "86"
+        locator: khung Em có biết
+      - fact_id: HG5.SGK.B20.F6
+        statement: Năm 2024 Cam-pu-chia có khoảng 16,6 triệu dân, chủ yếu là người Khơ-me, phần lớn sống ở nông thôn.
+        kind: figure
+        accept:
+          - 16,6 triệu
+          - mười sáu phẩy sáu triệu
+          - khơ-me
+          - khơ me
+          - sống ở nông thôn
+        pages: "87"
+        locator: mục 2, đoạn dưới Hình 2
+      - fact_id: HG5.SGK.B20.F7
+        statement: Thủ đô của Cam-pu-chia là Phnôm Pênh.
+        kind: place
+        accept:
+          - phnôm pênh
+          - nông pênh
+          - phnom penh
+        pages: 87, 89
+        locator: Hình 2 – bản đồ tự nhiên Cam-pu-chia (kí hiệu thủ đô); tiểu mục Tượng đài hữu nghị (trang 89)
+      - fact_id: HG5.SGK.B20.F8
+        statement: Ăng-co Vát là quần thể đền tháp xây từ đầu thế kỉ XII ở vùng Xiêm Riệp ngày nay.
+        kind: feature
+        accept:
+          - ăng-co vát
+          - ăng co vát
+          - angkor wat
+          - xiêm riệp
+          - đền tháp
+        pages: "88"
+        locator: mục 3, tiểu mục Ăng-co Vát; Hình 3
+      - fact_id: HG5.SGK.B20.F9
+        statement: Ăng-co Vát xây toàn bằng đá xếp khít, không dùng chất kết dính; tháp giữa cao tới 65 m.
+        kind: feature
+        accept:
+          - xây bằng đá
+          - không cần chất kết dính
+          - 65 mét
+          - sáu mươi lăm mét
+        pages: "88"
+        locator: mục 3, tiểu mục Ăng-co Vát
+      - fact_id: HG5.SGK.B20.F10
+        statement: Ăng-co Vát là biểu tượng của Cam-pu-chia, có hình trên Quốc kì; quần thể Ăng-co được UNESCO ghi danh năm 1992.
+        kind: symbol
+        accept:
+          - quốc kì
+          - lá cờ
+          - biểu tượng của cam-pu-chia
+          - "1992"
+        pages: 86, 88
+        locator: Khởi động, Hình 1 – Quốc kì (trang 86); khung Em có biết (trang 88)
+      - fact_id: HG5.SGK.B20.F11
+        statement: Ăng-co Thom, xây từ thế kỉ XII, là kinh đô cuối cùng của đế quốc Khơ-me; trung tâm là đền Bay-on.
+        kind: feature
+        accept:
+          - ăng-co thom
+          - ăng co thom
+          - kinh đô cuối cùng
+          - bay-on
+          - bay on
+          - bốn mặt phật
+        pages: "88"
+        locator: mục 3, tiểu mục Ăng-co Thom; Hình 4 – đền Bay-on
+      - fact_id: HG5.SGK.B20.F12
+        statement: Tượng đài hữu nghị Việt Nam – Cam-pu-chia ở Phnôm Pênh tượng trưng cho tình đoàn kết hai nước.
+        kind: symbol
+        accept:
+          - tượng đài hữu nghị
+          - đoàn kết hữu nghị
+          - chiến sĩ việt nam và cam-pu-chia
+        pages: "89"
+        locator: mục 3, tiểu mục Tượng đài hữu nghị Việt Nam – Cam-pu-chia; Hình 5
+  - lesson_id: HG5.SGK.B21
+    objectives:
+      - Chỉ được vị trí khu vực Đông Nam Á và các nước trong khu vực trên bản đồ hoặc lược đồ.
+      - Nêu được ASEAN ra đời như thế nào.
+      - Nêu được ý nghĩa của việc Việt Nam gia nhập ASEAN.
+    question_styles:
+      - Dựa vào bản đồ xác định các nước thành viên ASEAN
+      - Sưu tầm hình quốc kì một số nước thành viên và chia sẻ với bạn
+    opinion_prompts_present: false
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8459199f286380e5 }
+    facts:
+      - fact_id: HG5.SGK.B21.F1
+        statement: Đông Nam Á nằm ở phía đông nam châu Á, giáp Thái Bình Dương và Ấn Độ Dương.
+        kind: place
+        accept:
+          - đông nam châu á
+          - thái bình dương và ấn độ dương
+          - giáp ấn độ dương
+        pages: "90"
+        locator: mục 1 Vị trí địa lí của khu vực Đông Nam Á, đoạn 1; Hình 2 – bản đồ các quốc gia Đông Nam Á (trang 91)
+      - fact_id: HG5.SGK.B21.F2
+        statement: Đông Nam Á có 11 quốc gia, chia thành Đông Nam Á lục địa và Đông Nam Á hải đảo.
+        kind: figure
+        accept:
+          - 11 quốc gia
+          - mười một quốc gia
+          - mười một nước
+          - lục địa và hải đảo
+          - đông nam á hải đảo
+        pages: "90"
+        locator: mục 1, đoạn 2
+      - fact_id: HG5.SGK.B21.F3
+        statement: ASEAN được thành lập ngày 8 – 8 – 1967 tại Băng Cốc, Thái Lan.
+        kind: date
+        accept:
+          - 8-8-1967
+          - 8 tháng 8 năm 1967
+          - ngày 8 tháng 8
+          - năm 1967
+          - băng cốc
+        pages: "91"
+        locator: mục 2a Sự ra đời của ASEAN, đoạn 1
+      - fact_id: HG5.SGK.B21.F4
+        statement: Năm nước sáng lập ASEAN là Thái Lan, In-đô-nê-xi-a, Ma-lai-xi-a, Phi-líp-pin và Xin-ga-po.
+        kind: event
+        accept:
+          - năm nước
+          - 5 nước
+          - in-đô-nê-xi-a
+          - ma-lai-xi-a
+          - phi-líp-pin
+          - xin-ga-po
+        pages: "91"
+        locator: mục 2a, đoạn 1
+      - fact_id: HG5.SGK.B21.F5
+        statement: Mục tiêu của ASEAN là đoàn kết, hợp tác để giữ hoà bình, ổn định khu vực và cùng phát triển.
+        kind: feature
+        accept:
+          - đoàn kết hợp tác
+          - giữ gìn hoà bình
+          - cùng phát triển
+          - ổn định khu vực
+        pages: "91"
+        locator: mục 2a, cuối đoạn 1
+      - fact_id: HG5.SGK.B21.F6
+        statement: Sau năm 1967, ASEAN kết nạp thêm sáu nước, trong đó có Việt Nam; nay cả 11 nước Đông Nam Á là thành viên.
+        kind: event
+        accept:
+          - kết nạp thêm
+          - cả 11 nước
+          - tất cả đều là thành viên
+          - ti-mo lét-xtê
+          - bru-nây
+        pages: "91"
+        locator: mục 2a, đoạn 2
+      - fact_id: HG5.SGK.B21.F7
+        statement: Cờ ASEAN có bốn màu chủ đạo; hình bó lúa tượng trưng cho mơ ước các nước gắn bó, đoàn kết.
+        kind: symbol
+        accept:
+          - bó lúa
+          - bốn màu
+          - vòng tròn đỏ
+        pages: "92"
+        locator: khung Em có biết và Hình 3 – cờ ASEAN
+      - fact_id: HG5.SGK.B21.F8
+        statement: Ngày 28 – 7 – 1995 Việt Nam gia nhập ASEAN, trở thành thành viên thứ 7.
+        kind: date
+        accept:
+          - 28-7-1995
+          - 28 tháng 7 năm 1995
+          - năm 1995
+          - thành viên thứ 7
+          - thành viên thứ bảy
+        pages: "92"
+        locator: mục 2b Việt Nam trong ASEAN, đoạn 1
+      - fact_id: HG5.SGK.B21.F9
+        statement: Gia nhập ASEAN giúp Việt Nam mở rộng thị trường, thu hút vốn đầu tư nước ngoài, phát triển kinh tế.
+        kind: result
+        accept:
+          - mở rộng thị trường
+          - thu hút vốn đầu tư
+          - đầu tư nước ngoài
+          - phát triển kinh tế
+        pages: "92"
+        locator: mục 2b, đoạn 2
+      - fact_id: HG5.SGK.B21.F10
+        statement: Nhờ gia nhập ASEAN, Việt Nam mở rộng giao lưu văn hoá, tạo việc làm và nâng cao vị thế.
+        kind: result
+        accept:
+          - giao lưu văn hoá
+          - tạo việc làm
+          - nâng cao vị thế
+        pages: "92"
+        locator: mục 2b, đoạn 2
+      - fact_id: HG5.SGK.B21.F11
+        statement: Việt Nam đăng cai Hội nghị Cấp cao ASEAN 6 ở Hà Nội năm 1998 và làm Chủ tịch ASEAN năm 2010, 2020.
+        kind: event
+        accept:
+          - hội nghị cấp cao
+          - asean 6
+          - chủ tịch asean
+          - năm 1998
+        pages: "92"
+        locator: Hình 4 và khung Em có biết cuối mục 2b
+  - lesson_id: HG5.SGK.B22
+    objectives:
+      - Chỉ được vị trí các châu lục và một số dãy núi, cao nguyên, đồng bằng lớn trên bản đồ, lược đồ hoặc quả Địa Cầu.
+      - Nêu và so sánh vài đặc điểm tự nhiên (địa hình, khí hậu, sông ngòi, thiên nhiên) của các châu lục.
+      - Kể tên và chỉ được vị trí các đại dương trên bản đồ hoặc quả Địa Cầu.
+      - Dùng bảng số liệu và bản đồ để so sánh diện tích, độ sâu các đại dương.
+    question_styles:
+      - Đọc bảng số liệu để tìm châu lục, đại dương lớn nhất, nhỏ nhất
+      - Câu hỏi nhận biết đặc điểm nổi bật (châu lục lạnh nhất, hoang mạc nằm ở đâu)
+      - Chọn châu lục muốn khám phá và giải thích lí do
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: cfb79c6306f56950 }
+    facts:
+      - fact_id: HG5.SGK.B22.F1
+        statement: "Thế giới có sáu châu lục: châu Á, châu Âu, châu Phi, châu Mỹ, châu Đại Dương và châu Nam Cực."
+        kind: feature
+        accept:
+          - sáu châu lục
+          - 6 châu lục
+          - châu đại dương
+          - châu nam cực
+        pages: "93"
+        locator: mục 1a Khái quát chung, đoạn đầu; Hình 1 – bản đồ các châu lục và đại dương (trang 94)
+      - fact_id: HG5.SGK.B22.F2
+        statement: Theo bảng 1, châu Á rộng nhất (44,4 triệu km²), châu Đại Dương nhỏ nhất (8,5 triệu km²).
+        kind: figure
+        accept:
+          - châu á rộng nhất
+          - châu á lớn nhất
+          - 44,4
+          - châu đại dương nhỏ nhất
+          - 8,5
+        pages: "93"
+        locator: Bảng 1 – diện tích các châu lục
+      - fact_id: HG5.SGK.B22.F3
+        statement: Núi và cao nguyên chiếm khoảng 3/4 diện tích châu Á; châu Á có đủ các đới khí hậu.
+        kind: feature
+        accept:
+          - ba phần tư
+          - 3/4
+          - đủ các đới khí hậu
+          - núi và cao nguyên
+        pages: "94"
+        locator: mục 1b Đặc điểm tự nhiên, đoạn Châu Á
+      - fact_id: HG5.SGK.B22.F4
+        statement: Đỉnh Ê-vơ-rét cao 8 848 m, thuộc dãy Hi-ma-lay-a, là đỉnh núi cao nhất thế giới.
+        kind: figure
+        accept:
+          - ê-vơ-rét
+          - ê vơ rét
+          - everest
+          - 8 848
+          - hi-ma-lay-a
+          - hi ma lay a
+        pages: "94"
+        locator: khung Em có biết cạnh Hình 2 – dãy Hi-ma-lay-a
+      - fact_id: HG5.SGK.B22.F5
+        statement: Đồng bằng chiếm khoảng 2/3 diện tích châu Âu; khí hậu chủ yếu ôn đới; sông lớn có Đa-nuýp, Von-ga.
+        kind: feature
+        accept:
+          - hai phần ba
+          - 2/3
+          - ôn đới
+          - đa-nuýp
+          - von-ga
+        pages: "95"
+        locator: mục 1b, đoạn Châu Âu (đầu trang 95); Hình 3, Hình 4
+      - fact_id: HG5.SGK.B22.F6
+        statement: Châu Phi có địa hình khá cao, khí hậu khô nóng bậc nhất thế giới, có hoang mạc Xa-ha-ra rộng lớn.
+        kind: feature
+        accept:
+          - khô nóng
+          - nóng nhất
+          - xa-ha-ra
+          - xa ha ra
+          - sahara
+          - sông nin
+        pages: "95"
+        locator: mục 1b, đoạn Châu Phi; Hình 5 – hoang mạc Xa-ha-ra
+      - fact_id: HG5.SGK.B22.F7
+        statement: Châu Mỹ gồm lục địa Bắc Mỹ và Nam Mỹ, nối với nhau bởi eo đất Trung Mỹ.
+        kind: feature
+        accept:
+          - bắc mỹ và nam mỹ
+          - eo đất trung mỹ
+          - trung mỹ
+        pages: "95"
+        locator: mục 1b, đoạn Châu Mỹ
+      - fact_id: HG5.SGK.B22.F8
+        statement: Rừng A-ma-dôn ở Nam Mỹ là rừng nhiệt đới rộng nhất thế giới, được coi là lá phổi xanh của Trái Đất.
+        kind: feature
+        accept:
+          - a-ma-dôn
+          - a ma dôn
+          - amazon
+          - lá phổi xanh
+        pages: "96"
+        locator: khung Em có biết cạnh Hình 7 – rừng A-ma-dôn
+      - fact_id: HG5.SGK.B22.F9
+        statement: Châu Đại Dương gồm lục địa Ô-xtrây-li-a khô hạn, nhiều hoang mạc, xa van, và các đảo ở giữa Thái Bình Dương.
+        kind: feature
+        accept:
+          - ô-xtrây-li-a
+          - ô xtrây li a
+          - úc
+          - can-gu-ru
+          - chuột túi
+          - gấu túi
+        pages: "96"
+        locator: mục 1b, đoạn Châu Đại Dương; Hình 8, Hình 9
+      - fact_id: HG5.SGK.B22.F10
+        statement: Châu Nam Cực là cao nguyên phủ băng dày, lạnh và khô nhất Trái Đất, có chim cánh cụt, hải cẩu.
+        kind: feature
+        accept:
+          - lạnh nhất
+          - lạnh và khô nhất
+          - phủ băng
+          - chim cánh cụt
+          - hải cẩu
+        pages: "96"
+        locator: mục 1b, đoạn Châu Nam Cực; Hình 10; khung Em có biết cuối trang
+      - fact_id: HG5.SGK.B22.F11
+        statement: "Có năm đại dương: Thái Bình Dương, Đại Tây Dương, Ấn Độ Dương, Bắc Băng Dương, Nam Đại Dương."
+        kind: place
+        accept:
+          - năm đại dương
+          - 5 đại dương
+          - đại tây dương
+          - bắc băng dương
+          - nam đại dương
+        pages: "97"
+        locator: mục 2 Các đại dương trên thế giới, đoạn đầu
+      - fact_id: HG5.SGK.B22.F12
+        statement: Theo bảng 2, Thái Bình Dương rộng nhất và sâu nhất; Bắc Băng Dương nhỏ nhất và nông nhất.
+        kind: figure
+        accept:
+          - thái bình dương rộng nhất
+          - thái bình dương lớn nhất
+          - 165,3
+          - 4 280
+          - bắc băng dương nhỏ nhất
+          - 14,1
+        pages: "97"
+        locator: Bảng 2 – diện tích và độ sâu trung bình các đại dương
+  - lesson_id: HG5.SGK.B23
+    objectives:
+      - Dùng bảng số liệu để so sánh dân số giữa các châu lục.
+      - Kể tên và mô tả nét ngoại hình chính của các chủng tộc.
+      - Dùng lược đồ để trình bày nơi phân bố của các chủng tộc.
+      - Biết cư xử phù hợp, tôn trọng sự khác biệt chủng tộc.
+    question_styles:
+      - Sắp xếp số dân các châu lục theo thứ tự từ bảng số liệu
+      - Vẽ sơ đồ ngoại hình và nơi phân bố các chủng tộc
+      - Viết đoạn văn ngắn nêu suy nghĩ về tôn trọng khác biệt
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 112c10eabb797bbd }
+    facts:
+      - fact_id: HG5.SGK.B23.F1
+        statement: Trước thế kỉ XIX thế giới chỉ khoảng 1 tỉ người; năm 2024 đã hơn 8 tỉ người.
+        kind: figure
+        accept:
+          - 8 tỉ
+          - tám tỉ
+          - 1 tỉ
+          - dân số ngày càng tăng
+        pages: "98"
+        locator: mục 1 Dân số thế giới, đoạn 1
+      - fact_id: HG5.SGK.B23.F2
+        statement: Châu Á đông dân nhất, chiếm hơn 50% dân số thế giới.
+        kind: figure
+        accept:
+          - châu á đông dân nhất
+          - hơn một nửa
+          - hơn 50%
+          - hơn năm mươi phần trăm
+        pages: "98"
+        locator: mục 1, đoạn 2; bảng số dân các châu lục năm 2024
+      - fact_id: HG5.SGK.B23.F3
+        statement: Năm 2024 châu Đại Dương ít dân nhất, khoảng 44 triệu người; châu Á khoảng 4 773 triệu người.
+        kind: figure
+        accept:
+          - châu đại dương ít dân nhất
+          - 44 triệu
+          - bốn mươi bốn triệu
+          - 4 773
+        pages: "98"
+        locator: bảng số dân các châu lục năm 2024
+      - fact_id: HG5.SGK.B23.F4
+        statement: Bốn chủng tộc chính là Môn-gô-lô-it, Nê-grô-it, Ơ-rô-pê-ô-it và Ô-xtra-lô-it.
+        kind: feature
+        accept:
+          - bốn chủng tộc
+          - 4 chủng tộc
+          - môn-gô-lô-it
+          - nê-grô-it
+          - ơ-rô-pê-ô-it
+          - ô-xtra-lô-it
+        pages: "99"
+        locator: mục 2a Đặc điểm ngoại hình của các chủng tộc, đoạn đầu
+      - fact_id: HG5.SGK.B23.F5
+        statement: Các chủng tộc khác nhau rõ về màu da, tóc, mắt, mũi.
+        kind: feature
+        accept:
+          - màu da
+          - màu tóc
+          - ngoại hình khác nhau
+        pages: "99"
+        locator: mục 2a, đoạn 2; Hình 1 – các chủng tộc chính
+      - fact_id: HG5.SGK.B23.F6
+        statement: Người Môn-gô-lô-it có da vàng, tóc đen thẳng, mắt nhỏ màu nâu đen.
+        kind: feature
+        accept:
+          - da vàng
+          - tóc đen thẳng
+          - môn-gô-lô-it da vàng
+        pages: "99"
+        locator: Hình 1, cột Môn-gô-lô-it
+      - fact_id: HG5.SGK.B23.F7
+        statement: Môn-gô-lô-it sống chủ yếu ở châu Á, châu Mỹ; Nê-grô-it chủ yếu ở châu Phi.
+        kind: place
+        accept:
+          - nê-grô-it ở châu phi
+          - môn-gô-lô-it ở châu á
+          - châu á và châu mỹ
+        pages: "99"
+        locator: mục 2b Sự phân bố của các chủng tộc; Hình 2 – bản đồ phân bố (trang 100)
+      - fact_id: HG5.SGK.B23.F8
+        statement: Ơ-rô-pê-ô-it sống chủ yếu ở châu Âu, châu Mỹ, châu Đại Dương; Ô-xtra-lô-it chủ yếu ở châu Đại Dương.
+        kind: place
+        accept:
+          - ơ-rô-pê-ô-it ở châu âu
+          - ô-xtra-lô-it ở châu đại dương
+        pages: "99"
+        locator: mục 2b; Hình 2 – bản đồ phân bố (trang 100)
+      - fact_id: HG5.SGK.B23.F9
+        statement: Ngày nay có cả nhóm người lai, và các chủng tộc đã sống ở khắp nơi trên Trái Đất.
+        kind: feature
+        accept:
+          - người lai
+          - khắp mọi nơi
+          - sống chung
+        pages: "100"
+        locator: mục 2b, đoạn đầu trang 100
+      - fact_id: HG5.SGK.B23.F10
+        statement: Mọi chủng tộc đều có quyền như nhau và hoàn toàn bình đẳng.
+        kind: feature
+        accept:
+          - bình đẳng
+          - quyền như nhau
+          - tôn trọng sự khác biệt
+        pages: "100"
+        locator: mục 2b, đoạn 2 trang 100
+      - fact_id: HG5.SGK.B23.F11
+        statement: Khoảng 20 nghìn năm trước, người Môn-gô-lô-it đi qua eo đất Bê-rinh từ châu Á sang châu Mỹ.
+        kind: event
+        accept:
+          - bê-rinh
+          - bê rinh
+          - eo đất bê-rinh
+          - 20 nghìn năm
+        pages: "100"
+        locator: khung Em có biết, trang 100
+  - lesson_id: HG5.SGK.B24
+    objectives:
+      - Chỉ được vị trí nước Ai Cập ngày nay trên bản đồ hoặc lược đồ.
+      - Tìm tư liệu và mô tả một số thành tựu tiêu biểu của văn minh Ai Cập như kim tự tháp, đồng hồ mặt trời.
+      - Kể lại được câu chuyện về kim tự tháp và các pha-ra-ông.
+    question_styles:
+      - Mô tả một thành tựu văn minh từ tư liệu tự sưu tầm
+      - Nói thành tựu em ấn tượng nhất và giải thích vì sao
+      - Tìm hiểu qua sách báo, internet các thành tựu còn được bảo tồn
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2cfdc83c9b3a7d95 }
+    facts:
+      - fact_id: HG5.SGK.B24.F1
+        statement: Ai Cập ở vùng Đông Bắc châu Phi, có sông Nin chảy qua.
+        kind: place
+        accept:
+          - đông bắc châu phi
+          - sông nin
+          - châu phi
+        pages: "101"
+        locator: mục 1 Vị trí địa lí và một số thành tựu tiêu biểu, đoạn đầu; Hình 2 – lược đồ Ai Cập ngày nay (trang 102)
+      - fact_id: HG5.SGK.B24.F2
+        statement: Ai Cập giáp Địa Trung Hải, Biển Đỏ, Xu-đăng và Li-bi.
+        kind: place
+        accept:
+          - địa trung hải
+          - biển đỏ
+          - xu-đăng
+          - xu đăng
+          - li-bi
+          - li bi
+        pages: "101"
+        locator: mục 1, đoạn đầu; Hình 2 (trang 102)
+      - fact_id: HG5.SGK.B24.F3
+        statement: Sông Nin đem phù sa, nước và đường giao thông cho Ai Cập, nên được gọi là món quà của sông Nin.
+        kind: cause
+        accept:
+          - quà tặng của sông nin
+          - phù sa
+          - món quà của sông nin
+        pages: "101"
+        locator: khung Em có biết, trang 101
+      - fact_id: HG5.SGK.B24.F4
+        statement: Thành tựu nổi bật của Ai Cập cổ đại gồm kim tự tháp, đồng hồ mặt trời, giấy pa-pi-rút.
+        kind: feature
+        accept:
+          - kim tự tháp
+          - đồng hồ mặt trời
+          - giấy pa-pi-rút
+          - pa pi rút
+        pages: "102"
+        locator: mục 1, đoạn dưới Hình 2
+      - fact_id: HG5.SGK.B24.F5
+        statement: Kim tự tháp là lăng mộ của pha-ra-ông và hoàng hậu, xây bằng đá, hình chóp đáy vuông.
+        kind: feature
+        accept:
+          - lăng mộ
+          - pha-ra-ông
+          - pha ra ông
+          - hình chóp
+          - đáy hình vuông
+        pages: "102"
+        locator: mục 1, tiểu mục Kim tự tháp
+      - fact_id: HG5.SGK.B24.F6
+        statement: Gần kim tự tháp ở Ghi-da có tượng nhân sư đầu người mình sư tử bằng đá, cao 20 m.
+        kind: feature
+        accept:
+          - nhân sư
+          - đầu người thân sư tử
+          - ghi-da
+          - ghi da
+        pages: "102"
+        locator: khung Em có biết, trang 102; Hình 1 (trang 101)
+      - fact_id: HG5.SGK.B24.F7
+        statement: Người Ai Cập phát minh đồng hồ mặt trời khoảng năm 3500 TCN, xem giờ nhờ hướng và độ dài bóng cột.
+        kind: date
+        accept:
+          - 3500 trước công nguyên
+          - ba nghìn năm trăm
+          - bóng cột
+          - bóng ngắn
+        pages: 102, 103
+        locator: mục 1, tiểu mục Đồng hồ mặt trời (cuối trang 102 – đầu trang 103)
+      - fact_id: HG5.SGK.B24.F8
+        statement: Kim tự tháp Kê-ốp là lớn nhất, làm lăng mộ cho pha-ra-ông Kê-ốp, xây trong khoảng 20 năm.
+        kind: event
+        accept:
+          - kê-ốp
+          - kê ốp
+          - 20 năm
+          - hai mươi năm
+        pages: 102, 103
+        locator: tiểu mục Kim tự tháp (trang 102); Câu chuyện lịch sử Xây dựng kim tự tháp Kê-ốp, đoạn 1 (trang 103)
+      - fact_id: HG5.SGK.B24.F9
+        statement: Kim tự tháp Kê-ốp cao 147 m, gồm khoảng 2,3 triệu tảng đá xếp khít, không dùng chất kết dính.
+        kind: figure
+        accept:
+          - 147 mét
+          - một trăm bốn mươi bảy
+          - 2,3 triệu tảng đá
+          - không dùng chất kết dính
+        pages: "103"
+        locator: Câu chuyện lịch sử Xây dựng kim tự tháp Kê-ốp, đoạn 2; Hình 3
+      - fact_id: HG5.SGK.B24.F10
+        statement: Nữ hoàng Cờ-lê-ô-pát lên ngôi năm 17 tuổi, thông minh, biết nhiều thứ tiếng.
+        kind: person
+        accept:
+          - cờ-lê-ô-pát
+          - cờ lê ô pát
+          - 17 tuổi
+          - mười bảy tuổi
+          - nữ hoàng
+        pages: "104"
+        locator: Câu chuyện lịch sử Nữ hoàng Cờ-lê-ô-pát; Hình 4
+      - fact_id: HG5.SGK.B24.F11
+        statement: Cờ-lê-ô-pát xây quân đội và hạm đội tàu chiến để đương đầu với đế chế La Mã.
+        kind: event
+        accept:
+          - la mã
+          - hạm đội
+          - tàu chiến
+        pages: "104"
+        locator: Câu chuyện lịch sử Nữ hoàng Cờ-lê-ô-pát, đoạn 2
+  - lesson_id: HG5.SGK.B25
+    objectives:
+      - Chỉ được vị trí nước Hy Lạp ngày nay trên bản đồ hoặc lược đồ.
+      - Tìm tư liệu và mô tả một số thành tựu tiêu biểu về kiến trúc, điêu khắc của văn minh Hy Lạp.
+      - Kể lại được câu chuyện về lịch sử Ô-lim-píc và các vị thần Hy Lạp.
+    question_styles:
+      - Hoàn thành sơ đồ tư duy về thành tựu kiến trúc, điêu khắc
+      - Nói thành tựu em ấn tượng nhất và giải thích vì sao
+      - Sưu tầm, giới thiệu một thành tựu còn bảo tồn hoặc thuộc lĩnh vực khác
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e59332ef12f62185 }
+    facts:
+      - fact_id: HG5.SGK.B25.F1
+        statement: Hy Lạp ngày nay nằm ở phía nam châu Âu, phía đông và nam giáp Thổ Nhĩ Kỳ và biển Ê-giê.
+        kind: place
+        accept:
+          - nam châu âu
+          - phía nam châu âu
+          - biển ê-giê
+          - ê giê
+          - thổ nhĩ kỳ
+        pages: "105"
+        locator: mục 1 Vị trí địa lí và một số thành tựu tiêu biểu, đoạn đầu; Hình 2 – lược đồ Hy Lạp ngày nay (trang 106)
+      - fact_id: HG5.SGK.B25.F2
+        statement: Thời cổ đại, Hy Lạp chủ yếu ở nam bán đảo Ban-căng, các đảo biển Ê-giê và phía tây Tiểu Á.
+        kind: place
+        accept:
+          - ban-căng
+          - ban căng
+          - tiểu á
+          - bán đảo
+        pages: "105"
+        locator: khung Em có biết, trang 105
+      - fact_id: HG5.SGK.B25.F3
+        statement: Văn minh Hy Lạp cổ đại đóng góp lớn về chữ viết, văn học, khoa học, kĩ thuật, kiến trúc, điêu khắc.
+        kind: feature
+        accept:
+          - chữ viết
+          - văn học
+          - kiến trúc
+          - điêu khắc
+        pages: "105"
+        locator: mục 1, đoạn cuối trang 105
+      - fact_id: HG5.SGK.B25.F4
+        statement: Đền Pác-tê-nông thờ nữ thần A-tê-na, xây trên đồi A-crô-pôn vào thế kỉ V TCN.
+        kind: feature
+        accept:
+          - pác-tê-nông
+          - pác tê nông
+          - parthenon
+          - a-crô-pôn
+          - thế kỉ v trước công nguyên
+        pages: "106"
+        locator: mục 1, tiểu mục Kiến trúc, đoạn 1–2; Hình 3
+      - fact_id: HG5.SGK.B25.F5
+        statement: Đền Pác-tê-nông làm bằng đá cẩm thạch trắng, mái đỡ bởi các cột tròn ở bốn mặt.
+        kind: feature
+        accept:
+          - đá cẩm thạch
+          - cẩm thạch trắng
+          - cột tròn
+        pages: "106"
+        locator: tiểu mục Kiến trúc, đoạn 2
+      - fact_id: HG5.SGK.B25.F6
+        statement: Hình mặt tiền đền Pác-tê-nông được UNESCO dùng làm biểu tượng của tổ chức.
+        kind: symbol
+        accept:
+          - biểu tượng unesco
+          - unesco
+          - di sản thế giới
+        pages: "106"
+        locator: khung Em có biết, trang 106
+      - fact_id: HG5.SGK.B25.F7
+        statement: Tượng lực sĩ ném đĩa có cơ thể cân đối, tượng trưng cho sự tự tin và khát vọng chiến thắng.
+        kind: feature
+        accept:
+          - lực sĩ ném đĩa
+          - ném đĩa
+          - khát vọng chiến thắng
+        pages: "107"
+        locator: tiểu mục Điêu khắc, đoạn 2; Hình 4
+      - fact_id: HG5.SGK.B25.F8
+        statement: A-tê-na là nữ thần trí tuệ, nghề thủ công, thần bảo hộ thủ đô A-ten.
+        kind: person
+        accept:
+          - a-tê-na
+          - a tê na
+          - nữ thần trí tuệ
+          - bảo hộ a-ten
+        pages: "107"
+        locator: Câu chuyện lịch sử A-tê-na – nữ thần trí tuệ và tài năng; Hình 5
+      - fact_id: HG5.SGK.B25.F9
+        statement: Trong cuộc thi với thần Pô-xê-đông, A-tê-na trồng cây ô liu, mong mang lại hoà bình, thịnh vượng.
+        kind: event
+        accept:
+          - cây ô liu
+          - ô liu
+          - pô-xê-đông
+          - pô xê đông
+        pages: "107"
+        locator: Câu chuyện lịch sử A-tê-na, đoạn 2
+      - fact_id: HG5.SGK.B25.F10
+        statement: Lễ hội Ô-lim-píc tổ chức lần đầu năm 776 TCN để tôn vinh các vị thần, bốn năm một lần.
+        kind: date
+        accept:
+          - 776 trước công nguyên
+          - bảy trăm bảy mươi sáu
+          - bốn năm một lần
+          - 4 năm một lần
+        pages: "108"
+        locator: Câu chuyện lịch sử Lịch sử Ô-lim-píc, đoạn 1
+      - fact_id: HG5.SGK.B25.F11
+        statement: Người thắng cuộc được nhận vòng nguyệt quế tết từ cành, lá ô liu.
+        kind: feature
+        accept:
+          - vòng nguyệt quế
+          - nguyệt quế
+          - lá ô liu
+        pages: "108"
+        locator: Câu chuyện lịch sử Lịch sử Ô-lim-píc, cuối đoạn 1
+      - fact_id: HG5.SGK.B25.F12
+        statement: Ngày nay Đại hội Ô-lim-píc diễn ra trên toàn thế giới, biểu trưng cho đoàn kết, hoà bình.
+        kind: symbol
+        accept:
+          - đoàn kết hoà bình
+          - toàn thế giới
+          - thế vận hội
+        pages: "108"
+        locator: Câu chuyện lịch sử Lịch sử Ô-lim-píc, đoạn 2; Hình 1 – biểu tượng Ô-lim-píc (trang 105)
+  - lesson_id: HG5.SGK.B26
+    objectives:
+      - Nêu được vài vai trò của thiên nhiên đối với cuộc sống con người.
+      - Dùng kiến thức lịch sử, địa lí và tư liệu để kể và trình bày một số vấn đề môi trường (thiên tai, biến đổi khí hậu, suy giảm tài nguyên, ô nhiễm).
+      - Đề xuất đơn giản một số biện pháp xây dựng thế giới xanh – sạch – đẹp.
+      - Bày tỏ sự quan tâm đến môi trường qua vẽ tranh, viết thư.
+    question_styles:
+      - Vẽ sơ đồ tóm tắt các vấn đề môi trường
+      - Vẽ tranh hoặc viết thư kể một hoạt động bảo vệ môi trường em đã tham gia
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ee6cae9ba9a30883 }
+    facts:
+      - fact_id: HG5.SGK.B26.F1
+        statement: Thiên nhiên là không gian sống và cung cấp tài nguyên cho sản xuất, sinh hoạt của con người.
+        kind: feature
+        accept:
+          - không gian sinh sống
+          - nơi sinh sống
+          - cung cấp tài nguyên
+        pages: "109"
+        locator: mục 1 Vai trò của thiên nhiên đối với cuộc sống con người
+      - fact_id: HG5.SGK.B26.F2
+        statement: Thiên nhiên còn là nơi chứa đựng chất thải do con người tạo ra.
+        kind: feature
+        accept:
+          - chứa chất thải
+          - chứa đựng chất thải
+          - nơi chứa rác
+        pages: "109"
+        locator: mục 1, câu cuối
+      - fact_id: HG5.SGK.B26.F3
+        statement: Nguyên nhân chủ yếu gây ra các vấn đề môi trường là hoạt động sản xuất và sinh hoạt của con người.
+        kind: cause
+        accept:
+          - do con người
+          - hoạt động sản xuất
+          - sinh hoạt của con người
+        pages: "110"
+        locator: mục 2 Một số vấn đề môi trường trên thế giới, đoạn đầu
+      - fact_id: HG5.SGK.B26.F4
+        statement: Thiên tai như bão, lũ, động đất, sóng thần, hạn hán ngày càng nhiều, gây thiệt hại về người và tài sản.
+        kind: result
+        accept:
+          - thiên tai
+          - bão lũ
+          - động đất
+          - sóng thần
+          - hạn hán
+        pages: "110"
+        locator: bảng Một số vấn đề môi trường trên thế giới, dòng Thiên tai
+      - fact_id: HG5.SGK.B26.F5
+        statement: Biến đổi khí hậu biểu hiện ở sự nóng lên toàn cầu và nước biển dâng.
+        kind: feature
+        accept:
+          - biến đổi khí hậu
+          - nóng lên toàn cầu
+          - nước biển dâng
+          - trái đất nóng lên
+        pages: "110"
+        locator: bảng Một số vấn đề môi trường, dòng Biến đổi khí hậu; Khởi động Hình 1 – băng tan ở Bắc Cực (trang 109)
+      - fact_id: HG5.SGK.B26.F6
+        statement: Rừng và các loài sinh vật giảm, khoáng sản cạn dần làm mất nơi sống của sinh vật, giảm đa dạng sinh học.
+        kind: result
+        accept:
+          - suy giảm tài nguyên
+          - mất rừng
+          - cạn kiệt
+          - đa dạng sinh học
+          - mất môi trường sống
+        pages: "110"
+        locator: bảng Một số vấn đề môi trường, dòng Suy giảm tài nguyên thiên nhiên
+      - fact_id: HG5.SGK.B26.F7
+        statement: Ô nhiễm đất, nước, không khí làm tăng dịch bệnh và giảm sức khoẻ con người.
+        kind: result
+        accept:
+          - ô nhiễm
+          - ô nhiễm không khí
+          - ô nhiễm nước
+          - dịch bệnh
+        pages: 110, 111
+        locator: bảng Một số vấn đề môi trường, dòng Ô nhiễm môi trường; Hình 5 – hồ nước bị ô nhiễm (trang 111)
+      - fact_id: HG5.SGK.B26.F8
+        statement: "Sách nêu ví dụ: động đất, sóng thần ở Nhật Bản (3 – 2011), lũ quét ở Lào Cai (8 – 2023)."
+        kind: event
+        accept:
+          - nhật bản
+          - lũ quét
+          - lào cai
+          - cháy rừng
+        pages: 110, 111
+        locator: Hình 2, Hình 3 (trang 110); Hình 4 – cháy rừng (trang 111)
+      - fact_id: HG5.SGK.B26.F9
+        statement: Xây dựng và bảo vệ môi trường xanh – sạch – đẹp là trách nhiệm của mọi người.
+        kind: feature
+        accept:
+          - trách nhiệm của mọi người
+          - mọi người đều phải
+          - trách nhiệm chung
+        pages: "111"
+        locator: mục 3 Biện pháp xây dựng thế giới xanh – sạch – đẹp, đoạn đầu
+      - fact_id: HG5.SGK.B26.F10
+        statement: Biện pháp gồm giáo dục ý thức bảo vệ môi trường, trồng rừng và bảo vệ rừng.
+        kind: feature
+        accept:
+          - trồng rừng
+          - bảo vệ rừng
+          - trồng cây
+          - giáo dục ý thức
+        pages: "111"
+        locator: Hình 6 – sơ đồ biện pháp, ô 1–2
+      - fact_id: HG5.SGK.B26.F11
+        statement: Cần dùng tài nguyên tiết kiệm, giữ gìn môi trường sống và chọn lối sống xanh.
+        kind: feature
+        accept:
+          - tiết kiệm
+          - sử dụng tiết kiệm
+          - lối sống xanh
+          - giữ gìn môi trường
+        pages: "111"
+        locator: Hình 6 – sơ đồ biện pháp, ô 3–5
+  - lesson_id: HG5.SGK.B27
+    objectives:
+      - Dùng tư liệu (Liên hợp quốc, truyền thuyết chim bồ câu và cành ô liu, Chữ thập đỏ, Ô-lim-píc) để trình bày mong ước và nỗ lực của nhân loại vì hoà bình.
+      - Đề xuất đơn giản một số biện pháp xây dựng thế giới hoà bình.
+      - Thể hiện thế giới tương lai qua vẽ tranh, viết thư, kể chuyện.
+    question_styles:
+      - Hoàn thành bảng tên tổ chức, phong trào – mục đích, ý nghĩa
+      - Vẽ tranh theo chủ đề hoà bình
+      - Kể một hoạt động vì hoà bình em đã tham gia hoặc biết
+      - Viết thư cho bạn đề xuất biện pháp bảo vệ hoà bình
+    opinion_prompts_present: true
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 71f34e2fedff4080 }
+    facts:
+      - fact_id: HG5.SGK.B27.F1
+        statement: Nhân loại luôn mong ước, chung tay xây dựng hoà bình, thể hiện qua truyền thuyết, Ô-lim-píc, Chữ thập đỏ, Liên hợp quốc.
+        kind: feature
+        accept:
+          - mong ước hoà bình
+          - chung tay
+          - xây dựng hoà bình
+        pages: "113"
+        locator: mục 1 Nhân loại xây dựng thế giới hoà bình, đoạn đầu trang 113
+      - fact_id: HG5.SGK.B27.F2
+        statement: Theo truyền thuyết, bồ câu của Nô-ê ngậm cành ô liu bay về, báo hiệu nước lũ đã rút bớt.
+        kind: event
+        accept:
+          - nô-ê
+          - nô ê
+          - nước đã rút
+          - con thuyền
+        pages: "113"
+        locator: Câu chuyện lịch sử Truyền thuyết về chim bồ câu và cành ô liu
+      - fact_id: HG5.SGK.B27.F3
+        statement: Chim bồ câu ngậm cành ô liu được coi là biểu tượng của hoà bình.
+        kind: symbol
+        accept:
+          - chim bồ câu
+          - bồ câu
+          - cành ô liu
+          - biểu tượng hoà bình
+        pages: "113"
+        locator: Câu chuyện lịch sử, đoạn cuối; Hình 1 (trang 112)
+      - fact_id: HG5.SGK.B27.F4
+        statement: Năm 1896 Thế vận hội Ô-lim-píc được tổ chức lần đầu tại A-ten, Hy Lạp.
+        kind: date
+        accept:
+          - "1896"
+          - năm 1896
+          - a-ten
+          - a ten
+        pages: "113"
+        locator: tiểu mục Thế vận hội Ô-lim-píc
+      - fact_id: HG5.SGK.B27.F5
+        statement: Năm vòng tròn đan nhau của Ô-lim-píc đại diện năm châu lục, thể hiện đoàn kết, bình đẳng.
+        kind: symbol
+        accept:
+          - năm vòng tròn
+          - 5 vòng tròn
+          - năm châu lục
+          - đan vào nhau
+        pages: "113"
+        locator: khung Em có biết cạnh Hình 2 – khai mạc Ô-lim-píc Tô-ki-ô
+      - fact_id: HG5.SGK.B27.F6
+        statement: Chữ thập đỏ là phong trào nhân đạo quốc tế bảo vệ cuộc sống và sức khoẻ con người.
+        kind: feature
+        accept:
+          - chữ thập đỏ
+          - nhân đạo
+          - bảo vệ sức khoẻ
+        pages: "114"
+        locator: tiểu mục Phong trào Chữ thập đỏ
+      - fact_id: HG5.SGK.B27.F7
+        statement: Sau Chiến tranh thế giới thứ hai, năm 1945, Liên hợp quốc được thành lập để giữ hoà bình, an ninh thế giới.
+        kind: date
+        accept:
+          - liên hợp quốc
+          - năm 1945
+          - chiến tranh thế giới thứ hai
+        pages: "114"
+        locator: tiểu mục Liên hợp quốc, đoạn 1
+      - fact_id: HG5.SGK.B27.F8
+        statement: Trụ sở Liên hợp quốc đặt tại Niu Oóc, Hoa Kỳ.
+        kind: place
+        accept:
+          - niu oóc
+          - new york
+          - hoa kỳ
+        pages: "114"
+        locator: tiểu mục Liên hợp quốc, đoạn 1
+      - fact_id: HG5.SGK.B27.F9
+        statement: Cờ Liên hợp quốc màu trắng và xanh, có nhánh ô liu bao quanh bản đồ thế giới.
+        kind: symbol
+        accept:
+          - trắng và xanh
+          - nhánh ô liu
+          - bản đồ thế giới
+        pages: "114"
+        locator: khung Em có biết và Hình 4 – cờ Liên hợp quốc
+      - fact_id: HG5.SGK.B27.F10
+        statement: Quân nhân Việt Nam tham gia giữ hoà bình của Liên hợp quốc ở Nam Xu-đăng.
+        kind: event
+        accept:
+          - nam xu-đăng
+          - nam xu đăng
+          - giữ hoà bình
+          - quân nhân việt nam
+        pages: "114"
+        locator: Hình 3 – quân nhân Việt Nam tại Phái bộ giữ hoà bình
+      - fact_id: HG5.SGK.B27.F11
+        statement: Liên hợp quốc chọn ngày 21 – 9 hằng năm là ngày Quốc tế Hoà bình.
+        kind: date
+        accept:
+          - 21-9
+          - 21 tháng 9
+          - ngày quốc tế hoà bình
+        pages: "115"
+        locator: khung Em có biết, trang 115
+      - fact_id: HG5.SGK.B27.F12
+        statement: "Biện pháp giữ hoà bình: đoàn kết, hữu nghị, không kì thị màu da, giải quyết mâu thuẫn bằng cách hoà bình."
+        kind: feature
+        accept:
+          - đoàn kết hữu nghị
+          - không kì thị
+          - giải quyết bằng hoà bình
+          - tuyên truyền
+        pages: 114, 115
+        locator: mục 2 Một số biện pháp xây dựng thế giới hoà bình (cuối trang 114 – đầu trang 115)
+  - lesson_id: HG5.SGK.B28
+    objectives: []
+    question_styles:
+      - Hoàn thành bảng hoặc xếp thông tin theo đúng triều đại đã học
+      - Vẽ và hoàn thành trục thời gian các sự kiện lịch sử
+      - Bảng so sánh tự nhiên, dân số, công trình của các nước láng giềng
+      - Kể lại nhân vật hoặc sự kiện lịch sử, viết đoạn văn về châu lục hay thành tựu văn minh và nêu cảm nghĩ
+    opinion_prompts_present: true
+    approved: null
+    facts: []

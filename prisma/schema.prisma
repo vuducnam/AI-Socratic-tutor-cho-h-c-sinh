@@ -38,6 +38,7 @@ model User {
   approved_misconceptions Misconception[]
   approved_sources        AllowedSource[]
   approved_life_contexts  LifeContext[]
+  approved_key_facts      KeyFact[]
   progress_set            SchoolProgress[]
   independent_results     IndependentResult[]
   decisions               Decision[]
@@ -225,6 +226,7 @@ model CurriculumLesson {
 
   school_progress      SchoolProgress[]
   progress_suggestions ProgressSuggestion[]
+  key_facts            KeyFact[]
 
   @@unique([subject, grade, seq])
   @@map("curriculum_lessons")
@@ -642,6 +644,31 @@ model LifeContext {
 
   @@index([skill_id])
   @@map("life_contexts")
+}
+
+// Ý chính từng bài của môn kiến thức (SPEC §5d), seed từ data/key-facts. Dữ liệu chương trình, không phải dữ liệu
+// học sinh. Duyệt theo BÀI: approved.content_hash trong YAML phải khớp hash ý chính hiện tại của bài, không khớp
+// (sửa sau khi duyệt) → seed như chưa duyệt. Chỉ ý chính đã duyệt mới được dùng để dạy.
+model KeyFact {
+  fact_id      String    @id
+  lesson_id    String
+  subject      String
+  statement    String
+  kind         String // date | place | person | event | cause | result | feature | figure | symbol
+  accept       String[]
+  withhold     String[]  @default([]) // chữ Mít không được nói khi con chưa nêu ý (chỉ để chặn, không để chấm)
+  pages        String
+  locator      String
+  content_hash String // hash ý chính của cả bài
+  approved_by  String?   @db.Uuid
+  approved_at  DateTime? @db.Timestamptz(6)
+  created_at   DateTime  @default(now()) @db.Timestamptz(6)
+
+  lesson   CurriculumLesson @relation(fields: [lesson_id], references: [lesson_id], onDelete: Restrict)
+  approver User?            @relation(fields: [approved_by], references: [id], onDelete: Restrict)
+
+  @@index([lesson_id])
+  @@map("key_facts")
 }
 
 model Mission {

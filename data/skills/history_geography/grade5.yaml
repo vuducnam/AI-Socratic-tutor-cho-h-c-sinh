@@ -1,0 +1,346 @@
+# Skill graph Lịch sử và Địa lí 5 — SPEC mục 5, 5d; docs/CURRICULUM.md.
+# NHÁP do Claude Code soạn ngày 2026-10-21 CHỈ từ mục lục đã chép (data/curriculum/history_geography/grade5.yaml):
+# mỗi bài học là một skill, tên skill = tên bài; Bài 11 và 28 (Ôn tập) không có skill riêng.
+# source.imported_at = ngày Claude đọc bản chính thống trên taphuan; CHỜ CHỦ DỰ ÁN DUYỆT.
+# Kiến thức cụ thể của từng bài nằm ở data/key-facts/history_geography/grade5.yaml (ý chính, có duyệt riêng).
+subject: history_geography
+grade: 5
+skills:
+  - skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
+    name: Vị trí địa lí, lãnh thổ, đơn vị hành chính, Quốc kì, Quốc huy, Quốc ca
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 1. Vị trí địa lí, lãnh thổ, đơn vị hành chính, Quốc kì, Quốc huy, Quốc ca
+      pages: 5-8
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B02.NATURE
+    name: Thiên nhiên Việt Nam
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 2. Thiên nhiên Việt Nam
+      pages: 9-15
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B03.SEA_ISLANDS
+    name: Biển, đảo Việt Nam
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 3. Biển, đảo Việt Nam
+      pages: 16-19
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
+    name: Dân cư và dân tộc ở Việt Nam
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 4. Dân cư và dân tộc ở Việt Nam
+      pages: 20-24
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B05.VAN_LANG_AU_LAC
+    name: Nhà nước Văn Lang, Nhà nước Âu Lạc
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 5. Nhà nước Văn Lang, Nhà nước Âu Lạc
+      pages: 25-28
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B06.FUNAN
+    name: Vương quốc Phù Nam
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 6. Vương quốc Phù Nam
+      pages: 29-31
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B07.CHAMPA
+    name: Vương quốc Chăm-pa
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 7. Vương quốc Chăm-pa
+      pages: 32-35
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
+    name: Đấu tranh giành độc lập thời kì Bắc thuộc
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 8. Đấu tranh giành độc lập thời kì Bắc thuộc
+      pages: 36-39
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B09.LY_DYNASTY_THANG_LONG
+    name: Triều Lý và việc định đô ở Thăng Long
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 9. Triều Lý và việc định đô ở Thăng Long
+      pages: 40-43
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
+    name: Triều Trần xây dựng đất nước và kháng chiến chống quân Mông – Nguyên xâm lược
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 10. Triều Trần xây dựng đất nước và kháng chiến chống quân Mông – Nguyên xâm lược
+      pages: 44-49
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B12.LAM_SON_LATER_LE
+    name: Khởi nghĩa Lam Sơn và Triều Hậu Lê
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 12. Khởi nghĩa Lam Sơn và Triều Hậu Lê
+      pages: 51-55
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B13.NGUYEN_DYNASTY
+    name: Triều Nguyễn
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 13. Triều Nguyễn
+      pages: 56-60
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B14.AUGUST_REVOLUTION_1945
+    name: Cách mạng tháng Tám năm 1945
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 14. Cách mạng tháng Tám năm 1945
+      pages: 61-64
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B15.DIEN_BIEN_PHU_1954
+    name: Chiến dịch Điện Biên Phủ năm 1954
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 15. Chiến dịch Điện Biên Phủ năm 1954
+      pages: 65-68
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
+    name: Chiến dịch Hồ Chí Minh năm 1975
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 16. Chiến dịch Hồ Chí Minh năm 1975
+      pages: 69-71
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B17.DOI_MOI
+    name: Đất nước Đổi mới
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 17. Đất nước Đổi mới
+      pages: 72-75
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B18.CHINA
+    name: Nước Cộng hoà Nhân dân Trung Hoa
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 18. Nước Cộng hoà Nhân dân Trung Hoa
+      pages: 76-81
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B19.LAOS
+    name: Nước Cộng hoà Dân chủ Nhân dân Lào
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 19. Nước Cộng hoà Dân chủ Nhân dân Lào
+      pages: 82-85
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B20.CAMBODIA
+    name: Vương quốc Cam-pu-chia
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 20. Vương quốc Cam-pu-chia
+      pages: 86-89
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B21.ASEAN
+    name: Hiệp hội các quốc gia Đông Nam Á
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 21. Hiệp hội các quốc gia Đông Nam Á
+      pages: 90-92
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B22.CONTINENTS_OCEANS
+    name: Các châu lục và đại dương trên thế giới
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 22. Các châu lục và đại dương trên thế giới
+      pages: 93-97
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B23.WORLD_POPULATION_RACES
+    name: Dân số và các chủng tộc chính trên thế giới
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 23. Dân số và các chủng tộc chính trên thế giới
+      pages: 98-100
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B24.EGYPT_CIVILIZATION
+    name: Văn minh Ai Cập
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 24. Văn minh Ai Cập
+      pages: 101-104
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B25.GREEK_CIVILIZATION
+    name: Văn minh Hy Lạp
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 25. Văn minh Hy Lạp
+      pages: 105-108
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B26.GREEN_CLEAN_WORLD
+    name: Xây dựng thế giới xanh – sạch – đẹp
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 26. Xây dựng thế giới xanh – sạch – đẹp
+      pages: 109-111
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21
+  - skill_id: HG.B27.WORLD_PEACE
+    name: Xây dựng thế giới hoà bình
+    subject: history_geography
+    grade_introduced: 5
+    prerequisites: []
+    source:
+      series: Kết nối tri thức với cuộc sống
+      publisher: NXB Giáo dục Việt Nam
+      book: Lịch sử và Địa lí 5
+      lesson: Bài 27. Xây dựng thế giới hoà bình
+      pages: 112-115
+      official_url: https://taphuan.nxbgd.vn/tap-huan/doc-sach/sgk-lich-su-va-dia-li-5.4843863100
+      imported_at: 2026-10-21

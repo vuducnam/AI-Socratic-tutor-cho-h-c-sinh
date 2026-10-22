@@ -1,4 +1,5 @@
 import 'server-only';
+import { matchedPhrase } from '@/lib/key-point-matcher';
 import { compileTermSet, type TermDefinition } from '@/lib/term-pattern-matcher';
 import { toCanonical } from '@/lib/vi-math-normalizer';
 import { unitNameLeak } from './unit-name-leak';
@@ -7,7 +8,8 @@ import { unitNameLeak } from './unit-name-leak';
 // - LENGTH: số câu, số từ, số câu hỏi theo preset.
 // - LEAK: theo kiểu đáp án (khớp chuỗi thô báo nhầm: "5" nằm trong "0,5", số có sẵn trong đề):
 //   number / number_list → token số đã chuẩn hoá (cả "0,5" lẫn "không phẩy năm") trùng đáp án mà KHÔNG
-//   phải số liệu đề cho; relation / choice → mẫu khẳng định ("0,5 lớn hơn 0,45", "bạn Lan nhảy xa nhất").
+//   phải số liệu đề cho; relation / choice → mẫu khẳng định ("0,5 lớn hơn 0,45", "bạn Lan nhảy xa nhất");
+//   môn kiến thức → cụm chấp nhận của ý chính con chưa tự nêu (withheldFacts).
 // - SCOPE: khớp patterns của forbiddenTerms.
 // - FORMAT: số thập phân dấu chấm (0.45) không được lọt ra UI học sinh.
 
@@ -39,6 +41,8 @@ export interface HardCheckContext {
   studentTexts?: string[];
   /** Con ra đúng đáp án nhưng đang đoán: xác nhận "Đúng rồi" lúc này là lộ (đoán lần lượt cũng được gật đầu). */
   forbidConfirmation?: boolean;
+  /** Môn kiến thức: cụm chấp nhận của ý chính bắt buộc con chưa tự nêu; Mít nói ra là lộ (SPEC §5d). */
+  withheldFacts?: { fact_id: string; phrases: string[] }[];
 }
 
 const CONFIRMATION = /(?<![p{L}p{M}])(đúng rồi|chính xác|đúng vậy|đúng đó|bạn nói đúng|bạn đúng)(?![p{L}p{M}])/iu;
@@ -205,6 +209,15 @@ export function runHardChecks(message: string, ctx: HardCheckContext): HardCheck
   if (stepLeaks.length) {
     reasons.add('LEAK');
     details.push(`nói sẵn kết quả bước con chưa làm: ${stepLeaks.join(', ')}`);
+  }
+  // Môn kiến thức: Mít nói ra ý chính con chưa tự nêu (năm, tên người, địa danh, kết quả) là lộ (SPEC §5d).
+  const factLeaks = (ctx.withheldFacts ?? []).flatMap((f) => {
+    const phrase = matchedPhrase(message, { fact_id: f.fact_id, accept: f.phrases });
+    return phrase ? [`${f.fact_id} («${phrase}»)`] : [];
+  });
+  if (factLeaks.length) {
+    reasons.add('LEAK');
+    details.push(`nói ra ý chính con chưa tự nêu: ${factLeaks.join(', ')} (hỏi gợi mở hoặc chỉ trang sách để con tự đọc)`);
   }
   if (ctx.forbidConfirmation && CONFIRMATION.test(message)) {
     reasons.add('LEAK');

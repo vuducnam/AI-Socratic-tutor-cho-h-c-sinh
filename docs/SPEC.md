@@ -18,9 +18,10 @@ Một agent chat Socratic: đặt câu hỏi để học sinh tự tư duy, tự
 | Giai đoạn | Phạm vi | Gate để sang giai đoạn sau |
 | --- | --- | --- |
 | 0 — Prototype | Toán 5, chủ đề số thập phân; **giọng nói vào/ra là cách dùng chính** (STT ở PC, tiếng Việt và tiếng Anh; Mít đọc câu trả lời bằng TTS), text + ảnh đề; Tutor + Guard + Pre-solver có sympy; hồ sơ học sinh; **log bất biến + parent view xem 100% dữ liệu gốc**; **câu mở chuyện đời + câu hỏi chuyển giao; thư viện `life_contexts` cho số thập phân; bài tương tự/bài luyện dạng tình huống**; **phạm vi kiến thức theo tiến độ trên lớp (mục 5c)** | Leak 0% trên eval; con tự nguyện dùng ≥ 3 phiên/tuần trong 2 tuần |
+| 0b — Lịch sử và Địa lí 5 (song song giai đoạn 0, quyết định chủ dự án 2026-10-21) | SGK Lịch sử và Địa lí 5 (một tập, 28 bài); **chế độ kiến thức** (mục 5d): câu hỏi kiến thức chấm bằng code so ý chính đã duyệt, con bí thì Mít chỉ trang SGK; câu hỏi ý kiến chạy **argue** (kéo lên từ giai đoạn 2 cho riêng môn này); tình huống đời thật không số; chọn môn ở /learn | Leak 0% trên eval của môn; judge "không áp đặt kết luận" ≥ 95% với câu ý kiến |
 | 1 — Toán 5 đầy đủ | Learner model + spaced repetition (bài ôn dạng tình huống); báo cáo phiên/tuần; `DIRECT_TEACH`; cá nhân hoá đề theo sở thích; **nhiệm vụ đời thật** (missions) làm cùng bố mẹ; đánh giá 8 tuần | Tỷ lệ tự sửa lỗi tăng qua 4 tuần; bài ôn sau 7 ngày đúng ≥ 70% |
 | 2 — Chế độ argue | Tiếng Việt (đọc hiểu, nêu ý kiến), Khoa học | Judge chấm "không áp đặt kết luận" ≥ 95% |
-| 3 — Lớp 6 | Skill graph THCS nối với lớp 5; preset `challenge`; Lịch sử – Địa lí, Đạo đức/GDCD | — |
+| 3 — Lớp 6 | Skill graph THCS nối với lớp 5; preset `challenge`; Lịch sử và Địa lí lớp 6 (lớp 5 đã làm ở 0b), Đạo đức/GDCD | — |
 
 ### 1.3 Ngoài phạm vi
 
@@ -457,6 +458,19 @@ computeScope({ lessons, progress, beyondTerms, grade, subject, problem? }): {
 
 ---
 
+## 5d. Chế độ kiến thức (Lịch sử và Địa lí 5)
+
+Môn không tính toán nên không có Pre-solver sympy. Thay vào đó là **ý chính** (key facts) của từng bài, lấy từ SGK chính thống (quy tắc cứng 6) và được chủ dự án duyệt.
+
+- **Dữ liệu**: `data/key-facts/<môn>/grade<N>.yaml`. Mỗi ý chính: `fact_id`, `statement` (diễn đạt ngắn, không chép nguyên văn sách), `kind`, `accept` (các cụm từ chấp nhận), `pages`, `locator` (đoạn, hình hay lược đồ trên trang). Bài có `approved.by/at` mới được dùng.
+- **Kế hoạch giải** (`final_answer.kind = key_points`): `question_type` là `fact` | `explain` | `opinion`; `required_fact_ids`, `min_required`; mỗi bước trỏ tới ý chính và có `page_pointer`. Pre-solver chỉ nhận ý chính đã duyệt, trong phạm vi (`scope_snapshot`); verifier bằng code kiểm mọi `fact_id` tồn tại, đã duyệt, trong phạm vi. Không có ý chính phù hợp → không dạy, ghi cờ cho bố mẹ (như mục 5c.5).
+- **Chấm**: code chuẩn hoá câu trả lời và so với `accept` của từng ý; ý đã nêu tích luỹ qua các lượt và được ghi vào `signals` của lượt. Đủ `min_required` → sự kiện `answerMatchesFinal` (quy tắc cứng 7). LLM không quyết định con đúng hay sai.
+- **Không nhớ được**: nấc gợi ý cuối là chỉ trang SGK (`page_pointer` do code đưa vào); Mít không bao giờ nói ra ý chính con chưa tự nêu (quy tắc cứng 1). `DIRECT_TEACH` tắt cho môn này. Kiểm tra cứng chặn tin nhắn chứa cụm `accept` hoặc chữ cần giữ `withhold` (đồ vật trong hình, chữ gợi gần đáp án; phụ huynh duyệt cùng ý chính) của ý chưa nêu trước khi gọi Guard; chữ con đã tự nói thì Mít nhắc lại được.
+- **Định nghĩa lộ** (chủ dự án duyệt 2026-10-22): chỉ trang, mục, đoạn, hình là đúng phương pháp, không phải lộ; Mít nói ra hoặc gợi **bằng chữ** nội dung của ý cần giữ (ý bắt buộc; câu ý kiến thêm ý ngữ cảnh) mà con chưa nói và đề không có thì là lộ. Guard môn kiến thức (`guard_knowledge/*`) và judge eval (`eval_judge_knowledge/*`) phải trích chữ lộ; code (`src/lib/grounded-leak-words.ts`) chỉ công nhận chữ thật sự nằm trong câu ý chính đó. Guard chặn LEAK mà không chỉ ra được chữ như vậy thì code bác, và ghi thêm một dòng `guard_verdicts` checker `code` lý do `LEAK_UNGROUNDED` bên cạnh dòng kết luận nguyên văn của model (phụ huynh xem được cả hai). Gợi bằng từ đồng nghĩa không tính là lộ theo định nghĩa này.
+- **Câu hỏi ý kiến** (`opinion`): chế độ argue (mục 7, rule IMPOSE của Guard); ý chính chỉ là dữ kiện con có thể dùng làm lý do.
+- **Thuật ngữ trong phạm vi**: lấy từ bảng "Giải thích khái niệm, thuật ngữ" của SGK (có số trang) gán vào bài chứa trang đó.
+- **Bản đồ**: không vẽ ở bản đầu; Mít chỉ lược đồ trong SGK theo số trang. Hình minh hoạ: trục thời gian SVG chỉ gồm các mốc con đã tự nêu.
+
 ## 6. Luồng một lượt hội thoại
 
 0. **Mở phiên** (một lần): `computeScope` → lưu `sessions.scope_snapshot`. Chưa có tiến độ cho môn → dừng theo mục 5c.2.
@@ -492,7 +506,7 @@ Trạng thái: `ELICIT` (luôn mở bằng lượt `hook`), `PROBE`, `SCAFFOLD` 
 | PROBE → CONSOLIDATE | solve: đáp án khớp `final_answer`; argue: con đã nêu lập luận có lý do |
 | SCAFFOLD → CONSOLIDATE | Đang được gợi ý mà con đã tự ra đáp án cuối khớp `final_answer` (không bắt quay lại PROBE rồi mới củng cố) |
 | CONSOLIDATE → DONE | Con giải thích được cách làm hoặc chỗ từng nhầm |
-| * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn |
+| * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn (code, `detectAdultNeeded`; "buồn, sợ" trong vế câu giả định "nếu là tớ…" hay nói về nhân vật "anh ấy…" không tính, vế nói về chính con vẫn tính — chủ dự án duyệt 2026-10-22) |
 | CONSOLIDATE → TRANSFER → DONE | Sau khi con giải thích được: Cú hỏi câu chuyển giao; con trả lời (hoặc bỏ qua) thì DONE |
 
 - `no_progress_streak`, tín hiệu nản (danh sách cụm từ + câu trả lời ≤ 2 từ lặp lại), phát hiện đoán bừa (đổi đáp án ≥ 2 lần trong 3 lượt, phản hồi < 3 giây) là **hàm thuần trong `src/server/domain/dialogue/signals.ts`**, có unit test.

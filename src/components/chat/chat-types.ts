@@ -1,7 +1,7 @@
 // Kiểu dữ liệu phía client của /learn (khớp JSON từ /api/learn/*, /api/chat — không import từ src/server).
 
 export interface Visual {
-  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box';
+  kind: 'segment_bar' | 'fraction_grid' | 'number_line' | 'box' | 'timeline';
   items: { label: string; value: number; unit: string }[];
 }
 
@@ -25,8 +25,21 @@ export interface TurnResultDto {
   paused: boolean;
 }
 
+/** Môn học (config/subjects.yaml): tên hiển thị và có bàn phím toán không. */
+export type SubjectDto = { id: string; name: string; mathKeyboard: boolean };
+
 export type StartDto =
-  | { ok: true; sessionId: string; lines: ChatLine[]; state: string | null; hasProblem: boolean; minutesLeft: number }
+  | {
+      ok: true;
+      sessionId: string;
+      subject: SubjectDto;
+      subjects: SubjectDto[];
+      lines: ChatLine[];
+      state: string | null;
+      hasProblem: boolean;
+      minutesLeft: number;
+    }
+  | { ok: false; reason: 'choose_subject'; subjects: SubjectDto[] }
   | { ok: false; reason: string; message: string };
 
 export type ProblemResultDto = { ok: true; turn: TurnResultDto } | { ok: false; message: string; reason: string };
