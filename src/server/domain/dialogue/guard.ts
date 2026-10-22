@@ -84,6 +84,8 @@ export async function runGuard(input: GuardInput): Promise<GuardResult> {
   const knowledge = promptVersion === GUARD_KNOWLEDGE_PROMPT;
   const result = await callLlm({
     purpose: 'guard',
+    // Môn kiến thức chạy Guard bằng model mạnh hơn (config/models.yaml › guard_knowledge).
+    role: knowledge ? 'guard_knowledge' : undefined,
     studentId: input.studentId,
     sessionId: input.sessionId,
     turnId: input.turnId,

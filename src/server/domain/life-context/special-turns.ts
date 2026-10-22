@@ -5,6 +5,7 @@ import { renderCurriculumScope } from '@/server/domain/curriculum/render-curricu
 import { subjectName } from '@/server/domain/curriculum/subject-config';
 import { guardVerdictRows, runGuard, type GuardInput } from '@/server/domain/dialogue/guard';
 import { runHardChecks, type HardCheckContext } from '@/server/domain/dialogue/hard-checks';
+import { guardedFactIds } from '@/server/domain/dialogue/key-points-progress';
 import type { TurnContext } from '@/server/domain/dialogue/turn-context';
 import { callLlm, LlmOutputInvalidError } from '@/server/llm/llm-gateway';
 import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
@@ -14,7 +15,7 @@ import { loadPrompt, renderPrompt } from '@/server/llm/prompt-loader';
 
 export const HOOK_PROMPT = 'hook/v5';
 // Môn kiến thức (SPEC §5d): chuyện đời thường quanh em, không nói ra ý chính của bài.
-export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v2';
+export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v3';
 export const TRANSFER_PROMPT = 'transfer/v4';
 // Môn kiến thức: câu chuyển giao hỏi gặp lại điều vừa học ở đâu quanh mình (tên đường, ngày lễ, bản đồ), không hỏi "cách làm".
 export const TRANSFER_KNOWLEDGE_PROMPT = 'transfer_knowledge/v1';
@@ -99,7 +100,13 @@ export async function generateHook(input: SpecialTurnInput) {
   const promptId = knowledge ? HOOK_KNOWLEDGE_PROMPT : HOOK_PROMPT;
   const prompt = await loadPrompt(promptId);
   const system = renderPrompt(prompt.content, {
-    ...(knowledge ? { subject_name: subjectName(input.ctx.scope.subject) } : {}),
+    ...(knowledge
+      ? {
+          subject_name: subjectName(input.ctx.scope.subject),
+          // Ý chính cần giữ: câu mở phải tránh nhắc tới (câu mở kể sẵn "cấy lúa" khi đề hỏi nghề là lộ).
+          key_facts: input.ctx.keyFacts.filter((f) => guardedFactIds(input.ctx.plan!.knowledge!).includes(f.fact_id)).map((f) => `- ${f.statement}`).join('\n') || '(không có)',
+        }
+      : {}),
     display_name: input.ctx.student.display_name,
     student_name: input.ctx.student.display_name,
     grade: input.ctx.student.grade,

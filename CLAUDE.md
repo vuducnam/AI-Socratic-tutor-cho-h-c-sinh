@@ -54,6 +54,7 @@ Tên hiển thị của bạn học với con là **Mít** (linh vật vẫn là
 | --- | --- |
 | Tutor | `claude-sonnet-5-5` |
 | Guard, learner summary | `claude-haiku-5-5` |
+| Guard môn kiến thức (Lịch sử và Địa lí) | `claude-sonnet-5-5` (Haiku bỏ sót kiểu gợi bằng chữ của ý chính; chủ dự án duyệt 2026-10-22) |
 | Pre-solver | `claude-opus-5-5` + sympy verify |
 | Đọc ảnh đề (vision) | `claude-sonnet-5-5` |
 | Việc offline không tương tác (nháp misconception, báo cáo tuần) | Message Batches API |

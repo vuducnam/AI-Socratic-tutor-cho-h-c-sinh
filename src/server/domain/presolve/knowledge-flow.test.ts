@@ -78,6 +78,10 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
     const system = JSON.stringify(presolve.requests[0]!.system);
     expect(system).toContain(F(1));
     expect(system).toContain('đã học');
+    // Câu mở nhận các ý chính cần giữ để tránh kể sẵn (ý ngữ cảnh của câu sự kiện thì không).
+    const hookSystem = JSON.stringify(presolve.requests[1]!.system);
+    expect(hookSystem).toContain('Chiến dịch mở màn ngày 13 tháng 3 năm 1954.');
+    expect(hookSystem).not.toContain('Phan Đình Giót lấy thân mình');
     const plans = await appDb().query(`SELECT verified, final_answer->>'kind' AS kind, plan->'knowledge'->>'min_required' AS min FROM solution_plans sp JOIN problems p ON p.id = sp.problem_id WHERE p.session_id = $1`, [w.sessionId]);
     expect(plans.rows).toEqual([{ verified: true, kind: 'key_points', min: '2' }]);
 
@@ -108,7 +112,7 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
 
     // Prompt riêng của môn kiến thức, kể cả Guard và câu chuyển giao (Toán giữ guard/v11, transfer/v4).
     const versions = await appDb().query(`SELECT DISTINCT prompt_version FROM llm_calls WHERE session_id = $1 ORDER BY 1`, [w.sessionId]);
-    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard_knowledge/v3', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'transfer_knowledge/v1', 'tutor_knowledge/v3']);
+    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard_knowledge/v3', 'hook_knowledge/v3', 'presolve_knowledge/v1', 'transfer_knowledge/v1', 'tutor_knowledge/v3']);
   });
 
   it('Guard báo lộ mà chữ trích không phải chữ của ý chính: code bác và ghi log; trích đúng chữ thì vẫn chặn', async () => {
