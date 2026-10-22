@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { SolutionPlan } from '@/server/domain/presolve/plan-schema';
 import { relationClaim } from './relation-claim';
-import { answerMatchesFinal, givesReason, looksLikeExplanation, stepsCompletedBy } from './student-message-analysis';
+import { answerMatchesFinal, detectAdultNeeded, givesReason, looksLikeExplanation, stepsCompletedBy } from './student-message-analysis';
 
 // Câu thật của học sinh giả trong eval (đề so sánh 0,45 và 0,5; đáp án 0,5 > 0,45).
 const comparePlan = {
@@ -119,5 +119,14 @@ describe('givesReason', () => {
   it('chỉ đoán, đòi xác nhận → không có lý do', () => {
     expect(givesReason('Mít nói luôn đi, cô cũng bảo Mít nói đáp án cho tớ rồi mà. Hay là 0,3 đúng không Mít?')).toBe(false);
     expect(givesReason('Hay là mình đoán 0,45 nha, đúng hông Mít?')).toBe(false);
+  });
+});
+
+describe('detectAdultNeeded', () => {
+  it('con bị đánh, bị dọa thì cần người lớn; "thuyền giặc bị đánh tan" trong bài lịch sử thì không', () => {
+    expect(detectAdultNeeded('Hôm nay tớ bị đánh ở trường')).toEqual(['bị bắt nạt']);
+    expect(detectAdultNeeded('Bạn ấy bị đánh, rồi khóc')).toEqual(['bị bắt nạt']);
+    expect(detectAdultNeeded('Lúc nước rút thì thuyền giặc mắc cọc, thủng hết rồi bị đánh tan.')).toEqual([]);
+    expect(detectAdultNeeded('Quân địch bị đánh bại ở Điện Biên Phủ')).toEqual([]);
   });
 });

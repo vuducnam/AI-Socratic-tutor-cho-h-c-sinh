@@ -96,9 +96,19 @@ describe('môn kiến thức: Lịch sử và Địa lí', () => {
     const second = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Kết thúc ngày 7 tháng 5', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
     expect(second.state).toBe('CONSOLIDATE');
 
-    // Prompt riêng của môn kiến thức, kể cả Guard (Toán giữ guard/v11).
+    // Con không chịu giải thích: Mít hỏi "vì sao" tối đa hai lượt rồi sang câu chuyển giao, không hỏi dồn.
+    setGatewayDependencies({ primary: scriptedAnthropic([tutor('Bạn nhớ ra mốc đó từ đâu?'), PASS]).provider, fallback: null });
+    const third = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Biết rồi mà', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
+    expect(third.state).toBe('CONSOLIDATE');
+    const transferQ = 'Bạn nhớ chắc thật đó. Bạn sẽ gặp lại hai mốc này ở đâu, như trên tờ lịch ngày lễ?';
+    setGatewayDependencies({ primary: scriptedAnthropic([{ question: transferQ }, PASS]).provider, fallback: null });
+    const fourth = await turns.runStudentTurn(w.actor, { studentId: w.studentId, sessionId: w.sessionId, text: 'Thì nó vậy', idempotencyKey: crypto.randomUUID(), responseTimeMs: 8000 });
+    expect(fourth.state).toBe('TRANSFER');
+    expect(fourth.message).toBe(transferQ);
+
+    // Prompt riêng của môn kiến thức, kể cả Guard và câu chuyển giao (Toán giữ guard/v11, transfer/v4).
     const versions = await appDb().query(`SELECT DISTINCT prompt_version FROM llm_calls WHERE session_id = $1 ORDER BY 1`, [w.sessionId]);
-    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard_knowledge/v3', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'tutor_knowledge/v2']);
+    expect(versions.rows.map((r) => r.prompt_version)).toEqual(['guard_knowledge/v3', 'hook_knowledge/v2', 'presolve_knowledge/v1', 'transfer_knowledge/v1', 'tutor_knowledge/v3']);
   });
 
   it('Guard báo lộ mà chữ trích không phải chữ của ý chính: code bác và ghi log; trích đúng chữ thì vẫn chặn', async () => {

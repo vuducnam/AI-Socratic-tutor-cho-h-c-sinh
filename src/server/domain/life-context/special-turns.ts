@@ -16,8 +16,11 @@ export const HOOK_PROMPT = 'hook/v5';
 // Môn kiến thức (SPEC §5d): chuyện đời thường quanh em, không nói ra ý chính của bài.
 export const HOOK_KNOWLEDGE_PROMPT = 'hook_knowledge/v2';
 export const TRANSFER_PROMPT = 'transfer/v4';
+// Môn kiến thức: câu chuyển giao hỏi gặp lại điều vừa học ở đâu quanh mình (tên đường, ngày lễ, bản đồ), không hỏi "cách làm".
+export const TRANSFER_KNOWLEDGE_PROMPT = 'transfer_knowledge/v1';
 export const HOOK_FALLBACK = 'Bài hôm nay giúp mình làm được nhiều việc ngoài đời lắm đấy.';
 export const TRANSFER_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại cách làm này ở đâu ngoài đời nhỉ?';
+export const TRANSFER_KNOWLEDGE_FALLBACK = 'Bạn nghĩ mình sẽ gặp lại điều vừa học ở đâu quanh mình, như tên đường, ngày lễ hay bản đồ?';
 
 interface SpecialTurnInput {
   ctx: TurnContext;
@@ -119,8 +122,11 @@ export async function generateHook(input: SpecialTurnInput) {
 }
 
 export async function generateTransferQuestion(input: SpecialTurnInput) {
-  const prompt = await loadPrompt(TRANSFER_PROMPT);
+  const knowledge = input.ctx.plan?.final_answer.kind === 'key_points';
+  const promptId = knowledge ? TRANSFER_KNOWLEDGE_PROMPT : TRANSFER_PROMPT;
+  const prompt = await loadPrompt(promptId);
   const system = renderPrompt(prompt.content, {
+    ...(knowledge ? { subject_name: subjectName(input.ctx.scope.subject) } : {}),
     display_name: input.ctx.student.display_name,
     grade: input.ctx.student.grade,
     skill_names: skillNames(input.ctx),
@@ -130,11 +136,11 @@ export async function generateTransferQuestion(input: SpecialTurnInput) {
   });
   return checkedMessage(input, {
     purpose: 'transfer',
-    promptId: TRANSFER_PROMPT,
+    promptId,
     system,
     schema: z.object({ question: z.string().min(1).max(300) }),
     field: 'question',
-    fallback: TRANSFER_FALLBACK,
+    fallback: knowledge ? TRANSFER_KNOWLEDGE_FALLBACK : TRANSFER_FALLBACK,
     hardChecks: input.hardChecks,
   });
 }

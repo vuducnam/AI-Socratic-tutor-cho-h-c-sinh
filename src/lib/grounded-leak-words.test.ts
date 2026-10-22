@@ -16,11 +16,11 @@ const check = (message: string, quote: string, statement: string, problemText: s
 describe('groundedLeakWords', () => {
   it('gợi bằng chữ của ý chính con chưa nói: công nhận là lộ', () => {
     const m1 = 'Theo sách, Ngô Quyền cho cắm thứ gì dưới lòng sông để chờ thuyền giặc?';
-    expect(check(m1, 'cắm thứ gì dưới lòng sông', NGO_QUYEN, NGO_QUYEN_Q)).toEqual(['dươi']);
+    expect(check(m1, 'cắm thứ gì dưới lòng sông', NGO_QUYEN, NGO_QUYEN_Q)).toEqual(['dưới']);
     const m2 = 'Bạn mở lại câu chuyện về anh, anh ấy đã làm việc gì đặc biệt khi đang bị thương?';
     expect(check(m2, 'khi đang bị thương', GIOT, GIOT_Q)).toEqual(['thương']);
     const m3 = 'Nhìn lại trang 26, bạn thấy điều gì nữa liên quan tới vải không?';
-    expect(check(m3, 'liên quan tới vải', VAN_LANG, VAN_LANG_Q)).toEqual(['vai']);
+    expect(check(m3, 'liên quan tới vải', VAN_LANG, VAN_LANG_Q)).toEqual(['vải']);
   });
 
   it('câu chỉ hỏi loại điều cần tìm, hay chữ có trong đề: không phải lộ bằng chữ', () => {
@@ -37,7 +37,8 @@ describe('groundedLeakWords', () => {
     expect(check('Bạn mở SGK trang 39 nhé?', 'cọc nhọn', NGO_QUYEN, NGO_QUYEN_Q)).toEqual([]);
   });
 
-  it('gập dấu thanh: "thuỷ triều" trong tin khớp "thủy triều" trong ý chính', () => {
-    expect(check('Thuỷ triều lúc đó thế nào?', 'thuỷ triều', 'Ngô Quyền lợi dụng thủy triều.', NGO_QUYEN_Q)).toEqual(['thui', 'triêu']);
+  it('giữ dấu thanh, chỉ thống nhất vị trí dấu: "thuỷ" khớp "thủy", nhưng "thường" không khớp "thương"', () => {
+    expect(check('Bạn có thường xem tranh không?', 'thường', 'Phan Đình Giót bị thương vẫn lao vào.', 'Em nghĩ gì về anh Giót?')).toEqual([]);
+    expect(check('Thuỷ triều lúc đó thế nào?', 'thuỷ triều', 'Ngô Quyền lợi dụng thủy triều.', NGO_QUYEN_Q)).toEqual(['thủy', 'triều']);
   });
 });

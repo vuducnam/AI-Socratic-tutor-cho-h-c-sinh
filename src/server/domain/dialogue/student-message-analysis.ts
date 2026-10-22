@@ -11,7 +11,18 @@ import { findFrustrationPhrase, soundsUnsure } from './signals';
 // Cụm từ cần người lớn (SPEC §13). Khớp nguyên từ trên văn bản chuẩn hoá. Danh sách thận trọng: báo nhầm
 // (PAUSE + báo bố mẹ) an toàn hơn bỏ sót.
 const ADULT_NEEDED_PHRASES: TermDefinition[] = [
-  { term: 'bị bắt nạt', patterns: ['bắt nạt', 'bị đánh', 'bị đe doạ', 'bị đe dọa', 'bị dọa', 'bị doạ'] },
+  {
+    term: 'bị bắt nạt',
+    patterns: [
+      'bắt nạt',
+      // "bị đánh" nhưng không phải chuyện trong bài lịch sử ("thuyền giặc bị đánh tan", "quân địch bị đánh bại").
+      're:(?<![\\p{L}\\p{M}\\p{N}])bị\\s+đánh(?![\\p{L}\\p{M}\\p{N}])(?!\\s+(?:tan|bại|bật|lui|chìm|đuổi|úp|tơi)(?![\\p{L}\\p{M}\\p{N}]))',
+      'bị đe doạ',
+      'bị đe dọa',
+      'bị dọa',
+      'bị doạ',
+    ],
+  },
   { term: 'tự làm hại', patterns: ['muốn chết', 'tự tử', 'tự làm đau', 'không muốn sống', 'chết đi cho rồi', 'tự cắt'] },
   { term: 'buồn kéo dài', patterns: ['buồn lắm', 'buồn quá', 'khóc mãi', 'không ai thương', 'cô đơn quá', 'sợ lắm'] },
   { term: 'người lạ', patterns: ['người lạ nhắn', 'người lạ rủ', 'bảo em giữ bí mật'] },

@@ -82,6 +82,10 @@ const TERMINAL: DialogueState[] = ['DONE', 'PAUSE'];
 const STEP_LEAK_STATES: DialogueState[] = ['ELICIT', 'PROBE', 'SCAFFOLD', 'DIRECT_TEACH'];
 // Con đã tự ra đáp án cuối (code đã kiểm khi chuyển sang CONSOLIDATE).
 const ANSWER_GIVEN_STATES: DialogueState[] = ['CONSOLIDATE', 'TRANSFER', 'DONE'];
+// Môn kiến thức: con đã tự nêu đủ ý chính thì Mít hỏi "vì sao" tối đa hai lượt rồi sang câu chuyển giao, kể cả khi
+// con không giải thích (hỏi dồn về một sự kiện con đã nhớ đúng chỉ làm con chán). Toán vẫn chờ con giải thích.
+const MAX_KNOWLEDGE_CONSOLIDATE_REPLIES = 2;
+const consolidateReplies = (ctx: TurnContext) => ctx.problemTurns.filter((t) => t.role !== 'student' && t.state_after === 'CONSOLIDATE').length;
 
 function hardCheckContext(
   ctx: TurnContext,
@@ -396,7 +400,7 @@ export async function runStudentTurn(actor: Actor, input: StudentTurnInput): Pro
         // Ở PARALLEL, đáp án đúng là của bài tương tự → quay về bài gốc, không phải CONSOLIDATE.
         answerMatchesFinal: state === 'PARALLEL' ? false : matchesFinal,
         argueReasonGiven: ctx.mode === 'argue' && explained,
-        explainedMethodOrMistake: state === 'CONSOLIDATE' && explained,
+        explainedMethodOrMistake: state === 'CONSOLIDATE' && (explained || (!!knowledge && consolidateReplies(ctx) >= MAX_KNOWLEDGE_CONSOLIDATE_REPLIES)),
         parallelSolved: state === 'PARALLEL' && matchesFinal,
         transferAnswered: state === 'TRANSFER' && !isSkip(text) && text.length > 0,
         transferSkipped: state === 'TRANSFER' && isSkip(text),
