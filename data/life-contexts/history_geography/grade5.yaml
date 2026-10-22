@@ -19,7 +19,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có thầy cô.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e00d05d3b520a157 }
   - id: HG5.B1.WALL_MAP_SHAPE
     skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
     theme: home
@@ -34,7 +34,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ff0215d56cedc950 }
   - id: HG5.B1.PEN_PAL_LETTER
     skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
     theme: other
@@ -50,7 +50,7 @@ contexts:
     safety:
       adult_required: false
       notes: Bạn qua thư do bố mẹ biết và đồng ý; không gửi địa chỉ, ảnh mặt.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 5ddd72088b1346b8 }
   - id: HG5.B1.STORM_NEWS
     skill_id: HG.B01.LOCATION_TERRITORY_SYMBOLS
     theme: nature
@@ -65,7 +65,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: bbafe37a3aa88c55 }
   - id: HG5.B2.WINTER_VIDEO_CALL
     skill_id: HG.B02.NATURE
     theme: other
@@ -80,7 +80,7 @@ contexts:
     safety:
       adult_required: false
       notes: Gọi video với người thân trong nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7674ef30d3a8a395 }
   - id: HG5.B2.BALCONY_SOIL
     skill_id: HG.B02.NATURE
     theme: home
@@ -95,7 +95,7 @@ contexts:
     safety:
       adult_required: false
       notes: Ông làm cùng; không dùng dụng cụ sắc.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8c2852e7035ac6b0 }
   - id: HG5.B2.CAR_TRIP_HILLS
     skill_id: HG.B02.NATURE
     theme: travel
@@ -110,7 +110,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, ngồi trong xe, thắt dây an toàn.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 45f61f47153fc4de }
   - id: HG5.B2.TREE_PLANTING_DAY
     skill_id: HG.B02.NATURE
     theme: nature
@@ -125,7 +125,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo; không dùng cuốc, xẻng nặng.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: adaecd9b6ea8a641 }
   - id: HG5.B3.BAY_BOAT_TRIP
     skill_id: HG.B03.SEA_ISLANDS
     theme: travel
@@ -140,7 +140,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, mặc áo phao, ngồi trong khoang tàu.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: a33d7dd4a7117596 }
   - id: HG5.B3.CLASS_MAP_ARCHIPELAGOS
     skill_id: HG.B03.SEA_ISLANDS
     theme: school
@@ -155,7 +155,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 88e4f43d1d70250b }
   - id: HG5.B3.MUSEUM_OLD_MAP
     skill_id: HG.B03.SEA_ISLANDS
     theme: travel
@@ -170,7 +170,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi bảo tàng cùng mẹ.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 3255f9118cfde5ac }
   - id: HG5.B4.ETHNIC_COSTUME_FESTIVAL
     skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
     theme: school
@@ -185,7 +185,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có thầy cô.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d4d81ae491c76719 }
   - id: HG5.B4.POPULATION_NEWS
     skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
     theme: other
@@ -201,7 +201,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d3bc9d808b85353d }
   - id: HG5.B4.LONG_FAMILY_DRIVE
     skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
     theme: travel
@@ -216,7 +216,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, ngồi trong xe, thắt dây an toàn.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: aacf43df45250a7c }
   - id: HG5.B4.GRANDMA_STORY_TAN_TRAO
     skill_id: HG.B04.POPULATION_ETHNIC_GROUPS
     theme: home
@@ -231,7 +231,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8079341648fbd393 }
   - id: HG5.B5.CO_LOA_VISIT
     skill_id: HG.B05.VAN_LANG_AU_LAC
     theme: travel
@@ -247,7 +247,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, không leo trèo lên tường thành.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 0eb809faed51962f }
   - id: HG5.B5.BRONZE_DRUM_SOUVENIR
     skill_id: HG.B05.VAN_LANG_AU_LAC
     theme: home
@@ -262,7 +262,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8bf9d1aac4a2c7c4 }
   - id: HG5.B5.FLOOD_SEASON_TALE
     skill_id: HG.B05.VAN_LANG_AU_LAC
     theme: nature
@@ -277,7 +277,7 @@ contexts:
     safety:
       adult_required: false
       notes: Ở trong nhà xem tin, không ra gần chỗ nước lũ.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 67e344f929cfe0b9 }
   - id: HG5.B5.HUNG_KINGS_HOLIDAY
     skill_id: HG.B05.VAN_LANG_AU_LAC
     theme: other
@@ -293,7 +293,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 94eddf2f0924efb1 }
   - id: HG5.B6.FLOATING_MARKET_STOVE
     skill_id: HG.B06.FUNAN
     theme: market
@@ -308,7 +308,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, mặc áo phao; con chỉ quan sát, không lại gần bếp.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 667c9f4e9814e4a0 }
   - id: HG5.B6.LIBRARY_COMIC_LEGEND
     skill_id: HG.B06.FUNAN
     theme: school
@@ -324,7 +324,7 @@ contexts:
     safety:
       adult_required: false
       notes: Đọc truyện ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 1d3188a1c4fe252e }
   - id: HG5.B6.DOCUMENTARY_WITH_GRANDPA
     skill_id: HG.B06.FUNAN
     theme: other
@@ -340,7 +340,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 656e216e330a2b2e }
   - id: HG5.B7.MY_SON_FAMILY_TRIP
     skill_id: HG.B07.CHAMPA
     theme: travel
@@ -355,7 +355,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, không leo lên tháp.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7281e561e58f2f19 }
   - id: HG5.B7.POSTCARD_PO_NAGAR
     skill_id: HG.B07.CHAMPA
     theme: other
@@ -370,7 +370,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 1a63deeb3b849d55 }
   - id: HG5.B7.BEDTIME_LEGEND_PO_ONG
     skill_id: HG.B07.CHAMPA
     theme: home
@@ -385,7 +385,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 0596d1946241599b }
   - id: HG5.B7.CLASS_QUIZ_GAME
     skill_id: HG.B07.CHAMPA
     theme: game
@@ -401,7 +401,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: b5e379d42005cbf5 }
   - id: HG5.B8.STREET_SIGN_HAI_BA_TRUNG
     skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
     theme: travel
@@ -416,7 +416,7 @@ contexts:
     safety:
       adult_required: true
       notes: Mẹ chở, đội mũ bảo hiểm.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 24b73f16b87cc0eb }
   - id: HG5.B8.MUSEUM_BATTLE_PAINTING
     skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
     theme: travel
@@ -431,7 +431,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi bảo tàng cùng bố.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: a255f160702d8ce5 }
   - id: HG5.B8.GRANDPA_TIDE_CALENDAR
     skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
     theme: nature
@@ -446,7 +446,7 @@ contexts:
     safety:
       adult_required: false
       notes: Ông kể ở nhà; con không ra sông.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 26342e4b960a0ed6 }
   - id: HG5.B8.CLASS_PLAY_LY_BI
     skill_id: HG.B08.INDEPENDENCE_STRUGGLE_NORTHERN_RULE
     theme: school
@@ -461,7 +461,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: b38bfa3a1b94d797 }
   - id: HG5.B9.COUSIN_LETTER_CAPITAL
     skill_id: HG.B09.LY_DYNASTY_THANG_LONG
     theme: other
@@ -476,7 +476,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 896c93a2ce292f10 }
   - id: HG5.B9.MID_AUTUMN_DRAGON_DANCE
     skill_id: HG.B09.LY_DYNASTY_THANG_LONG
     theme: other
@@ -491,7 +491,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ, nắm tay người lớn nơi đông người.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8a534e0e39e94373 }
   - id: HG5.B9.SCHOOL_POEM_RECITAL
     skill_id: HG.B09.LY_DYNASTY_THANG_LONG
     theme: school
@@ -507,7 +507,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có thầy cô.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: cb1f968135b2283b }
   - id: HG5.B10.MARKET_ORANGES
     skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
     theme: market
@@ -522,7 +522,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi chợ cùng mẹ.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8708b67f886f6148 }
   - id: HG5.B10.CLASS_PRIZE_STORY
     skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
     theme: school
@@ -537,7 +537,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 760afc4d83d38468 }
   - id: HG5.B10.FAMILY_MEETING_VOTE
     skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
     theme: home
@@ -552,7 +552,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e97f31ef78a798ce }
   - id: HG5.B10.HISTORY_CARTOON_STAKES
     skill_id: HG.B10.TRAN_DYNASTY_MONGOL_RESISTANCE
     theme: other
@@ -567,7 +567,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 20f9ba96453faf33 }
   - id: HG5.B12.STREET_NAME_LE_LAI
     skill_id: HG.B12.LAM_SON_LATER_LE
     theme: travel
@@ -582,7 +582,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi xe cùng bố mẹ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: bbcaa214e887d5d9 }
   - id: HG5.B12.SCHOOL_PLAY_WEIGHING_ELEPHANT
     skill_id: HG.B12.LAM_SON_LATER_LE
     theme: school
@@ -597,7 +597,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 6dab716d0d5b70b2 }
   - id: HG5.B12.CLASS_TRIP_STONE_STELAE
     skill_id: HG.B12.LAM_SON_LATER_LE
     theme: travel
@@ -612,7 +612,7 @@ contexts:
     safety:
       adult_required: true
       notes: Tham quan cùng lớp và cô giáo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 20e8a81810be88c2 }
   - id: HG5.B12.MOUNTAIN_PASS_ROAD_TRIP
     skill_id: HG.B12.LAM_SON_LATER_LE
     theme: nature
@@ -628,7 +628,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi xe khách cùng bố mẹ; giọng kể nhẹ nhàng, không tả cảnh giao chiến
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 9cb79705cd146f46 }
   - id: HG5.B13.FAMILY_TRIP_HUE
     skill_id: HG.B13.NGUYEN_DYNASTY
     theme: travel
@@ -643,7 +643,7 @@ contexts:
     safety:
       adult_required: true
       notes: Du lịch cùng bố mẹ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2710d0333bbd6c87 }
   - id: HG5.B13.LETTER_FROM_GRANDPA_TEMPLE
     skill_id: HG.B13.NGUYEN_DYNASTY
     theme: home
@@ -659,7 +659,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 00fc2e59addf14c7 }
   - id: HG5.B13.TV_NEWS_ISLANDS
     skill_id: HG.B13.NGUYEN_DYNASTY
     theme: other
@@ -674,7 +674,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà cùng bố
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c19bcb492b5379d5 }
   - id: HG5.B13.CLASSROOM_MAP_PROVINCES
     skill_id: HG.B13.NGUYEN_DYNASTY
     theme: school
@@ -689,7 +689,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 461fb2f55de1d4fc }
   - id: HG5.B14.NATIONAL_DAY_TV
     skill_id: HG.B14.AUGUST_REVOLUTION_1945
     theme: home
@@ -704,7 +704,7 @@ contexts:
     safety:
       adult_required: false
       notes: Treo cờ ngay trước cửa nhà cùng người lớn, không leo trèo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 43a8d29c6a08a437 }
   - id: HG5.B14.VETERANS_SCHOOL_EXCHANGE
     skill_id: HG.B14.AUGUST_REVOLUTION_1945
     theme: school
@@ -720,7 +720,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có thầy cô
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 17576c488d55475c }
   - id: HG5.B14.RED_SCARF_CEREMONY
     skill_id: HG.B14.AUGUST_REVOLUTION_1945
     theme: school
@@ -736,7 +736,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường; giọng kể nhẹ nhàng về sự hi sinh, không tả chi tiết
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ee09c36337a5fdaf }
   - id: HG5.B15.STREET_NAMES
     skill_id: HG.B15.DIEN_BIEN_PHU_1954
     theme: travel
@@ -751,7 +751,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi xe cùng mẹ, đội mũ bảo hiểm
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 48c7dea5f2cb6e9b }
   - id: HG5.B15.MUSIC_CLASS_PULLING_CANNON
     skill_id: HG.B15.DIEN_BIEN_PHU_1954
     theme: school
@@ -767,7 +767,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường; giọng kể nhẹ nhàng, không tả cảnh bị bắn phá
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 71a061c720f6629f }
   - id: HG5.B15.WALL_MAP_WITH_GRANDPA
     skill_id: HG.B15.DIEN_BIEN_PHU_1954
     theme: home
@@ -782,7 +782,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2af20d9190e40fd9 }
   - id: HG5.B15.MUSEUM_FLAG_PHOTO
     skill_id: HG.B15.DIEN_BIEN_PHU_1954
     theme: travel
@@ -798,7 +798,7 @@ contexts:
     safety:
       adult_required: true
       notes: Tham quan cùng lớp và cô giáo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: b47469b0c41dbb57 }
   - id: HG5.B16.HOLIDAY_ARCHIVE_FILM
     skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
     theme: home
@@ -814,7 +814,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà cùng gia đình
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 4c52d9f0361d492a }
   - id: HG5.B16.VISIT_INDEPENDENCE_PALACE
     skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
     theme: travel
@@ -829,7 +829,7 @@ contexts:
     safety:
       adult_required: true
       notes: Tham quan cùng bố mẹ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 28b005f73ceb919a }
   - id: HG5.B16.AIRPORT_WAITING_STORY
     skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
     theme: travel
@@ -845,7 +845,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ; giọng kể bình tĩnh, không tả cảnh cháy nổ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2d07fcb87933d3a9 }
   - id: HG5.B16.GRANDMA_RADIO_MEMORY
     skill_id: HG.B16.HO_CHI_MINH_CAMPAIGN_1975
     theme: other
@@ -860,7 +860,7 @@ contexts:
     safety:
       adult_required: false
       notes: Nghe bà kể ở nhà
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 138140ac48a2a52b }
   - id: HG5.B17.OLD_RATION_BOOK_IN_CUPBOARD
     skill_id: HG.B17.DOI_MOI
     theme: home
@@ -875,7 +875,7 @@ contexts:
     safety:
       adult_required: false
       notes: Dọn tủ cùng bà, không trèo lên cao
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 178ab2ec94dae14e }
   - id: HG5.B17.RICE_STALL_AT_MARKET
     skill_id: HG.B17.DOI_MOI
     theme: market
@@ -891,7 +891,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi chợ cùng mẹ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d60381dea5487997 }
   - id: HG5.B17.GRANDPA_SHOPPING_STORY
     skill_id: HG.B17.DOI_MOI
     theme: other
@@ -907,7 +907,7 @@ contexts:
     safety:
       adult_required: false
       notes: Nghe ông kể ở nhà
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 1ff8a622404aad70 }
   - id: HG5.B17.CLASS_NOTICE_BOARD
     skill_id: HG.B17.DOI_MOI
     theme: school
@@ -923,7 +923,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, làm việc nhóm
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e9d48ddccfd9cc67 }
   - id: HG5.B18.NEW_WORLD_MAP_IN_ROOM
     skill_id: HG.B18.CHINA
     theme: home
@@ -938,7 +938,7 @@ contexts:
     safety:
       adult_required: false
       notes: Bố treo bản đồ, không leo trèo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: f954a528ba78bf7d }
   - id: HG5.B18.DOCUMENTARY_LONG_WALL
     skill_id: HG.B18.CHINA
     theme: other
@@ -954,7 +954,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem phim ở nhà cùng bố
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 573687bb8eafee4e }
   - id: HG5.B18.POSTCARD_FROM_AUNT
     skill_id: HG.B18.CHINA
     theme: travel
@@ -970,7 +970,7 @@ contexts:
     safety:
       adult_required: false
       notes: Nhận bưu thiếp ở nhà
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 78ce676ae0f8ecb4 }
   - id: HG5.B18.FAMILY_QUIZ_GAME
     skill_id: HG.B18.CHINA
     theme: game
@@ -985,7 +985,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 04aef1e4c3f04146 }
   - id: HG5.B19.TEXTBOOK_MAP_NEIGHBOURS
     skill_id: HG.B19.LAOS
     theme: school
@@ -1000,7 +1000,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có cô giáo
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 865843446c249488 }
   - id: HG5.B19.BEACH_TRIP_WONDER
     skill_id: HG.B19.LAOS
     theme: nature
@@ -1016,7 +1016,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi biển cùng bố mẹ; tình huống chỉ là suy nghĩ, không có hoạt động bơi lội
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e4ab7816ed286e30 }
   - id: HG5.B19.BANKNOTE_SOUVENIR
     skill_id: HG.B19.LAOS
     theme: other
@@ -1032,7 +1032,7 @@ contexts:
     safety:
       adult_required: false
       notes: ""
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 9b4c3a3a59cecc8e }
   - id: HG5.B19.EVENING_NEWS_STONE_JARS
     skill_id: HG.B19.LAOS
     theme: home
@@ -1047,7 +1047,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà cùng mẹ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2f5947d09790dc35 }
   - id: HG5.B20.SCHOOL_FESTIVAL_FLAGS
     skill_id: HG.B20.CAMBODIA
     theme: school
@@ -1062,7 +1062,7 @@ contexts:
     safety:
       adult_required: true
       notes: Ở trường, có thầy cô; người lớn treo cờ
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 979fb10f002053f7 }
   - id: HG5.B20.RIVER_BOAT_TRIP
     skill_id: HG.B20.CAMBODIA
     theme: travel
@@ -1078,7 +1078,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi thuyền du lịch cùng bố mẹ, mặc áo phao
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 0f9b73dece22a282 }
   - id: HG5.B20.PHOTO_FROM_AUNT_IN_CAPITAL
     skill_id: HG.B20.CAMBODIA
     theme: other
@@ -1094,7 +1094,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ảnh ở nhà
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 386fdcd9fcae1705 }
   - id: HG5.B20.WOODEN_BLOCK_TEMPLE_MODEL
     skill_id: HG.B20.CAMBODIA
     theme: game
@@ -1109,7 +1109,7 @@ contexts:
     safety:
       adult_required: false
       notes: Đồ chơi khối gỗ ở nhà, không dùng dụng cụ sắc
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ccdad9c0c556ebc2 }
   - id: HG5.B21.FLAG_DRAWING_SCHOOL_FAIR
     skill_id: HG.B21.ASEAN
     theme: school
@@ -1124,7 +1124,7 @@ contexts:
     safety:
       adult_required: false
       notes: Hoạt động vẽ trên lớp.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 1f154db24e0f42e7 }
   - id: HG5.B21.POSTCARD_SOUTHEAST_ASIA_MAP
     skill_id: HG.B21.ASEAN
     theme: other
@@ -1139,7 +1139,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem bưu thiếp ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d6a2d602b235ea04 }
   - id: HG5.B21.TV_NEWS_VIETNAM_JOINS
     skill_id: HG.B21.ASEAN
     theme: home
@@ -1154,7 +1154,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà cùng gia đình.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: dbcfe7ec5a630df8 }
   - id: HG5.B21.MARKET_GOODS_FROM_NEIGHBOURS
     skill_id: HG.B21.ASEAN
     theme: market
@@ -1169,7 +1169,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi siêu thị cùng mẹ; không nêu tên nhãn hàng hay tên siêu thị.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 6824a5435e21ed35 }
   - id: HG5.B22.GLOBE_AT_HOME
     skill_id: HG.B22.CONTINENTS_OCEANS
     theme: home
@@ -1185,7 +1185,7 @@ contexts:
     safety:
       adult_required: false
       notes: Ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7f0992e2eb441cde }
   - id: HG5.B22.PENGUIN_DOCUMENTARY
     skill_id: HG.B22.CONTINENTS_OCEANS
     theme: animals
@@ -1200,7 +1200,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem phim ở nhà cùng gia đình.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 235f638c0cc4bef7 }
   - id: HG5.B22.TEACHER_STORY_HIGHEST_PEAK
     skill_id: HG.B22.CONTINENTS_OCEANS
     theme: school
@@ -1215,7 +1215,7 @@ contexts:
     safety:
       adult_required: false
       notes: Nghe kể chuyện trên lớp; trẻ không leo trèo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 485cdbda23113a4b }
   - id: HG5.B22.DESERT_SAND_SOUVENIR
     skill_id: HG.B22.CONTINENTS_OCEANS
     theme: other
@@ -1230,7 +1230,7 @@ contexts:
     safety:
       adult_required: false
       notes: Quà lưu niệm xem ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7c0f573ea055e7ae }
   - id: HG5.B23.TV_NEWS_WORLD_POPULATION
     skill_id: HG.B23.WORLD_POPULATION_RACES
     theme: home
@@ -1245,7 +1245,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà cùng ông.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 771324950be573bf }
   - id: HG5.B23.MAP_QUIZ_GAME_SIBLINGS
     skill_id: HG.B23.WORLD_POPULATION_RACES
     theme: game
@@ -1261,7 +1261,7 @@ contexts:
     safety:
       adult_required: false
       notes: Trò chơi đố ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 61f5b3470ed0824a }
   - id: HG5.B23.PARK_VISITORS_MANY_COUNTRIES
     skill_id: HG.B23.WORLD_POPULATION_RACES
     theme: travel
@@ -1276,7 +1276,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố mẹ. Lời lẽ trung tính, không so sánh hay nhận xét ngoại hình.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 03a83cc517f204c3 }
   - id: HG5.B23.WELCOME_NEW_CLASSMATE
     skill_id: HG.B23.WORLD_POPULATION_RACES
     theme: school
@@ -1291,7 +1291,7 @@ contexts:
     safety:
       adult_required: false
       notes: Tôn trọng khác biệt; không nêu đặc điểm ngoại hình của bạn mới.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 169c839512186432 }
   - id: HG5.B24.PYRAMID_BUILDING_TOY
     skill_id: HG.B24.EGYPT_CIVILIZATION
     theme: game
@@ -1306,7 +1306,7 @@ contexts:
     safety:
       adult_required: false
       notes: Đồ chơi gỗ ở nhà, không nêu tên nhãn hàng.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 3a703218f8463845 }
   - id: HG5.B24.SUNDIAL_MODEL_SCHOOLYARD
     skill_id: HG.B24.EGYPT_CIVILIZATION
     theme: school
@@ -1322,7 +1322,7 @@ contexts:
     safety:
       adult_required: false
       notes: Trong khuôn viên trường.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 5b0be6889d72d14b }
   - id: HG5.B24.RIVER_DOCUMENTARY
     skill_id: HG.B24.EGYPT_CIVILIZATION
     theme: nature
@@ -1337,7 +1337,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem phim ở nhà cùng gia đình.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 6f1e2f05b05529f3 }
   - id: HG5.B24.BEDTIME_STORY_QUEEN
     skill_id: HG.B24.EGYPT_CIVILIZATION
     theme: home
@@ -1352,7 +1352,7 @@ contexts:
     safety:
       adult_required: false
       notes: Đọc truyện ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 1450da4e9d8aaea0 }
   - id: HG5.B25.OLYMPIC_OPENING_ON_TV
     skill_id: HG.B25.GREEK_CIVILIZATION
     theme: sport
@@ -1367,7 +1367,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7792747422836ef3 }
   - id: HG5.B25.SCHOOL_RACE_PRIZE
     skill_id: HG.B25.GREEK_CIVILIZATION
     theme: school
@@ -1382,7 +1382,7 @@ contexts:
     safety:
       adult_required: false
       notes: Hội thao trong trường, có thầy cô.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 9975c097de503948 }
   - id: HG5.B25.LIBRARY_HERITAGE_POSTER
     skill_id: HG.B25.GREEK_CIVILIZATION
     theme: other
@@ -1398,7 +1398,7 @@ contexts:
     safety:
       adult_required: false
       notes: Trong thư viện trường.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 23c0253b594a6be4 }
   - id: HG5.B25.OLIVE_OIL_SALAD
     skill_id: HG.B25.GREEK_CIVILIZATION
     theme: cooking
@@ -1413,7 +1413,7 @@ contexts:
     safety:
       adult_required: false
       notes: Trẻ chỉ bày đĩa; không dùng bếp, dao. Không nêu tên nhãn hàng.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 21352b7e0a2193c5 }
   - id: HG5.B26.SCHOOL_TREE_PLANTING
     skill_id: HG.B26.GREEN_CLEAN_WORLD
     theme: school
@@ -1429,7 +1429,7 @@ contexts:
     safety:
       adult_required: false
       notes: Trồng cây trong sân trường có thầy cô hướng dẫn.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 4d5f159e9cc322e1 }
   - id: HG5.B26.POLLUTED_LAKE_WALK
     skill_id: HG.B26.GREEN_CLEAN_WORLD
     theme: nature
@@ -1444,7 +1444,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng bố, đứng xa mép nước.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e5c1be8ec5fce967 }
   - id: HG5.B26.MELTING_ICE_DOCUMENTARY
     skill_id: HG.B26.GREEN_CLEAN_WORLD
     theme: other
@@ -1459,7 +1459,7 @@ contexts:
     safety:
       adult_required: false
       notes: Xem phim ở nhà cùng gia đình.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: dfd906dce6573dd0 }
   - id: HG5.B26.HOME_WASTE_SORTING
     skill_id: HG.B26.GREEN_CLEAN_WORLD
     theme: home
@@ -1475,7 +1475,7 @@ contexts:
     safety:
       adult_required: false
       notes: Phân loại rác khô ở nhà; không đụng mảnh vỡ thuỷ tinh.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: b8c3ecdf9e53a51e }
   - id: HG5.B27.PEACE_DRAWING_CONTEST
     skill_id: HG.B27.WORLD_PEACE
     theme: school
@@ -1491,7 +1491,7 @@ contexts:
     safety:
       adult_required: false
       notes: Hoạt động vẽ trên lớp.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 054e9d1126399f4a }
   - id: HG5.B27.OLYMPIC_RINGS_TSHIRT
     skill_id: HG.B27.WORLD_PEACE
     theme: sport
@@ -1506,7 +1506,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đá bóng cùng bố. Biểu tượng Ô-lim-píc không phải tên nhãn hàng; không nêu hãng áo.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2a419c0a51f14c67 }
   - id: HG5.B27.BLOOD_DONATION_WITH_MOM
     skill_id: HG.B27.WORLD_PEACE
     theme: other
@@ -1521,7 +1521,7 @@ contexts:
     safety:
       adult_required: true
       notes: Đi cùng mẹ; trẻ chỉ ngồi chờ, không tham gia hiến máu.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 492cd06930125ab1 }
   - id: HG5.B27.TV_NEWS_PEACEKEEPERS
     skill_id: HG.B27.WORLD_PEACE
     theme: home
@@ -1536,4 +1536,4 @@ contexts:
     safety:
       adult_required: false
       notes: Xem ti vi ở nhà.
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 4a9f0a74185e980c }

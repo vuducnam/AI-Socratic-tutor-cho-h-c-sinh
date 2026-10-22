@@ -19,7 +19,7 @@ lessons:
       - Xác định trên bản đồ hành chính một số thành phố và quần đảo
       - Tìm hiểu rồi chia sẻ việc dùng biểu tượng quốc gia ở trường hoặc nơi em sống
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 80e18a921e324f4e }
     facts:
       - fact_id: HG5.SGK.B1.F1
         statement: Việt Nam nằm ở khu vực Đông Nam Á, thuộc châu Á.
@@ -182,7 +182,7 @@ lessons:
       - Hoàn thành bảng nêu vai trò của từng thành phần thiên nhiên với đời sống và sản xuất
       - Tìm hiểu rồi chia sẻ đặc điểm một thành phần thiên nhiên ở địa phương mình
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 5389c2ca50938a64 }
     facts:
       - fact_id: HG5.SGK.B2.F1
         statement: Trên phần đất liền, đồi núi chiếm khoảng ba phần tư diện tích, chủ yếu là đồi núi thấp; đồng bằng chiếm một phần tư.
@@ -351,7 +351,7 @@ lessons:
       - Giới thiệu bài hát, bài thơ hoặc câu chuyện về biển, đảo đã sưu tầm
       - Tìm hiểu rồi chia sẻ hoạt động bảo vệ chủ quyền biển đảo ở địa phương
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: cd6a8bf33b5a2b26 }
     facts:
       - fact_id: HG5.SGK.B3.F1
         statement: Vùng biển Việt Nam là một phần của Biển Đông, trong đó có hàng nghìn hòn đảo.
@@ -501,7 +501,7 @@ lessons:
       - Đọc bản đồ mật độ dân số để kể tên nơi có mật độ cao nhất và thấp nhất
       - Viết đoạn văn ngắn giới thiệu một dân tộc (tên, nơi sống, trang phục, lễ hội) rồi chia sẻ
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c2de35686cce5782 }
     facts:
       - fact_id: HG5.SGK.B4.F1
         statement: Năm 2024, Việt Nam có hơn 101,3 triệu dân, đứng thứ ba khu vực Đông Nam Á.
@@ -650,7 +650,7 @@ lessons:
       - Kể lại một truyền thuyết khác gắn với Văn Lang hoặc Âu Lạc
       - Tìm hiểu và kể tên di tích hoặc hoạt động kinh tế từ thời Văn Lang – Âu Lạc còn đến nay
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 439d4da0585feaba }
     facts:
       - fact_id: HG5.SGK.B5.F1
         statement: Nhà nước Văn Lang ra đời khoảng thế kỉ VII trước Công nguyên, ở lưu vực các sông vùng Bắc Bộ và Bắc Trung Bộ.
@@ -815,7 +815,7 @@ lessons:
       - Hoàn thành bảng xếp hiện vật vào nhóm đời sống vật chất hoặc đời sống tinh thần
       - Vẽ và trang trí một hiện vật khảo cổ em ấn tượng
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 7edb7ca8638fa2e2 }
     facts:
       - fact_id: HG5.SGK.B6.F1
         statement: Vương quốc Phù Nam ra đời vào khoảng thế kỉ I.
@@ -954,7 +954,7 @@ lessons:
       - Sưu tầm tranh ảnh một đền tháp Chăm và giới thiệu với bạn, người thân
       - Kể lại một câu chuyện về đền tháp Chăm
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: a2b993f83bbed884 }
     facts:
       - fact_id: HG5.SGK.B7.F1
         statement: Vương quốc Chăm-pa được thành lập vào cuối thế kỉ II.
@@ -1099,7 +1099,7 @@ lessons:
       - Kể lại câu chuyện về một nhân vật chống Bắc thuộc mà em sưu tầm.
       - Tìm hiểu di tích, đường phố, trường học mang tên các nhân vật lịch sử.
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 0ac3a0f41c72c250 }
     facts:
       - fact_id: HG5.SGK.B8.F1
         statement: Năm 179 TCN, Triệu Đà thôn tính Âu Lạc; sau đó phong kiến phương Bắc lần lượt đô hộ nước ta hơn 1 000 năm.
@@ -1224,7 +1224,7 @@ lessons:
       - Kể chuyện về một nhân vật lịch sử thời Lý.
       - Sưu tầm tư liệu về một di tích hoặc nhân vật thời Lý và chia sẻ với bạn.
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: dfdb004909add98c }
     facts:
       - fact_id: HG5.SGK.B9.F1
         statement: Năm 1009, vua Lê Long Đĩnh mất, các quan tôn Lý Công Uẩn lên ngôi (Lý Thái Tổ), lập ra Triều Lý.
@@ -1354,7 +1354,7 @@ lessons:
       - Giới thiệu một nhân vật thời Trần và đóng góp của nhân vật đó qua tư liệu sưu tầm.
       - Sưu tầm tư liệu về một di tích liên quan Triều Trần còn đến nay.
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 09b40474cf2453d1 }
     facts:
       - fact_id: HG5.SGK.B10.F1
         statement: Năm 1226, Lý Chiêu Hoàng nhường ngôi cho chồng là Trần Cảnh, Triều Trần được thành lập.
@@ -1498,7 +1498,7 @@ lessons:
       - Kể lại câu chuyện về một nhân vật thời Lam Sơn hoặc Hậu Lê mà em sưu tầm.
       - Kể tên địa danh (di tích, đường phố, trường học) liên quan đến khởi nghĩa Lam Sơn và Hậu Lê.
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e745e50761fa8a50 }
     facts:
       - fact_id: HG5.SGK.B12.F1
         statement: Năm 1418, Lê Lợi lãnh đạo khởi nghĩa Lam Sơn (Thanh Hoá); sau 10 năm chiến đấu (1418 – 1427), khởi nghĩa thắng lợi hoàn toàn.
@@ -1629,7 +1629,7 @@ lessons:
       - Kể chuyện về một nhân vật thời Nguyễn và cho biết câu chuyện giúp em hiểu gì về thời kì đó.
       - Sưu tầm, giới thiệu một di sản văn hoá của Triều Nguyễn.
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 550373a6379c759f }
     facts:
       - fact_id: HG5.SGK.B13.F1
         statement: Năm 1802, Nguyễn Ánh lên ngôi Hoàng đế, lập Triều Nguyễn, đóng đô ở Phú Xuân (Huế), lấy niên hiệu Gia Long.
@@ -1758,7 +1758,7 @@ lessons:
       - Kể lại một câu chuyện về Bác Hồ, Võ Nguyên Giáp hoặc Kim Đồng.
       - Tìm hiểu ngày thành lập Đội Thiếu niên Tiền phong và ý nghĩa ngày 22 – 12 hằng năm.
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 209668a0820dec95 }
     facts:
       - fact_id: HG5.SGK.B14.F1
         statement: Bàn đá bên suối Lê-nin ở Pác Bó (Cao Bằng) là nơi Bác Hồ ngồi làm việc trong những năm 1941 – 1945.
@@ -1885,7 +1885,7 @@ lessons:
       - Nêu cảm nghĩ về các tấm gương anh hùng và điều em học được từ họ.
       - Sưu tầm tranh ảnh, bài thơ, bài hát về Điện Biên Phủ và chia sẻ với bạn.
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c261b8d0100bf803 }
     facts:
       - fact_id: HG5.SGK.B15.F1
         statement: Chiến dịch Điện Biên Phủ diễn ra từ ngày 13 – 3 – 1954 đến ngày 7 – 5 – 1954, chia làm 3 đợt.
@@ -2028,7 +2028,7 @@ lessons:
       - Viết đoạn văn ngắn (khoảng 5 câu) nêu cảm nghĩ về một câu chuyện lịch sử trong bài.
       - Sưu tầm tranh ảnh, câu chuyện về Chiến dịch Hồ Chí Minh và chia sẻ với bạn.
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: d3c7539a42d9f894 }
     facts:
       - fact_id: HG5.SGK.B16.F1
         statement: Năm 1975, sau thắng lợi Tây Nguyên, Huế – Đà Nẵng, ta mở chiến dịch giải phóng Sài Gòn – Gia Định, mang tên Hồ Chí Minh.
@@ -2158,7 +2158,7 @@ lessons:
       - Giới thiệu tranh ảnh về hiện vật thời bao cấp hoặc thời Đổi mới em sưu tầm.
       - Viết đoạn văn (khoảng 5 câu) nêu suy nghĩ về một thành tựu thời Đổi mới.
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ed60aae173d6961b }
     facts:
       - fact_id: HG5.SGK.B17.F1
         statement: Thời bao cấp là giai đoạn trước Đổi mới, từ khi đất nước thống nhất đến năm 1986 (1976 – 1986).
@@ -2279,7 +2279,7 @@ lessons:
       - "Giới thiệu một công trình theo gợi ý: tên, địa điểm, thời gian xây, điểm nổi bật"
       - Tìm hiểu qua sách báo, internet để kể thêm công trình nổi tiếng khác
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 6bfe134c6e7b682a }
     facts:
       - fact_id: HG5.SGK.B18.F1
         statement: Trung Quốc rộng khoảng 9,6 triệu km², đứng thứ tư thế giới về diện tích.
@@ -2412,7 +2412,7 @@ lessons:
       - Hoàn thành bảng tên công trình – nét đặc sắc
       - Giới thiệu với người thân một công trình em ấn tượng
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 4e2e4ea6a542a28e }
     facts:
       - fact_id: HG5.SGK.B19.F1
         statement: "Lào giáp năm nước: Trung Quốc, Mi-an-ma, Thái Lan, Cam-pu-chia và Việt Nam."
@@ -2541,7 +2541,7 @@ lessons:
       - Chọn công trình muốn đến thăm và giải thích lí do
       - Sưu tầm tranh ảnh, tư liệu về công trình khác để chia sẻ
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: c96f44b822e8985f }
     facts:
       - fact_id: HG5.SGK.B20.F1
         statement: Cam-pu-chia giáp Lào và Thái Lan ở phía bắc, Việt Nam ở phía đông, vịnh Thái Lan ở tây nam.
@@ -2670,7 +2670,7 @@ lessons:
       - Dựa vào bản đồ xác định các nước thành viên ASEAN
       - Sưu tầm hình quốc kì một số nước thành viên và chia sẻ với bạn
     opinion_prompts_present: false
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 8459199f286380e5 }
     facts:
       - fact_id: HG5.SGK.B21.F1
         statement: Đông Nam Á nằm ở phía đông nam châu Á, giáp Thái Bình Dương và Ấn Độ Dương.
@@ -2796,7 +2796,7 @@ lessons:
       - Câu hỏi nhận biết đặc điểm nổi bật (châu lục lạnh nhất, hoang mạc nằm ở đâu)
       - Chọn châu lục muốn khám phá và giải thích lí do
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: cfb79c6306f56950 }
     facts:
       - fact_id: HG5.SGK.B22.F1
         statement: "Thế giới có sáu châu lục: châu Á, châu Âu, châu Phi, châu Mỹ, châu Đại Dương và châu Nam Cực."
@@ -2940,7 +2940,7 @@ lessons:
       - Vẽ sơ đồ ngoại hình và nơi phân bố các chủng tộc
       - Viết đoạn văn ngắn nêu suy nghĩ về tôn trọng khác biệt
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 112c10eabb797bbd }
     facts:
       - fact_id: HG5.SGK.B23.F1
         statement: Trước thế kỉ XIX thế giới chỉ khoảng 1 tỉ người; năm 2024 đã hơn 8 tỉ người.
@@ -3057,7 +3057,7 @@ lessons:
       - Nói thành tựu em ấn tượng nhất và giải thích vì sao
       - Tìm hiểu qua sách báo, internet các thành tựu còn được bảo tồn
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 2cfdc83c9b3a7d95 }
     facts:
       - fact_id: HG5.SGK.B24.F1
         statement: Ai Cập ở vùng Đông Bắc châu Phi, có sông Nin chảy qua.
@@ -3180,7 +3180,7 @@ lessons:
       - Nói thành tựu em ấn tượng nhất và giải thích vì sao
       - Sưu tầm, giới thiệu một thành tựu còn bảo tồn hoặc thuộc lĩnh vực khác
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: e59332ef12f62185 }
     facts:
       - fact_id: HG5.SGK.B25.F1
         statement: Hy Lạp ngày nay nằm ở phía nam châu Âu, phía đông và nam giáp Thổ Nhĩ Kỳ và biển Ê-giê.
@@ -3309,7 +3309,7 @@ lessons:
       - Vẽ sơ đồ tóm tắt các vấn đề môi trường
       - Vẽ tranh hoặc viết thư kể một hoạt động bảo vệ môi trường em đã tham gia
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: ee6cae9ba9a30883 }
     facts:
       - fact_id: HG5.SGK.B26.F1
         statement: Thiên nhiên là không gian sống và cung cấp tài nguyên cho sản xuất, sinh hoạt của con người.
@@ -3430,7 +3430,7 @@ lessons:
       - Kể một hoạt động vì hoà bình em đã tham gia hoặc biết
       - Viết thư cho bạn đề xuất biện pháp bảo vệ hoà bình
     opinion_prompts_present: true
-    approved: null
+    approved: { by: vuduc.nam64@gmail.com, at: 2026-10-22, content_hash: 71f34e2fedff4080 }
     facts:
       - fact_id: HG5.SGK.B27.F1
         statement: Nhân loại luôn mong ước, chung tay xây dựng hoà bình, thể hiện qua truyền thuyết, Ô-lim-píc, Chữ thập đỏ, Liên hợp quốc.
