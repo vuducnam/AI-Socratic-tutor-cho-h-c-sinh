@@ -29,8 +29,25 @@ const ADULT_NEEDED_PHRASES: TermDefinition[] = [
 ];
 const adultNeededMatcher = compileTermSet(ADULT_NEEDED_PHRASES);
 
+// "Buồn, sợ" trong câu giả định ("nếu là tớ chắc tớ sợ lắm") hay nói về nhân vật ("anh ấy chắc buồn lắm") là cảm
+// nghĩ về bài, không phải con đang cần người lớn (chủ dự án duyệt 2026-10-22). Xét theo từng vế câu (tách ở dấu câu
+// và dấu phẩy); vế nói về chính con ("tớ sợ lắm") vẫn dừng bài. Chỉ áp cho nhóm buồn kéo dài.
+const FEELING_TERM = 'buồn kéo dài';
+const feelingMatcher = compileTermSet(ADULT_NEEDED_PHRASES.filter((p) => p.term === FEELING_TERM));
+const HYPOTHETICAL = /(?<![\p{L}\p{M}])(nếu|giả sử|giả dụ|giá mà|giá như)(?![\p{L}\p{M}])/u;
+const THIRD_PERSON = /(?<![\p{L}\p{M}])(anh ấy|chị ấy|ông ấy|bà ấy|cô ấy|chú ấy|các anh|các chú|nhân vật)(?![\p{L}\p{M}])/u;
+const FIRST_PERSON = /(?<![\p{L}\p{M}])(tớ|mình|em|con|tôi|tao)(?![\p{L}\p{M}])/u;
+
+function feelingAboutLessonOnly(text: string): boolean {
+  const clauses = normalizeForMatching(text).split(/[.!?;,\n…]+/);
+  const feelingClauses = clauses.filter((c) => feelingMatcher.match(c).length > 0);
+  return feelingClauses.length > 0 && feelingClauses.every((c) => HYPOTHETICAL.test(c) || (THIRD_PERSON.test(c) && !FIRST_PERSON.test(c)));
+}
+
 export function detectAdultNeeded(text: string): string[] {
-  return [...new Set(adultNeededMatcher.match(text).map((m) => m.term))];
+  const terms = new Set(adultNeededMatcher.match(text).map((m) => m.term));
+  if (terms.has(FEELING_TERM) && feelingAboutLessonOnly(text)) terms.delete(FEELING_TERM);
+  return [...terms];
 }
 
 /** Con hỏi điều chưa học (khớp thuật ngữ bị cấm của phạm vi) → cờ beyond_scope_curiosity. */

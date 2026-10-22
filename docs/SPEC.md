@@ -506,7 +506,7 @@ Trạng thái: `ELICIT` (luôn mở bằng lượt `hook`), `PROBE`, `SCAFFOLD` 
 | PROBE → CONSOLIDATE | solve: đáp án khớp `final_answer`; argue: con đã nêu lập luận có lý do |
 | SCAFFOLD → CONSOLIDATE | Đang được gợi ý mà con đã tự ra đáp án cuối khớp `final_answer` (không bắt quay lại PROBE rồi mới củng cố) |
 | CONSOLIDATE → DONE | Con giải thích được cách làm hoặc chỗ từng nhầm |
-| * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn |
+| * → PAUSE | Guard SAFETY hoặc phát hiện tín hiệu cần người lớn (code, `detectAdultNeeded`; "buồn, sợ" trong vế câu giả định "nếu là tớ…" hay nói về nhân vật "anh ấy…" không tính, vế nói về chính con vẫn tính — chủ dự án duyệt 2026-10-22) |
 | CONSOLIDATE → TRANSFER → DONE | Sau khi con giải thích được: Cú hỏi câu chuyển giao; con trả lời (hoặc bỏ qua) thì DONE |
 
 - `no_progress_streak`, tín hiệu nản (danh sách cụm từ + câu trả lời ≤ 2 từ lặp lại), phát hiện đoán bừa (đổi đáp án ≥ 2 lần trong 3 lượt, phản hồi < 3 giây) là **hàm thuần trong `src/server/domain/dialogue/signals.ts`**, có unit test.

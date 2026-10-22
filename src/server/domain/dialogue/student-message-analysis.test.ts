@@ -130,3 +130,16 @@ describe('detectAdultNeeded', () => {
     expect(detectAdultNeeded('Quân địch bị đánh bại ở Điện Biên Phủ')).toEqual([]);
   });
 });
+describe('detectAdultNeeded — buồn, sợ trong câu giả định hay về nhân vật', () => {
+  it('con nói về chính mình thì vẫn cần người lớn', () => {
+    expect(detectAdultNeeded('Tớ sợ lắm, bạn ấy hay chặn đường tớ')).toEqual(['buồn kéo dài']);
+    expect(detectAdultNeeded('Dạo này mình buồn lắm Mít ạ')).toEqual(['buồn kéo dài']);
+  });
+  it('câu giả định hay cảm nghĩ về nhân vật trong bài thì không dừng bài', () => {
+    expect(detectAdultNeeded('Tớ nghĩ nếu là tớ chắc tớ sợ lắm, không dám đâu.')).toEqual([]);
+    expect(detectAdultNeeded('Anh ấy chắc buồn lắm vì đồng đội hi sinh.')).toEqual([]);
+  });
+  it('có cả vế giả định lẫn vế nói về chính con thì vẫn dừng bài', () => {
+    expect(detectAdultNeeded('Nếu là tớ chắc tớ sợ lắm. Mà dạo này tớ buồn quá.')).toEqual(['buồn kéo dài']);
+  });
+});
