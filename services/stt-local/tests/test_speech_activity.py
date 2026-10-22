@@ -33,3 +33,18 @@ def test_quiet_voice_counts_as_speech() -> None:
 
 def test_empty_input_has_no_speech() -> None:
     assert not has_speech(np.zeros(0, dtype=np.float32), SAMPLE_RATE)
+
+
+def test_gain_boosted_room_noise_has_no_speech() -> None:
+    # Trình duyệt tự khuếch đại khi con im lặng: tiếng ồn đều khoảng -34 dBFS, to hơn ngưỡng tuyệt đối nhưng không nổi
+    # lên trên nền ồn của chính nó.
+    noise = np.random.default_rng(3).normal(0, 0.02, 3 * SAMPLE_RATE).astype(np.float32)
+    assert not has_speech(noise, SAMPLE_RATE)
+
+
+def test_voice_over_boosted_room_noise_counts_as_speech() -> None:
+    rng = np.random.default_rng(5)
+    noise = rng.normal(0, 0.02, 3 * SAMPLE_RATE).astype(np.float32)
+    start = SAMPLE_RATE
+    noise[start : start + SAMPLE_RATE // 2] += _tone(0.5, 0.2)  # khoảng -17 dBFS, nổi trên nền ~17 dB
+    assert has_speech(noise, SAMPLE_RATE)

@@ -21,6 +21,7 @@ class FakeLoader:
 
     fail_load: set[str] = field(default_factory=set)
     fail_infer: bool = False
+    transcript: str = FAKE_TRANSCRIPT
     loads: list[str] = field(default_factory=list)
     calls: list[tuple[str, str, int]] = field(default_factory=list)
 
@@ -33,14 +34,15 @@ class FakeLoader:
             self.calls.append((model_name, language, samples.size))
             if self.fail_infer:
                 raise RuntimeError("CUDA out of memory")
-            return f"  {FAKE_TRANSCRIPT}  "
+            return f"  {self.transcript}  "
 
         return transcribe
 
 
 @dataclass
 class FakeDecoder:
-    """Trả `seconds` giây âm 220 Hz (như có tiếng nói), hoặc im lặng khi `silent`; ghi lại file tạm có tồn tại lúc giải mã hay không."""
+    """Trả `seconds` giây: một phần tư đầu lặng (như lúc bấm micro rồi mới nói) rồi âm 220 Hz (như có tiếng nói),
+    hoặc im lặng khi `silent`; ghi lại file tạm có tồn tại lúc giải mã hay không."""
 
     seconds: float = 2.0
     silent: bool = False
@@ -54,7 +56,9 @@ class FakeDecoder:
         count = int(self.seconds * SAMPLE_RATE)
         if self.silent:
             return np.zeros(count, dtype=np.float32)
-        return (0.1 * np.sin(2 * np.pi * 220 * np.arange(count) / SAMPLE_RATE)).astype(np.float32)
+        samples = (0.1 * np.sin(2 * np.pi * 220 * np.arange(count) / SAMPLE_RATE)).astype(np.float32)
+        samples[: count // 4] = 0
+        return samples
 
 
 @pytest.fixture
