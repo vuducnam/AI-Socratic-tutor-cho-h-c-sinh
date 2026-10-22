@@ -37,6 +37,7 @@ export async function seedKeyFacts(
           statement: f.statement,
           kind: f.kind,
           accept: f.accept,
+          withhold: f.withhold ?? [],
           pages: f.pages,
           locator: f.locator,
           content_hash: hash,

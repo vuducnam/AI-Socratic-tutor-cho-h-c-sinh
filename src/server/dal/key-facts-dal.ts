@@ -14,6 +14,8 @@ export interface KeyFactRow {
   statement: string;
   kind: string;
   accept: string[];
+  /** Chữ Mít không được nói khi con chưa nêu ý này (chỉ để chặn). */
+  withhold: string[];
   pages: string;
   locator: string;
 }
@@ -22,7 +24,7 @@ export async function listApprovedKeyFacts(lessonIds: string[]): Promise<KeyFact
   if (!lessonIds.length) return [];
   const rows = await prisma.keyFact.findMany({
     where: { lesson_id: { in: lessonIds }, approved_by: { not: null } },
-    select: { fact_id: true, lesson_id: true, statement: true, kind: true, accept: true, pages: true, locator: true },
+    select: { fact_id: true, lesson_id: true, statement: true, kind: true, accept: true, withhold: true, pages: true, locator: true },
   });
   // Thứ tự ổn định theo bài rồi số thứ tự ý (F1, F2, …, F10), không theo chuỗi.
   const num = (id: string) => Number(id.slice(id.lastIndexOf('.F') + 2));
@@ -34,7 +36,7 @@ export async function listKeyFactsByIds(factIds: string[]): Promise<KeyFactRow[]
   if (!factIds.length) return [];
   const rows = await prisma.keyFact.findMany({
     where: { fact_id: { in: factIds }, approved_by: { not: null } },
-    select: { fact_id: true, lesson_id: true, statement: true, kind: true, accept: true, pages: true, locator: true },
+    select: { fact_id: true, lesson_id: true, statement: true, kind: true, accept: true, withhold: true, pages: true, locator: true },
   });
   return factIds.flatMap((id) => rows.filter((r) => r.fact_id === id));
 }

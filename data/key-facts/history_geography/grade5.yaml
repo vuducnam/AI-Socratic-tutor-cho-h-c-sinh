@@ -27,6 +27,9 @@ lessons:
         accept:
           - đông nam á
           - châu á
+        withhold:
+          - đông nam
+          - nam á
         pages: "5"
         locator: mục 1 Vị trí địa lí, đoạn văn cuối trang; khung nhỏ Việt Nam trong Đông Nam Á ở Hình 3 trang 6
       - fact_id: HG5.SGK.B1.F2
@@ -51,6 +54,10 @@ lessons:
           - nhiều thiên tai
           - bão
           - xuất khẩu
+        withhold:
+          - gió mùa
+          - nhiệt đới
+          - thiên tai
         pages: "7"
         locator: Hình 4 – sơ đồ Một số ảnh hưởng của vị trí địa lí, đầu trang
       - fact_id: HG5.SGK.B1.F4
@@ -59,6 +66,9 @@ lessons:
         accept:
           - vùng trời
           - vùng đất vùng biển vùng trời
+        withhold:
+          - vùng biển
+          - vùng đất
         pages: "7"
         locator: mục 2 Lãnh thổ và đơn vị hành chính, đoạn đầu
       - fact_id: HG5.SGK.B1.F5
@@ -69,6 +79,9 @@ lessons:
           - hình chữ s
           - hẹp ngang
           - chiều bắc nam
+        withhold:
+          - hẹp bề ngang
+          - bắc nam
         pages: "7"
         locator: mục 2, đoạn đầu (câu cuối); đối chiếu Hình 3 – Bản đồ hành chính trang 6
       - fact_id: HG5.SGK.B1.F6
@@ -100,6 +113,8 @@ lessons:
         accept:
           - hà nội
           - thủ đô hà nội
+        withhold:
+          - sao đỏ
         pages: "7"
         locator: mục 2, cuối đoạn thứ hai; dấu sao đỏ trên Hình 3 trang 6
       - fact_id: HG5.SGK.B1.F9
@@ -110,6 +125,10 @@ lessons:
           - sao vàng
           - sao vàng năm cánh
           - tượng trưng cho cách mạng
+        withhold:
+          - màu đỏ
+          - màu vàng
+          - ngôi sao
         pages: "7"
         locator: mục 3a Quốc kì, đoạn văn cạnh Hình 5
       - fact_id: HG5.SGK.B1.F10
@@ -122,6 +141,8 @@ lessons:
           - thương nhân
           - binh sĩ
           - năm tầng lớp
+        withhold:
+          - tầng lớp
         pages: "7"
         locator: mục 3a Quốc kì, cuối đoạn văn cạnh Hình 5
       - fact_id: HG5.SGK.B1.F11
@@ -133,6 +154,9 @@ lessons:
           - bánh xe răng
           - nông nghiệp
           - công nghiệp
+        withhold:
+          - lúa vàng
+          - bánh răng
         pages: "8"
         locator: mục 3b Quốc huy, đoạn đầu cạnh Hình 6
       - fact_id: HG5.SGK.B1.F12
@@ -143,6 +167,8 @@ lessons:
           - văn cao
           - "1944"
           - năm 1944
+        withhold:
+          - nhạc sĩ
         pages: "8"
         locator: mục 3c Quốc ca, đoạn đầu và khung Em có biết
   - lesson_id: HG5.SGK.B2
@@ -167,6 +193,8 @@ lessons:
           - 1/4
           - một phần tư
           - đồi núi thấp
+        withhold:
+          - phần tư
         pages: "9"
         locator: mục 1a Địa hình, đoạn văn cuối trang; đối chiếu Hình 1 – Bản đồ tự nhiên trang 10
       - fact_id: HG5.SGK.B2.F2
@@ -176,6 +204,9 @@ lessons:
           - tây bắc đông nam
           - vòng cung
           - hình vòng cung
+        withhold:
+          - tây bắc
+          - đông nam
         pages: "9"
         locator: mục 1a Địa hình, đoạn văn cuối trang
       - fact_id: HG5.SGK.B2.F3
@@ -185,6 +216,9 @@ lessons:
           - xâm nhập mặn
           - ngập lụt
           - dân cư đông đúc
+        withhold:
+          - nước mặn
+          - lũ lụt
         pages: "11"
         locator: mục 1a (tiếp), đoạn đầu trang
       - fact_id: HG5.SGK.B2.F4
@@ -197,6 +231,10 @@ lessons:
           - bô-xít
           - bô xít
           - a-pa-tít
+        withhold:
+          - dầu
+          - than
+          - đá vôi
         pages: 10-11
         locator: khung Em có biết mục 1b Khoáng sản trang 11; kí hiệu khoáng sản trên Hình 1 trang 10
       - fact_id: HG5.SGK.B2.F5
@@ -218,6 +256,9 @@ lessons:
           - hai mươi độ
           - "1500"
           - 2000 mm
+        withhold:
+          - nhiệt đới
+          - gió mùa
         pages: "11"
         locator: mục 2a Khí hậu, đoạn đầu
       - fact_id: HG5.SGK.B2.F7
@@ -229,6 +270,10 @@ lessons:
           - nóng quanh năm
           - mùa mưa và mùa khô
           - mùa khô
+        withhold:
+          - hai miền khí hậu
+          - đông lạnh
+          - mùa mưa
         pages: "11"
         locator: mục 2a Khí hậu, đoạn thứ hai; bảng nhiệt độ Hà Nội – TP Hồ Chí Minh đầu trang 12
       - fact_id: HG5.SGK.B2.F8
@@ -240,6 +285,9 @@ lessons:
           - sông nhỏ
           - mùa lũ
           - mùa cạn
+        withhold:
+          - sông lớn
+          - theo mùa
         pages: "12"
         locator: mục 2b Sông, hồ, đoạn đầu
       - fact_id: HG5.SGK.B2.F9
@@ -262,6 +310,9 @@ lessons:
           - feralit
           - phù sa
           - đất phù sa
+        withhold:
+          - màu mỡ
+          - nghèo mùn
         pages: "13"
         locator: mục 3a Đất, hai đoạn văn dưới khung câu hỏi
       - fact_id: HG5.SGK.B2.F11
@@ -272,6 +323,8 @@ lessons:
           - rừng nhiệt đới
           - xói mòn
           - cung cấp gỗ
+        withhold:
+          - dược liệu
         pages: "14"
         locator: mục 3b Rừng, hai đoạn đầu; Hình 9, 10
       - fact_id: HG5.SGK.B2.F12
@@ -284,6 +337,8 @@ lessons:
           - thủy lợi
           - cảnh báo sớm
           - khai thác hợp lí
+        withhold:
+          - tái tạo
         pages: 14-15
         locator: mục 4, đoạn cuối trang 14; Hình 11 – sơ đồ Biện pháp trang 15
   - lesson_id: HG5.SGK.B3
@@ -305,6 +360,8 @@ lessons:
           - biển đông
           - hàng nghìn đảo
           - hàng nghìn hòn đảo
+        withhold:
+          - hàng nghìn
         pages: "16"
         locator: mục 1 Vị trí địa lí, đoạn văn cuối trang
       - fact_id: HG5.SGK.B3.F2
@@ -327,6 +384,8 @@ lessons:
           - trường sa
           - quần đảo hoàng sa
           - quần đảo trường sa
+        withhold:
+          - quần đảo
         pages: "16"
         locator: mục 1, câu cuối trang; Hình 1 đảo Trường Sa Lớn
       - fact_id: HG5.SGK.B3.F4
@@ -337,6 +396,8 @@ lessons:
           - vịnh hạ long
           - unesco
           - di sản thiên nhiên thế giới
+        withhold:
+          - di sản
         pages: "17"
         locator: khung Em có biết cạnh Hình 2, đầu trang
       - fact_id: HG5.SGK.B3.F5
@@ -349,6 +410,9 @@ lessons:
           - thế kỉ xvii
           - thế kỉ 17
           - thế kỷ 17
+        withhold:
+          - sản vật
+          - chủ quyền
         pages: "17"
         locator: mục 2, đoạn cuối trang
       - fact_id: HG5.SGK.B3.F6
@@ -368,6 +432,8 @@ lessons:
           - tháng 3 đến tháng 8
           - tháng ba đến tháng tám
           - ba ngày ba đêm
+        withhold:
+          - thuyền buồm
         pages: "18"
         locator: khung Câu chuyện lịch sử Đội Hoàng Sa, đoạn thứ hai
       - fact_id: HG5.SGK.B3.F8
@@ -396,6 +462,8 @@ lessons:
           - năm 1836
           - phạm hữu nhật
           - cột mốc
+        withhold:
+          - binh thuyền
         pages: "18"
         locator: khung TƯ LIỆU (viền chấm xanh) giữa trang
       - fact_id: HG5.SGK.B3.F11
@@ -406,6 +474,8 @@ lessons:
           - bia chủ quyền
           - "1938"
           - năm 1938
+        withhold:
+          - dựng bia
         pages: "18"
         locator: đoạn văn cạnh Hình 6 – Bia chủ quyền, cuối trang
       - fact_id: HG5.SGK.B3.F12
@@ -417,6 +487,8 @@ lessons:
           - công ước luật biển
           - "1982"
           - năm 1982
+        withhold:
+          - liên hợp quốc
         pages: 18-19
         locator: đoạn cuối trang 18 nối sang đoạn đầu trang 19
   - lesson_id: HG5.SGK.B4
@@ -441,6 +513,8 @@ lessons:
           - thứ ba đông nam á
           - thứ 3 đông nam á
           - đứng thứ ba
+        withhold:
+          - triệu dân
         pages: 20-21
         locator: Bảng số dân các nước Đông Nam Á năm 2024 trang 20; dòng đầu trang 21
       - fact_id: HG5.SGK.B4.F2
@@ -482,6 +556,9 @@ lessons:
           - xu hướng giảm
           - tốc độ tăng giảm
           - tăng chậm lại
+        withhold:
+          - đang giảm
+          - giảm dần
         pages: "21"
         locator: mục 2 Gia tăng dân số, đoạn đầu dưới biểu đồ (câu thứ hai)
       - fact_id: HG5.SGK.B4.F6
@@ -491,6 +568,9 @@ lessons:
           - lao động dồi dào
           - nguồn lao động
           - thị trường tiêu thụ
+        withhold:
+          - dồi dào
+          - tiêu thụ
         pages: "21"
         locator: mục 2, đoạn thứ hai dưới biểu đồ (vế đầu)
       - fact_id: HG5.SGK.B4.F7
@@ -513,6 +593,9 @@ lessons:
           - ven biển đông dân
           - mật độ dân số cao
           - miền núi thưa dân
+        withhold:
+          - tập trung đông
+          - thưa
         pages: 21-22
         locator: mục 3 Phân bố dân cư, đoạn cuối trang 21; Hình 2 – Bản đồ phân bố dân cư năm 2024 trang 22
       - fact_id: HG5.SGK.B4.F9
@@ -639,6 +722,17 @@ lessons:
           - nuôi tằm
           - trồng dâu
           - dệt vải
+        withhold:
+          - ruộng
+          - lúa
+          - dâu
+          - tằm
+          - vải
+          - cấy
+          - cánh đồng
+          - ra đồng
+          - ngoài đồng
+          - đồng áng
         pages: "26"
         locator: mục 2 Đời sống kinh tế, đoạn đầu
       - fact_id: HG5.SGK.B5.F8
@@ -650,6 +744,19 @@ lessons:
           - đồ gốm
           - đan lát
           - đóng thuyền
+        withhold:
+          - bằng đồng
+          - đồ đồng
+          - rìu
+          - trống đồng
+          - lưỡi cày
+          - công cụ
+          - vũ khí
+          - trang sức
+          - vòng tay
+          - nồi
+          - gốm
+          - thuyền
         pages: 26-27
         locator: mục 2, đoạn thứ hai cuối trang 26; Hình 4–6 (nồi gốm, lưỡi cày đồng, vòng tay đồng) đầu trang 27
       - fact_id: HG5.SGK.B5.F9
@@ -681,6 +788,8 @@ lessons:
           - kim quy
           - nỏ thần
           - móng vuốt
+        withhold:
+          - móng
         pages: "28"
         locator: khung Câu chuyện lịch sử Sự tích nỏ thần, đoạn đầu
       - fact_id: HG5.SGK.B5.F12
@@ -693,6 +802,8 @@ lessons:
           - mỵ châu
           - mị châu
           - chủ quan
+        withhold:
+          - lấy cắp
         pages: "28"
         locator: khung Câu chuyện lịch sử Sự tích nỏ thần, cuối đoạn đầu và đoạn hai
   - lesson_id: HG5.SGK.B6
@@ -753,6 +864,8 @@ lessons:
           - nền chùa
           - cọc gỗ
           - nhà sàn
+        withhold:
+          - cọc
         pages: "30"
         locator: đoạn văn dưới câu chuyện; Hình 2 và Hình 3
       - fact_id: HG5.SGK.B6.F6
@@ -774,6 +887,9 @@ lessons:
           - đất nung
           - che gió
           - giữ tro
+        withhold:
+          - bếp
+          - tro
         pages: "30"
         locator: mục 2, đoạn văn cạnh Hình 5 – Nồi và cà ràng
       - fact_id: HG5.SGK.B6.F8
@@ -802,6 +918,8 @@ lessons:
           - khuyên tai
           - khuyên tai bằng vàng
           - bông tai vàng
+        withhold:
+          - bằng vàng
         pages: "31"
         locator: Hình 6 – Khuyên tai bằng vàng
       - fact_id: HG5.SGK.B6.F11
@@ -813,6 +931,8 @@ lessons:
           - gỗ bằng lăng
           - toà sen
           - tòa sen
+        withhold:
+          - bằng lăng
         pages: "31"
         locator: Hình 7 và khung Em có biết
       - fact_id: HG5.SGK.B6.F12
@@ -865,6 +985,8 @@ lessons:
           - mĩ sơn
           - thánh địa mỹ sơn
           - thánh địa mĩ sơn
+        withhold:
+          - thánh địa
         pages: "32"
         locator: mục 1, đoạn thứ hai cuối trang; Hình 3 trang 33
       - fact_id: HG5.SGK.B7.F4
@@ -906,6 +1028,9 @@ lessons:
           - hoa cúc
           - sư tử
           - voi
+        withhold:
+          - hoa lá
+          - động vật
         pages: 33-34
         locator: cuối đoạn văn thứ hai trang 33, nối sang dòng đầu trang 34
       - fact_id: HG5.SGK.B7.F8
@@ -937,6 +1062,9 @@ lessons:
           - rồng trắng
           - voi trắng
           - ghẻ chốc
+        withhold:
+          - rồng
+          - voi
         pages: "34"
         locator: khung Câu chuyện lịch sử Tháp Pô Klong Ga-rai, đoạn đầu và đoạn hai
       - fact_id: HG5.SGK.B7.F11
@@ -993,6 +1121,8 @@ lessons:
           - chữ hán
           - phong tục người hán
           - sáp nhập
+        withhold:
+          - sản vật
         pages: "36"
         locator: khung Em có biết? bên phải mục 1
       - fact_id: HG5.SGK.B8.F3
@@ -1045,6 +1175,8 @@ lessons:
           - hoằng tháo
           - nam hán
           - đường biển
+        withhold:
+          - cửa sông
         pages: "38"
         locator: Câu chuyện lịch sử 'Ngô Quyền đại phá quân Nam Hán', cuối trang
       - fact_id: HG5.SGK.B8.F8
@@ -1057,6 +1189,16 @@ lessons:
           - thuỷ triều
           - thủy triều
           - bịt sắt
+        withhold:
+          - dưới sông
+          - lòng sông
+          - cọc
+          - nhọn
+          - sắt
+          - triều
+          - nước lên
+          - nước rút
+          - nước xuống
         pages: "39"
         locator: tiếp câu chuyện Ngô Quyền, đoạn đầu trang (cạnh Hình 3)
       - fact_id: HG5.SGK.B8.F9
@@ -1068,6 +1210,8 @@ lessons:
           - "938"
           - ngô quyền
           - kết thúc bắc thuộc
+        withhold:
+          - độc lập
         pages: "37"
         locator: đoạn đầu trang 37; nhắc lại ở cuối câu chuyện Ngô Quyền trang 39
   - lesson_id: HG5.SGK.B9
@@ -1772,6 +1916,9 @@ lessons:
           - phân khu bắc
           - đợt 1
           - đợt một
+        withhold:
+          - tiêu diệt
+          - cứ điểm
         pages: "66"
         locator: Hình 2 – sơ đồ diễn biến chính, ô Đợt 1
       - fact_id: HG5.SGK.B15.F4
@@ -1803,6 +1950,8 @@ lessons:
           - de castries
           - đầu hàng
           - bắt sống
+        withhold:
+          - thắng lợi
         pages: "66"
         locator: Hình 2 – ô Đợt 3, gạch đầu dòng thứ hai; Hình 4 tr. 67
       - fact_id: HG5.SGK.B15.F7
@@ -1812,6 +1961,9 @@ lessons:
           - kéo pháo
           - sức người
           - kéo pháo vào
+        withhold:
+          - mở đường
+          - pháo
         pages: "66"
         locator: Câu chuyện lịch sử 'Kéo pháo ở Điện Biên Phủ', đoạn 1; Hình 3
       - fact_id: HG5.SGK.B15.F8
@@ -1858,6 +2010,13 @@ lessons:
           - phan đình giót
           - lỗ châu mai
           - lấp lỗ châu mai
+        withhold:
+          - bị thương
+          - bịt
+          - lao vào
+          - thân mình
+          - cứ điểm
+          - diệt
         pages: "68"
         locator: Câu chuyện lịch sử 'Phan Đình Giót lấy thân mình lấp lỗ châu mai'
   - lesson_id: HG5.SGK.B16
@@ -1889,6 +2048,9 @@ lessons:
           - năm cánh quân
           - 5 cánh quân
           - 17 giờ
+        withhold:
+          - cánh quân
+          - phòng thủ
         pages: "69"
         locator: mục 1, đoạn 2
       - fact_id: HG5.SGK.B16.F3
@@ -1916,6 +2078,8 @@ lessons:
           - dinh độc lập
           - 30 tháng 4
           - 10 giờ 45
+        withhold:
+          - dinh
         pages: "69"
         locator: mục 1, cuối đoạn 2; Hình 1
       - fact_id: HG5.SGK.B16.F6
@@ -1925,6 +2089,8 @@ lessons:
           - 11 giờ 30
           - nóc dinh độc lập
           - lá cờ cách mạng
+        withhold:
+          - lá cờ
         pages: "69"
         locator: câu cuối trang
       - fact_id: HG5.SGK.B16.F7
@@ -1935,6 +2101,8 @@ lessons:
           - a 37
           - máy bay thu được
           - bất ngờ
+        withhold:
+          - máy bay
         pages: "70"
         locator: Câu chuyện lịch sử 'Phi đội Quyết thắng tấn công sân bay Tân Sơn Nhất', đoạn 1
       - fact_id: HG5.SGK.B16.F8
@@ -1965,6 +2133,8 @@ lessons:
           - dương văn minh
           - đầu hàng không điều kiện
           - đài phát thanh
+        withhold:
+          - đầu hàng
         pages: "71"
         locator: Câu chuyện lịch sử 'Thời khắc cuối cùng của chính quyền Sài Gòn', đoạn 1; Hình 4
       - fact_id: HG5.SGK.B16.F11
@@ -1974,6 +2144,8 @@ lessons:
           - sụp đổ
           - toàn thắng rồi
           - bật khóc
+        withhold:
+          - khóc
         pages: "71"
         locator: cùng câu chuyện, đoạn 2
   - lesson_id: HG5.SGK.B17

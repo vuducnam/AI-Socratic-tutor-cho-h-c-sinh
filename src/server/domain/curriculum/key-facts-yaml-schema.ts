@@ -18,6 +18,9 @@ const factSchema = z.object({
   statement: z.string().trim().min(1),
   kind: z.enum(KEY_FACT_KINDS),
   accept: z.array(z.string().trim().min(1)).min(1).max(6),
+  // Chữ Mít không được nói khi con chưa nêu ý này (đồ vật trong hình, chữ gợi gần đáp án); chỉ dùng để chặn, không
+  // dùng để chấm con đã nêu ý chưa. Con tự nói chữ đó thì Mít nhắc lại được.
+  withhold: z.array(z.string().trim().min(1)).max(12).default([]),
   pages: z.union([z.string(), z.number()]).transform(String),
   locator: z.string().trim().min(1),
 });
@@ -37,8 +40,9 @@ const lessonSchema = z.object({
 
 const fileSchema = z.object({ subject: z.string().min(1), grade: z.number().int(), lessons: z.array(z.unknown()) });
 
-export type KeyFactDef = z.infer<typeof factSchema>;
-export type KeyFactLessonDef = z.infer<typeof lessonSchema> & { subject: string };
+// withhold tuỳ chọn ở kiểu (dữ liệu dựng tay trong test, file cũ): không có nghĩa là danh sách rỗng.
+export type KeyFactDef = Omit<z.infer<typeof factSchema>, 'withhold'> & { withhold?: string[] };
+export type KeyFactLessonDef = Omit<z.infer<typeof lessonSchema>, 'facts'> & { facts: KeyFactDef[]; subject: string };
 
 export class KeyFactsSeedError extends Error {
   constructor(readonly problems: string[]) {
@@ -52,7 +56,8 @@ export function keyFactsLessonHash(lesson: Pick<KeyFactLessonDef, 'lesson_id' | 
   const content = {
     lesson_id: lesson.lesson_id,
     objectives: lesson.objectives,
-    facts: lesson.facts.map((f) => [f.fact_id, f.statement, f.kind, f.accept, f.pages, f.locator]),
+    // withhold chỉ vào hash khi có, để hash của bài chưa có danh sách này không đổi.
+    facts: lesson.facts.map((f) => [f.fact_id, f.statement, f.kind, f.accept, f.pages, f.locator, ...(f.withhold?.length ? [f.withhold] : [])]),
   };
   return createHash('sha256').update(JSON.stringify(content)).digest('hex').slice(0, 16);
 }
@@ -100,7 +105,7 @@ export function parseKeyFactsFile(file: string, text: string, lessonPages: Map<s
       if (factIds.has(f.fact_id)) problems.push(`${where}: fact_id trùng`);
       factIds.add(f.fact_id);
       if (wordCount(f.statement) > MAX_STATEMENT_WORDS) problems.push(`${where}: statement quá ${MAX_STATEMENT_WORDS} từ (diễn đạt ngắn, không chép sách)`);
-      for (const a of f.accept) {
+      for (const a of [...f.accept, ...(f.withhold ?? [])]) {
         if (a !== a.normalize('NFC').toLocaleLowerCase('vi')) problems.push(`${where}: accept "${a}" phải viết thường, NFC`);
       }
       const pages = parsePages(f.pages);

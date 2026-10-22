@@ -656,6 +656,7 @@ model KeyFact {
   statement    String
   kind         String // date | place | person | event | cause | result | feature | figure | symbol
   accept       String[]
+  withhold     String[]  @default([]) // chữ Mít không được nói khi con chưa nêu ý (chỉ để chặn, không để chấm)
   pages        String
   locator      String
   content_hash String // hash ý chính của cả bài

@@ -31,7 +31,7 @@ export default async function KeyFactsReviewPage({ searchParams }: { searchParam
               <tr>
                 <th>Ý chính</th>
                 <th>Trang · chỗ trong sách</th>
-                <th>Cụm từ chấp nhận</th>
+                <th>Cụm từ chấp nhận · chữ cần giữ</th>
               </tr>
             </thead>
             <tbody>
@@ -47,7 +47,10 @@ export default async function KeyFactsReviewPage({ searchParams }: { searchParam
                     tr. {f.pages}
                     <div className="muted small">{f.locator}</div>
                   </td>
-                  <td className="small">{f.accept.join(' · ')}</td>
+                  <td className="small">
+                    {f.accept.join(' · ')}
+                    {f.withhold.length ? <div className="muted">Mít không nói trước: {f.withhold.join(' · ')}</div> : null}
+                  </td>
                 </tr>
               ))}
             </tbody>

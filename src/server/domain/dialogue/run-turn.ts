@@ -114,7 +114,7 @@ function hardCheckContext(
             choiceLabel: plan.final_answer.choice_label,
           }
         : null,
-    withheldFacts: knowledge && !ANSWER_GIVEN_STATES.includes(state) ? withheldPhrases({ plan: plan!, facts: ctx.keyFacts, problemText, statedFactIds }) : [],
+    withheldFacts: knowledge && !ANSWER_GIVEN_STATES.includes(state) ? withheldPhrases({ plan: plan!, facts: ctx.keyFacts, problemText, statedFactIds, studentTexts }) : [],
     problemText,
     givenNumbers: plan?.given_numbers ?? [],
     forbiddenTerms: ctx.scope.forbiddenTerms,

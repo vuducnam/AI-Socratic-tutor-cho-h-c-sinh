@@ -47,17 +47,31 @@ export function guardedFactIds(knowledge: NonNullable<SolutionPlan['knowledge']>
 }
 
 /**
- * Cụm từ Mít KHÔNG được nói (kiểm tra cứng LEAK): cụm chấp nhận của ý cần giữ (guardedFactIds) con chưa tự nêu, trừ
- * cụm có sẵn trong câu hỏi. Ý con đã nêu thì Mít nhắc lại được.
+ * Cụm từ Mít KHÔNG được nói (kiểm tra cứng LEAK) cho mỗi ý cần giữ (guardedFactIds) con chưa tự nêu: cụm chấp nhận
+ * và chữ cần giữ (withhold: đồ vật trong hình, chữ gợi gần đáp án), trừ cụm có sẵn trong câu hỏi và chữ cần giữ con
+ * đã tự nói. Ý con đã nêu thì Mít nhắc lại được.
  */
-export function withheldPhrases(input: { plan: SolutionPlan; facts: MatchableFact[]; problemText: string; statedFactIds: string[] }): { fact_id: string; phrases: string[] }[] {
+export function withheldPhrases(input: {
+  plan: SolutionPlan;
+  facts: (MatchableFact & { withhold?: string[] })[];
+  problemText: string;
+  statedFactIds: string[];
+  studentTexts?: string[];
+}): { fact_id: string; phrases: string[] }[] {
   const k = input.plan.knowledge;
   if (!k) return [];
   const stated = new Set(input.statedFactIds);
   const guarded = guardedFactIds(k);
+  const said = (input.studentTexts ?? []).join('\n');
+  const withholdOf = new Map(input.facts.map((f) => [f.fact_id, f.withhold ?? []]));
+  const notSaid = (fact_id: string, term: string) => matchedPhrase(said, { fact_id, accept: [term] }) === null;
   return factsBeyondQuestion(input.facts, input.problemText)
-    .filter((f) => guarded.includes(f.fact_id) && !stated.has(f.fact_id) && f.accept.length > 0)
-    .map((f) => ({ fact_id: f.fact_id, phrases: f.accept }));
+    .filter((f) => guarded.includes(f.fact_id) && !stated.has(f.fact_id))
+    .map((f) => {
+      const withhold = factsBeyondQuestion([{ fact_id: f.fact_id, accept: withholdOf.get(f.fact_id) ?? [] }], input.problemText)[0]!.accept;
+      return { fact_id: f.fact_id, phrases: [...f.accept, ...withhold.filter((t) => notSaid(f.fact_id, t))] };
+    })
+    .filter((f) => f.phrases.length > 0);
 }
 
 const YEAR = /(?<!\d)(1\d{3}|20\d{2})(?!\d)/g;

@@ -156,7 +156,10 @@ function knowledgeVariables(input: TutorPromptInput): Record<string, string> {
     subject_name: k?.subjectName ?? '',
     question_type: plan?.question_type ?? 'fact',
     key_facts: facts.length
-      ? facts.map((f) => `- ${f.fact_id} [${required.has(f.fact_id) ? 'bắt buộc' : 'ngữ cảnh'}] ${f.statement} (${where(f)})`).join('\n')
+      ? facts
+          // Chữ cần giữ: Mít không nói khi em chưa tự nói (code chặn), nên viết sẵn để Tutor tránh từ đầu.
+          .map((f) => `- ${f.fact_id} [${required.has(f.fact_id) ? 'bắt buộc' : 'ngữ cảnh'}] ${f.statement} (${where(f)})${f.withhold?.length ? ` — không nói trước: ${f.withhold.join(', ')}` : ''}`)
+          .join('\n')
       : '(không có)',
     stated_facts: k?.statedFactIds.length ? k.statedFactIds.join(', ') : '(chưa có)',
     page_pointer: stepFacts.length ? stepFacts.map(where).join('; ') : '(không có — hỏi gợi mở, không chỉ trang)',

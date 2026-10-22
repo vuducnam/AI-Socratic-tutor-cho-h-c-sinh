@@ -265,6 +265,11 @@ Quy tắc khi sửa ý chính:
 - `accept` viết thường; code so nguyên cụm, coi gạch nối như khoảng trắng và chấp nhận hai kiểu bỏ dấu thanh
   (`src/lib/key-point-matcher.ts`). Cụm quá chung (một từ phổ biến) dễ chấm nhầm; cụm có sẵn trong câu hỏi thì
   không được tính.
+- `withhold` (tuỳ chọn, viết thường, tối đa 12): chữ Mít không được nói khi con chưa nêu ý này, ví dụ đồ vật trong
+  hình ("rìu", "nồi") hay chữ gợi gần đáp án ("lòng sông", "nước lên"). Chỉ dùng để chặn (kiểm tra cứng LEAK), không
+  dùng để chấm con đã nêu ý chưa; con tự nói chữ đó thì Mít được nhắc lại. Lấy từ câu ý chính hoặc chỗ trong sách đã
+  ghi, không thêm từ trí nhớ. Tránh chữ một âm tiết dễ trùng khi bỏ dấu thanh ("đồng" trùng "đông"): dùng cụm
+  ("cánh đồng", "bằng đồng"). Đo trước khi thêm: chạy lại kiểm tra cứng trên tin của Mít đã ghi ở DB eval.
 - `pages` phải nằm trong trang của bài; `locator` ghi đoạn, hình, lược đồ để Mít chỉ con tự đọc.
 - Sửa ý chính sau khi duyệt thì bài mất duyệt (hash đổi). `pnpm key-facts:hash` in hash và trạng thái từng bài.
 

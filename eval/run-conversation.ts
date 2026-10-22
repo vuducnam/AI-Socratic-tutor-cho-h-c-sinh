@@ -220,7 +220,7 @@ export async function runConversation(
       const problemText = owner.problem.confirmed_text ?? '';
       const studentTexts = turns.slice(0, index).filter((x) => x.role === 'student' && x.problem_id === t.problem_id).map((x) => x.content);
       const statedFactIds = keyPointsProgress({ plan, facts, problemText, studentTexts }).statedFactIds;
-      withheldFacts = withheldPhrases({ plan, facts, problemText, statedFactIds });
+      withheldFacts = withheldPhrases({ plan, facts, problemText, statedFactIds, studentTexts });
     }
     const hard = runHardChecks(t.content, {
       maxSentences: t.turn_kind === 'hook' ? 1 : isProblemText ? preset.max_sentences_situational : preset.max_sentences,
